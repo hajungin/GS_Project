@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+		
+<div id="footer" class="">
+	<div class="top">
+		<ul>
+			<li><a href="/guid/aboutPortal" title="포털소개 메뉴로 이동하는 버튼">포털소개</a></li>
+			<li> ｜ </li>
+			<li><a href="/guid/help" title="도움말 메뉴로 이동하는 버튼">도움말</a></li>						
+		</ul>
+	</div>
+	<div class="mid">
+		<a href="/use/UseTableau.jsp" target="_blank" title="통계 정보 메뉴 페이지" class=""><img src="/static_resources/portal/img/flogo.png" alt="해양 경찰청 로고 이미지" /></a>
+	</div>
+	<div class="bot">
+		<p class="copyTxt">21995 인천광역시 연수구 해돋이로 130(송도동 3-8) 대표전화 : 032-835-2000<br>
+			COPYROGHT(C) 2018 Korea Coast Guard All Rights Reserved.</p>
+	</div>
+</div><!-- // footer -->
+<script type="text/javascript" src="/static_resources/portal/js/common.js?rscVer=${properties.rscVer}"></script>
