@@ -81,4 +81,5 @@
 **/WebContents/WEB-INF/jsp/kcg/system/share_mng
 **/WebContents/WEB-INF/jsp/kcg/system/stat_mng
 **/WebContents/WEB-INF/jsp/kcg/system/user_auth_mng
-
+**/WebContents
+**/src
