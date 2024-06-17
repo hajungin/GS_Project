@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='system.team2_cust_mng'>
+
+	<select id="getAll" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT 
+			c.cust_sn AS cust_sn,
+			c.cust_nm AS cust_nm,
+			c.cust_eml_addr AS cust_eml_addr, 
+			c.cust_home_telno AS cust_home_telno, 
+			c.cust_mbl_telno AS cust_mbl_telno,
+			c.cust_pridtf_no AS cust_pridtf_no,
+			c.cust_road_nm_addr AS cust_road_nm_addr,
+			e.emp_nm AS emp_nm,
+			cm.comm_nm AS emp_dept_nm
+		FROM kcgbd.e_customer AS c
+		JOIN kcgbd.e_employee AS e ON c.emp_no = e.emp_no
+		JOIN kcgbd.e_common AS cm ON e.emp_dept = cm.comm_no
+
+	</select>
+	
+	<select id="getEmployee" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT
+			e.emp_nm AS emp_nm,
+			c.comm_nm AS emp_posit,
+			d.comm_nm AS emp_dept,
+			e.emp_mbl_telno AS emp_mbl_telno
+		FROM kcgbd.e_employee AS e
+		JOIN
+        	kcgbd.e_common c ON e.emp_posit = c.comm_no
+	    JOIN
+	        kcgbd.e_common d ON e.emp_dept = d.comm_no
+	</select>
+	
+	
+</mapper>
+

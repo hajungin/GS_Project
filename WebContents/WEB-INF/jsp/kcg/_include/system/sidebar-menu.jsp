@@ -31,7 +31,19 @@
 	
 	
 			<ul id="main-menu" class="main-menu">
-			
+			<li data-lnb="10" data-snb="0">
+					<a href="#gm">
+						<i class="entypo-newspaper"></i>
+						<span class="title">EZEN 고객관리</span>
+					</a>
+					<ul data-lnb="10" data-snb="0">
+						<li data-lnb="10" data-snb="3">
+							<a href="#gm" onclick="cf_movePage('/customer/custMng')">
+								<span class="title">고객정보 목록 조회</span>
+							</a>
+						</li>						
+					</ul>
+				</li> 
 			
 				<li data-lnb="10" data-snb="0">
 					<a href="#gm">
