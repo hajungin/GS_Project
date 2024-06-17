@@ -2,6 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace='system.team2.sell_mng'>
 
-<select id="getAll" parameterType="cmmnMap" resultType="cmmnMap">
-	select * from kcgbd.e_product
-</select>
+    <select id="get" parameterType="cmmnMap" resultType="cmmnMap">
+SELECT 
+    ep.prod_no,
+    ep.prod_nm,
+    ec_type.comm_nm AS prod_type,
+    ec_target.comm_nm AS sub_tg,
+    ep.pay_period,
+    ec_cycle.comm_nm AS pay_cycle,
+    ep.price_max,
+    ep.price_min,
+    ec_stat.comm_nm AS sale_stat,
+    ep.sale_beg_dt,
+    ep.sale_end_dt,
+    ep.promtn_yn
+FROM 
+    kcgbd.e_product ep
+LEFT JOIN 
+    kcgbd.e_common ec_type ON ep.prod_type = ec_type.comm_no AND ec_type.group_comm_no = 4
+LEFT JOIN 
+    kcgbd.e_common ec_target ON ep.sub_tg = ec_target.comm_no AND ec_target.group_comm_no = 6
+LEFT JOIN 
+    kcgbd.e_common ec_cycle ON ep.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
+LEFT JOIN 
+    kcgbd.e_common ec_stat ON ep.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8;
+	where 1=1
+		<if test='prod_nm != null and prod_nm != ""'>
+		   and prod_nm like concat('%',#{prod_nm},'%')
+		</if>
+		<if test='prod_type != null and prod_type != ""'>
+		   and prod_type = #{prod_type}
+		</if>
+		<if test='sub_tg != null and sub_tg != ""'>
+		   and sub_tg = #{sub_tg}
+		</if>
+		<if test='sale_beg_dt != null and sale_end_dt != null'>
+           AND ep.sale_beg_dt BETWEEN #{sale_beg_dt} AND #{sale_end_dt}
+        </if>
+		<if test='prod_ty_cd != null and prod_ty_cd != ""'>
+		   and prod_ty_cd = #{prod_ty_cd}
+		</if>
+    </select>
+    
+</mapper>

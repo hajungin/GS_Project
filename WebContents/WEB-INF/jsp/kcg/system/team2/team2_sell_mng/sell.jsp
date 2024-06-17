@@ -16,6 +16,60 @@
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
 
 <title>상품정보조회</title>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .btn-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-icon i {
+            margin-left: 5px;
+        }
+    </style>
 </head>
 <body class="page-body">
 
@@ -40,50 +94,58 @@
 
 			<div class="flex-column flex-gap-10" id="vueapp">
 				<template>
-					<div class="flex flex-100">
-						<div class="flex-wrap flex-66 flex flex-gap-10 flex-padding-10">
-							<div class="form-group flex-40">
-								<label class="form-control">상품명 :</label> 
-								<input class="form-control" v-model="prod_nm" value="" />
-							</div>
-							<div class="form-group flex-40">
-								<label class="form-control">상품 유형 :</label> 
-								<input class="form-control" v-model="prod_nm" value="" />
-							</div>
-							<div class="form-group flex-40">
-								<label class="form-control">판매 기간 :</label> 
-								<input class="form-control" v-model="prod_nm" value="" />
-							</div>
-							<div class="form-group flex-40">
-								<label class="form-control">가입대상:</label> <select
-									v-model="sbstg_ty_cd" class="form-control">
-									<option value="0">전체</option>
-									<option value="1">일반개인</option>
-									<option value="2">청년생활지원</option>
-								</select>
-							</div>
-							<div class="form-group flex-40">
-								<label class="form-control">최대 금액 :</label> 
-								<input class="form-control" v-model="prod_nm" value="" />
-							</div>
-							<div class="form-group flex-40">
-								<label class="form-control">최소 금액 :</label> 
-								<input class="form-control" v-model="prod_nm" value="" />
-							</div>
-						</div>
-						<div
-							class="flex-wrap flex-33 flex flex-center flex-gap-10 flex-padding-10">
-							<div class="form-group" style="width: 45%;">
-								<button type="button"
-									class="btn btn-blue btn-icon icon-left form-control "
-									@click="getListCond(true)">
-									검색 <i class="entypo-search"></i>
-								</button>
+					
+        
+        <div class="flex flex-100">
+            <div class="flex-wrap flex-60 flex flex-gap-10 flex-padding-10">
+                <div class="form-group flex-20">
+                    <label for="productName">상품명 :</label>
+                    <input type="text" id="productName"/>
+                </div>
+                <div class="form-group flex-20">
+				    <label for="productType">상품 유형 :</label>
+				    <select id="productType">
+				        <option value="all">전체</option>
+				        <option value="PT02">예금</option>
+				        <option value="PT03">대출</option>
+				        <option value="PT01">적금</option>
+				    </select>
+				</div>
 
-							</div>
 
-						</div>
-					</div>
+                <div class="form-group flex-20">
+                    <label for="salePeriod">판매 기간 :</label>
+                    <input type="date" id="salePeriod"/>
+                    <input type="date" id="sale"/>
+                </div>
+                <div class="form-group flex-20">
+                    <label for="subTarget">가입대상 :</label>
+                    <select id="subTarget">
+                        <option value="all">전체</option>
+                        <option value="ST01">일반개인</option>
+                        <option value="ST02">청년</option>
+                        <option value="STO3">소상공인</option>
+                    </select>
+                </div>
+<!--                 <div class="form-group flex-20"> -->
+<!--                     <label>최대 최소 금액 :</label> -->
+<!--                     <div class="price-range"> -->
+<!--                         <input type="text" id="priceMin" placeholder="최소 금액"/>~ -->
+<!--                         <input type="text" id="priceMax" placeholder="최대 금액"/> -->
+<!--                     </div> -->
+<!--                 </div> -->
+            </div>
+            <div class="flex-wrap flex-0 flex flex-center flex-gap-10 flex-padding-10">
+                <div class="form-group" style="width: 45%;">
+                    <button type="button" class="btn-icon"
+                    @click="getListCond(true)">
+                        검색 <i class="entypo-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    
+    
 		
 					<table class="table table-bordered datatable dataTable"
 						id="grid_app" style="border: 1px solid #999999;">
@@ -91,22 +153,22 @@
 							<tr class="replace-inputs">
 								<th style="width: 4%;" class="center hidden-xs nosort"><input
 									type="checkbox" id="allCheck" @click="all_check(event.target)"></th>
-								<th style="width: 20%;" class="center sorting"
+								<th style="width: 15%;" class="center sorting"
 									@click="sortList(event.target)" sort_target="prod_nm">상품명</th>
-									<th style="width: 20%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="prod_nm">상품유형</th>
+									<th style="width: 10%;" class="center sorting"
+									@click="sortList(event.target)" sort_target="prod_type">상품유형</th>
 								<th style="width: 10%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="sbstg_ty_cd_nm">가입대상</th>
-								<th style="width: 13%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="ntsl_amt_min">최소가입금액</th>
-								<th style="width: 13%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="ntsl_amt_max">최대가입금액</th>
-								<th style="width: 10%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="pay_ty_cd_nm">납입주기</th>
-								<th style="width: 10%;" class="center sorting"
+									@click="sortList(event.target)" sort_target="sub_tg">가입대상</th>
+								<th style="width: 11%;" class="center sorting"
+									@click="sortList(event.target)" sort_target="price_min">최소가입금액</th>
+								<th style="width: 11%;" class="center sorting"
+									@click="sortList(event.target)" sort_target="price_max">최대가입금액</th>
+								<th style="width: 9%;" class="center sorting"
+									@click="sortList(event.target)" sort_target="pay_period">납입주기</th>
+								<th style="width: 9%;" class="center sorting"
 									@click="sortList(event.target)" sort_target="prod_air_max">판매상태</th>
-								<th style="width: 10%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="int_tax_ty_cd_nm">프로모션</th>
+								<th style="width: 20%;" class="center sorting"
+									@click="sortList(event.target)" sort_target="promtn_yn">프로모션</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -115,17 +177,17 @@
 									:data-idx="item.prod_cd" name="is_check" @click="onCheck">
 								</td>
 								<td class="left" @click="gotoDtl(item.prod_cd)">{{item.prod_nm}}</td>
-								<td class="center" @click="gotoDtl(item.prod_cd)">{{item.sbstg_ty_cd_nm}}</td>
+								<td class="center" @click="gotoDtl(item.prod_cd)">{{item.prod_type}}</td>
 								<td class="right" @click="gotoDtl(item.prod_cd)"
-									style="text-align: right;">{{item.ntsl_amt_min}}</td>
+									style="text-align: right;">{{item.sub_tg}}</td>
 								<td class="right" @click="gotoDtl(item.prod_cd)"
-									style="text-align: right;">{{item.ntsl_amt_max}}</td>
-								<td class="center" @click="gotoDtl(item.prod_cd)">{{item.pay_ty_cd_nm}}</td>
+									style="text-align: right;">{{item.price_min}}</td>
+								<td class="right" @click="gotoDtl(item.prod_cd)">{{item.price_max}}</td>
 								<td class="right" @click="gotoDtl(item.prod_cd)"
-									style="text-align: right;">{{item.prod_air_min}}</td>
+									style="text-align: right;">{{item.pay_cycle}}</td>
 								<td class="right" @click="gotoDtl(item.prod_cd)"
-									style="text-align: right;">{{item.prod_air_max}}</td>
-								<td class="center" @click="gotoDtl(item.prod_cd)">{{item.int_tax_ty_cd_nm}}</td>
+									style="text-align: right;">{{item.sale_stat}}</td>
+								<td class="center" @click="gotoDtl(item.prod_cd)">{{item.promtn_yn}}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -135,6 +197,7 @@
 						
 				</template>
 			</div>
+			
 
 			<jsp:include page="/WEB-INF/jsp/kcg/_include/system/footer.jsp"
 				flush="false" />
@@ -144,116 +207,90 @@
 	</div>
 </body>
 <script>
-function setDatePicker() {
-	setTimeout(
-			function() {
-				if ($("#fromdtbtn").length == 1) {
-					var $this = $(".datepicker2"), opts = {
-						format : attrDefault($this, 'format', 'mm/dd/yyyy'),
-						daysOfWeekDisabled : attrDefault($this,
-								'disabledDays', ''),
-						startView : attrDefault($this, 'startView', 0),
-						rtl : rtl(),
-						todayBtn : true,
-						language : 'ko',
-						autoclose : true,
-						todayHighlight : true,
-					}, $n = $this.next(), $p = $this.prev();
-					$this.datepicker(opts).on("changeDate", function(e) {
-						var objID = e.currentTarget.id;
-						if (objID == 'fromdtbtn') { //시작일시
-							vueapp.from_date = e.date.format('yyyy-MM-dd')
-						}
-					});
-				}
-			}, 300);
-}
-setDatePicker();
+var vueapp = new Vue({
+    el: "#vueapp",
+    data: {
+        dataList: [],
+        prod_nm: "",
+        prod_type: "",
+        sub_tg: "",
+//         price_max: "",
+//         price_min: "",
+        sale_beg_dt:"",
+        sale_end_dt:"",
+        all_srch : "Y",
+    },
+    mounted: function(){
+        var fromDtl = cf_getUrlParam("fromDtl");
+        var pagingConfig = cv_sessionStorage.getItem("pagingConfig");       
+        if ("Y" === fromDtl && !cf_isEmpty(pagingConfig)) {
+            cv_pagingConfig.pageNo = pagingConfig.pageNo;
+            cv_pagingConfig.orders = pagingConfig.orders;
+            
+            var params = cv_sessionStorage.getItem("params");
+            this.prod_nm = params.prod_nm;
+            this.prod_type = params.prod_type;
+            this.sub_tg = params.sub_tg;
+            this.sale_beg_dt = params.sale_beg_dt;
+            this.sale_end_dt = params.sale_end_dt;
+//             this.price_max = params.price_max;
+//             this.price_min = params.price_min;
 
-var todaystr = "${today}";
-var today = todaystr.toDate();
-
-var vueapp = new Vue(
-{
-	el : "#vueapp",
-	data : {
-		dataList : [],
-		prod_nm : "",
-		sbstg_ty_cd : "",
-		pay_ty_cd : "",
-		from_date : "",
-		all_srch : "N",
-	},
-	mounted : function() {
-		var fromDtl = cf_getUrlParam("fromDtl");
-		var pagingConfig = cv_sessionStorage.getItem("pagingConfig");		
-		if("Y" === fromDtl && !cf_isEmpty(pagingConfig)){
-			cv_pagingConfig.pageNo = pagingConfig.pageNo;
-			cv_pagingConfig.orders = pagingConfig.orders;
-	 		
-			this.getList();
-		} else {
-			cv_sessionStorage
-				.removeItem("pagingConfig")
-				.removeItem("params");
-			this.getList(true);
-		}
-	},
-	methods : {
-		getListAll : function(isInit){
-			this.all_srch = "Y";
-			this.getList(isInit);
-		},
-		getListCond : function(isInit){
+            this.getList();
+        } else {
+            cv_sessionStorage
+                .removeItem("pagingConfig")
+                .removeItem("params");
+            this.getList(true);
+        }
+    },
+    methods: {
+    	getListCond : function(isInit){
 			this.all_srch = "N";
 			this.getList(isInit);
 		},
-		getList : function(isInit) {
+        getList: function(isInit){
+            cv_pagingConfig.func = this.getList;
+            if (isInit === true) {
+                cv_pagingConfig.pageNo = 1;
+                cv_pagingConfig.orders = [{ target: "prod_nm", isAsc: false }];
+            }
+            
+            var params = {}
+            if(this.all_srch != "Y"){
+            	params = {
+            			prod_nm: this.prod_nm,
+                        prod_type: this.prod_type,
+                        sub_tg: this.sub_tg,
+                        sale_beg_dt: this.sale_beg_dt,
+                        sale_end_dt: this.sale_end_dt,
+//                         price_max: this.price_max,
+//                         price_min: this.price_min,	
+            	}
+            }
+                
+            
+            
+            cv_sessionStorage
+                .setItem('pagingConfig', cv_pagingConfig)
+                .setItem('params', params);
 
-			cv_pagingConfig.func = this.getList;
-			
-			if(isInit === true){
-				cv_pagingConfig.pageNo = 1;
-			}
-
-			var params = {}
-			if(this.all_srch != "Y") {
-				params = {
-					prod_nm : this.prod_nm,
-					sbstg_ty_cd : this.sbstg_ty_cd,
-					pay_ty_cd : this.pay_ty_cd,
-					from_date : this.from_date,
-				}
-			}
-			cv_sessionStorage
-				.setItem('pagingConfig', cv_pagingConfig)
-				.setItem('params', params);
-
-			cf_ajax("/prod_mng/getListPaging", params,
-					this.getListCB);
-		},
-		getListCB : function(data) {
-			this.dataList = data.list;
-			for (var i = 0; i < this.dataList.length; i++) {
-				this.dataList[i].ntsl_amt_min = this.dataList[i].ntsl_amt_min
-						.numformat();
-				this.dataList[i].ntsl_amt_max = this.dataList[i].ntsl_amt_max
-						.numformat();
-			}
-
-			cv_pagingConfig.renderPagenation("system");
-		},
-		gotoDtl : function(prod_cd) {
-			var params = {
-				prod_cd : cf_defaultIfEmpty(prod_cd, ""),
-			}
-			cf_movePage("/prod_mng/dtl", params);
-		},
-		sortList : function(obj) {
-			cf_setSortConf(obj, "prod_nm");
-			this.getList();
-		},
-		all_check : function(obj) {
+            cf_ajax("/sell/getList", params, this.getListCB);
+        },
+        
+        getListCB: function(data){
+            this.dataList = data.list;
+            for (var i = 0; i < this.dataList.length; i++) {
+                this.dataList[i].prod_nm = this.dataList[i].prod_nm;
+            }
+            
+            cv_pagingConfig.renderPagenation("system");
+        },
+        sortList: function(obj){
+            cf_setSortConf(obj, "prod_nm");
+            this.getList();
+        },
+        all_check : function(obj) {
 			$('[name=is_check]').prop('checked', obj.checked);
 		},
 		onCheck : function() {
@@ -262,86 +299,8 @@ var vueapp = new Vue(
 							'checked',
 							$("[name=is_check]:checked").length === $("[name=is_check]").length);
 		},
-		popupPrint : function(prod_cd) {
-			var chkedList = $("[name=is_check]:checked");
-			if (chkedList.length == 0) {
-				alert("출력할 대상을 선택하여 주십시오.");
-				return;
-			}
-			//check list 가져오기..
-			var dateCopyList = [];
-			var idx;
-			chkedList.each(function(i) {
-				idx = $(this).attr("data-idx");
-				dateCopyList.push(vueapp.dataList.getElementFirst(
-						"prod_cd", idx));
-			});
-
-			console.log(dateCopyList);
-
-			//출력팝업 띄우기
-			popup_print.init(dateCopyList);
-			$('#popup_print').modal('show');
-		},
-	},
-})
-
-var popup_print = new Vue(
-{
-	el : "#popup_print",
-	data : {
-		printInfo : {
-			prodCount : 0,
-			prodList : [],
-		}
-	},
-	methods : {
-		init : function(dateCopyList) {
-			this.initInfo(dateCopyList);
-		},
-		initInfo : function(dateCopyList) {
-			this.printInfo = {
-				prodCount : dateCopyList.length,
-				prodList : dateCopyList,
-			};
-		},
-		print : function() {
-			const printArea = document.getElementById('printArea').innerHTML;
-			console.log(printArea);
-
-			win = window.open();
-			self.focus();
-			win.document.open();
-
-			/*
-			1. div 안의 모든 태그들을 innerHTML을 사용하여 매개변수로 받는다.
-			2. window.open() 을 사용하여 새 팝업창을 띄운다.
-			3. 열린 새 팝업창에 기본 <html><head><body>를 추가한다.
-			4. <body> 안에 매개변수로 받은 printArea를 추가한다.
-			5. window.print() 로 인쇄
-			6. 인쇄 확인이 되면 팝업창은 자동으로 window.close()를 호출하여 닫힘
-			 */
-			win.document.write('<html><head>');
-
-			win.document
-					.write('<link rel="stylesheet" href="/static_resources/system/js/datatables/datatables.css">');
-			win.document
-					.write('<link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">');
-			win.document
-					.write('<link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">');
-
-			win.document.write('<title></title><style>');
-			win.document.write('td.center {text-align: center;}');
-			win.document.write('th.center {text-align: center;}');
-			win.document.write('body {font-size: 14px;}');
-			win.document.write('</style></head><body>');
-			win.document.write(printArea);
-			win.document.write('</body></html>');
-			win.document.close();
-			win.print();
-			win.close();
-		},
-	}
+    }
 });
 </script>
+
 </html>
