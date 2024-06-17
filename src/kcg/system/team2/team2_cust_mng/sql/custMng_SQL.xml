@@ -19,7 +19,7 @@
 
 	</select>
 	
-	<select id="getEmployee" parameterType="cmmnMap" resultType="cmmnMap">
+	<select id="getEmpInfo" resultType="cmmnMap">
 		SELECT
 			e.emp_nm AS emp_nm,
 			c.comm_nm AS emp_posit,
@@ -32,6 +32,30 @@
 	        kcgbd.e_common d ON e.emp_dept = d.comm_no
 	</select>
 	
+		<select id="getCustOne" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT
+			c.cust_nm AS cust_nm,
+			c.cust_eml_addr AS cust_eml_addr, 
+			c.cust_home_telno AS cust_home_telno, 
+			c.cust_mbl_telno AS cust_mbl_telno,
+			c.cust_pridtf_no AS cust_pridtf_no,
+			a.comm_nm AS cust_cr_nm,
+			c.cust_road_nm_addr AS cust_road_nm_addr,
+			e.emp_nm AS emp_nm,
+			b.comm_nm AS emp_dept_nm,
+			d.comm_nm AS emp_posit,
+			e.emp_mbl_telno AS emp_mbl_telno,
+			g.emp_nm AS emp_nm,
+			f.cnslt_dt AS cnslt_dt,
+			f.cnslt_cn AS cnslt_cn
+		FROM kcgbd.e_customer AS c
+		JOIN kcgbd.e_employee AS e ON c.emp_no = e.emp_no
+		JOIN kcgbd.e_common AS a ON c.cust_cr_no = a.comm_no
+		JOIN kcgbd.e_common AS b ON e.emp_posit = b.comm_no
+		JOIN kcgbd.e_common AS d ON e.emp_dept = d.comm_no
+		JOIN kcgbd.e_cnsltlist AS f ON c.cust_sn = f.cust_no
+		JOIN kcgbd.e_employee AS g ON e.emp_no = g.emp_no
+	</select>
 	
 </mapper>
 

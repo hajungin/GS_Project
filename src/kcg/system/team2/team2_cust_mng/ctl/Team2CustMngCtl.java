@@ -35,15 +35,25 @@ public class Team2CustMngCtl {
 	}
 	
 	// 고객 목록 조회 (List)
-	@RequestMapping("/getCustInfoList2")
+	@RequestMapping("/getCustInfoList")
 	public List<CmmnMap> getCustInfoList(CmmnMap params, PagingConfig pagingConfig ) {
-		System.out.println(params);
-		return custMngSvc.getAll(params, pagingConfig);
+		List<CmmnMap> dataList = custMngSvc.getAll(params, pagingConfig);
+		log.debug(dataList.toString());	
+		return dataList;
 	}
 	
-	@RequestMapping("/getPicInfo")
-	public List<CmmnMap> getPicInfo(CmmnMap params){
-		return custMngSvc.getPicInfo(params); 
+	@RequestMapping("/getEmpInfo")
+	public List<CmmnMap> getEmpInfo(CmmnMap params){
+		List<CmmnMap> dataList = custMngSvc.getEmpInfo(params); 
+		log.debug(dataList.toString());
+		return dataList;
+	}
+	
+	@RequestMapping("/getCustOne")
+	public CmmnMap getCustOne(CmmnMap params){
+		CmmnMap data = custMngSvc.getCustOne(params); 
+		log.debug(data.toString());
+		return data;
 	}
 	
 }

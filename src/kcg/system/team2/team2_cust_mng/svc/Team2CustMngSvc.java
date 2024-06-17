@@ -33,9 +33,15 @@ public class Team2CustMngSvc {
 		return cmmnDao.selectListPage("system.team2_cust_mng.getAll", params, pagingConfig);
 	}
 
-	public List<CmmnMap> getPicInfo(CmmnMap params) {
-		List<CmmnMap> dataList = cmmnDao.selectList("system.team2_cust_mng.getEmployee", params);
+	public List<CmmnMap> getEmpInfo(CmmnMap params) {
+		List<CmmnMap> dataList = cmmnDao.selectList("system.team2_cust_mng.getEmpInfo");
+		System.out.println(dataList.toString());
 		return dataList;
+	}
+
+	public CmmnMap getCustOne(CmmnMap params) {
+		CmmnMap data = cmmnDao.selectOne("system.team2_cust_mng.getCustOne", params);
+		return data;
 	}
 
 }
