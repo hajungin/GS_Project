@@ -14,6 +14,7 @@
 	<link rel="stylesheet"
 		href="/static_resources/system/js/select2/select2.css">
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
+	
 
 <title>상품정보조회</title>
 <style>
@@ -99,13 +100,13 @@
         <div class="flex flex-100">
             <div class="flex-wrap flex-60 flex flex-gap-10 flex-padding-10">
                 <div class="form-group flex-20">
-                    <label for="productName">상품명 :</label>
-                    <input type="text" id="productName"/>
+                    <label for="productName" class="form-control">상품명 :</label>
+                    <input type="text" class="form-control" v-model="prod_nm" value=""/>
                 </div>
-                <div class="form-group flex-20">
-				    <label for="productType">상품 유형 :</label>
-				    <select id="productType">
-				        <option value="all">전체</option>
+                <div class="form-group flex-40">
+				    <label for="productType" class="form-control">상품 유형 :</label>
+				    <select v-model="prod_type" class="form-control">
+				        <option value="">전체</option>
 				        <option value="PT02">예금</option>
 				        <option value="PT03">대출</option>
 				        <option value="PT01">적금</option>
@@ -113,15 +114,15 @@
 				</div>
 
 
-                <div class="form-group flex-20">
-                    <label for="salePeriod">판매 기간 :</label>
-                    <input type="date" id="salePeriod"/>
-                    <input type="date" id="sale"/>
+                <div class="form-group flex-40">
+                    <label for="from_date" class="form-control">판매 기간 :</label>
+                    <input type="text" class="form-control" v-model="from_date" data-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"/>
+<!--                     <input type="text" v-model="sale_end_dt" data-format="yyyy-mm-dd"/> -->
                 </div>
-                <div class="form-group flex-20">
-                    <label for="subTarget">가입대상 :</label>
-                    <select id="subTarget">
-                        <option value="all">전체</option>
+                <div class="form-group flex-40">
+                    <label for="subTarget" class="form-control">가입대상 :</label>
+                    <select v-model="sub_tg" class="form-control" value="">
+                        <option value="">전체</option>
                         <option value="ST01">일반개인</option>
                         <option value="ST02">청년</option>
                         <option value="STO3">소상공인</option>
@@ -135,15 +136,23 @@
 <!--                     </div> -->
 <!--                 </div> -->
             </div>
-            <div class="flex-wrap flex-0 flex flex-center flex-gap-10 flex-padding-10">
-                <div class="form-group" style="width: 45%;">
-                    <button type="button" class="btn-icon"
-                    @click="getListCond(true)">
-                        검색 <i class="entypo-search"></i>
-                    </button>
-                </div>
-            </div>
+		    <div class="flex-wrap flex-20 flex flex-center flex-gap-10 flex-padding-110">
+			    <div class="form-group" style="width: 45%;">
+			        <button type="button" class="btn-icon" @click="getListCond(true)">
+			            검색 <i class="entypo-search"></i>
+			        </button>
+			    </div>
+			</div>
+
         </div>
+        <div class="flex flex-100 flex-padding-10 flex-gap-10"
+						style="justify-content: flex-end; border: 1px solid #999999;">
+						<button type="button" class="btn btn-blue btn-icon icon-left"
+							@click="popupPrint()">
+							상세내역 <i class="entypo entypo-info"></i>
+						</button>
+					</div>
+        
     
     
 		
@@ -216,6 +225,7 @@ var vueapp = new Vue({
         sub_tg: "",
 //         price_max: "",
 //         price_min: "",
+		from_date:"",
         sale_beg_dt:"",
         sale_end_dt:"",
         all_srch : "Y",
@@ -233,6 +243,7 @@ var vueapp = new Vue({
             this.sub_tg = params.sub_tg;
             this.sale_beg_dt = params.sale_beg_dt;
             this.sale_end_dt = params.sale_end_dt;
+            this.from_date = params.from_date;
 //             this.price_max = params.price_max;
 //             this.price_min = params.price_min;
 
@@ -246,6 +257,11 @@ var vueapp = new Vue({
     },
     methods: {
     	getListCond : function(isInit){
+    		var regex = /^\d{4}-\d{2}-\d{2}$/;
+            if (!regex.test(this.from_date)) {
+                alert('날짜 형식이 올바르지 않습니다. yyyy-mm-dd 형식으로 입력해주세요.');
+                // 형식에 맞지 않는 경우 입력을 초기화하거나 기타 작업을 수행할 수 있습니다.
+            }
 			this.all_srch = "N";
 			this.getList(isInit);
 		},
@@ -264,6 +280,7 @@ var vueapp = new Vue({
                         sub_tg: this.sub_tg,
                         sale_beg_dt: this.sale_beg_dt,
                         sale_end_dt: this.sale_end_dt,
+                        from_date: this.from_date,
 //                         price_max: this.price_max,
 //                         price_min: this.price_min,	
             	}
@@ -290,6 +307,12 @@ var vueapp = new Vue({
             cf_setSortConf(obj, "prod_nm");
             this.getList();
         },
+        gotoDtl : function(prod_no) {
+			var params = {
+				prod_cd : cf_defaultIfEmpty(prod_no, ""),
+			}
+			cf_movePage("/sell/dtl", params);
+		},
         all_check : function(obj) {
 			$('[name=is_check]').prop('checked', obj.checked);
 		},

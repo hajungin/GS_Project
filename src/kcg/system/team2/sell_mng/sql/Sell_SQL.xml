@@ -25,23 +25,21 @@ LEFT JOIN
 LEFT JOIN 
     kcgbd.e_common ec_cycle ON ep.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 LEFT JOIN 
-    kcgbd.e_common ec_stat ON ep.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8;
+    kcgbd.e_common ec_stat ON ep.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
 	where 1=1
 		<if test='prod_nm != null and prod_nm != ""'>
-		   and prod_nm like concat('%',#{prod_nm},'%')
+		   and ep.prod_nm like CONCAT('%',#{prod_nm},'%')
 		</if>
 		<if test='prod_type != null and prod_type != ""'>
-		   and prod_type = #{prod_type}
+		   and ep.prod_type = #{prod_type}
 		</if>
 		<if test='sub_tg != null and sub_tg != ""'>
-		   and sub_tg = #{sub_tg}
+		   and ep.sub_tg = #{sub_tg}
 		</if>
-		<if test='sale_beg_dt != null and sale_end_dt != null'>
-           AND ep.sale_beg_dt BETWEEN #{sale_beg_dt} AND #{sale_end_dt}
-        </if>
-		<if test='prod_ty_cd != null and prod_ty_cd != ""'>
-		   and prod_ty_cd = #{prod_ty_cd}
+        <if test='from_date != null and from_date != ""'>
+   		 AND CAST(#{from_date} AS DATE) BETWEEN sale_beg_dt AND sale_end_dt
 		</if>
+
     </select>
     
 </mapper>

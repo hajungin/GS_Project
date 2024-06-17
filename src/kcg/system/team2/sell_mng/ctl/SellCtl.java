@@ -35,8 +35,9 @@ public class SellCtl {
 			return sellsvc.getList(params, pagingConfig); 
 	 }
 	 
-	 @RequestMapping("/search")
-	 public CmmnMap search(CmmnMap params) {
-		 return sellsvc.search(params);
-	 }
+	 @RequestMapping("/dtl")
+		public String openPageDtl(Model model, CmmnMap params) {
+			model.addAttribute("prod_cd", params.getString("prod_no", ""));
+			return "kcg/system/team2/team2_sell_mng/dtl";
+		}
 }
