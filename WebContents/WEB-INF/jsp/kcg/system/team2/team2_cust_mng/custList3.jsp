@@ -36,24 +36,31 @@
                     <div class="flex flex-100">
                         <div class="flex-wrap flex-90 flex flex-gap-10 flex-padding-10">
                             <div class="form-group flex-40">
-                                <label style="text-align: center;">고객명 :</label>
+                                <label class="fix-width-33">고객명 :</label>
                                 <input class="form-control" v-model="cust_nm" value="">
-                                <label class="fix-width-15">생년월일 :</label>
-                                <input type="text" class="form-control" v-model="birth" placeholder="yy-mm-dd">
-                                <label class="fix-width-15">관리담당자 :</label>
+                            </div>
+                           	<div class="form-group flex-40">
+                                <label class="fix-width-33">생년월일 :</label>
+                                <input type="text" class="form-control" v-model="cust_pridtf_no">
+                            </div>
+                            <div class="form-group flex-40">
+                                <label class="fix-width-33">관리담당자 :</label>
                                 <input class="form-control" v-model="emp_nm" value="">
-                                <label class="fix-width-15">이벤트구분 :</label>
-                                <select id ="event" class="form-control">
+                            </div>
+           				    <div class="form-group flex-40">
+                                <label class="fix-width-33">이벤트구분 :</label>
+                                <select id ="event">
                                 	<option value="">전체</option>
                                 	<option value="">생일</option>
                                 	<option value="">만기도래</option>
                                 	<option value="">기타</option>
                                 </select>
                             </div>
+
                         </div>
 
                         <div class="flex-wrap flex-10 flex flex-center flex-gap-10 flex-padding-10">
-                            <div class="form-group" style="width:40%; margin-right: 5%;">
+                            <div class="form-group" style="width:30%;">
                                 <button type="button" class="btn btn-primary btn-icon" 
                                     v-model="search_val" @click="getCustInfoList(true)">
                                     검색
@@ -62,7 +69,6 @@
                             </div>
                         </div>
                     </div>
-			</div>
                     <div class="flex flex-100 flex-padding-10 flex-gap-10"
                         style="justify-content:flex-end;border: 1px solid #999999;">
                         <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"
@@ -103,14 +109,14 @@
                             <tr v-for="item in dataList" @dblclick="gotoDtl(item.cust_mbl_telno)"
                                 style="cursor: pointer;">
                                 <td class="center" @dblclick.stop="return false;"><input type="checkbox"
-                                        :data-idx="item.cust_nm" name="is_check" @click.stop="onCheck"
+                                        :data-idx="item.cust_mbl_telno" name="is_check" @click.stop="onCheck"
                                         style="cursor: pointer;">
                                 </td>
                                 <td class="center">{{item.cust_nm}}</td>
                                 <td class="center">{{item.cust_pridtf_no.substring(0,6)}}</td>
                                 <td class="center">{{item.cust_eml_addr}}</td>
                                 <td class="center">{{item.cust_mbl_telno}}</td>
-                                <td class="center">{{item.cust_road_addr}}</td>
+                                <td class="center">{{item.cust_road_nm_addr}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -138,6 +144,12 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
+                                    <label for="wrt_dt" class="col-sm-4 control-label">작성일자</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="wrt_dt" v-model="info.wrt_dt" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="cust_nm" class="col-sm-4 control-label">성명</label>
                                     <div class="col-sm-8">
                                         <input type="text" id="cust_nm" v-model="info.cust_nm" class="form-control">
@@ -162,7 +174,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="cust_mbl_telno" class="col-sm-4 control-label">핸드폰번호</label>
+                                    <label for="cust_mbl_telno" class="info.col-sm-4 control-label">핸드폰번호</label>
                                     <div class="col-sm-8">
                                         <input type="text" id="cust_mbl_telno" v-model="info.cust_mbl_telno" class="form-control">
                                     </div>
@@ -174,11 +186,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="cust_road_addr" class="col-sm-4 control-label">주소</label>
+                                    <label for="cust_load_addr" class="col-sm-4 control-label">주소</label>
                                     <div class="col-sm-8">
-                                        <textarea id="cust_road_addr" v-model="info.cust_road_addr" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
+                                        <textarea id="cust_load_nm_addr" v-model="info.cust_load_nm_addr" class="form-control" style="width: 100%;"></textarea>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="emp_nm" class="col-sm-4 control-label">담당자명</label>
                                     <div class="col-sm-8">
@@ -193,33 +207,25 @@
                                 <div class="form-group">
                                     <label for="emp_dept" class="col-sm-4 control-label">부서</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="emp_dept" v-model="info.emp_dept" class="form-control" readonly>
+                                        <input type="text" id="emp_dept" v-model="info.emp_dept" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="emp_posit" class="col-sm-4 control-label">직위</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="emp_posit" v-model="info.emp_posit" class="form-control" readonly>
+                                        <input type="text" id="emp_posit" v-model="info.emp_posit" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="emp_mbl_telno" class="col-sm-4 control-label">연락처</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="emp_mbl_telno" v-model="info.emp_mbl_telno" class="form-control" readonly>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="cnslt_cn" class="col-sm-4 control-label">상담내역</label>
-                                    <div class="col-sm-8">
-                                        <textarea id="cnslt_cn" class="form-control" style="width: 100%; height: 300px; resize: none;" readonly></textarea>
+                                        <input type="text" id="emp_mbl_telno" v-model="info.emp_mbl_telno" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="cnslt_cn" class="col-sm-4 control-label">상담추가입력</label>
+                                    <label for="" class="col-sm-4 control-label">상담내역</label>
                                     <div class="col-sm-8">
-                                        <textarea id="cnslt_cn" class="form-control" style="width: 100%; height: 150px; resize: none;"></textarea>
+                                        <textarea id="" v-model="" class="form-control" style="width: 100%; height: 300px;"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -227,8 +233,6 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                	<button type="button" class="btn btn-secondary">고객정보저장</button>
-                	<button type="button" class="btn btn-secondary">상담내용저장</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -249,7 +253,7 @@
 			        <div class="modal-content">
 			        <div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose">&times;</button>
-						<h4 class="modal-title" id="modify_nm">담당자 설정</h4>
+						<h4 class="modal-title" id="modify_nm">관리자 설정</h4>
 					</div> 
 			            <div class="modal-body">
 			                <div style="height: 400px; overflow: auto;" class="dataTables_wrapper">
@@ -288,7 +292,7 @@
             search_nm: "",
             cust_nm: "",
     		cust_pridtf_no: "",
-    		birth: "",
+    		cust_mbl_telno: "",
     		emp_nm: "",
             search_val: "",
         },
@@ -302,6 +306,7 @@
                 this.search_nm = params.search_nm;
                 this.cust_nm = params.cust_nm;
                 this.cust_pridtf_no = params.cust_pridtf_no;
+                this.cust_mbl_telno = params.cust_mbl_telno;
                 this.emp_nm = params.emp_nm;
                 this.search_val = params.search_val;
 
@@ -359,9 +364,9 @@
                 this.dataList = data.list;
                 cv_pagingConfig.renderPagenation("system");
             },
-            gotoDtl: function (cust_pridtf_no) {
-                console.log(cust_pridtf_no);
-                pop_cust_info.init(cust_pridtf_no);
+            gotoDtl: function (cust_mbl_telno) {
+                console.log(cust_mbl_telno);
+                pop_cust_info.init(cust_mbl_telno);
                 $('#pop_cust_info').modal('show');
             },
             all_check: function (obj) {
@@ -383,7 +388,7 @@
                 var idx;
                 checkedList.each(function (i) {
                     idx = $(this).attr("data-idx");
-                    dateCopyList.push(vueapp.dataList.getElementFirst("cust_nm", idx));
+                    dateCopyList.push(vueapp.dataList.getElementFirst("cust_mbl_telno", idx));
                 });
 
                 console.log(dateCopyList);
@@ -399,14 +404,14 @@
         el: "#pop_cust_info",
         data: {
             info: {
-            	cust_pridtf_no: "${cust_pridtf_no}",
+            	cust_pridtf_no: "",
                 wrt_dt: "",
                 cust_nm: "",
                 cust_eml_addr: "",
                 cust_home_telno: "",
                 cust_mbl_telno: "",
                 cust_cr_nm: "",
-                cust_road_addr: "",
+                cust_load_nm_addr: "",
                 emp_nm: "",
                 emp_dept: "",
                 emp_posit: "",
@@ -432,7 +437,7 @@
                    cust_home_telno: "",
                    cust_mbl_telno: "",
                    cust_cr_nm: "",
-                   cust_road_addr: "",
+                   cust_load_nm_addr: "",
                    emp_nm: "",
                    emp_dept: "",
                    emp_posit: "",
@@ -480,8 +485,8 @@
                 this.dataList = data;
                 console.log(data);
             },
-            selItem: function (cust_nm) {
-            	$('#pop_pic_info').modal("hide");
+            selItem: function (emp_nm) {
+            	$('#pop_pic_info').modal("close");
             },
         },
         mounted() {
