@@ -70,11 +70,11 @@
                             신규회원등록
                             <i class="entypo-archive"></i>
                         </button>
-                        <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"
-                            >
-                            관리대장출력
-                            <i class="entypo-vcard"></i>
-                        </button>
+<!--                         <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;" -->
+<!--                             > -->
+<!--                             관리대장출력 -->
+<!--                             <i class="entypo-vcard"></i> -->
+<!--                         </button> -->
                         <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"
                             >
                             상담내역
@@ -140,13 +140,13 @@
                                 <div class="form-group">
                                     <label for="cust_nm" class="col-sm-4 control-label">성명</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="cust_nm" v-model="info.cust_nm" class="form-control">
+                                        <input type="text" id="cust_nm" v-model="info.cust_nm" class="form-control" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="cust_pridtf_no" class="col-sm-4 control-label">실명번호</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="cust_pridtf_no" v-model="info.cust_pridtf_no" class="form-control">
+                                        <input type="text" id="cust_pridtf_no" v-model="info.cust_pridtf_no" class="form-control" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -168,9 +168,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="cust_cr_nm" class="col-sm-4 control-label">직업</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" id="cust_cr_nm" v-model="info.cust_cr_nm" class="form-control">
+                                    <label for="cust_cr_no" class="col-sm-4 control-label">직업</label>
+                                    <div class="col-sm-8" id="selectcr">
+                                       <select id="cust_cr_no" class="form-control" v-model="info.cust_cr_no" style="margin-left: 10px;">
+											<option value="JB01">학생</option>
+											<option value="JB02">공무원</option>
+											<option value="JB03">회사원</option>
+											<option value="JB04">자영업자</option>
+											<option value="JB05">프리랜서</option>
+											<option value="JB06">무직</option>
+											<option value="JB07">기타</option>
+										</select>
+										<input v-if="showInput" type="text" class="form-control" v-model="info.other_cr" placeholder="직업명 입력">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -219,7 +228,7 @@
                                 <div class="form-group">
                                     <label for="cnslt_cn" class="col-sm-4 control-label">상담추가입력</label>
                                     <div class="col-sm-8">
-                                        <textarea id="cnslt_cn" class="form-control" style="width: 100%; height: 150px; resize: none;"></textarea>
+                                        <textarea id="cnslt_cn" class="form-control" v-model="info.cuslt_cn" style="width: 100%; height: 150px; resize: none;"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -227,8 +236,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                	<button type="button" class="btn btn-secondary">고객정보저장</button>
-                	<button type="button" class="btn btn-secondary">상담내용저장</button>
+                	<button type="button" class="btn btn-secondary" @click="custUpdate">고객정보저장</button>
+                	<button type="button" class="btn btn-secondary" @click="cusltInsert">상담내용저장</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -263,7 +272,7 @@
 			                            </tr>
 			                        </thead>
 			                        <tbody>
-			                            <tr v-for="item in dataList" :key="item.emp_nm" @click="selItem(item.emp_nm)" style="cursor: pointer;">
+			                            <tr v-for="item in dataList" :key="item.emp_nm" @click="selItem(item.emp_mbl_telno)" style="cursor: pointer;">
 			                                <td class="center">{{ item.emp_nm }}</td>
 			                                <td class="center">{{ item.emp_dept }}</td>
 			                                <td class="center">{{ item.emp_posit }}</td>
@@ -301,7 +310,7 @@
                 var params = cv_sessionStorage.getItem("params");
                 this.search_nm = params.search_nm;
                 this.cust_nm = params.cust_nm;
-                this.cust_pridtf_no = params.cust_pridtf_no;
+                this.birth = params.birth;
                 this.emp_nm = params.emp_nm;
                 this.search_val = params.search_val;
 
@@ -326,26 +335,8 @@
                     search_nm: this.search_nm,
                     search_val: this.search_val,
                     cust_nm: this.cust_nm,
-                    cust_pridtf_no: this.cust_pridtf_no,
-                }
-
-                cv_sessionStorage
-                    .setItem('pagingConfig', cv_pagingConfig)
-                    .setItem('params', params);
-
-                cf_ajax("/customer/getCustInfoList", params, this.getListCB);
-            },
-            getCustInfoListAll: function (isInit) {
-
-                cv_pagingConfig.func = this.getCustInfoListAll;
-                if (isInit === true) {
-                    cv_pagingConfig.pageNo = 1;
-                    cv_pagingConfig.orders = [{ target: "cust_nm", isAsc: false }];
-                }
-
-                var params = {
-                    search_nm: this.search_nm,
-                    search_val: this.search_val,
+                    emp_nm: this.emp_nm,
+                    birth: this.birth,
                 }
 
                 cv_sessionStorage
@@ -400,13 +391,14 @@
         data: {
             info: {
             	cust_pridtf_no: "${cust_pridtf_no}",
-                wrt_dt: "",
                 cust_nm: "",
                 cust_eml_addr: "",
                 cust_home_telno: "",
                 cust_mbl_telno: "",
-                cust_cr_nm: "",
+                cust_cr_no: "",
                 cust_road_addr: "",
+                other_cr: "",
+                emp_no: "",
                 emp_nm: "",
                 emp_dept: "",
                 emp_posit: "",
@@ -416,6 +408,11 @@
                 cuslt_cn: "",
             }
         },
+        computed: {
+            showInput() {
+              return this.info.cust_cr_no === 'JB07';
+            }
+          },
         methods: {
             init: function (cust_mbl_telno) {
                 this.initInfo();
@@ -426,13 +423,15 @@
             },
             initInfo: function () {
                 this.info = {
-                   wrt_dt: "",
+                   cust_sn: "",
                    cust_nm: "",
                    cust_eml_addr: "",
                    cust_home_telno: "",
                    cust_mbl_telno: "",
-                   cust_cr_nm: "",
+                   cust_cr_no: "",
                    cust_road_addr: "",
+                   other_cr: "",
+                   emp_no: "",
                    emp_nm: "",
                    emp_dept: "",
                    emp_posit: "",
@@ -454,8 +453,71 @@
             popEmp: function () {
             	$('#pop_emp_info').modal('show');
             },
-            
-        },
+            getEmpCB: function(data) {
+            	this.info.emp_no = data.emp_no;
+            	this.info.emp_nm = data.emp_nm;
+            	this.info.emp_dept = data.emp_dept;
+				this.info.emp_posit = data.emp_posit;
+				this.info.emp_mbl_telno = data.emp_mbl_telno;
+                console.log(data);
+            },
+            getEmpSelInfo: function (emp_mbl_telno) {
+            	var params = {
+            		emp_mbl_telno: emp_mbl_telno,
+				}
+				cf_ajax("/customer/getEmpSelInfo", params, this.getEmpCB);
+			},
+			custUpdate: function () {
+				var cust_nm = this.info.cust_nm;
+				var cust_pridtf_no = this.info.cust_pridtf_no;
+				var cust_eml_addr = this.info.cust_eml_addr;
+				var cust_home_telno = this.info.cust_home_telno;
+				var cust_mbl_telno = this.info.cust_mbl_telno;
+				var cust_cr_no = this.info.cust_cr_no;
+				var other_cr = this.info.other_cr;
+				var cust_road_addr = this.info.cust_road_addr;
+				var emp_no = this.info.emp_no;
+				 
+				var params = { 
+					cust_nm: cust_nm,
+					cust_pridtf_no: cust_pridtf_no,
+					cust_eml_addr: cust_eml_addr,
+					cust_home_telno: cust_home_telno,
+					cust_mbl_telno: cust_mbl_telno,
+					cust_cr_no: cust_cr_no,
+					other_cr: other_cr,
+					cust_mbl_telno: cust_mbl_telno,
+					cust_road_addr: cust_road_addr,
+					emp_no: emp_no,
+				}
+				cf_ajax("/customer/custUpdate", params, this.changeStsCB);
+			},
+			changeStsCB: function (data) {
+				if (data.status == "OK") {
+					alert("고객정보 변경 완료");
+				}
+				$('#pop_cust_info').modal('hide');
+				window.location.reload();
+			},
+			
+			cusltInsert: function () {
+				var cust_sn = this.info.cust_sn;
+				var cuslt_cn = this.info.cuslt_cn;
+				 
+				var params = { 
+					cust_sn: cust_sn,
+					cuslt_cn: cuslt_cn,
+				}
+				cf_ajax("/communi/cusltInsert", params, this.insertStsCB);
+			},
+			insertStsCB: function (data) {
+				if (data.status == "OK") {
+					alert("상담내역 입력 완료");
+				}
+
+			},
+			
+        }
     });
     
     var pop_emp_info = new Vue({
@@ -480,8 +542,10 @@
                 this.dataList = data;
                 console.log(data);
             },
-            selItem: function (cust_nm) {
-            	$('#pop_pic_info').modal("hide");
+            selItem: function (emp_nm) {
+            	var self = this;
+            	$('#pop_emp_info').hide();
+            	pop_cust_info.getEmpSelInfo(emp_nm);
             },
         },
         mounted() {

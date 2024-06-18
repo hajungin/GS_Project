@@ -44,4 +44,14 @@ public class Team2CustMngSvc {
 		return data;
 	}
 
+	public CmmnMap getEmpSelInfo(CmmnMap params) {
+		CmmnMap data = cmmnDao.selectOne("system.team2_cust_mng.getEmpSelInfo", params);
+		return data;
+	}
+
+	public CmmnMap custUpdate(CmmnMap params) {
+		cmmnDao.update("system.team2_cust_mng.updateCust", params);
+		return new CmmnMap().put("status", "OK");
+	}
+
 }

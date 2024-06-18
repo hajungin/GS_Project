@@ -24,9 +24,7 @@ public class Team2CustMngCtl {
 	
 	@Autowired
 	Team2CustMngSvc custMngSvc;
-	
-	@Autowired
-	CommonSvc commonSvc;
+
 	
 	// 고객 관리 메인페이지
 	@RequestMapping("/custMng")
@@ -54,6 +52,18 @@ public class Team2CustMngCtl {
 		CmmnMap data = custMngSvc.getCustOne(params); 
 		log.debug(data.toString());
 		return data;
+	}
+	
+	@RequestMapping("/getEmpSelInfo")
+	public CmmnMap getEmpSelInfo(CmmnMap params){
+		CmmnMap data = custMngSvc.getEmpSelInfo(params); 
+		log.debug(data.toString());
+		return data;
+	}
+	
+	@RequestMapping("/custUpdate")
+	public CmmnMap custUpdate(CmmnMap params){
+		return custMngSvc.custUpdate(params); 
 	}
 	
 }
