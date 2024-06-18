@@ -27,14 +27,14 @@ public class SellSvc {
 	}
 
 
-	public CmmnMap search(CmmnMap params) {
-		CmmnMap rsltInfo = cmmnDao.selectOne("system.team2.sell_mng.get", params);
-		List<CmmnMap> rsltHist = cmmnDao.selectList("system.team2.sell_mng.search", params);
-		String strHist = "";
-		for(CmmnMap map : rsltHist) {
-			strHist = strHist + map.getString(strHist);
-		}
-		rsltInfo.put("prod_hist", strHist);
-		return rsltInfo;
+	public PageList<CmmnMap> getcustomer(CmmnMap params, PagingConfig pagingConfig) {
+		PageList<CmmnMap> rslt = cmmnDao.selectListPage("system.team2.sell_mng.getcustomer", params,pagingConfig);
+		return rslt;
+	}
+
+
+	public PageList<CmmnMap> joinList(CmmnMap params, PagingConfig pagingConfig) {
+		PageList<CmmnMap> rslt = cmmnDao.selectListPage("system.team2.sell_mng.joinList", params,pagingConfig);
+		return rslt;
 	}
 }

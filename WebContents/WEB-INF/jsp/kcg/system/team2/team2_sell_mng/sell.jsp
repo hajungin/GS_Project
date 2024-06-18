@@ -258,7 +258,7 @@ var vueapp = new Vue({
     methods: {
     	getListCond : function(isInit){
     		var regex = /^\d{4}-\d{2}-\d{2}$/;
-            if (!regex.test(this.from_date)) {
+            if (this.from_date && !regex.test(this.from_date)) {
                 alert('날짜 형식이 올바르지 않습니다. yyyy-mm-dd 형식으로 입력해주세요.');
                 // 형식에 맞지 않는 경우 입력을 초기화하거나 기타 작업을 수행할 수 있습니다.
             }

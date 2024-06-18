@@ -30,14 +30,37 @@ public class SellCtl {
 	        return "kcg/system/team2/team2_sell_mng/sell";
 	 }
 	 
+	 // 상품관리 리스트 및 검색
 	 @RequestMapping("/getList")
 		public PageList<CmmnMap> getList(CmmnMap params , PagingConfig pagingConfig){
 			return sellsvc.getList(params, pagingConfig); 
 	 }
 	 
+	 // 상품 디테일 페이지 이동
 	 @RequestMapping("/dtl")
 		public String openPageDtl(Model model, CmmnMap params) {
 			model.addAttribute("prod_cd", params.getString("prod_no", ""));
 			return "kcg/system/team2/team2_sell_mng/dtl";
 		}
+	 
+	 // 가입관리 페이지
+	 @RequestMapping("/join")
+	 public String joinPage() {
+		 return "kcg/system/team2/team2_sell_mng/join";
+	 }
+	 
+	 // 고객정보 리스트 및 검색
+	 @RequestMapping("/getcustomer")
+		public PageList<CmmnMap> getcustomer(CmmnMap params , PagingConfig pagingConfig){
+			return sellsvc.getcustomer(params, pagingConfig); 
+	 }
+	 
+	 //가입현황 리스트 및 검색
+	 @RequestMapping("/joinList")
+		public PageList<CmmnMap> joinList(CmmnMap params , PagingConfig pagingConfig){
+			return sellsvc.joinList(params, pagingConfig); 
+	 }
+	 
+	 
+	 
 }
