@@ -32,7 +32,7 @@
 			<li class="active"><strong>금융계산기</strong></li>
 		</ol>
 	
-		<h2>프로모션 > 금융계산기 (목돈마련적금 설계)</h2>
+		<h2>프로모션 > 금융계산기 (적금 설계)</h2>
 		<br/>
 		
 		<div class="row">
@@ -98,10 +98,10 @@
 				<div class="right flex-column flex-100">
                     <div class="right-top">
                         <ul class="nav">
-                            <li class="nav-tab" @click="tabChange(1)">적금 설계</li>
-                            <li class="nav-tab active" @click="tabChange(2)">목돈마련적금 설계</li>
-                            <li class="nav-tab" @click="tabChange(3)">예금 설계</li>
-                            <li class="nav-tab" @click="tabChange(4)">대출 설계</li>
+                            <li class="nav-tab" @click="tabChange(PT01)">적금 설계</li>
+                            <li class="nav-tab active" @click="tabChange(PT02)">목돈마련적금 설계</li>
+                            <li class="nav-tab" @click="tabChange(PT03)">예금 설계</li>
+                            <li class="nav-tab" @click="tabChange(PT04)">대출 설계</li>
                         </ul>
                         <div class="nav-content flex-column flex-gap-10">
                         	<div class="form-group" style="justify-content: left">
@@ -310,9 +310,9 @@
 				<div class="dataTables_wrapper">					
 					<div class="dt-buttons">
 						<div>
-							<label>코드:</label>
-							<input type="search" id="pop_prod_sn" style="width: 80px;" v-model="pop_prod_sn">
-							<label>코드명:</label>
+							<label>상품코드:</label>
+							<input type="search" id="pop_prod_no" style="width: 80px;" v-model="pop_prod_no">
+							<label>상품명:</label>
 							<input type="search" id="pop_prod_nm" style="width: 200px;" v-model="pop_prod_nm">
 							<button type="button" class="btn btn-red" style="margin-left: 5px;" @click="getList">
 								검색
@@ -333,7 +333,7 @@
 							<tr v-for="item in dataList" @click="selProd(item.prod_no)" style="cursor: pointer;">
 								<td class="center">{{item.prod_no}}</td>
 								<td class="left">{{item.prod_nm}}</td>
-								<td class="left">{{item.sbstg_ty_cd_nm}}</td>
+								<td class="left">{{item.sub_tg}}</td>
 							</tr>
 						</tbody>
 					</table>	
@@ -684,8 +684,9 @@ var pop_prod = new Vue({
 	el : "#pop_prod",
 	data : {
 		dataList : [],
-		pop_prod_sn : "",
+		pop_prod_no : "",
 		pop_prod_nm : "",
+		pop_sub_tg : ""
 	},
 	mounted : function(){
 		//this.getList();
@@ -698,7 +699,7 @@ var pop_prod = new Vue({
 				prod_nm : this.prod_nm,
 				prod_type : vueapp.info.prod_type,
 			}
-			cf_ajax("/sell/getList", params, function(data){
+			cf_ajax("/prod_mng/getList", params, function(data){
 				pop_prod.dataList = data;
 			});
 		},

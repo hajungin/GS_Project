@@ -1,5 +1,7 @@
 package kcg.system.team2.prod_mng.svc;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -36,13 +38,13 @@ public class ProdSvc {
 	
 	public CmmnMap getDsgInfo(CmmnMap params) {
 		CmmnMap rsltMap = new CmmnMap();
-		if("1".equals(params.getString("prod_type"))) {
+		if("PT01".equals(params.getString("prod_type"))) {
 			rsltMap = cmmnDao.selectOne("system.team2.prod_mng.getDsgnSavgpl", params);
-		}else if("2".equals(params.getString("prod_type"))) {
+		}else if("PT02".equals(params.getString("prod_type"))) {
 			rsltMap = cmmnDao.selectOne("system.team2.prod_mng.getDsgnAcmlpl", params);
-		}else if("3".equals(params.getString("prod_type"))) {
+		}else if("PT03".equals(params.getString("prod_type"))) {
 			rsltMap = cmmnDao.selectOne("system.team2.prod_mng.getDsgnDpstpl", params);
-		}else if("4".equals(params.getString("prod_type"))) {
+		}else if("PT04".equals(params.getString("prod_type"))) {
 			rsltMap = cmmnDao.selectOne("system.team2.prod_mng.getDsgnLoanpl", params);
 		}
 		return rsltMap;
@@ -79,7 +81,8 @@ public class ProdSvc {
 		}
 	}
 
-	public CmmnMap getList(CmmnMap params) {
-		return null;
+	public List<CmmnMap> getList(CmmnMap params) {
+		List<CmmnMap> rslt = cmmnDao.selectList("system.2team.prod_mng.getList", params);
+		return rslt;
 	}
 }
