@@ -36,7 +36,7 @@
 				<li class="active"><strong>상품정보조회</strong></li>
 			</ol>
 
-			<h2>판매관리 > 상품정보조회</h2>
+			<h2>상품관리 > 상품정보조회</h2>
 			<br />
 
 			<div class="flex-column flex-gap-10" id="vueapp">
@@ -74,13 +74,6 @@
                         <option value="STO3">소상공인</option>
                     </select>
                 </div>
-<!--                 <div class="form-group flex-20"> -->
-<!--                     <label>최대 최소 금액 :</label> -->
-<!--                     <div class="price-range"> -->
-<!--                         <input type="text" id="priceMin" placeholder="최소 금액"/>~ -->
-<!--                         <input type="text" id="priceMax" placeholder="최대 금액"/> -->
-<!--                     </div> -->
-<!--                 </div> -->
             </div>
 		    <div class="flex-wrap flex-20 flex flex-center flex-gap-10 flex-padding-110">
 			    <div class="form-group" style="width: 45%;">
@@ -91,7 +84,7 @@
 			</div>
 
         </div>
-        <div class="flex flex-100 flex-padding-10 flex-gap-10"
+       <div class="flex flex-100 flex-padding-10 flex-gap-10"
 						style="justify-content: flex-end; border: 1px solid #999999;">
 						<button type="button" class="btn btn-blue btn-icon icon-left"
 							@click="popupPrint()">
@@ -119,11 +112,11 @@
 								<th style="width: 11%;" class="center sorting"
 									@click="sortList(event.target)" sort_target="price_max">최대가입금액</th>
 								<th style="width: 9%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="pay_period">납입주기</th>
+									@click="sortList(event.target)" sort_target="pay_cycle">납입주기</th>
 								<th style="width: 9%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="prod_air_max">판매상태</th>
-								<th style="width: 20%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="promtn_yn">프로모션</th>
+									@click="sortList(event.target)" sort_target="pay_period">납입기간</th>
+<!-- 								<th style="width: 20%;" class="center sorting" -->
+<!-- 									@click="sortList(event.target)" sort_target="promtn_yn">프로모션</th> -->
 							</tr>
 						</thead>
 						<tbody>
@@ -142,8 +135,8 @@
 								<td class="right" @click="gotoDtl(item.prod_cd)"
 									style="text-align: right;">{{item.pay_cycle}}</td>
 								<td class="right" @click="gotoDtl(item.prod_cd)"
-									style="text-align: right;">{{item.sale_stat}}</td>
-								<td class="center" @click="gotoDtl(item.prod_cd)">{{item.promtn_yn}}</td>
+									style="text-align: right;">{{item.pay_period}}개월</td>
+<!-- 								<td class="center" @click="gotoDtl(item.prod_cd)">{{item.promtn_yn}}</td> -->
 							</tr>
 						</tbody>
 					</table>
@@ -170,8 +163,6 @@ var vueapp = new Vue({
         prod_nm: "",
         prod_type: "",
         sub_tg: "",
-//         price_max: "",
-//         price_min: "",
 		from_date:"",
         sale_beg_dt:"",
         sale_end_dt:"",
@@ -191,9 +182,6 @@ var vueapp = new Vue({
             this.sale_beg_dt = params.sale_beg_dt;
             this.sale_end_dt = params.sale_end_dt;
             this.from_date = params.from_date;
-//             this.price_max = params.price_max;
-//             this.price_min = params.price_min;
-
             this.getList();
         } else {
             cv_sessionStorage
@@ -228,8 +216,6 @@ var vueapp = new Vue({
                         sale_beg_dt: this.sale_beg_dt,
                         sale_end_dt: this.sale_end_dt,
                         from_date: this.from_date,
-//                         price_max: this.price_max,
-//                         price_min: this.price_min,	
             	}
             }
                 
@@ -239,7 +225,7 @@ var vueapp = new Vue({
                 .setItem('pagingConfig', cv_pagingConfig)
                 .setItem('params', params);
 
-            cf_ajax("/sell/getList", params, this.getListCB);
+            cf_ajax("/2team/prod/getList", params, this.getListCB);
         },
         
         getListCB: function(data){

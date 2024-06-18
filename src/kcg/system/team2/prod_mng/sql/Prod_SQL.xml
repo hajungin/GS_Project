@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace='system.team2.sell_mng'>
-
-    <select id="get" parameterType="cmmnMap" resultType="cmmnMap">
+<mapper namespace='system.team2.prod_mng'>
+	<select id="getList" parameterType="cmmnMap" resultType="cmmnMap">
 	SELECT  
 		ep.prod_no,
 		ep.prod_nm,
@@ -27,7 +26,7 @@
 			    kcgbd.e_common ec_cycle ON ep.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ep.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
-				where 1=1
+				where ep.promtn_yn='N'
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ep.prod_nm like CONCAT('%',#{prod_nm},'%')
 		</if>
@@ -40,6 +39,7 @@
         <if test='from_date != null and from_date != ""'>
    		 AND CAST(#{from_date} AS DATE) BETWEEN sale_beg_dt AND sale_end_dt
 		</if>
+		
 		UNION ALL
 		SELECT  
 			el.loan_prod_no,
@@ -65,7 +65,9 @@
 		    kcgbd.e_common ec_cycle ON el.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 		LEFT JOIN 
 		    kcgbd.e_common ec_stat ON el.loan_sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
-			where 1=1
+		    
+			where el.promtn_yn='N'
+			
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and el.prod_nm like CONCAT('%',#{prod_nm},'%')
 		</if>
@@ -104,7 +106,9 @@
 			    kcgbd.e_common ec_cycle ON ea.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ea.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
-				where 1=1
+			    
+				where ea.promtn_yn='N'
+				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ea.prod_nm like CONCAT('%',#{prod_nm},'%')
 		</if>
@@ -143,7 +147,9 @@
 			    kcgbd.e_common ec_cycle ON ed.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ed.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
-				where 1=1
+			    
+				where ed.promtn_yn='N'
+				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ed.prod_nm like CONCAT('%',#{prod_nm},'%')
 		</if>
@@ -156,26 +162,6 @@
         <if test='from_date != null and from_date != ""'>
    		 AND CAST(#{from_date} AS DATE) BETWEEN sale_beg_dt AND sale_end_dt
 		</if>
-		
+	</select>
 
-    </select>
-    
-    <select id="getcustomer" parameterType="cmmnMap" resultType="cmmnMap">
-    	SELECT cust_nm, cust_mbl_telno, cust_pridtf_no FROM kcgbd.e_customer
-    	where 1=1
-    	<if test='cust_nm != null and cust_nm != ""'>
-		   and cust_nm like CONCAT('%',#{cust_nm},'%')
-		</if>
-		<if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
-		   and cust_mbl_telno like CONCAT('%',#{cust_mbl_telno},'%')
-		</if>
-		<if test='cust_pridtf_no != null and cust_pridtf_no != ""'>
-		   and cust_pridtf_no like CONCAT('%',#{cust_pridtf_no},'%')
-		</if>
-    </select>
-    
-    <select id="joinList">
-    	select * from kcgbd.e_product_init
-    </select>
-    
 </mapper>
