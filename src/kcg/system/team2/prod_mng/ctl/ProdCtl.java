@@ -29,25 +29,30 @@ public class ProdCtl {
 	
 	@RequestMapping("/list")
 	public String openPageCalc(Model model, CmmnMap params) {
-		return "kcg/system/promion_mng/PromionList";
+		return "kcg/system/team2/team2_prod_mng/planlist";
+	}
+	
+	@RequestMapping("/getlist")
+	public CmmnMap productList(CmmnMap params) {
+		return prodSvc.getList(params);
 	}
 	
 	@RequestMapping("/dtl")
 	public String openPageDtl(Model model, CmmnMap params) {
 		
-		String sProdTyCd = params.getString("prod_ty_cd", "1");
-		model.addAttribute("prod_ds_sn", params.getString("prod_ds_sn", ""));			// 설계설계번호
+		String sProdTyCd = params.getString("prod_type", "PT01");
+		model.addAttribute("plan_no", params.getString("plan_no", ""));			// 설계설계번호
 		model.addAttribute("cust_mbl_telno", params.getString("cust_mbl_telno", ""));	// 고객KEY
-		model.addAttribute("prod_ty_cd", sProdTyCd);										// 설계타입코드 : 1.적금설계, 2.목돈마련설계, 3.예금설계, 4.대출설계
+		model.addAttribute("prod_type", sProdTyCd);										// 설계타입코드 : 1.적금설계, 2.목돈마련설계, 3.예금설계, 4.대출설계
 		
 		String sRsltUrl = "";
-		if("1".equals(sProdTyCd)) {
+		if("PT01".equals(sProdTyCd)) {
 			sRsltUrl = "kcg/system/team2/team2_prod_mng/CalcDpst";
-		}else if("2".equals(sProdTyCd)) {
+		}else if("PT02".equals(sProdTyCd)) {
 			sRsltUrl = "kcg/system/promion_mng/PromionAcmlplDtl";
-		}else if("3".equals(sProdTyCd)) {
+		}else if("PT03".equals(sProdTyCd)) {
 			sRsltUrl = "kcg/system/promion_mng/PromionDpstplDtl";
-		}else if("4".equals(sProdTyCd)) {
+		}else if("PT04".equals(sProdTyCd)) {
 			sRsltUrl = "kcg/system/promion_mng/PromionLoanplDtl";
 		}
 		

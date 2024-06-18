@@ -5,7 +5,7 @@
 	<select id="getList" parameterType="cmmnMap" resultType="cmmnMap">
 	/* system.promion_mng.getlist */
 		select b.cust_nm 
-		     , a.prod_ds_sn
+		     , a.plan_no
 		     , a.cust_mbl_telno
 		     , to_char(a.wrt_dt,'yyyy-mm-dd') wrt_dt
 		     , b.cust_eml_addr
@@ -15,33 +15,33 @@
 		     , a.suggest_amt
 		     , d.pic_nm
 		     , '1' simpl_ty_cd /* 간편타입코드 : 1.정상, 0.간편 */
-		  from (select prod_ds_sn
+		  from (select plan_no
 		             , wrt_dt
-		             , prod_cd
+		             , prod_sn
 		             , prod_nm
 		             , tot_dpst_amt suggest_amt
 		             , cust_mbl_telno
 		          from kcgbd.tb_proddsgnsavgpl
 		         union
-		        select prod_ds_sn
+		        select plan_no
 		             , wrt_dt
-		             , prod_cd
+		             , prod_sn
 		             , prod_nm
 		             , tot_dpst_amt suggest_amt
 		             , cust_mbl_telno
 		          from kcgbd.tb_proddsgnacmlpl
 		         union
-		        select prod_ds_sn
+		        select plan_no
 		             , wrt_dt
-		             , prod_cd
+		             , prod_sn
 		             , prod_nm
 		             , tot_dpst_amt suggest_amt
 		             , cust_mbl_telno
 		          from kcgbd.tb_proddsgndpstpl
 		         union
-		        select prod_ds_sn
+		        select plan_no
 		             , wrt_dt
-		             , prod_cd
+		             , prod_sn
 		             , prod_nm
 		             , tot_pay_amt suggest_amt
 		             , cust_mbl_telno
@@ -51,7 +51,7 @@
 		     , kcgbd.tb_custmst b
 		     , kcgbd.tb_custpicrel c
 		     , kcgbd.tb_picmst d
-		 where a.prod_cd = a1.prod_cd
+		 where a.prod_sn = a1.prod_sn
 		   and a.cust_mbl_telno = b.cust_mbl_telno
 		   and a.cust_mbl_telno = c.cust_mbl_telno
 		   and c.pic_mbl_telno  = d.pic_mbl_telno
@@ -67,12 +67,12 @@
 		<if test='wrt_dt != null and wrt_dt != ""'>
 		   and to_char(a.wrt_dt,'yyyy-mm-dd') = #{wrt_dt}
 		</if>
-		order by a.wrt_dt desc, a.prod_ds_sn desc
+		order by a.wrt_dt desc, a.plan_no desc
 	</select>
 	
 	<select id="getProdInfo" parameterType="cmmnMap" resultType="cmmnMap">
 	/* system.promion_mng.getprodinfo */
-		select prod_cd
+		select prod_sn
 		     , prod_nm
 		     , prod_ty_cd
 		     , sbstg_ty_cd
@@ -126,51 +126,50 @@
 		     , 0 as tot_int_amt_fmt
 		     , 0 as tot_pay_amt_fmt
 		  from kcgbd.tb_prodmst
-		 where prod_cd = #{prod_cd}
+		 where prod_sn = #{prod_sn}
 	</select>
 	
 	<select id="getDsgnSavgpl" parameterType="cmmnMap" resultType="cmmnMap">
 	/* system.promion_mng.getDsgnSavgpl */
-        select a.prod_ds_sn
-             , a.prod_cd
-			 , a.prod_nm
-			 , a.cust_mbl_telno
-             , a.int_cty_cd
-			 , a.pay_ty_cd
-			 , a.circle_acml_amt
-			 , a.goal_prd
-			 , a.aply_rate
-			 , a.int_tax_ty_cd
-			 , a.tot_dpst_amt
-			 , a.tot_dpst_int
-			 , a.int_tax_amt
-			 , a.atx_rcve_amt
-			 , to_char(a.wrt_dt,'yyyy-mm-dd') wrt_dt
-		     , b.prod_ty_cd
-			 , b.sbstg_ty_cd
-			 , b.ntsl_amt_min
-			 , b.ntsl_amt_max
-			 , b.prod_air_min
-			 , b.prod_air_max
-			 , b.prod_air_bgng_ymd
-			 , b.prod_air_end_ymd
-			 , b.curr_stcd
-			 , b.ntsl_bgng_ymd
-			 , b.ntsl_end_ymd
-		  from kcgbd.tb_proddsgnsavgpl a
-		     , kcgbd.tb_prodmst b
-		 where a.prod_cd = b.prod_cd 
-		   and a.prod_ds_sn = cast(#{prod_ds_sn} as numeric(5))
+        select a.plan_no
+             , b.prod_sn
+			 , b.prod_nm
+			 , c.cust_mbl_telno
+             , 1 as int_cty_cd
+			 , b.pay_cycle
+			 , 0 as circle_acml_amt
+			 , b.pay_period
+			 , 0 as aply_rate
+			 , 1 as int_tax_ty_cd
+			 , 0 as tot_dpst_amt
+			 , 0 as tot_dpst_int
+			 , 0 as int_tax_amt
+			 , 0 as atx_rcve_amt
+			 , to_char(current_date,'yyyy-mm-dd') wrt_dt
+		     , b.prod_type
+			 , b.sub_tg
+			 , b.price_min
+			 , b.price_max
+			 , b.air_min
+			 , b.air_max
+			 , b.sale_beg_dt
+			 , b.sale_end_dt
+		  from kcgbd.e_planlist a
+		     , kcgbd.e_product b
+		     , kcgbd.e_customer c
+		 where a.prod_sn = b.prod_sn
+		 , a.cust_sn = c.cust_sn 
+		   and a.plan_no = cast(#{plan_no} as numeric(5))
 	</select>
 	
 	<select id="getDsgnAcmlpl" parameterType="cmmnMap" resultType="cmmnMap">
 	/* system.promion_mng.getDsgnAcmlpl */
-        select a.prod_ds_sn
-             , a.prod_cd
+        select a.plan_no 
+             , a.prod_sn
 			 , a.prod_nm
 			 , a.cust_mbl_telno
              , a.int_cty_cd
-			 , a.pay_ty_cd
+			 , a.pay_cycle
 			 , a.circle_acml_amt
 			 , a.goal_amt
 			 , a.goal_prd
@@ -181,8 +180,8 @@
 			 , a.int_tax_amt
 			 , a.atx_rcve_amt
 			 , to_char(a.wrt_dt,'yyyy-mm-dd') wrt_dt
-		     , b.prod_ty_cd
-			 , b.sbstg_ty_cd
+		     , b.prod_type
+			 , b.
 			 , b.ntsl_amt_min
 			 , b.ntsl_amt_max
 			 , b.prod_air_min
@@ -194,16 +193,16 @@
 			 , b.ntsl_end_ymd
 		  from kcgbd.tb_proddsgnacmlpl a
 		     , kcgbd.tb_prodmst b
-		 where a.prod_cd = b.prod_cd 
-		   and a.prod_ds_sn = cast(#{prod_ds_sn} as numeric(5))
+		 where a.prod_sn = b.prod_sn 
+		   and a.plan_no = cast(#{plan_no} as numeric(5))
 	</select>
 	
 	<select id="getDsgnDpstpl" parameterType="cmmnMap" resultType="cmmnMap">
 	/* system.promion_mng.getDsgnDpstpl */
-        select a.prod_ds_sn
-             , a.prod_cd
-			 , a.prod_nm
-			 , a.cust_mbl_telno
+        select a.plan_no
+             , b.prod_no
+			 , b.prod_nm
+			 , c.cust_mbl_telno
              , a.int_cty_cd
 			 , a.pay_ty_cd
 			 , a.dpst_amt
@@ -228,14 +227,14 @@
 			 , b.ntsl_end_ymd
 		  from kcgbd.tb_proddsgndpstpl a
 		     , kcgbd.tb_prodmst b
-		 where a.prod_cd = b.prod_cd 
-		   and a.prod_ds_sn = cast(#{prod_ds_sn} as numeric(5))
+		 where a.prod_sn = b.prod_sn 
+		   and a.plan_no = cast(#{plan_no} as numeric(5))
 	</select>
 	
 	<select id="getDsgnLoanpl" parameterType="cmmnMap" resultType="cmmnMap">
 	/* system.promion_mng.getDsgnLoanpl */
-        select a.prod_ds_sn
-             , a.prod_cd
+        select a.plan_no
+             , a.prod_sn
 			 , a.prod_nm
 			 , a.cust_mbl_telno
              , a.int_cty_cd
@@ -263,15 +262,15 @@
 			 , b.ntsl_end_ymd
 		  from kcgbd.tb_proddsgnloanpl a
 		     , kcgbd.tb_prodmst b
-		 where a.prod_cd = b.prod_cd 
-		   and a.prod_ds_sn = cast(#{prod_ds_sn} as numeric(5))
+		 where a.prod_sn = b.prod_sn 
+		   and a.plan_no = cast(#{plan_no} as numeric(5))
 	</select>
 	
 	<insert id="insertDsgnSavgpl" parameterType="cmmnMap">
 	/* system.promion_mng.insertDsgnSavgpl */
 		insert 
 		  into kcgbd.tb_proddsgnsavgpl (
-		  	   prod_ds_sn
+		  	   plan_no
 		  	 , int_cty_cd
 		  	 , prod_nm
 		  	 , pay_ty_cd
@@ -285,10 +284,10 @@
 		  	 , int_tax_amt
 		  	 , atx_rcve_amt
 		  	 , cust_mbl_telno
-		  	 , prod_cd
+		  	 , prod_sn
 		  	 )
 		values (
-		       (select coalesce(max(prod_ds_sn), 0) + 1 from kcgbd.tb_proddsgnsavgpl)
+		       (select coalesce(max(plan_no), 0) + 1 from kcgbd.tb_proddsgnsavgpl)
 		  	 , #{int_cty_cd}
 		  	 , #{prod_nm}
 		  	 , #{pay_ty_cd}
@@ -302,7 +301,7 @@
 		  	 , #{int_tax_amt}
 		  	 , #{atx_rcve_amt}
 		  	 , #{cust_mbl_telno}
-		  	 , #{prod_cd}
+		  	 , #{prod_sn}
 		     )
 	</insert>
 	
@@ -322,8 +321,8 @@
 		     , int_tax_amt = cast(#{int_tax_amt} as numeric(15))
 		     , atx_rcve_amt = cast(#{atx_rcve_amt} as numeric(15))
 		     , cust_mbl_telno = #{cust_mbl_telno}
-		     , prod_cd = #{prod_cd}
-		 where prod_ds_sn = cast(#{prod_ds_sn} as numeric(5))
+		     , prod_sn = #{prod_sn}
+		 where plan_no = cast(#{plan_no} as numeric(5))
 	</update>
 	
 	
@@ -331,7 +330,7 @@
 	/* system.promion_mng.insertDsgnAcmlpl */
 		insert 
 		  into kcgbd.tb_proddsgnacmlpl (
-		  	   prod_ds_sn
+		  	   plan_no
 		  	 , int_cty_cd
 		  	 , prod_nm
 		  	 , pay_ty_cd
@@ -346,10 +345,10 @@
 		  	 , int_tax_amt
 		  	 , atx_rcve_amt
 		  	 , cust_mbl_telno
-		  	 , prod_cd
+		  	 , prod_sn
 		  	 )
 		values (
-		       (select coalesce(max(prod_ds_sn), 0) + 1 from kcgbd.tb_proddsgnacmlpl)
+		       (select coalesce(max(plan_no), 0) + 1 from kcgbd.tb_proddsgnacmlpl)
 		  	 , #{int_cty_cd}
 		  	 , #{prod_nm}
 		  	 , #{pay_ty_cd}
@@ -364,7 +363,7 @@
 		  	 , #{int_tax_amt}
 		  	 , #{atx_rcve_amt}
 		  	 , #{cust_mbl_telno}
-		  	 , #{prod_cd}
+		  	 , #{prod_sn}
 		     )
 	</insert>
 	
@@ -385,15 +384,15 @@
 		     , int_tax_amt = cast(#{int_tax_amt} as numeric(15))
 		     , atx_rcve_amt = cast(#{atx_rcve_amt} as numeric(15))
 		     , cust_mbl_telno = #{cust_mbl_telno}
-		     , prod_cd = #{prod_cd}
-		 where prod_ds_sn = cast(#{prod_ds_sn} as numeric(5))
+		     , prod_sn = #{prod_sn}
+		 where plan_no = cast(#{plan_no} as numeric(5))
 	</update>
 	
 	<insert id="insertDsgnDpstpl" parameterType="cmmnMap">
 	/* system.promion_mng.insertDsgnDpstpl */
 		insert 
 		  into kcgbd.tb_proddsgndpstpl (
-		  	   prod_ds_sn
+		  	   plan_no
 		  	 , int_cty_cd
 		  	 , prod_nm
 		  	 , pay_ty_cd
@@ -407,10 +406,10 @@
 		  	 , int_tax_amt
 		  	 , atx_rcve_amt
 		  	 , cust_mbl_telno
-		  	 , prod_cd
+		  	 , prod_sn
 		  	 )
 		values (
-		       (select coalesce(max(prod_ds_sn), 0) + 1 from kcgbd.tb_proddsgndpstpl)
+		       (select coalesce(max(plan_no), 0) + 1 from kcgbd.tb_proddsgndpstpl)
 		  	 , #{int_cty_cd}
 		  	 , #{prod_nm}
 		  	 , #{pay_ty_cd}
@@ -424,7 +423,7 @@
 		  	 , #{int_tax_amt}
 		  	 , #{atx_rcve_amt}
 		  	 , #{cust_mbl_telno}
-		  	 , #{prod_cd}
+		  	 , #{prod_sn}
 		     )
 	</insert>
 	
@@ -444,8 +443,8 @@
 		     , int_tax_amt = cast(#{int_tax_amt} as numeric(15))
 		     , atx_rcve_amt = cast(#{atx_rcve_amt} as numeric(15))
 		     , cust_mbl_telno = #{cust_mbl_telno}
-		     , prod_cd = #{prod_cd}
-		 where prod_ds_sn = cast(#{prod_ds_sn} as numeric(5))
+		     , prod_sn = #{prod_sn}
+		 where plan_no = cast(#{plan_no} as numeric(5))
 	</update>
 	
 	
@@ -454,7 +453,7 @@
 	/* system.promion_mng.insertDsgnLoanpl */
 		insert 
 		  into kcgbd.tb_proddsgnloanpl (
-		  	   prod_ds_sn
+		  	   plan_no
 		  	 , int_cty_cd
 		  	 , prod_nm
 		  	 , loan_rpty_cd
@@ -469,10 +468,10 @@
 		  	 , tot_int_amt
 		  	 , tot_pay_amt
 		  	 , cust_mbl_telno
-		  	 , prod_cd
+		  	 , prod_sn
 		  	 )
 		values (
-		       (select coalesce(max(prod_ds_sn), 0) + 1 from kcgbd.tb_proddsgnloanpl)
+		       (select coalesce(max(plan_no), 0) + 1 from kcgbd.tb_proddsgnloanpl)
 		  	 , #{int_cty_cd}
 		  	 , #{prod_nm}
 		  	 , #{loan_rpty_cd}
@@ -487,7 +486,7 @@
 		  	 , #{tot_int_amt}
 		  	 , #{tot_pay_amt}
 		  	 , #{cust_mbl_telno}
-		  	 , #{prod_cd}
+		  	 , #{prod_sn}
 		     )
 	</insert>
 	
@@ -508,8 +507,8 @@
 		     , tot_int_amt = cast(#{tot_int_amt} as numeric(15))
 		     , tot_pay_amt = cast(#{tot_pay_amt} as numeric(15))
 		     , cust_mbl_telno = #{cust_mbl_telno}
-		     , prod_cd = #{prod_cd}
-		 where prod_ds_sn = cast(#{prod_ds_sn} as numeric(5))
+		     , prod_sn = #{prod_sn}
+		 where plan_no = cast(#{plan_no} as numeric(5))
 	</update>
 	
 	

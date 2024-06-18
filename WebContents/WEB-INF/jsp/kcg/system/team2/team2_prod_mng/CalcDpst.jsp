@@ -127,19 +127,22 @@
                             <div class="form-group" style="justify-content: left">
                                 <label>목표금액 (원):</label>
                                 <input class="form-control flex-50" type="text" id="goal_amt" v-model="info.goal_amt" style="width: 700px;"/>
-                                <span id="price_min" v-model="price_min">최소금액 : {{price_min}}</span> ~
-                                <span id="price_max" v-model="price_max">최대금액 : {{price_max}}</span>
+                                 <button type="button" class="btn btn-transparent flex-20" @click="setCircleAcmlAmt(10)">+10만원</button>
+                                <button type="button" class="btn btn-transparent flex-20" @click="setCircleAcmlAmt(50)">+50만원</button>
+                                <button type="button" class="btn btn-transparent flex-20" @click="setCircleAcmlAmt(100)">+100만원</button>
                                 <button type="button" class="btn btn-navy flex-20" @click="setGoalAmt(0)">정정</button>
                             </div>
                             <div class="form-group" style="justify-content: left">
                                 <label>목표기간 (개월):</label>
                                 <input class="form-control flex-50" type="text" id="goal_prd" v-model="info.goal_prd" style="width: 700px;"/>
+                                 <button type="button" class="btn btn-transparent flex-20" @click="setGoalPrd(3)">+3개월</button>
+                                <button type="button" class="btn btn-transparent flex-20" @click="setGoalPrd(6)">+6개월</button>
+                                <button type="button" class="btn btn-transparent flex-20" @click="setGoalPrd(12)">+12개월</button>
                                 <button type="button" class="btn btn-navy flex-20" @click="setGoalPrd(0)">정정</button>
                             </div>
                             <div class="form-group" style="justify-content: left">
                                 <label>적용금리 (%):</label>
-                                 <span id="air_min" v-model="air_min">최소금리 : {{air_min}}</span> ~
-                                <span id="air_max" v-model="air_max">최대금리 : {{air_max}}</span>
+                                
                                 <input class="form-control" type="text" id="aply_rate" v-model="info.aply_rate" />
                             </div>
                             <div class="form-group" style="justify-content: left">
@@ -308,7 +311,7 @@
 					<div class="dt-buttons">
 						<div>
 							<label>코드:</label>
-							<input type="search" id="pop_prod_cd" style="width: 80px;" v-model="pop_prod_cd">
+							<input type="search" id="pop_prod_sn" style="width: 80px;" v-model="pop_prod_sn">
 							<label>코드명:</label>
 							<input type="search" id="pop_prod_nm" style="width: 200px;" v-model="pop_prod_nm">
 							<button type="button" class="btn btn-red" style="margin-left: 5px;" @click="getList">
@@ -394,7 +397,7 @@ var vueapp = new Vue({
 		info : {
 			plan_no : "${plan_no}",
 			cust_mbl_telno : "${cust_mbl_telno}",
-			prod_ty_cd : "${prod_ty_cd}",
+			prod_type : "${prod_type}",
 			simpl_ty_cd : "0",
 			wrt_dt : "",
 			int_cty_cd : "",
@@ -448,7 +451,7 @@ var vueapp = new Vue({
 			
 			var params = {
 				cust_mbl_telno : cf_defaultIfEmpty(this.info.cust_mbl_telno, ""),
-				prod_ty_cd : index,
+				prod_type : index,
 			}
 			cf_movePage("/sell/dtl", params);
 			
@@ -681,7 +684,7 @@ var pop_prod = new Vue({
 	el : "#pop_prod",
 	data : {
 		dataList : [],
-		pop_prod_cd : "",
+		pop_prod_sn : "",
 		pop_prod_nm : "",
 	},
 	mounted : function(){
@@ -693,9 +696,9 @@ var pop_prod = new Vue({
 			var params = {
 				prod_no : this.prod_no,
 				prod_nm : this.prod_nm,
-				prod_ty_cd : vueapp.info.prod_ty_cd,
+				prod_type : vueapp.info.prod_type,
 			}
-			cf_ajax("/prod_mng/getList", params, function(data){
+			cf_ajax("/sell/getList", params, function(data){
 				pop_prod.dataList = data;
 			});
 		},
@@ -726,7 +729,7 @@ var pop_cust = new Vue({
 				emp_dept : "",
 				wrt_dt : "",
 			}
-			cf_ajax("/prod_mng/getCustList", params, function(data){
+			cf_ajax("/sell/getCustList", params, function(data){
 				pop_cust.dataList = data;
 			});
 		},
