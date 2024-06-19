@@ -69,6 +69,30 @@
 						</li>
 					</ul>
 				</li>
+				
+				<li data-lnb="11" data-snb="0">
+					<a href="#gm">
+						<i class="entypo-newspaper"></i>
+						<span class="title">GSITM 판매관리</span>
+					</a>
+					<ul data-lnb="11" data-snb="0">
+						<li data-lnb="11" data-snb="1">
+							<a href="#gm" onclick="cf_movePage('/sell/list')">
+								<span class="title">상품정보 조회</span>
+							</a>
+							<a href="#gm" onclick="cf_movePage('/sell/join')">
+								<span class="title">가입관리</span>
+							</a>
+							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
+								<span class="title">판매달성률관리</span>
+							</a>
+							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
+								<span class="title">판매달성률조회</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				
 				<li data-lnb="12" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
