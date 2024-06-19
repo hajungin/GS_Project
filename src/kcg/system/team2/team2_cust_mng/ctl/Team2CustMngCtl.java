@@ -25,10 +25,16 @@ public class Team2CustMngCtl {
 	@Autowired
 	Team2CustMngSvc custMngSvc;
 
-	
-	// 고객 관리 메인페이지
+	// 고객 목록 페이지
 	@RequestMapping("/custMng")
-	public String CustInfoMngPage() {
+	public String CustMngPage() {
+		return "kcg/system/team2/team2_cust_mng/custMng";
+	}
+
+	
+	// 고객 목록 페이지
+	@RequestMapping("/custList")
+	public String CustListPage() {
 		return "kcg/system/team2/team2_cust_mng/custList";
 	}
 	
@@ -71,5 +77,9 @@ public class Team2CustMngCtl {
 		return custMngSvc.custInsert(params); 
 	}
 	
+	@RequestMapping("/custChangeSts")
+	public CmmnMap custChangeSts(CmmnMap params){
+		return custMngSvc.custChangeSts(params); 
+	}
 	
 }

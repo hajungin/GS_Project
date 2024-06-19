@@ -224,24 +224,42 @@
                                 <div class="form-group" v-if="isEmpty(info.cust_sn)">
                                     <label for="cnslt_cn" class="col-sm-4 control-label">상담내역</label>
                                     <div class="col-sm-8">
-                                        <textarea id="cnslt_cn" class="form-control" style="width: 100%; height: 300px; resize: none;" readonly></textarea>
+                                         <textarea id="cnslt_cn" class="form-control" v-model="" style="width: 100%; height: 300px; resize: none;" readonly>
+										
+								        </textarea>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" v-if="isEmpty(info.cust_sn)">
                                     <label for="cnslt_cn" class="col-sm-4 control-label">상담추가입력</label>
                                     <div class="col-sm-8">
-                                        <textarea id="cnslt_cn" class="form-control" v-model="info.cnslt_cn" style="width: 100%; height: 150px; resize: none;"></textarea>
+                                        <textarea id="cnslt_cn_add" class="form-control" v-model="info.cnslt_cn" style="width: 100%; height: 150px; resize: none;"></textarea>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-sm-6"  v-if="isNotEmpty(info.cust_sn)">
+                             	 <img src="/static_resources/system/team2/team2_images/customer2.jpg" style="width: 250px; height:500px; margin-left: 40%;">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                	<button type="button" class="btn btn-secondary" @click="custUpdate" v-if="isEmpty(info.cust_sn)">고객정보변경</button>
-                	<button type="button" class="btn btn-secondary" @click=custInsert v-if="isNotEmpty(info.cust_sn)">고객정보등록</button>
-                	<button type="button" class="btn btn-secondary" @click="cnsltInsert">상담내용저장</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</button>
+                	<button type="button" class="btn btn-green btn-icon btn-small" @click="custInsert" v-if="isNotEmpty(info.cust_sn)">
+					고객정보등록
+					<i class="entypo-add-user"></i>
+					</button>
+					<button type="button" class="btn btn-green btn-icon btn-small" @click="custUpdate" v-if="isEmpty(info.cust_sn)">
+					고객정보변경
+					<i class=" entypo-user"></i>
+					</button>
+					<button type="button" class="btn btn-blue btn-icon btn-small" @click="cnsltInsert" v-if="isEmpty(info.cust_sn)">
+					상담내용저장
+					<i class="entypo-pencil"></i>
+					</button>
+					<button type="button" class="btn btn-red btn-icon btn-small" @click="custChangeSts" v-if="isEmpty(info.cust_pridtf_no)" style="align: left;">
+					고객정보삭제
+					<i class="entypo-trash"></i>
+<!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
                 </div>
             </div>
         </div>
@@ -399,16 +417,30 @@
                 emp_dept: "",
                 emp_posit: "",
                 emp_mbl_telno: "",
-                cnslt_dt: "",
+    			cnslt_dt: "",
                 cnslt_emp_nm: "",
                 cnslt_cn: "",
-            }
+                cnsltList : [],
+                cnsltItems: [],
+            },
+    		
+                
         },
         computed: {
             showInput() {
               return this.info.cust_cr_no === 'JB07';
-            },
-          },
+            }, 
+//             cnsltList() {
+//                 this.info.cnsltItems = '';
+//                 for (var i = 0; i < this.info.cnsltList.length; i++) {
+//                 	this.info.cnsltItems += this.info.cnsltList[i];
+//                     if (i < this.info.cnsltList.length - 1) {
+//                     	this.info.cnsltItems += '\n';
+//                     }
+//                 }
+//                 return this.info.cnsltItems;
+//             }
+         },
         methods: {
             init: function (cust_mbl_telno) {
                 this.initInfo();
@@ -432,9 +464,6 @@
                    emp_dept: "",
                    emp_posit: "",
                    emp_mbl_telno: "",
-                   cnslt_dt: "",
-                   cnslt_emp_nm: "",
-                   cnslt_cn: "",
                 }
             },
             getInfo: function () {
@@ -485,9 +514,9 @@
 					cust_road_addr: cust_road_addr,
 					emp_no: emp_no,
 				}
-				cf_ajax("/customer/custUpdate", params, this.changeStsCB);
+				cf_ajax("/customer/custUpdate", params, this.updateStsCB);
 			},
-			changeStsCB: function (data) {
+			updateStsCB: function (data) {
 				if (data.status == "OK") {
 					alert("고객정보 변경 완료");
 				}
@@ -495,6 +524,18 @@
 				window.location.reload();
 			},
 			
+// 			getCnsltList: function (data) {
+// 				var params = {
+// 						cust_mbl_telno: this.info.cust_mbl_telno,
+// 	                }
+// 	                cf_ajax("/communi/getCnsltList", params, this.getCnsltCB);
+// 			},
+			
+// 			getCnsltCB: function (data) {
+// 				this.info.cnsltList = data.list;
+//                 console.log(data);
+// 			},
+
 			custInsert: function () {
 				var cust_nm = this.info.cust_nm;
 				var cust_pridtf_no = this.info.cust_pridtf_no;
@@ -530,8 +571,8 @@
 			
 			cnsltInsert: function () {
 				var emp_no = this.emp_no;
-				var cust_sn = this.info.cust_sn;
-				var cnslt_cn = this.info.cnslt_cn;
+				var cust_sn = this.cnslt.cust_sn;
+				var cnslt_cn = this.cnslt.cnslt_cn;
 				 
 				var params = { 
 					emp_no: emp_no,
@@ -545,8 +586,23 @@
             },
 			isNotEmpty(value){
 				return value === '';
-			}
+			},
+            custChangeSts: function () {
+				var cust_pridtf_no = this.info.cust_pridtf_no;
+				 
+				var params = { 
+						cust_pridtf_no: cust_pridtf_no,
+				}
+				cf_ajax("/customer/custChangeSts", params, this.changeStsCB);
 			
+			},
+			changeStsCB: function (data) {
+				if (data.status == "OK") {
+					alert("고객 목록 정보 삭제 완료");
+				}
+				$('#pop_cust_info').modal('hide');
+				window.location.reload();
+			},
         }
     });
     

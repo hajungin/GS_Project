@@ -59,5 +59,10 @@ public class Team2CustMngSvc {
 		return new CmmnMap().put("status", "OK");
 	}
 
+	public CmmnMap custChangeSts(CmmnMap params) {
+		cmmnDao.update("system.team2_cust_mng.custChangeSts", params);
+		return new CmmnMap().put("status", "OK");
+	}
+
 
 }

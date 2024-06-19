@@ -10,7 +10,7 @@
             <link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
             <link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
             <link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
-            <title>상담내역 페이지</title>
+            <title>상담내역조회</title>
         </head>
 
         <body class="page-body">
@@ -25,7 +25,7 @@
 
                     <ol class="breadcrumb bc-3">
                         <li><a href="#none" onclick="cf_movePage('/system')"><i class="fa fa-home"></i>Home</a></li>
-                        <li class="active"><strong>상담내역 조회</strong></li>
+                        <li class="active"><strong>상담내역조회</strong></li>
                     </ol>
 
                     <h2>상담내역</h2>
@@ -66,7 +66,7 @@
                             <div class="flex flex-100 flex-padding-10 flex-gap-10"
                                 style="justify-content:flex-end;border: 1px solid #999999;">
                                 <button type="button" class="btn btn-orange btn-icon icon-left"
-                                    style="margin-left: 5px;" @click="del">
+                                    style="margin-left: 5px;" @click="cnsltDelete">
                                     삭제
                                     <i class="entypo-users"></i>
                                 </button>
@@ -80,7 +80,7 @@
                                         <th style="width: 10%;" class="center">상담일자</th>
                                         <th style="width: 5%;" class="center">고객명</th>
                                         <th style="width: 30%;" class="center">상담내용</th>
-                                        <th style="width: 5%;" class="center">작성자</th>
+                                        <th style="width: 5%;" class="center">상담자</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -100,6 +100,69 @@
                             </table>
                         </template>
                     </div>
+<!-- 상담내역 detail 팝업                 -->
+ <div class="modal fade" id="pop_cnslt_dtl">
+    <template>
+        <div class="modal-dialog modal-md"> 
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose">&times;</button>
+                    <h4 class="modal-title" id="cnslt_nm">상담내역</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="row">
+                                <div class="form-group">
+                                    <label for="cust_nm" class="col-sm-4 control-label">상담일</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="cnslt_dt" v-model="dtl.cnslt_dt" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cust_pridtf_no" class="col-sm-4 control-label">고객명</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="cust_nm" v-model="dtl.cust_nm" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cust_pridtf_no" class="col-sm-4 control-label">상담자</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="emp_nm" v-model="dtl.emp_nm" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cnslt_cn" class="col-sm-4 control-label">상담내역</label>
+                                    <div class="col-sm-8">
+                                        <textarea id="cnslt_cn"  v-model="dtl.cnslt_cn" class="form-control" style="width: 100%; height: 300px; margin-left: 10px; resize: none;" readonly></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+<!--                             상담 내역 추가 기능 구현 전 -->
+<!--                             <div class="col-sm-6"> -->
+                                
+<!--                                 <div class="form-group"> -->
+<!--                                     <label for="cnslt_cn" class="col-sm-4 control-label">상담추가입력</label> -->
+<!--                                     <div class="col-sm-8"> -->
+<!--                                         <textarea id="cnslt_cn" class="form-control" v-model="dtl.cnslt_cn_add" style="width: 100%; height: 150px; resize: none;"></textarea> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+
+                    </form>
+                </div>
+<!--                 <div class="modal-footer"> -->
+<!-- 					<button type="button" class="btn btn-blue btn-icon btn-small" @click=""> -->
+<!-- 					상담내용저장 -->
+<!-- 					<i class="entypo-check"></i> -->
+<!-- 					</button> -->
+<!-- <!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --> -->
+<!--                 </div> -->
+            </div>
+        </div>
+    </template>
+</div>
+                    
 
                     <jsp:include page="/WEB-INF/jsp/kcg/_include/system/footer.jsp" flush="false" />
                 </div>
@@ -165,11 +228,11 @@
                this.dataList = data.list;
                cv_pagingConfig.renderPagenation("system");
            },
-//            gotoDtl: function (cust_mbl_telno) {
-//                console.log(cust_mbl_telno);
-//                pop_cust_info.init(cust_mbl_telno);
-//                $('#pop_cust_info').modal('show');
-//            },
+           gotoDtl: function (cnslt_cn) {
+               console.log(cnslt_cn);
+               pop_cnslt_dtl.getCnsltDtl(cnslt_cn);
+               $('#pop_cnslt_dtl').modal('show');
+           },
            all_check: function (obj) {
                 $('[name=is_check]').prop('checked', obj.checked);
             },
@@ -178,7 +241,7 @@
                     $("[name=is_check]:checked").length === $("[name=is_check]").length
                 );
             },
-           del : function(){
+           cnsltDelete : function(){
               var checkedList = $("[name=is_check]:checked");
                 if (checkedList.length == 0) {
                     alert("삭제항목을 선택하세요.");
@@ -197,9 +260,9 @@
                 var params = {
                    dataCopyList: dataCopyList
                 }
-            cf_ajax("/communi/cnsltDelete", params, this.delCB);
+            cf_ajax("/communi/cnsltDelete", params, this.cnsltDeleteCB);
             },
-           	delCB : function(data){
+            cnsltDeleteCB : function(data){
 	            if (data.status == "OK") {
 	                    alert("삭제가 완료되었습니다.");
 	              this.getCommuniList(true);
@@ -207,5 +270,28 @@
          	}
          }
     });
+   
+   var pop_cnslt_dtl = new Vue({
+       el: "#pop_cnslt_dtl",
+       data: {
+           dtl: {
+        	   dataList: [],
+               cnslt_no: "",
+               cnslt_cn: "",
+               cnslt_cn_add: "",
+           }
+       },
+       methods: {
+    	   getCnsltDtl: function (cnslt_no) {
+               var params = {
+            		cnslt_no: cnslt_no
+               }
+               cf_ajax("/communi/getCnsltDtl", params, this.getDtlCB);
+           },
+           getDtlCB: function (data) {
+               this.dtl = data;
+           },
+       }
+   });
 </script>
 </html>

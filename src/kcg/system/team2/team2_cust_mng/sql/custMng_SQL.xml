@@ -16,7 +16,7 @@
 		FROM kcgbd.e_customer AS c
 		JOIN kcgbd.e_employee AS e ON c.emp_no = e.emp_no
 		JOIN kcgbd.e_common AS cm ON e.emp_dept = cm.comm_no
-		WHERE 1=1
+		WHERE c.use_yn = 'Y'
 		<if test='cust_nm != null and cust_nm != ""'>
 		AND c.cust_nm like CONCAT('%',#{cust_nm},'%')
 		</if>
@@ -116,6 +116,14 @@
          )
    </insert>
 	
+	<update id="custChangeSts" parameterType="cmmnMap">
+		UPDATE 
+			kcgbd.e_customer 
+		SET
+			use_yn = 'N'
+		WHERE 1=1
+		  AND cust_pridtf_no = #{cust_pridtf_no}
+	</update>
 	
 </mapper>
 

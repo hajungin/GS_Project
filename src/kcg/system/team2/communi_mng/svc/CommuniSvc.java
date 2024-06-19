@@ -51,4 +51,12 @@ public class CommuniSvc {
 		return new CmmnMap().put("status", "OK");
 	}
 
+	public CmmnMap getCnsltDtl(CmmnMap params) {
+		return cmmnDao.selectOne("system.team2_communi_mng.getCnsltDtl", params);
+	}
+
+	public List<CmmnMap> getCnsltList(CmmnMap params) {
+		return cmmnDao.selectList("system.team2_communi_mng.getCnsltList", params);
+	}
+
 }

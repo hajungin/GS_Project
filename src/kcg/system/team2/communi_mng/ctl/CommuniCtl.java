@@ -1,5 +1,7 @@
 package kcg.system.team2.communi_mng.ctl;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,12 @@ public class CommuniCtl {
       return pageList;
    }
    
+   @RequestMapping("/getCnsltDtl")
+   public CmmnMap getCnsltDtl(CmmnMap params) {
+      return communiSvc.getCnsltDtl(params);
+    }
+   
+   
    @RequestMapping("/cnsltDelete")
    public CmmnMap cnsltDelete(CmmnMap params) {
       return communiSvc.cnsltDelete(params);
@@ -41,4 +49,13 @@ public class CommuniCtl {
 	public CmmnMap cnsltInsert(CmmnMap params){
 		return communiSvc.cnsltInsert(params); 
 	}
+	
+	@RequestMapping("/getCnsltList")
+	   public List<CmmnMap> getCnsltList(CmmnMap params) {
+	      List<CmmnMap> List = communiSvc.getCnsltList(params);
+	      log.debug(List.toString());
+	      return List;
+	   }
+
+	
 }
