@@ -50,8 +50,14 @@ public class Team2CustMngSvc {
 	}
 
 	public CmmnMap custUpdate(CmmnMap params) {
-		cmmnDao.update("system.team2_cust_mng.updateCust", params);
+		cmmnDao.update("system.team2_cust_mng.custUpdate", params);
 		return new CmmnMap().put("status", "OK");
 	}
+
+	public CmmnMap custInsert(CmmnMap params) {
+		cmmnDao.update("system.team2_cust_mng.custInsert", params);
+		return new CmmnMap().put("status", "OK");
+	}
+
 
 }

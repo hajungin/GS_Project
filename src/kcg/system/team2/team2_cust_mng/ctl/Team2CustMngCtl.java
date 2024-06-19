@@ -66,4 +66,10 @@ public class Team2CustMngCtl {
 		return custMngSvc.custUpdate(params); 
 	}
 	
+	@RequestMapping("/custInsert")
+	public CmmnMap custInsert(CmmnMap params){
+		return custMngSvc.custInsert(params); 
+	}
+	
+	
 }

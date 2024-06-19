@@ -39,7 +39,14 @@
 					<ul data-lnb="10" data-snb="0">
 						<li data-lnb="10" data-snb="3">
 							<a href="#gm" onclick="cf_movePage('/customer/custMng')">
-								<span class="title">고객정보 목록 조회</span>
+								<span class="title">고객 정보 목록 조회</span>
+							</a>
+						</li>						
+					</ul>
+					<ul data-lnb="10" data-snb="0">
+						<li data-lnb="10" data-snb="3">
+							<a href="#gm" onclick="cf_movePage('/communi/communiList')">
+								<span class="title">상담 내역 조회</span>
 							</a>
 						</li>						
 					</ul>

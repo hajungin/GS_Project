@@ -80,7 +80,7 @@
 	    WHERE 
 	    	e.emp_mbl_telno = #{emp_mbl_telno}
 	</select>
-	<update id="updateCust" parameterType="cmmnMap">
+	<update id="custUpdate" parameterType="cmmnMap">
 		UPDATE 
 			kcgbd.e_customer 
 		SET
@@ -98,5 +98,24 @@
 		WHERE 1=1
 		  AND cust_pridtf_no = #{cust_pridtf_no}
 	</update>
+	
+	<insert id="custInsert" parameterType="cmmnMap">
+      INSERT INTO kcgbd.e_customer(
+      	 frst_reg_dt, cust_nm, cust_pridtf_no, cust_eml_addr, cust_home_telno, cust_mbl_telno, cust_cr_no, other_cr, cust_road_nm_addr, emp_no)
+         VALUES ( 
+         now(),
+         #{cust_nm},
+         #{cust_pridtf_no},
+         #{cust_eml_addr},
+         #{cust_home_telno},
+         #{cust_mbl_telno},
+         #{cust_cr_no},
+         #{other_cr},
+         #{cust_road_addr},
+         #{emp_no}
+         )
+   </insert>
+	
+	
 </mapper>
 

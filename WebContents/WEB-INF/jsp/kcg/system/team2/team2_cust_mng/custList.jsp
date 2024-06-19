@@ -35,20 +35,20 @@
                 <template>
                     <div class="flex flex-100">
                         <div class="flex-wrap flex-90 flex flex-gap-10 flex-padding-10">
-                            <div class="form-group flex-40">
-                                <label style="text-align: center;">고객명 :</label>
-                                <input class="form-control" v-model="cust_nm" value="">
+                            <div class="form-group flex-60">
+                                <label style="text-align: center; margin-left: 100px;">고객명 :</label>
+                                <input class="form-control" v-model="cust_nm" value="" style="margin-right: 100px; ">
                                 <label class="fix-width-15">생년월일 :</label>
-                                <input type="text" class="form-control" v-model="birth" placeholder="yy-mm-dd">
+                                <input type="text" class="form-control" v-model="birth" placeholder="yy-mm-dd" style="margin-right: 100px;">
                                 <label class="fix-width-15">관리담당자 :</label>
-                                <input class="form-control" v-model="emp_nm" value="">
-                                <label class="fix-width-15">이벤트구분 :</label>
-                                <select id ="event" class="form-control">
-                                	<option value="">전체</option>
-                                	<option value="">생일</option>
-                                	<option value="">만기도래</option>
-                                	<option value="">기타</option>
-                                </select>
+                                <input class="form-control" v-model="emp_nm" value="" style="margin-right: 100px;">
+<!--                                 <label class="fix-width-15">이벤트구분 :</label> -->
+<!--                                 <select id ="event" class="form-control"> -->
+<!--                                 	<option value="">전체</option> -->
+<!--                                 	<option value="">생일</option> -->
+<!--                                 	<option value="">만기도래</option> -->
+<!--                                 	<option value="">기타</option> -->
+<!--                                 </select> -->
                             </div>
                         </div>
 
@@ -66,25 +66,27 @@
                     <div class="flex flex-100 flex-padding-10 flex-gap-10"
                         style="justify-content:flex-end;border: 1px solid #999999;">
                         <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"
-                            >
+                            @click="gotoDtl()">
                             신규회원등록
                             <i class="entypo-archive"></i>
                         </button>
+<!--                         출력 기능 작업전 -->
 <!--                         <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;" -->
 <!--                             > -->
 <!--                             관리대장출력 -->
 <!--                             <i class="entypo-vcard"></i> -->
 <!--                         </button> -->
                         <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"
-                            >
+                            @click="cf_movePage('/communi/communiList')">
                             상담내역
                             <i class="entypo-user"></i>
                         </button>
-                        <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;" 
-                        	@click="popupEmpInfo">
-                            담당자설정
-                            <i class="entypo-clipboard"></i>
-                        </button>
+<!--                         담당자 일괄설정 작업 전 -->
+<!--                         <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"  -->
+<!--                         	@click="popupEmpInfo"> -->
+<!--                             담당자설정 -->
+<!--                             <i class="entypo-clipboard"></i> -->
+<!--                         </button> -->
                     </div>
                     <table class="table table-bordered datatable dataTable" id="grid_app"
                         style="border: 1px solid #999999;">
@@ -127,7 +129,7 @@
 <!-- 	   고객 정보 팝업 		-->
 	<div class="modal fade" id="pop_cust_info">
     <template>
-        <div class="modal-dialog modal-lg"> <!-- modal-lg 클래스를 추가하여 모달의 크기를 조정 -->
+        <div class="modal-dialog modal-lg"> 
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose">&times;</button>
@@ -140,13 +142,13 @@
                                 <div class="form-group">
                                     <label for="cust_nm" class="col-sm-4 control-label">성명</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="cust_nm" v-model="info.cust_nm" class="form-control" readonly>
+                                        <input type="text" id="cust_nm" v-model="info.cust_nm" class="form-control" :readonly="isEmpty(info.cust_sn)">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="cust_pridtf_no" class="col-sm-4 control-label">실명번호</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="cust_pridtf_no" v-model="info.cust_pridtf_no" class="form-control" readonly>
+                                        <input type="text" id="cust_pridtf_no" v-model="info.cust_pridtf_no" class="form-control" :readonly="isEmpty(info.cust_sn)">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -219,7 +221,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <div class="form-group">
+                                <div class="form-group" v-if="isEmpty(info.cust_sn)">
                                     <label for="cnslt_cn" class="col-sm-4 control-label">상담내역</label>
                                     <div class="col-sm-8">
                                         <textarea id="cnslt_cn" class="form-control" style="width: 100%; height: 300px; resize: none;" readonly></textarea>
@@ -228,7 +230,7 @@
                                 <div class="form-group">
                                     <label for="cnslt_cn" class="col-sm-4 control-label">상담추가입력</label>
                                     <div class="col-sm-8">
-                                        <textarea id="cnslt_cn" class="form-control" v-model="info.cuslt_cn" style="width: 100%; height: 150px; resize: none;"></textarea>
+                                        <textarea id="cnslt_cn" class="form-control" v-model="info.cnslt_cn" style="width: 100%; height: 150px; resize: none;"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -236,20 +238,15 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                	<button type="button" class="btn btn-secondary" @click="custUpdate">고객정보저장</button>
-                	<button type="button" class="btn btn-secondary" @click="cusltInsert">상담내용저장</button>
+                	<button type="button" class="btn btn-secondary" @click="custUpdate" v-if="isEmpty(info.cust_sn)">고객정보변경</button>
+                	<button type="button" class="btn btn-secondary" @click=custInsert v-if="isNotEmpty(info.cust_sn)">고객정보등록</button>
+                	<button type="button" class="btn btn-secondary" @click="cnsltInsert">상담내용저장</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </template>
 </div>
-
-
-
-
-
-
 
 <!--// 담당자설정 팝업  -->
             <!-- 팝업 -->
@@ -369,15 +366,14 @@
                     alert("담당자 설정 대상을 선택하여 주십시오.");
                     return;
                 }
-                //check list 가져오기..
-                var dateCopyList = [];
+                var dataCopyList = [];
                 var idx;
                 checkedList.each(function (i) {
                     idx = $(this).attr("data-idx");
-                    dateCopyList.push(vueapp.dataList.getElementFirst("cust_nm", idx));
+                    dataCopyList.push(vueapp.dataList.getElementFirst("cust_nm", idx));
                 });
 
-                console.log(dateCopyList);
+                console.log(dataCopyList);
 
                 //설정팝업 띄우기
 //                 pop_damdang_set.init(dateCopyList);
@@ -403,15 +399,15 @@
                 emp_dept: "",
                 emp_posit: "",
                 emp_mbl_telno: "",
-                cuslt_dt: "",
-                cuslt_emp_nm: "",
-                cuslt_cn: "",
+                cnslt_dt: "",
+                cnslt_emp_nm: "",
+                cnslt_cn: "",
             }
         },
         computed: {
             showInput() {
               return this.info.cust_cr_no === 'JB07';
-            }
+            },
           },
         methods: {
             init: function (cust_mbl_telno) {
@@ -436,9 +432,9 @@
                    emp_dept: "",
                    emp_posit: "",
                    emp_mbl_telno: "",
-                   cuslt_dt: "",
-                   cuslt_emp_nm: "",
-                   cuslt_cn: "",
+                   cnslt_dt: "",
+                   cnslt_emp_nm: "",
+                   cnslt_cn: "",
                 }
             },
             getInfo: function () {
@@ -486,7 +482,6 @@
 					cust_mbl_telno: cust_mbl_telno,
 					cust_cr_no: cust_cr_no,
 					other_cr: other_cr,
-					cust_mbl_telno: cust_mbl_telno,
 					cust_road_addr: cust_road_addr,
 					emp_no: emp_no,
 				}
@@ -500,22 +495,57 @@
 				window.location.reload();
 			},
 			
-			cusltInsert: function () {
-				var cust_sn = this.info.cust_sn;
-				var cuslt_cn = this.info.cuslt_cn;
+			custInsert: function () {
+				var cust_nm = this.info.cust_nm;
+				var cust_pridtf_no = this.info.cust_pridtf_no;
+				var cust_eml_addr = this.info.cust_eml_addr;
+				var cust_home_telno = this.info.cust_home_telno;
+				var cust_mbl_telno = this.info.cust_mbl_telno;
+				var cust_cr_no = this.info.cust_cr_no;
+				var other_cr = this.info.other_cr;
+				var cust_road_addr = this.info.cust_road_addr;
+				var emp_no = this.info.emp_no;
 				 
 				var params = { 
-					cust_sn: cust_sn,
-					cuslt_cn: cuslt_cn,
+					cust_nm: cust_nm,
+					cust_pridtf_no: cust_pridtf_no,
+					cust_eml_addr: cust_eml_addr,
+					cust_home_telno: cust_home_telno,
+					cust_mbl_telno: cust_mbl_telno,
+					cust_cr_no: cust_cr_no,
+					other_cr: other_cr,
+					cust_road_addr: cust_road_addr,
+					emp_no: emp_no,
 				}
-				cf_ajax("/communi/cusltInsert", params, this.insertStsCB);
+				cf_ajax("/customer/custInsert", params, this.insertStsCB);
 			},
 			insertStsCB: function (data) {
 				if (data.status == "OK") {
-					alert("상담내역 입력 완료");
+					alert("등록 완료");
 				}
-
+				$('#pop_cust_info').modal('hide');
+				window.location.reload();
 			},
+			
+			
+			cnsltInsert: function () {
+				var emp_no = this.emp_no;
+				var cust_sn = this.info.cust_sn;
+				var cnslt_cn = this.info.cnslt_cn;
+				 
+				var params = { 
+					emp_no: emp_no,
+					cust_sn: cust_sn,
+					cnslt_cn: cnslt_cn,
+				}
+				cf_ajax("/communi/cnsltInsert", params, this.insertStsCB);
+			},
+			isEmpty(value) {
+                return value !== '';
+            },
+			isNotEmpty(value){
+				return value === '';
+			}
 			
         }
     });
