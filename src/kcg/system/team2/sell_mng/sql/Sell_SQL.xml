@@ -16,7 +16,10 @@
 		ep.sale_beg_dt,
 		ep.sale_end_dt,
 		ep.promtn_yn,
-		ep.interest_no
+		ep.air_max,
+		ep.air_min,
+		ep.air_beg_dt,
+		ep.air_end_dt
 	 FROM 
    		 kcgbd.e_product_save ep
 			LEFT JOIN 
@@ -27,7 +30,9 @@
 			    kcgbd.e_common ec_cycle ON ep.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ep.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
-				where 1=1
+			    
+				where ep.sale_stat='SS02'
+				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ep.prod_nm like CONCAT('%',#{prod_nm},'%')
 		</if>
@@ -54,7 +59,10 @@
 			el.loan_sale_beg_dt,
 			el.loan_sale_end_dt,
 			el.promtn_yn,
-			el.interest_no
+			el.air_max,
+			el.air_min,
+			el.air_beg_dt,
+			el.air_end_dt
 		 FROM 
    			 kcgbd.e_product_loan el
 		LEFT JOIN 
@@ -65,7 +73,9 @@
 		    kcgbd.e_common ec_cycle ON el.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 		LEFT JOIN 
 		    kcgbd.e_common ec_stat ON el.loan_sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
-			where 1=1
+		    
+			where el.loan_sale_stat='SS02'
+			
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and el.prod_nm like CONCAT('%',#{prod_nm},'%')
 		</if>
@@ -93,7 +103,11 @@
 			ea.sale_beg_dt,
 			ea.sale_end_dt,
 			ea.promtn_yn,
-			ea.interest_no
+			ea.air_max,
+			ea.air_min,
+			ea.air_beg_dt,
+			ea.air_end_dt
+			
 		 FROM 
    			 kcgbd.e_product_ac ea
 			LEFT JOIN 
@@ -104,7 +118,9 @@
 			    kcgbd.e_common ec_cycle ON ea.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ea.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
-				where 1=1
+			    
+				where ea.sale_stat='SS02'
+				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ea.prod_nm like CONCAT('%',#{prod_nm},'%')
 		</if>
@@ -132,7 +148,10 @@
 			ed.sale_beg_dt,
 			ed.sale_end_dt,
 			ed.promtn_yn,
-			ed.interest_no
+			ed.air_max,
+			ed.air_min,
+			ed.air_beg_dt,
+			ed.air_end_dt		
 		FROM 
    		 kcgbd.e_product_dp ed
 			LEFT JOIN 
@@ -143,7 +162,9 @@
 			    kcgbd.e_common ec_cycle ON ed.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ed.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
-				where 1=1
+			    
+				where ed.sale_stat='SS02'
+				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ed.prod_nm like CONCAT('%',#{prod_nm},'%')
 		</if>

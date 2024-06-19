@@ -36,7 +36,7 @@
 				<li class="active"><strong>상품정보조회</strong></li>
 			</ol>
 
-			<h2>판매관리 > 상품정보조회</h2>
+			<h2>판매관리 > 상품정보조회 > 판매중 상품</h2>
 			<br />
 
 			<div class="flex-column flex-gap-10" id="vueapp">

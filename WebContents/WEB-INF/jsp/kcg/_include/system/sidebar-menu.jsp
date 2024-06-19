@@ -73,7 +73,7 @@
 				<li data-lnb="11" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
-						<span class="title">EZEN 판매관리</span>
+						<span class="title">EZEN 판매관리(사용자)</span>
 					</a>
 					<ul data-lnb="11" data-snb="0">
 						<li data-lnb="11" data-snb="1">

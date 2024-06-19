@@ -1,7 +1,5 @@
 package kcg.system.team2.sell_mng.svc;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
