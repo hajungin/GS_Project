@@ -87,6 +87,9 @@
        <div class="flex flex-100 flex-padding-10 flex-gap-10"
 						style="justify-content: flex-end; border: 1px solid #999999;">
 						<button type="button" class="btn btn-blue btn-icon icon-left"
+							@click="cf_movePage('/2team/prod/insert')">
+						 	상품등록 <i class="entypo entypo-info"></i>
+						</button><button type="button" class="btn btn-blue btn-icon icon-left"
 							@click="popupPrint()">
 							상세내역 <i class="entypo entypo-info"></i>
 						</button>

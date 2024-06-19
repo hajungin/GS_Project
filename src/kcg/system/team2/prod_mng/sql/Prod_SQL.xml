@@ -163,5 +163,50 @@
    		 AND CAST(#{from_date} AS DATE) BETWEEN sale_beg_dt AND sale_end_dt
 		</if>
 	</select>
+	
+	
+	<insert id="COsave" parameterType="cmmnMap">
+		insert into kcgbd.e_prod_code (prod_no, prod_type) values 
+		(#{prod_no}, #{prod_type})
+	</insert>
+	
+	<insert id="PSsave" parameterType="cmmnMap">
+		insert into kcgbd.e_product_save (prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, price_max, price_min, sale_stat, sale_beg_dt, sale_end_dt, promtn_yn) 
+		values 
+		(#{prod_no},#{prod_nm},#{prod_type},#{sub_tg},#{pay_period},#{pay_cycle},#{price_max},#{price_min},#{sale_stat}, 
+		CAST(#{sale_beg_dt} AS DATE), CAST(#{sale_end_dt} AS DATE), #{promtn_yn})
+	</insert>
+	
+	<insert id="Losave" parameterType="cmmnMap">
+		insert into kcgbd.e_product_load (prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, price_max, price_min, sale_stat, sale_beg_dt, sale_end_dt, promtn_yn) 
+		values 
+		(#{prod_no},#{prod_nm},#{prod_type},#{sub_tg},#{pay_period},#{pay_cycle},#{price_max},#{price_min},#{sale_stat}, 
+		CAST(#{sale_beg_dt} AS DATE), CAST(#{sale_end_dt} AS DATE), #{promtn_yn})
+	</insert>
+	
+	<insert id="DPsave" parameterType="cmmnMap">
+		insert into kcgbd.e_product_dp (prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, price_max, price_min, sale_stat, sale_beg_dt, sale_end_dt, promtn_yn) 
+		values 
+		(#{prod_no},#{prod_nm},#{prod_type},#{sub_tg},#{pay_period},#{pay_cycle},#{price_max},#{price_min},#{sale_stat}, 
+		CAST(#{sale_beg_dt} AS DATE), CAST(#{sale_end_dt} AS DATE), #{promtn_yn})
+	</insert>
+	
+	<insert id="ACsave" parameterType="cmmnMap">
+		insert into kcgbd.e_product_ac (prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, price_max, price_min, sale_stat, sale_beg_dt, sale_end_dt, promtn_yn) 
+		values 
+		(#{prod_no},#{prod_nm},#{prod_type},#{sub_tg},#{pay_period},#{pay_cycle},#{price_max},#{price_min},#{sale_stat}, 
+		CAST(#{sale_beg_dt} AS DATE), CAST(#{sale_end_dt} AS DATE), #{promtn_yn})
+	</insert>
+	
+	
+	<select id="code" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT prod_no FROM kcgbd.e_prod_code WHERE prod_type =#{prod_type} ORDER BY prod_no DESC LIMIT 1;
+	</select>
+
+
+
+
+
+
 
 </mapper>

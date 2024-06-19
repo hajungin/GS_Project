@@ -98,14 +98,14 @@
 				<li data-lnb="11" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
-						<span class="title">EZEN 상품관리</span>
+						<span class="title">EZEN 상품관리(관리자)</span>
 					</a>
 					<ul data-lnb="11" data-snb="0">
 						<li data-lnb="11" data-snb="1">
 							<a href="#gm" onclick="cf_movePage('/2team/prod/list')">
 								<span class="title">상품조회</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/sell/join')">
+							<a href="#gm" onclick="cf_movePage('/2team/prod/insert')">
 								<span class="title">상품등록</span>
 							</a>
 							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
