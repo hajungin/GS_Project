@@ -73,7 +73,7 @@
 				<li data-lnb="11" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
-						<span class="title">GSITM 판매관리</span>
+						<span class="title">EZEN 판매관리(사용자)</span>
 					</a>
 					<ul data-lnb="11" data-snb="0">
 						<li data-lnb="11" data-snb="1">
@@ -83,11 +83,36 @@
 							<a href="#gm" onclick="cf_movePage('/sell/join')">
 								<span class="title">가입관리</span>
 							</a>
+							<a href="#gm" onclick="cf_movePage('/sell/membership')">
+								<span class="title">가입현황</span>
+							</a>
 							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
-								<span class="title">판매달성률관리</span>
+								<span class="title">판매달성률관리(관리자)</span>
 							</a>
 							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
 								<span class="title">판매달성률조회</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li data-lnb="11" data-snb="0">
+					<a href="#gm">
+						<i class="entypo-newspaper"></i>
+						<span class="title">EZEN 상품관리(관리자)</span>
+					</a>
+					<ul data-lnb="11" data-snb="0">
+						<li data-lnb="11" data-snb="1">
+							<a href="#gm" onclick="cf_movePage('/2team/prod/list')">
+								<span class="title">상품조회</span>
+							</a>
+							<a href="#gm" onclick="cf_movePage('/2team/prod/insert')">
+								<span class="title">상품등록</span>
+							</a>
+							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
+								<span class="title">상품수정</span>
+							</a>
+							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
+								<span class="title">상품삭제</span>
 							</a>
 						</li>
 					</ul>
