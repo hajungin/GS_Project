@@ -39,7 +39,7 @@ public class PromionCtl {
 	public String openPageDtl(Model model, CmmnMap params) {
 		
 		String sProdTyCd = params.getString("prod_type", "PT01");
-		model.addAttribute("prod_ds_sn", params.getString("prod_ds_sn", ""));			// 설계설계번호
+		model.addAttribute("plan_no", params.getString("plan_no", ""));			// 설계설계번호
 		model.addAttribute("cust_mbl_telno", params.getString("cust_mbl_telno", ""));	// 고객KEY
 		model.addAttribute("prod_type", sProdTyCd);										// 설계타입코드 : 1.적금설계, 2.목돈마련설계, 3.예금설계, 4.대출설계
 		
@@ -47,11 +47,11 @@ public class PromionCtl {
 		if("PT01".equals(sProdTyCd)) {
 			sRsltUrl = "kcg/system/team2/team2_cal/CalcDpst";
 		}else if("PT02".equals(sProdTyCd)) {
-			sRsltUrl = "kcg/system/promion_mng/PromionAcmlplDtl";
+			sRsltUrl = "kcg/system/team2_cal/CalcDpstplDtl";
 		}else if("PT03".equals(sProdTyCd)) {
-			sRsltUrl = "kcg/system/promion_mng/PromionDpstplDtl";
+			sRsltUrl = "kcg/system/team2_cal/CalcAcmlplDtl";
 		}else if("PT04".equals(sProdTyCd)) {
-			sRsltUrl = "kcg/system/promion_mng/PromionLoanplDtl";
+			sRsltUrl = "kcg/system/team2_cal/CalcLoanDtl";
 		}
 		
 		return sRsltUrl;
@@ -67,7 +67,7 @@ public class PromionCtl {
 		return promionSvc.getDsgInfo(params);
 	}
 	
-	@RequestMapping("/getProd")
+	@RequestMapping("/getProdInfo")
 	public CmmnMap getProdInfo(CmmnMap params) {
 		System.out.println("==========================" + params);
 		CmmnMap rsltMap = new CmmnMap();

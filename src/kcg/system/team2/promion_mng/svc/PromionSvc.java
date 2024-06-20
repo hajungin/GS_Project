@@ -53,7 +53,7 @@ public class PromionSvc {
 	
 	public CmmnMap getProdInfo(CmmnMap params) {
 		System.out.println("====================svc" + params);
-		CmmnMap result = cmmnDao.selectOne("system.team2.promion_mng.getProd", params);
+		CmmnMap result = cmmnDao.selectOne("system.team2.promion_mng.getProdInfo", params);
 		return result;
 	}
 
