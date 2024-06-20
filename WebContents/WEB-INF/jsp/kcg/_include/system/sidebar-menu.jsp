@@ -32,6 +32,40 @@
 	
 			<ul id="main-menu" class="main-menu">
 			
+				<li data-lnb="10" data-snb="0">
+					<a href="#gm">
+						<i class="entypo-newspaper"></i>
+						<span class="title">EZEN 고객관리</span>
+					</a>
+					<ul data-lnb="10" data-snb="0">
+						<li data-lnb="10" data-snb="1">
+							<a href="#gm" onclick="cf_movePage('/custMng/custInfoList')">
+								<span class="title">고객정보 목록 조회</span>
+							</a>
+						</li>
+					</ul>
+					<ul data-lnb="10" data-snb="0">
+						<li data-lnb="10" data-snb="2">
+							<a href="#gm" onclick="cf_movePage('/communi/communiList')">
+								<span class="title">상담내역 조회</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li data-lnb="10" data-snb="0">
+					<a href="#gm">
+						<i class="entypo-newspaper"></i>
+						<span class="title">EZEN 담당자 관리</span>
+					</a>
+					<ul data-lnb="10" data-snb="0">
+						<li data-lnb="10" data-snb="1">
+							<a href="#gm" onclick="cf_movePage('/empMng/empMngList')">
+								<span class="title">담당자 목록 조회</span>
+							</a>
+						</li>
+					</ul>
+				</li>
 			
 				<li data-lnb="10" data-snb="0">
 					<a href="#gm">
