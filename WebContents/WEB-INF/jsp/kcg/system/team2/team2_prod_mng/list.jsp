@@ -7,13 +7,10 @@
 <jsp:include page="/WEB-INF/jsp/kcg/_include/system/header_meta.jsp"
 	flush="false" />
 <!-- Imported styles on this page -->
-	<link rel="stylesheet"
-		href="/static_resources/system/js/datatables/datatables.css">
-	<link rel="stylesheet"
-		href="/static_resources/system/js/datatables/prodlist.css">
-	<link rel="stylesheet"
-		href="/static_resources/system/js/select2/select2.css">
+	<link rel="stylesheet" href="/static_resources/system/js/datatables/datatables.css">
+	<link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
+	<link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
 	
 
 <title>상품정보조회</title>
@@ -71,7 +68,7 @@
                         <option value="">전체</option>
                         <option value="ST01">일반개인</option>
                         <option value="ST02">청년</option>
-                        <option value="STO3">소상공인</option>
+                        <option value="ST03">소상공인</option>
                     </select>
                 </div>
             </div>
@@ -127,19 +124,19 @@
 								<td class="center"><input type="checkbox"
 									:data-idx="item.prod_cd" name="is_check" @click="onCheck">
 								</td>
-								<td class="left" @click="gotoDtl(item.prod_cd)">{{item.prod_nm}}</td>
-								<td class="center" @click="gotoDtl(item.prod_cd)">{{item.prod_type}}</td>
-								<td class="right" @click="gotoDtl(item.prod_cd)"
+								<td class="left" @click="gotoDtl(item.prod_no)">{{item.prod_nm}}</td>
+								<td class="center" @click="gotoDtl(item.prod_no)">{{item.prod_type}}</td>
+								<td class="right" @click="gotoDtl(item.prod_no)"
 									style="text-align: right;">{{item.sub_tg}}</td>
-								<td class="right" @click="gotoDtl(item.prod_cd)" style="text-align: right;">
+								<td class="right" @click="gotoDtl(item.prod_no)" style="text-align: right;">
 								    {{ formatCurrency(item.price_min) }}</td>
-								<td class="right" @click="gotoDtl(item.prod_cd)" style="text-align: right;">
+								<td class="right" @click="gotoDtl(item.prod_no)" style="text-align: right;">
 								    {{ formatCurrency(item.price_max) }}</td>
-								<td class="right" @click="gotoDtl(item.prod_cd)"
+								<td class="right" @click="gotoDtl(item.prod_no)"
 									style="text-align: right;">{{item.pay_cycle}}</td>
-								<td class="right" @click="gotoDtl(item.prod_cd)"
+								<td class="right" @click="gotoDtl(item.prod_no)"
 									style="text-align: right;">{{item.pay_period}}개월</td>
-<!-- 								<td class="center" @click="gotoDtl(item.prod_cd)">{{item.promtn_yn}}</td> -->
+
 							</tr>
 						</tbody>
 					</table>
@@ -155,8 +152,114 @@
 				flush="false" />
 
 		</div>
-
 	</div>
+	<!-- 고객기본정보조회 팝업 -->
+<div class="modal fade" id="pop_cust_info">
+<template>
+	<div class="modal-dialog" style="width: 80%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose">&times;</button>
+				<h4 class="modal-title" id="modify_nm">상품기본정보</h4>
+			</div>
+			<div class="modal-body">
+                <div class="panel-body" style="display: flex;border: 1px solid #FF0000;width: 100%;">			
+                    <div class="left-panel" style="width: 70%;">
+                        <div class="form-group">
+                            <label for="err_eng_nm" class="fix-width-33">상품코드 :</label>
+                            <input type="text" class="form-control" id="prod_no" v-model="info.prod_no" disabled="disabled">
+                         </div>
+                        <div class="form-group">
+                           <label for="err_eng_nm" class="fix-width-33">상품명 :</label>
+                            <input type="text" class="form-control" id="prod_nm " v-model="info.prod_nm">
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="err_eng_nm" class="fix-width-33">상품유형 :</label>
+                            <input type="text"  class="form-control" id="prod_type" v-model="info.prod_type">
+                            <label for="err_eng_nm" class="fix-width-33">가입대상 :</label>
+                            <input type="text" class="form-control" id="sub_tg" v-model="info.sub_tg">
+                        </div>
+      
+                        <div class="form-group">
+                            <label for="err_eng_nm" class="fix-width-33">납입 기간 :</label>
+                            <input type="text" class="form-control" id="pay_period" v-model="info.pay_period">
+                            <label for="err_eng_nm" class="fix-width-33">납입 주기 :</label>
+                            <input type="text" class="form-control" id="pay_cycle" v-model="info.pay_cycle">
+                        </div>
+      
+                        <div class="form-group">
+                            <label for="err_eng_nm" class="fix-width-33">가입 금액 MAX :</label>
+                            <input type="text" class="form-control" id="price_max" v-model="info.price_max">
+                            <label for="err_eng_nm" class="fix-width-33">가입 금액 MIN  :</label>
+                            <input type="text" class="form-control" id="price_min" v-model="info.price_min">
+                        </div>
+                        
+                        <div class="form-group">
+                       		<label for="err_eng_nm" class="fix-width-33">이자과세 :</label>
+                            <input type="text" class="form-control" id="interest_ta" v-model="info.interest_ta">
+                            <label for="err_eng_nm" class="fix-width-33">판매상태  :</label>
+                            <input type="text" class="form-control" id="sale_stat" v-model="info.sale_stat">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="err_eng_nm" class="fix-width-33">판매시작일  :</label>
+                            <input type="text" class="form-control" id="sale_beg_dt" v-model="info.sale_beg_dt">
+                            <label for="err_eng_nm" class="fix-width-33">판매종료일  :</label>
+                            <input type="text" class="form-control" id="sale_end_dt" v-model="info.sale_end_dt">
+                        </div> 
+                        
+                        <div class="form-group">
+                            <label for="err_eng_nm" class="fix-width-33">적용이율 최대 :</label>
+                            <input type="text" class="form-control" id="air_max" v-model="info.air_max">
+                            <label for="err_eng_nm" class="fix-width-33">적용이율 최소 :</label>
+                            <input type="text" class="form-control" id="air_min" v-model="info.air_min">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="err_eng_nm" class="fix-width-33">적용기간 시작일 :</label>
+                            <input type="text" class="form-control" id="air_beg_dt" v-model="info.air_beg_dt">
+                            <label for="err_eng_nm" class="fix-width-33">적용기간 종료일 :</label>
+                            <input type="text" class="form-control" id="air_end_dt" v-model="info.air_end_dt">
+                        </div>  
+      
+                    </div>
+                    <div class="right-panel"  style="width: 30%;">
+                        <div class="form-group">
+                            <label for="err_eng_nm">변동 이율내역 :</label>
+                        </div>	
+                    <div>
+                        <textarea  id="tsk_dtl_cn" v-model="info.tsk_dtl_cn"style="width:100%;" ></textarea>               
+                    </div>
+                    </div>
+                </div>          
+    
+			</div>
+			<div class="modal-footer">
+				
+				<!-- 녹색 버튼, 왼쪽에 저장 아이콘 -->
+				<button type="button" class="btn btn-success btn-icon icon-left" data-dismiss="modal">
+				    <i class="fa fa-save"></i> <!-- save 아이콘 -->
+				    상품정보수정
+				</button>
+				
+				<!-- 빨간색 버튼, 왼쪽에 쓰레기통 아이콘 -->
+				<button type="button" class="btn btn-danger btn-icon icon-left" data-dismiss="modal">
+				    <i class="fa fa-trash"></i> <!-- delete 아이콘 -->
+				    상품판매중지
+				</button>
+				
+				<!-- 회색 버튼, 왼쪽에 X 아이콘 -->
+				<button type="button" class="btn btn-secondary btn-icon icon-left" data-dismiss="modal">
+				    Close
+				</button>
+
+
+		</div>
+	</div>
+</template>
+</div>
+<!--// 고객기본정보조회 팝업  -->
 </body>
 <script>
 var vueapp = new Vue({
@@ -199,6 +302,7 @@ var vueapp = new Vue({
             if (this.from_date && !regex.test(this.from_date)) {
                 alert('날짜 형식이 올바르지 않습니다. yyyy-mm-dd 형식으로 입력해주세요.');
                 // 형식에 맞지 않는 경우 입력을 초기화하거나 기타 작업을 수행할 수 있습니다.
+                return;
             }
 			this.all_srch = "N";
 			this.getList(isInit);
@@ -261,8 +365,92 @@ var vueapp = new Vue({
 		formatCurrency(value) {
             if (!value) return '';
             return parseFloat(value).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
-        }
+        },
+        gotoDtl : function(prod_no){	
+			pop_cust_info.init(prod_no);
+			$('#pop_cust_info').modal('show');
+		},
     }
+});
+var pop_cust_info = new Vue({
+	el : "#pop_cust_info",
+	data : {
+		info : {
+		prod_no : "${prod_no}",
+		prod_nm : "",
+		prod_type: "",
+		sub_tg:"",
+		pay_period:"",
+		pay_cycle: "",
+		price_max:"",
+		price_min:"",
+		sale_stat:"",
+		sale_beg_dt:"",
+		sale_end_dt:"",
+		promtn_yn:"",
+		interest_ta:"",
+		air_min:"",
+		air_max:"",
+		air_beg_dt:"",
+		air_end_dt:"",
+		
+		}
+	},
+	methods : {
+		init : function(prod_no){
+			this.initInfo();
+			this.info.prod_no = prod_no;
+			if(!cf_isEmpty(this.info.prod_no)){
+				this.getInfo();
+			}
+		},
+		initInfo : function(){
+			this.info = {
+				prod_no : "",
+				prod_nm : "",
+				prod_type: "",
+				sub_tg:"",
+				pay_period:"",
+				pay_cycle: "",
+				price_max:"",
+				price_min:"",
+				sale_stat:"",
+				sale_beg_dt:"",
+				sale_end_dt:"",
+				promtn_yn:"",
+				interest_ta:"",
+				air_min:"",
+				air_max:"",
+				air_beg_dt:"",
+				air_end_dt:"",
+			}
+		},
+		getInfo : function(){
+			var params = {
+					prod_no : this.info.prod_no,
+					prod_nm : this.info.prod_nm,
+					prod_type : this.info.prod_type,
+					sub_tg : this.info.sub_tg,
+					pay_period : this.info.pay_period,
+					pay_cycle : this.info.pay_cycle,
+					price_max : this.info.price_max,
+					price_min : this.info.price_min,
+					sale_stat : this.info.sale_stat,
+					sale_beg_dt : this.info.sale_beg_dt,
+					sale_end_dt : this.info.sale_end_dt,
+					promtn_yn : this.info.promtn_yn,
+					interest_ta : this.info.interest_ta,
+					air_min : this.info.air_min,
+					air_max : this.info.air_max,
+					air_beg_dt : this.info.air_beg_dt,
+					air_end_dt : this.info.air_end_dt,
+				}
+			cf_ajax("/2team/prod/getInfo", params, this.getInfoCB);
+		},
+		getInfoCB : function(data){
+			this.info = data;
+		},
+	},
 });
 </script>
 
