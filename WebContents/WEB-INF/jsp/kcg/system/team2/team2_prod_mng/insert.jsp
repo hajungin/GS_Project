@@ -95,7 +95,7 @@
 							<select class="form-control" id="pay_cycle" v-model="info.pay_cycle">
 								<option value="" disabled selected>납입주기를 선택하세요</option>
 								<option value="PC01">월납</option>
-								<option value="PC02">년납</option>
+								<option value="PC02" :disabled="isYearlyDisabled">년납</option>
 								<option value="PC03">일시납</option>
 							</select>
 						</div>		
@@ -217,6 +217,7 @@ var vueapp = new Vue({
 		},
 	},
 	mounted() {
+		this.setDates();
 	    this.info.prod_type = "";
 	    this.info.sale_stat = "";
 	    this.info.pay_cycle = "";
@@ -226,43 +227,42 @@ var vueapp = new Vue({
 	    this.info.prod_no="";
 	    this.info.price_min="";
 	    this.info.price_max="";
-	    // 날짜 가져오기
-	    const today = new Date();
-        const nextMonth = new Date(today);
-        nextMonth.setMonth(today.getMonth() + 1);
-
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1); // getMonth()는 0부터 시작하므로 +1
-        const day = String(today.getDate());
-
-        const nextYear = nextMonth.getFullYear();
-        const nextMonthFormatted = String(nextMonth.getMonth() + 1).padStart(2, '0'); // getMonth()는 0부터 시작하므로 +1
-        const nextDay = String(nextMonth.getDate()).padStart(2, '0');
-
-        
-        // 현재 날짜를 'YYYY-MM-DD' 형식으로 설정
-//         this.info.air_beg_dt = `${year}-${month}-${day}`;
-//         this.info.air_end_dt = `${nextYear}-${nextMonthFormatted}-${nextDay}`;
-//         this.info.sale_beg_dt = `${year}-${month}-${day}`;
-//         this.info.sale_end_dt = `${nextYear}-${nextMonthFormatted}-${nextDay}`;
+	    
+	   
         console.log(this.info.air_beg_dt); // 콘솔에서 값 확인
         console.log(this.info.air_end_dt); // 콘솔에서 값 확인
         console.log(this.info.sale_beg_dt); // 콘솔에서 값 확인
         console.log(this.info.sale_end_dt); // 콘솔에서 값 확인
 	  },
 	methods : {
+		//split('T')[0]을 사용하여 날짜 입력 필드에 필요한 형식인 YYYY-MM-DD 부분만 추출
+		setDates() {
+                const today = new Date();
+                const nextMonth = new Date(today);
+                nextMonth.setMonth(today.getMonth() + 1);
+
+                this.info.air_beg_dt = today.toISOString().split('T')[0];
+                this.info.air_end_dt = nextMonth.toISOString().split('T')[0];
+                
+                this.info.sale_beg_dt = today.toISOString().split('T')[0];
+                this.info.sale_end_dt = nextMonth.toISOString().split('T')[0];
+        },
 		generateProductCode() {
 		    cf_ajax("/2team/prod/code", { prod_type: this.info.prod_type }, this.code.bind(this));
 		},
+		
 		// 상품 유형 선택 시 자동으로 판매중으로 설정
-		updateProductStat() {
-		      if(this.info.prod_type != null){
-		    	  this.info.sale_stat = "SS01";
-		      }
-		    },
+// 		updateProductStat() {
+// 		      if(this.info.prod_type != null){
+// 		    	  this.info.sale_stat = "SS01";
+// 		      }
+// 		    },
 		code(data) {
 		    this.info.prod_no = data.prod_no + 1; // 상품코드 + 1 값으로 변경
 		},
+		isYearlyDisabled() {
+            return this.info.pay_period !== '' && parseInt(this.info.pay_period) <= 12;
+        },
 
 		 
 		save : function(){
@@ -342,8 +342,8 @@ var vueapp = new Vue({
 			cf_ajax("/2team/prod/save", this.info, this.saveCB);
 		},
 		saveCB : function(data){
-			alert("저장되었습니다.");
-			cf_movePage('/2team/prod/insert');
+				alert("저장되었습니다.");
+				cf_movePage('/2team/prod/list');
 		},
 	}
 });

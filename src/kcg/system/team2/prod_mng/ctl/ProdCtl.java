@@ -44,9 +44,16 @@ public class ProdCtl {
 		return prodSvc.code(params);
 	}
 	
+	// 모달창에서 선택 상품 정보
 	@RequestMapping("/getInfo")
 	public CmmnMap getInfo(CmmnMap params) {
 		return prodSvc.getInfo(params);
+	}
+	
+	//상품 수정
+	@RequestMapping("/update")
+	public CmmnMap update(CmmnMap params) {
+		return prodSvc.update(params);
 	}
 	
 	

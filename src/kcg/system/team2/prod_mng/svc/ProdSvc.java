@@ -1,5 +1,7 @@
 package kcg.system.team2.prod_mng.svc;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,7 +82,19 @@ public class ProdSvc {
 	            rslt = cmmnDao.selectOne("system.team2.prod_mng.getACInfo", params);
 	        }
 	    }
+	    List<CmmnMap> rsltHist = cmmnDao.selectList("system.team2.prod_mng.getIT", params);
+		String strHist = "";
+		for(CmmnMap map : rsltHist) {
+			strHist = strHist + map.getString("air_beg_dt") + " ~ " + map.getString("air_end_dt") + "\n" + "(최저)" + map.get("air_min") + "% (최고)" + map.get("air_max") + "%\n";
+		}
+		rslt.put("prod_hist", strHist);
 	    return rslt;
+	}
+
+	public CmmnMap update(CmmnMap params) {
+//		return cmmnDao.selectOne("system.team2.prod_mng.update",params);
+		//여기도 쿼리 4개 돌려야됨
+		return null;
 	}
 
 

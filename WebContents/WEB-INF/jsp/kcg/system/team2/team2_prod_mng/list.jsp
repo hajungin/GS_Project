@@ -162,8 +162,9 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose">&times;</button>
 				<h4 class="modal-title" id="modify_nm">상품기본정보</h4>
 			</div>
+			<span v-if="info.sale_stat === 'SS04'" style="display: inline-block; text-align: center; width: 100%; font-size: 24px;">해당상품은 판매종료입니다.</span>
 			<div class="modal-body">
-                <div class="panel-body" style="display: flex;border: 1px solid #FF0000;width: 100%;">			
+                <div class="panel-body" style="display: flex;border: 1px solid #FF0000;width: 100%;">	
                     <div class="left-panel" style="width: 70%;">
                         <div class="form-group">
                             <label for="err_eng_nm" class="fix-width-33">상품코드 :</label>
@@ -171,21 +172,34 @@
                          </div>
                         <div class="form-group">
                            <label for="err_eng_nm" class="fix-width-33">상품명 :</label>
-                            <input type="text" class="form-control" id="prod_nm " v-model="info.prod_nm">
+                            <input type="text" class="form-control" id="prod_nm " v-model="info.prod_nm" disabled="disabled">
                         </div>
     
                         <div class="form-group">
                             <label for="err_eng_nm" class="fix-width-33">상품유형 :</label>
-                            <input type="text"  class="form-control" id="prod_type" v-model="info.prod_type">
+                            <select type="text" class="form-control" id="prod_type" v-model="info.prod_type" disabled="disabled">
+						        <option value="PT01">적금</option>
+						        <option value="PT02">예금</option>
+						        <option value="PT03">대출</option>
+						        <option value="PT04">목돈마련</option>
+						    </select>
                             <label for="err_eng_nm" class="fix-width-33">가입대상 :</label>
-                            <input type="text" class="form-control" id="sub_tg" v-model="info.sub_tg">
+                            <select class="form-control" id="sub_tg" v-model="info.sub_tg">
+						        <option value="ST01">일반개인</option>
+						        <option value="ST02">청년생활</option>
+						        <option value="ST03">소상공인</option>
+						    </select>
                         </div>
       
                         <div class="form-group">
                             <label for="err_eng_nm" class="fix-width-33">납입 기간 :</label>
-                            <input type="text" class="form-control" id="pay_period" v-model="info.pay_period">
+                            <input type="text" class="form-control" id="pay_period" v-model="info.pay_period" placeholder="개월">
                             <label for="err_eng_nm" class="fix-width-33">납입 주기 :</label>
-                            <input type="text" class="form-control" id="pay_cycle" v-model="info.pay_cycle">
+                            <select class="form-control" id="pay_cycle" v-model="info.pay_cycle">
+						        <option value="PC01">월납</option>
+						        <option value="PC02">년납</option>
+						        <option value="PC03">일시납</option>
+						    </select>
                         </div>
       
                         <div class="form-group">
@@ -197,16 +211,27 @@
                         
                         <div class="form-group">
                        		<label for="err_eng_nm" class="fix-width-33">이자과세 :</label>
-                            <input type="text" class="form-control" id="interest_ta" v-model="info.interest_ta">
-                            <label for="err_eng_nm" class="fix-width-33">판매상태  :</label>
-                            <input type="text" class="form-control" id="sale_stat" v-model="info.sale_stat">
+                            <select class="form-control" id="interest_ta" v-model="info.interest_ta">
+						        <option value="IT01">일반과세</option>
+						        <option value="IT02">세금우대</option>
+						        <option value="IT03">비과세</option>
+						    </select>
+                            <label for="err_eng_nm" class="fix-width-33">판매상태 :</label>
+                            <select class="form-control" id="sale_stat" v-model="info.sale_stat" :disabled="info.sale_stat === 'SS04'">
+						        <option value="SS01">판매예정</option>
+						        <option value="SS02">판매진행</option>
+						        <option value="SS03">판매중지</option>
+						        <option value="SS04" disabled="disabled">판매종료</option>
+						    </select>
                         </div>
                         
+                        
                         <div class="form-group">
-                            <label for="err_eng_nm" class="fix-width-33">판매시작일  :</label>
-                            <input type="text" class="form-control" id="sale_beg_dt" v-model="info.sale_beg_dt">
-                            <label for="err_eng_nm" class="fix-width-33">판매종료일  :</label>
-                            <input type="text" class="form-control" id="sale_end_dt" v-model="info.sale_end_dt">
+                            <label for="err_eng_nm" class="fix-width-33">판매기간 :</label>
+                            <input type="date" class="form-control" id="sale_beg_dt" v-model="info.sale_beg_dt">
+                            <div>To  .</div>
+                            <input type="date" class="form-control" id="sale_end_dt" v-model="info.sale_end_dt">
+                            <div>End .</div>
                         </div> 
                         
                         <div class="form-group">
@@ -217,10 +242,11 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="err_eng_nm" class="fix-width-33">적용기간 시작일 :</label>
-                            <input type="text" class="form-control" id="air_beg_dt" v-model="info.air_beg_dt">
-                            <label for="err_eng_nm" class="fix-width-33">적용기간 종료일 :</label>
-                            <input type="text" class="form-control" id="air_end_dt" v-model="info.air_end_dt">
+                            <label for="err_eng_nm" class="fix-width-33">적용기간 :</label>
+                            <input type="date" class="form-control" id="air_beg_dt" v-model="info.air_beg_dt">
+                            <div>To  .</div>
+                            <input type="date" class="form-control" id="air_end_dt" v-model="info.air_end_dt">
+                            <div>End .</div>
                         </div>  
       
                     </div>
@@ -229,7 +255,7 @@
                             <label for="err_eng_nm">변동 이율내역 :</label>
                         </div>	
                     <div>
-                        <textarea  id="tsk_dtl_cn" v-model="info.tsk_dtl_cn"style="width:100%;" ></textarea>               
+                        <textarea  id="tsk_dtl_cn" v-model="info.prod_hist"style="width:100%;" readonly="readonly" ></textarea>               
                     </div>
                     </div>
                 </div>          
@@ -237,19 +263,14 @@
 			</div>
 			<div class="modal-footer">
 				
-				<!-- 녹색 버튼, 왼쪽에 저장 아이콘 -->
-				<button type="button" class="btn btn-success btn-icon icon-left" data-dismiss="modal">
-				    <i class="fa fa-save"></i> <!-- save 아이콘 -->
+				<button type="button" v-if="info.sale_stat !== 'SS04'" class="btn btn-success btn-icon icon-left" @click=update()>
+				    <i class="fa fa-save"></i> 
 				    상품정보수정
 				</button>
-				
-				<!-- 빨간색 버튼, 왼쪽에 쓰레기통 아이콘 -->
-				<button type="button" class="btn btn-danger btn-icon icon-left" data-dismiss="modal">
-				    <i class="fa fa-trash"></i> <!-- delete 아이콘 -->
+				<button type="button" v-if="info.sale_stat !== 'SS04'" class="btn btn-danger btn-icon icon-left" data-dismiss="modal">
+				    <i class="fa fa-trash"></i> 
 				    상품판매중지
 				</button>
-				
-				<!-- 회색 버튼, 왼쪽에 X 아이콘 -->
 				<button type="button" class="btn btn-secondary btn-icon icon-left" data-dismiss="modal">
 				    Close
 				</button>
@@ -393,6 +414,7 @@ var pop_cust_info = new Vue({
 		air_max:"",
 		air_beg_dt:"",
 		air_end_dt:"",
+		prod_hist:"",
 		
 		}
 	},
@@ -423,6 +445,7 @@ var pop_cust_info = new Vue({
 				air_max:"",
 				air_beg_dt:"",
 				air_end_dt:"",
+				prod_hist:"",
 			}
 		},
 		getInfo : function(){
@@ -444,11 +467,64 @@ var pop_cust_info = new Vue({
 					air_max : this.info.air_max,
 					air_beg_dt : this.info.air_beg_dt,
 					air_end_dt : this.info.air_end_dt,
+					prod_hist: this.info.prod_hist,
 				}
 			cf_ajax("/2team/prod/getInfo", params, this.getInfoCB);
 		},
 		getInfoCB : function(data){
 			this.info = data;
+		},
+		update : function(data){
+			// Date 객체로 변환
+            const air_beg_date = new Date(this.info.air_beg_dt);
+            const air_end_date = new Date(this.info.air_end_dt);
+            const sale_beg_date = new Date(this.info.sale_beg_dt);
+            const sale_end_date = new Date(this.info.sale_end_dt);
+			
+			if(cf_isEmpty(this.info.price_min && this.info.price_max)){
+				alert("가입금액을 입력하세요.");
+				return;
+			}
+			else if(parseInt(this.info.price_min) > parseInt(this.info.price_max)) {
+			    alert("가입금액 최소가 더 클 수 없습니다.");
+			    return;
+			}
+			else if(cf_isEmpty(this.info.pay_period)){
+				alert("납입기간을 입력하세요.");
+				return;
+			}
+			else if(cf_isEmpty(this.info.air_min && this.info.air_max)){
+				alert("적용이율을 입력하세요.");
+				return;
+			}
+			else if(parseFloat(this.info.air_min) > parseFloat(this.info.air_max)) {
+			    alert("적용이율 최소가 더 클 수 없습니다.");
+			    return;
+			}
+			else if(cf_isEmpty(this.info.air_beg_dt && this.info.air_end_dt)) {
+			    alert("적용기간을 입력하세요.");
+			    return;
+			}
+			else if (air_beg_date > air_end_date) {
+                alert("적용기간의 시작일은 종료일보다 늦을 수 없습니다.");
+                return;
+            }
+			else if(cf_isEmpty(this.info.sale_beg_dt && this.info.sale_end_dt)){
+				alert("판매기간을 입력하세요.");
+				return;
+			}
+			else if (sale_beg_date > sale_end_date) {
+                alert("판매기간의 시작일은 종료일보다 늦을 수 없습니다.");
+                return;
+            }
+			
+			if(!confirm("수정하시겠습니까?")) return;
+			
+			cf_ajax("/2team/prod/update", this.info, this.updateCB);
+		},
+		updateCB : function(data){
+			alert("저장되었습니다.");
+			cf_movePage('/2team/prod/list');
 		},
 	},
 });
