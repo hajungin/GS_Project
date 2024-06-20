@@ -16,7 +16,7 @@
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
 	
 
-<title>상품정보조회</title>
+<title>가입내역</title>
 </head>
 <body class="page-body">
 
@@ -33,10 +33,10 @@
 			<ol class="breadcrumb bc-3">
 				<li><a href="#none" onclick="cf_movePage('/system')"><i
 						class="fa fa-home"></i>Home</a></li>
-				<li class="active"><strong>상품정보조회</strong></li>
+				<li class="active"><strong>가입내역</strong></li>
 			</ol>
 
-			<h2>판매관리 > 상품정보조회 > 판매중 상품</h2>
+			<h2>판매관리 > 가입내역</h2>
 			<br />
 
 			<div class="flex-column flex-gap-10" id="vueapp">
@@ -74,13 +74,6 @@
                         <option value="STO3">소상공인</option>
                     </select>
                 </div>
-<!--                 <div class="form-group flex-20"> -->
-<!--                     <label>최대 최소 금액 :</label> -->
-<!--                     <div class="price-range"> -->
-<!--                         <input type="text" id="priceMin" placeholder="최소 금액"/>~ -->
-<!--                         <input type="text" id="priceMax" placeholder="최대 금액"/> -->
-<!--                     </div> -->
-<!--                 </div> -->
             </div>
 		    <div class="flex-wrap flex-20 flex flex-center flex-gap-10 flex-padding-110">
 			    <div class="form-group" style="width: 45%;">
@@ -135,10 +128,9 @@
 								<td class="center" @click="gotoDtl(item.prod_cd)">{{item.prod_type}}</td>
 								<td class="right" @click="gotoDtl(item.prod_cd)"
 									style="text-align: right;">{{item.sub_tg}}</td>
-								<td class="right" @click="gotoDtl(item.prod_cd)" style="text-align: right;">
-								    {{ formatCurrency(item.price_min) }}</td>
-								<td class="right" @click="gotoDtl(item.prod_cd)" style="text-align: right;">
-								    {{ formatCurrency(item.price_max) }}</td>
+								<td class="right" @click="gotoDtl(item.prod_cd)"
+									style="text-align: right;">{{item.price_min}}</td>
+								<td class="right" @click="gotoDtl(item.prod_cd)">{{item.price_max}}</td>
 								<td class="right" @click="gotoDtl(item.prod_cd)"
 									style="text-align: right;">{{item.pay_cycle}}</td>
 								<td class="right" @click="gotoDtl(item.prod_cd)"
@@ -170,8 +162,6 @@ var vueapp = new Vue({
         prod_nm: "",
         prod_type: "",
         sub_tg: "",
-//         price_max: "",
-//         price_min: "",
 		from_date:"",
         sale_beg_dt:"",
         sale_end_dt:"",
@@ -191,8 +181,7 @@ var vueapp = new Vue({
             this.sale_beg_dt = params.sale_beg_dt;
             this.sale_end_dt = params.sale_end_dt;
             this.from_date = params.from_date;
-//             this.price_max = params.price_max;
-//             this.price_min = params.price_min;
+
 
             this.getList();
         } else {
@@ -239,7 +228,7 @@ var vueapp = new Vue({
                 .setItem('pagingConfig', cv_pagingConfig)
                 .setItem('params', params);
 
-            cf_ajax("/sell/getList", params, this.getListCB);
+            cf_ajax("/sell/joinList", params, this.getListCB);
         },
         
         getListCB: function(data){
@@ -269,10 +258,6 @@ var vueapp = new Vue({
 							'checked',
 							$("[name=is_check]:checked").length === $("[name=is_check]").length);
 		},
-		formatCurrency(value) {
-            if (!value) return '';
-            return parseFloat(value).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
-        }
     }
 });
 </script>
