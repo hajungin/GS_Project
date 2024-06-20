@@ -37,7 +37,7 @@
                                 <div class="flex-wrap flex-66 flex flex-gap-10 flex-padding-10">
                                     <div class="form-group flex-40">
                                         <label class="fix-width-33">상담일시:</label>
-                                        <input type="text" class="form-control" v-model="cnslt_dt">
+                                        <input type="date" class="form-control" v-model="cnslt_dt">
                                     </div>
                                     <div class="form-group flex-40">
                                         <label class="fix-width-33">고객명:</label>

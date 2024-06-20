@@ -62,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-			</div>
+					</div>
                     <div class="flex flex-100 flex-padding-10 flex-gap-10"
                         style="justify-content:flex-end;border: 1px solid #999999;">
                         <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"
@@ -78,7 +78,7 @@
 <!--                         </button> -->
                         <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"
                             @click="cf_movePage('/communi/communiList')">
-                            상담내역
+                            상담목록조회
                             <i class="entypo-user"></i>
                         </button>
 <!--                         담당자 일괄설정 작업 전 -->
@@ -132,7 +132,7 @@
         <div class="modal-dialog modal-lg"> 
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose" @click="custInfoReload()">&times;</button>
                     <h4 class="modal-title" id="modify_nm">고객기본정보</h4>
                 </div>
                 <div class="modal-body">
@@ -220,19 +220,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group" v-if="isEmpty(info.cust_sn)">
+                            <div class="col-sm-6" style="display: flex; flex-direction: column; height: 100%;">
+                                <div class="form-group" v-if="isEmpty(info.cust_sn)" style="flex: 1;">
                                     <label for="cnslt_cn" class="col-sm-4 control-label">상담내역</label>
                                     <div class="col-sm-8">
-                                         <textarea id="cnslt_cn" class="form-control" v-model="" style="width: 100%; height: 300px; resize: none;" readonly>
-										
-								        </textarea>
+                                   	<div class="form-control" style="background-color: #DCDCDC; height: 350px;">
+                                    	<div  v-for="item in cnsltList">{{ item.cnslt_dt }} {{ item.cnslt_cn }}</div>
+                                    	</div>
+<!-- 										<textarea id="cnslt_cn" class="form-control" v-model="info.cnslt_cn" style="width: 100%; height: 350px; resize: none;" readonly>{{ cnsltItems }}</textarea> -->
                                     </div>
                                 </div>
-                                <div class="form-group" v-if="isEmpty(info.cust_sn)">
-                                    <label for="cnslt_cn" class="col-sm-4 control-label">상담추가입력</label>
+                                <div class="form-group" v-if="isEmpty(info.cust_sn)" >
+                                    <label for="cnslt_cn_add" class="col-sm-4 control-label">상담추가입력</label>
                                     <div class="col-sm-8">
-                                        <textarea id="cnslt_cn_add" class="form-control" v-model="info.cnslt_cn" style="width: 100%; height: 150px; resize: none;"></textarea>
+                                        <textarea id="cnslt_cn_add" class="form-control" v-model="cnslt_cn_add" style="width: 100%; height: 150px; resize: none;"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -243,22 +244,23 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-					</button>
-                	<button type="button" class="btn btn-green btn-icon btn-small" @click="custInsert" v-if="isNotEmpty(info.cust_sn)">
+					
+                	<button type="button" class="btn btn-success btn-icon btn-small" @click="custInsert" v-if="isNotEmpty(info.cust_sn)">
 					고객정보등록
-					<i class="entypo-add-user"></i>
+					<i class="entypo-user"></i>
 					</button>
-					<button type="button" class="btn btn-green btn-icon btn-small" @click="custUpdate" v-if="isEmpty(info.cust_sn)">
+					<button type="button" class="btn btn-success btn-icon btn-small" @click="custUpdate" v-if="isEmpty(info.cust_sn)">
 					고객정보변경
-					<i class=" entypo-user"></i>
+					<i class="entypo-user"></i>
 					</button>
-					<button type="button" class="btn btn-blue btn-icon btn-small" @click="cnsltInsert" v-if="isEmpty(info.cust_sn)">
+					<button type="button" class="btn btn-primary btn-icon btn-small" @click="cnsltInsert" v-if="isEmpty(info.cust_sn)">
 					상담내용저장
 					<i class="entypo-pencil"></i>
 					</button>
-					<button type="button" class="btn btn-red btn-icon btn-small" @click="custChangeSts" v-if="isEmpty(info.cust_pridtf_no)" style="align: left;">
+					<button type="button" class="btn btn-danger btn-icon btn-small" @click="custChangeSts" v-if="isEmpty(info.cust_pridtf_no)">
 					고객정보삭제
 					<i class="entypo-trash"></i>
+					</button>
 <!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
                 </div>
             </div>
@@ -272,7 +274,7 @@
 			    <div class="modal-dialog" style="width: 500px;">
 			        <div class="modal-content">
 			        <div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose">&times;</button>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose" >&times;</button>
 						<h4 class="modal-title" id="modify_nm">담당자 설정</h4>
 					</div> 
 			            <div class="modal-body">
@@ -365,9 +367,9 @@
                 this.dataList = data.list;
                 cv_pagingConfig.renderPagenation("system");
             },
-            gotoDtl: function (cust_pridtf_no) {
-                console.log(cust_pridtf_no);
-                pop_cust_info.init(cust_pridtf_no);
+            gotoDtl: function (cust_mbl_telno) {
+                console.log(cust_mbl_telno);
+                pop_cust_info.init(cust_mbl_telno);
                 $('#pop_cust_info').modal('show');
             },
             all_check: function (obj) {
@@ -378,25 +380,25 @@
                     $("[name=is_check]:checked").length === $("[name=is_check]").length
                 );
             },
-            popupEmpInfo: function () {
-                var checkedList = $("[name=is_check]:checked");
-                if (checkedList.length == 0) {
-                    alert("담당자 설정 대상을 선택하여 주십시오.");
-                    return;
-                }
-                var dataCopyList = [];
-                var idx;
-                checkedList.each(function (i) {
-                    idx = $(this).attr("data-idx");
-                    dataCopyList.push(vueapp.dataList.getElementFirst("cust_nm", idx));
-                });
+//             popupEmpInfo: function () {
+//                 var checkedList = $("[name=is_check]:checked");
+//                 if (checkedList.length == 0) {
+//                     alert("담당자 설정 대상을 선택하여 주십시오.");
+//                     return;
+//                 }
+//                 var dataCopyList = [];
+//                 var idx;
+//                 checkedList.each(function (i) {
+//                     idx = $(this).attr("data-idx");
+//                     dataCopyList.push(vueapp.dataList.getElementFirst("cust_nm", idx));
+//                 });
 
-                console.log(dataCopyList);
+//                 console.log(dataCopyList);
 
-                //설정팝업 띄우기
-//                 pop_damdang_set.init(dateCopyList);
-                $('#pop_emp_info').modal('show');
-            },
+//                 //설정팝업 띄우기
+// //                 pop_damdang_set.init(dateCopyList);
+//                 $('#pop_emp_info').modal('show');
+//             },
             
         }
     });
@@ -417,36 +419,29 @@
                 emp_dept: "",
                 emp_posit: "",
                 emp_mbl_telno: "",
-    			cnslt_dt: "",
-                cnslt_emp_nm: "",
-                cnslt_cn: "",
-                cnsltList : [],
-                cnsltItems: [],
+                
             },
-    		
+			cnslt_dt: "",
+            cnslt_emp_nm: "",
+            cnslt_cn: "",
+            cnslt_cn_add: "",
+            cnsltList: [],
+            cnsltItems: "",
                 
         },
         computed: {
             showInput() {
               return this.info.cust_cr_no === 'JB07';
             }, 
-//             cnsltList() {
-//                 this.info.cnsltItems = '';
-//                 for (var i = 0; i < this.info.cnsltList.length; i++) {
-//                 	this.info.cnsltItems += this.info.cnsltList[i];
-//                     if (i < this.info.cnsltList.length - 1) {
-//                     	this.info.cnsltItems += '\n';
-//                     }
-//                 }
-//                 return this.info.cnsltItems;
-//             }
          },
         methods: {
             init: function (cust_mbl_telno) {
-                this.initInfo();
                 this.info.cust_mbl_telno = cust_mbl_telno;
                 if (!cf_isEmpty(this.info.cust_mbl_telno)) {
                     this.getInfo();
+//                     this.getCnsltList();
+                } else {
+                	this.initInfo();
                 }
             },
             initInfo: function () {
@@ -471,10 +466,20 @@
                     cust_mbl_telno: this.info.cust_mbl_telno,
                 }
                 cf_ajax("/customer/getCustOne", params, this.getInfoCB);
+                cf_ajax("/communi/getCnsltList", params, this.getCnsltCB);
             },
             getInfoCB: function (data) {
                 this.info = data;
             },
+//             getCnsltList: function () {
+// 				var params = {
+// 						cust_mbl_telno: this.info.cust_mbl_telno
+// 	                }
+// 	                cf_ajax("/communi/getCnsltList", params, this.getCnsltCB);
+// 			},
+			getCnsltCB: function (data) {
+				this.cnsltList = data;
+			},
             popEmp: function () {
             	$('#pop_emp_info').modal('show');
             },
@@ -521,20 +526,13 @@
 					alert("고객정보 변경 완료");
 				}
 				$('#pop_cust_info').modal('hide');
-				window.location.reload();
+				this.custInfoReload();
+			},
+			custInfoReload: function () {
+				vueapp.getCustInfoList();
 			},
 			
-// 			getCnsltList: function (data) {
-// 				var params = {
-// 						cust_mbl_telno: this.info.cust_mbl_telno,
-// 	                }
-// 	                cf_ajax("/communi/getCnsltList", params, this.getCnsltCB);
-// 			},
 			
-// 			getCnsltCB: function (data) {
-// 				this.info.cnsltList = data.list;
-//                 console.log(data);
-// 			},
 
 			custInsert: function () {
 				var cust_nm = this.info.cust_nm;
@@ -565,14 +563,16 @@
 					alert("등록 완료");
 				}
 				$('#pop_cust_info').modal('hide');
+				this.cnslt_cn_add = "";
+// 				this.custInfoReload();
 				window.location.reload();
 			},
 			
 			
 			cnsltInsert: function () {
-				var emp_no = this.emp_no;
-				var cust_sn = this.cnslt.cust_sn;
-				var cnslt_cn = this.cnslt.cnslt_cn;
+				var emp_no = this.info.emp_no;
+				var cust_sn = this.info.cust_sn;
+				var cnslt_cn = this.cnslt_cn_add;
 				 
 				var params = { 
 					emp_no: emp_no,
@@ -601,6 +601,7 @@
 					alert("고객 목록 정보 삭제 완료");
 				}
 				$('#pop_cust_info').modal('hide');
+// 				this.getCustInfoList();
 				window.location.reload();
 			},
         }
