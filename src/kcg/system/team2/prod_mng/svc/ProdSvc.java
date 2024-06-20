@@ -24,6 +24,9 @@ public class ProdSvc {
 	    params.put("pay_period", Integer.parseInt(params.getString("pay_period")));
 	    params.put("price_max", Integer.parseInt(params.getString("price_max")));
 	    params.put("price_min", Integer.parseInt(params.getString("price_min")));
+	    params.put("air_max", Float.parseFloat(params.getString("air_max")));
+	    params.put("air_min", Float.parseFloat(params.getString("air_min")));
+	    
 	    
 
 	    try {
