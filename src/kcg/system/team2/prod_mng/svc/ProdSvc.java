@@ -61,4 +61,27 @@ public class ProdSvc {
 		return rslt;
 	}
 
+	public CmmnMap getInfo(CmmnMap params) {
+	    CmmnMap rslt = null; // 반환할 결과 변수 선언 및 초기화
+	    
+	    String prodNo = params.getString("prod_no");
+	    if (prodNo != null && prodNo.length() > 0) {
+	        String firstChar = prodNo.substring(0, 1);
+	        if ("1".equals(firstChar)) {
+	            rslt = cmmnDao.selectOne("system.team2.prod_mng.getPSInfo", params);
+	        } 
+	        else if ("4".equals(firstChar)) {
+	            rslt = cmmnDao.selectOne("system.team2.prod_mng.getLOInfo", params);
+	        } 
+	        else if ("2".equals(firstChar)) {
+	            rslt = cmmnDao.selectOne("system.team2.prod_mng.getDPInfo", params);
+	        } 
+	        else if ("3".equals(firstChar)) {
+	            rslt = cmmnDao.selectOne("system.team2.prod_mng.getACInfo", params);
+	        }
+	    }
+	    return rslt;
+	}
+
+
 }

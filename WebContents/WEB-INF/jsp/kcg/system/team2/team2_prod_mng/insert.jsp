@@ -343,10 +343,7 @@ var vueapp = new Vue({
 		},
 		saveCB : function(data){
 			alert("저장되었습니다.");
-			this.info.prod_cd = data.prod_cd;
-		},
-		delInfoCB : function(data){
-			this.gotoList();
+			cf_movePage('/2team/prod/insert');
 		},
 	}
 });

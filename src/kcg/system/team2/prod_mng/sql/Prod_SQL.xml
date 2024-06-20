@@ -42,7 +42,7 @@
 		   and ep.sub_tg = #{sub_tg}
 		</if>
         <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN sale_beg_dt AND sale_end_dt
+   		 AND CAST(#{from_date} AS DATE) BETWEEN ep.sale_beg_dt AND ep.sale_end_dt
 		</if>
 		
 		UNION ALL
@@ -77,7 +77,7 @@
 			where el.promtn_yn = 'N'
 			
 		<if test='prod_nm != null and prod_nm != ""'>
-		   and el.prod_nm like CONCAT('%',#{prod_nm},'%')
+		   and el.loan_prod_nm like CONCAT('%',#{prod_nm},'%')
 		</if>
 		<if test='prod_type != null and prod_type != ""'>
 		   and el.prod_type = #{prod_type}
@@ -86,7 +86,7 @@
 		   and el.sub_tg = #{sub_tg}
 		</if>
         <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN sale_beg_dt AND sale_end_dt
+   		 AND CAST(#{from_date} AS DATE) BETWEEN el.loan_sale_beg_dt AND el.loan_sale_end_dt
 		</if>
 		
 		UNION ALL
@@ -130,7 +130,7 @@
 		   and ea.sub_tg = #{sub_tg}
 		</if>
         <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN sale_beg_dt AND sale_end_dt
+   		 AND CAST(#{from_date} AS DATE) BETWEEN ea.sale_beg_dt AND ea.sale_end_dt
 		</if>
 		
 		UNION ALL
@@ -174,14 +174,14 @@
 		   and ed.sub_tg = #{sub_tg}
 		</if>
         <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN sale_beg_dt AND sale_end_dt
+   		 AND CAST(#{from_date} AS DATE) BETWEEN ed.sale_beg_dt AND ed.sale_end_dt
 		</if>
 	</select>
 	
 	
 	<insert id="COsave" parameterType="cmmnMap">
-		insert into kcgbd.e_prod_code (prod_no, prod_type) values 
-		(#{prod_no}, #{prod_type})
+		insert into kcgbd.e_interest (prod_no, prod_type, air_max, air_min, air_beg_dt, air_end_dt) values 
+		(#{prod_no}, #{prod_type}, #{air_max}, #{air_min}, #{air_beg_dt}, #{air_end_dt})
 	</insert>
 	
 	<insert id="PSsave" parameterType="cmmnMap">
@@ -233,6 +233,38 @@
 		SELECT prod_no FROM kcgbd.e_prod_code WHERE prod_type =#{prod_type} ORDER BY prod_no DESC LIMIT 1;
 	</select>
 
+
+	<select id="getPSInfo" parameterType="cmmnMap" resultType="cmmnMap">
+		select
+		prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, price_max, price_min, sale_stat, TO_CHAR(sale_beg_dt, 'YYYY-MM-DD'), TO_CHAR(sale_beg_dt, 'YYYY-MM-DD'), 
+		promtn_yn, interest_ta, air_min, 
+		air_max, TO_CHAR(air_beg_dt, 'YYYY-MM-DD'), TO_CHAR(air_end_dt, 'YYYY-MM-DD')
+		from kcgbd.e_product_save where prod_no = #{prod_no}
+	</select>
+	
+	<select id="getLOInfo" parameterType="cmmnMap" resultType="cmmnMap">
+		select 
+		loan_prod_no, loan_prod_nm, prod_type, sub_tg, pay_period, pay_cycle, price_max, price_min, loan_sale_stat, TO_CHAR(loan_sale_beg_dt, 'YYYY-MM-DD'), TO_CHAR(loan_sale_end_dt, 'YYYY-MM-DD'), 
+		promtn_yn, interest_ta, air_min, 
+		air_max, TO_CHAR(air_beg_dt, 'YYYY-MM-DD'), TO_CHAR(air_end_dt, 'YYYY-MM-DD') 
+		from kcgbd.e_product_loan where loan_prod_no = #{prod_no}
+	</select>
+	
+	<select id="getDPInfo" parameterType="cmmnMap" resultType="cmmnMap">
+		select
+		prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, price_max, price_min, sale_stat, TO_CHAR(sale_beg_dt, 'YYYY-MM-DD'), TO_CHAR(sale_end_dt, 'YYYY-MM-DD'), 
+		promtn_yn, interest_ta, air_min, 
+		air_max, TO_CHAR(air_beg_dt, 'YYYY-MM-DD'), TO_CHAR(air_end_dt, 'YYYY-MM-DD')
+		from kcgbd.e_product_dp where prod_no = #{prod_no}
+	</select>
+	
+	<select id="getACInfo" parameterType="cmmnMap" resultType="cmmnMap">
+		select 
+		prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, price_max, price_min, sale_stat, TO_CHAR(sale_beg_dt, 'YYYY-MM-DD'), TO_CHAR(sale_end_dt, 'YYYY-MM-DD'), 
+		promtn_yn, interest_ta, air_min, 
+		air_max, TO_CHAR(air_beg_dt, 'YYYY-MM-DD'), TO_CHAR(air_end_dt, 'YYYY-MM-DD')
+		from kcgbd.e_product_ac where prod_no = #{prod_no}
+	</select>
 
 
 

@@ -43,7 +43,7 @@
 		   and ep.sub_tg = #{sub_tg}
 		</if>
         <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN sale_beg_dt AND sale_end_dt
+   		 AND CAST(#{from_date} AS DATE) BETWEEN ep.sale_beg_dt AND ep.sale_end_dt
 		</if>
 		UNION ALL
 		SELECT  
@@ -77,7 +77,7 @@
 			where el.loan_sale_stat='SS02'
 			
 		<if test='prod_nm != null and prod_nm != ""'>
-		   and el.prod_nm like CONCAT('%',#{prod_nm},'%')
+		   and el.loan_prod_nm like CONCAT('%',#{prod_nm},'%')
 		</if>
 		<if test='prod_type != null and prod_type != ""'>
 		   and el.prod_type = #{prod_type}
@@ -86,7 +86,7 @@
 		   and el.sub_tg = #{sub_tg}
 		</if>
         <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN sale_beg_dt AND sale_end_dt
+   		 AND CAST(#{from_date} AS DATE) BETWEEN el.loan_sale_beg_dt AND el.loan_sale_end_dt
 		</if>
 		
 		UNION ALL
@@ -131,7 +131,7 @@
 		   and ea.sub_tg = #{sub_tg}
 		</if>
         <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN sale_beg_dt AND sale_end_dt
+   		 AND CAST(#{from_date} AS DATE) BETWEEN ea.sale_beg_dt AND ea.sale_end_dt
 		</if>
 		
 		UNION ALL
@@ -175,7 +175,7 @@
 		   and ed.sub_tg = #{sub_tg}
 		</if>
         <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN sale_beg_dt AND sale_end_dt
+   		 AND CAST(#{from_date} AS DATE) BETWEEN ed.sale_beg_dt AND ed.sale_end_dt
 		</if>
 		
 
