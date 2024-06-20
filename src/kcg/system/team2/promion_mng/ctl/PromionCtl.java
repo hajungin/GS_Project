@@ -35,7 +35,7 @@ public class PromionCtl {
 		return "kcg/system/team2/team2_cal/PlanList";
 	}
 	
-	@RequestMapping("/dtl")
+	@RequestMapping("/dtlCom")
 	public String openPageDtl(Model model, CmmnMap params) {
 		
 		String sProdTyCd = params.getString("prod_type", "PT01");
@@ -55,11 +55,6 @@ public class PromionCtl {
 		}
 		
 		return sRsltUrl;
-	}
-	
-	@RequestMapping("/getListPaging")
-	public PageList<CmmnMap> getListPaging(CmmnMap params, PagingConfig pagingConfig) {
-		return promionSvc.getListPaging(params, pagingConfig);
 	}
 	
 	@RequestMapping("/getDsgInfo")

@@ -118,9 +118,9 @@
                             <div class="form-group" style="justify-content: left">
                                 <label>납입주기:</label>
                                 <select class="form-control" id="pay_cycle" v-model="info.pay_cycle" style="padding-top: 3px;" disabled>
-									<option value="1">월납</option>
-									<option value="2">년납</option>
-									<option value="3">일시납</option>
+									<option value="PC01">월납</option>
+									<option value="PC02">년납</option>
+									<option value="PC03">일시납</option>
 								</select>
                             </div>
                             <div class="form-group" style="justify-content: left">
@@ -146,9 +146,9 @@
                             <div class="form-group" style="justify-content: left">
                                 <label>이자과세:</label>
 								<select class="form-control" id="interest_ta" v-model="info.interest_ta" style="padding-top: 3px;" disabled>
-									<option value="1">일반과세 (15.4%)</option>
-									<option value="2">세금우대 (9.5%)</option>
-									<option value="3">비과세</option>
+									<option value="IT01">일반과세 (15.4%)</option>
+									<option value="IT02">세금우대 (9.5%)</option>
+									<option value="IT03">비과세</option>
 								</select>
                             </div>
                             <div class="form-group" style="justify-content: left">
@@ -405,6 +405,12 @@ var vueapp = new Vue({
 			int_tax_amt : "", //이자과세금
 			bfo_rcve_amt : "", //세전수령액
 			atx_rcve_amt : "", //세후 수령액
+			pay_period : 0,
+			price_min : 0,
+			price_max : 0,
+			air_min : 0,
+			air_max : 0,
+			
 			
 			circle_acml_amt_fmt : "", //
 			tot_dpst_amt_fmt : "", //
@@ -543,7 +549,12 @@ var vueapp = new Vue({
 			}else if(cf_isEmpty(this.info.aply_rate) || this.info.aply_rate == 0){
 				alert("적용금리를 입력하세요.");
 				return;
+			}else if(this.info.circle_acml_amt*this.pay_period > this.price_max || this.info.circle_acml_amt*this.pay_period < this.price_min){
+				alert("불입금액이 상품기준금액보다 크거나 작습니다.");
+				return;
 			}
+			
+			this.info.pay_cycle = 1;
 			
 			var nPymAmt		= Math.round(this.info.circle_acml_amt); // 불입금액
 			var nRvcy		= Math.round(this.info.pay_cycle); // 납입주기
@@ -557,9 +568,9 @@ var vueapp = new Vue({
 			var nScInt		= 0;	// 회차이자
 			var nAcmInt		= 0;	// 누적이자
 			var nTax		= 0;	// 이자과세
-			if(this.info.interest_ta == "1") {		// 일반과세
+			if(this.info.interest_ta == "IT01") {		// 일반과세
 				nTax = 15.4 / 100;
-			} else if(this.info.interest_ta == "2") {	// 세금우대
+			} else if(this.info.interest_ta == "IT02") {	// 세금우대
 				nTax = 9.5 / 100;
 			} else {									// 비과세
 				nTax = 0;
