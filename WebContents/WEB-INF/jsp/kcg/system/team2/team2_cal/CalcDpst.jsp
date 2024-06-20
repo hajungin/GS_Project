@@ -488,7 +488,10 @@ var vueapp = new Vue({
 			cf_movePage('/promion_mng/list');
 		},
 		getProdInfo : function(){
-			cf_ajax("/sell/getProdInfo", this.info, this.getProdInfoCB);
+			var params={
+					prod_no : this.info.prod_no
+			}
+			cf_ajax("/cal/getProd", params, this.getProdInfoCB);
 		},
 		getProdInfoCB : function(data){
 			this.info = data;
@@ -684,13 +687,13 @@ var pop_prod = new Vue({
 			
 			this.dataList = [];
 			var params = {
-				prod_no : this.prod_no,
-				prod_nm : this.prod_nm,
+				prod_no : this.pop_prod_no,
+				prod_nm : this.pop_prod_nm,
 				prod_type : vueapp.info.prod_type,
 			}
 			
 		
-			cf_ajax("/sell/getProdList", params, function(data){
+			cf_ajax("/2team/prod/getProdList", params, function(data){
 				pop_prod.dataList = data;
 			});
 		},

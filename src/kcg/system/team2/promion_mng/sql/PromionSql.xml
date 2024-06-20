@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace='system.team2.Cal'>
+<mapper namespace='system.team2.promion_mng'>
 
 <select id="getList" parameterType="cmmnMap" resultType="cmmnMap">
 	/* system.promion_mng.getlist */
@@ -70,23 +70,8 @@
 		order by a.wrt_dt desc, a.prod_ds_sn desc
 	</select>
 
-	<select id="getProdList" parameterType="cmmnMap" resultType="cmmnMap">
-	 /* system.team2.Cal.getProdList */
-      select prod_no
-           , prod_nm
-           , prod_type
-           , sub_tg
-        from kcgbd.e_product_save
-       where 1=1
-      <if test='prod_no != null and prod_no != ""'>
-         and prod_no = #{prod_no}
-      </if>
-      <if test='prod_nm != null and prod_nm != ""'>
-         and prod_nm like concat('%',#{prod_nm},'%')
-      </if>
-	</select>
 	
-	<select id="getProdInfo" parameterType="cmmnMap" resultType="cmmnMap">
+	<select id="getProd" parameterType="CmmnMap" resultType="CmmnMap">
 	/* system.promion_mng.getprodinfo */
 		select prod_no
 		     , prod_nm
@@ -139,7 +124,7 @@
 		     , 0 as tot_int_amt_fmt
 		     , 0 as tot_pay_amt_fmt
 		  from kcgbd.e_product_save a
-		 where prod_no = #{prod_no}
+		 where cast(prod_no as text) = #{prod_no}
 	</select>
 	
 	<select id="getDsgnSavgpl" parameterType="cmmnMap" resultType="cmmnMap">

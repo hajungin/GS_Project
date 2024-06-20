@@ -1,4 +1,4 @@
-package kcg.system.team2.Cal.svc;
+package kcg.system.team2.promion_mng.svc;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import kcg.common.svc.CommonSvc;
 import kcg.login.vo.UserInfoVO;
 
 @Service
-public class CalSvc {
+public class PromionSvc {
 	@SuppressWarnings("unused")
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -31,32 +31,30 @@ public class CalSvc {
 	@Autowired
 	CmmnDao cmmnDao;
 	
-	public List<CmmnMap> getProdList(CmmnMap params) {
-		List<CmmnMap> rslt = cmmnDao.selectList("system.team2.Cal.getProdList", params);
-		return rslt;
-	}
-
+	
 	public PageList<CmmnMap> getListPaging(CmmnMap params, PagingConfig pagingConfig) {
-		PageList<CmmnMap> rslt = cmmnDao.selectListPage("system.team2.Cal.getList", params, pagingConfig);
+		PageList<CmmnMap> rslt = cmmnDao.selectListPage("system.team2.promion_mng.getList", params, pagingConfig);
 		return rslt;
 	}
 	
 	public CmmnMap getDsgInfo(CmmnMap params) {
 		CmmnMap rsltMap = new CmmnMap();
 		if("PT01".equals(params.getString("prod_type"))) {
-			rsltMap = cmmnDao.selectOne("system.team2.Cal.getDsgnSavgpl", params);
+			rsltMap = cmmnDao.selectOne("system.team2.promion_mng.getDsgnSavgpl", params);
 		}else if("PT02".equals(params.getString("prod_type"))) {
-			rsltMap = cmmnDao.selectOne("system.team2.Cal.getDsgnAcmlpl", params);
+			rsltMap = cmmnDao.selectOne("system.team2.promion_mng.getDsgnAcmlpl", params);
 		}else if("PT03".equals(params.getString("prod_type"))) {
-			rsltMap = cmmnDao.selectOne("system.team2.Cal.getDsgnDpstpl", params);
+			rsltMap = cmmnDao.selectOne("system.team2.promion_mng.getDsgnDpstpl", params);
 		}else if("PT04".equals(params.getString("prod_type"))) {
-			rsltMap = cmmnDao.selectOne("system.team2.Cal.getDsgnLoanpl", params);
+			rsltMap = cmmnDao.selectOne("system.team2.promion_mng.getDsgnLoanpl", params);
 		}
 		return rsltMap;
 	}
 	
 	public CmmnMap getProdInfo(CmmnMap params) {
-		return cmmnDao.selectOne("system.team2.Cal.getProdInfo", params);
+		System.out.println("====================svc" + params);
+		CmmnMap result = cmmnDao.selectOne("system.team2.promion_mng.getProd", params);
+		return result;
 	}
 
 	public void save(CmmnMap params) {
@@ -65,23 +63,23 @@ public class CalSvc {
 		
 		if(StringUtil.isEmpty(params.getString("prod_ds_sn"))) {
 			if("PT01".equals(params.getString("prod_type"))) {
-				cmmnDao.insert("system.team2.Cal.insertDsgnSavgpl", params);
+				cmmnDao.insert("system.team2.promion_mng.insertDsgnSavgpl", params);
 			}else if("PT02".equals(params.getString("prod_type"))) {
-				cmmnDao.insert("system.team2.Cal.insertDsgnAcmlpl", params);
+				cmmnDao.insert("system.team2.promion_mng.insertDsgnAcmlpl", params);
 			}else if("PT03".equals(params.getString("prod_type"))) {
-				cmmnDao.insert("system.team2.Cal.insertDsgnDpstpl", params);
+				cmmnDao.insert("system.team2.promion_mng.insertDsgnDpstpl", params);
 			}else if("PT04".equals(params.getString("prod_type"))) {
-				cmmnDao.insert("system.team2.Cal.insertDsgnLoanpl", params);
+				cmmnDao.insert("system.team2.promion_mng.insertDsgnLoanpl", params);
 			}
 		} else {
 			if("PT01".equals(params.getString("prod_type"))) {
-				cmmnDao.update("system.team2.Cal.updateDsgnSavgpl", params);
+				cmmnDao.update("system.team2.promion_mng.updateDsgnSavgpl", params);
 			}else if("PT02".equals(params.getString("prod_type"))) {
-				cmmnDao.update("system.team2.Cal.updateDsgnAcmlpl", params);
+				cmmnDao.update("system.team2.promion_mng.updateDsgnAcmlpl", params);
 			}else if("PT03".equals(params.getString("prod_type"))) {
-				cmmnDao.update("system.team2.Cal.updateDsgnDpstpl", params);
+				cmmnDao.update("system.team2.promion_mng.updateDsgnDpstpl", params);
 			}else if("PT04".equals(params.getString("prod_type"))) {
-				cmmnDao.update("system.team2.Cal.updateDsgnLoanpl", params);
+				cmmnDao.update("system.team2.promion_mng.updateDsgnLoanpl", params);
 			}
 		}
 	}

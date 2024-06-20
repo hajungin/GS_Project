@@ -1,4 +1,4 @@
-package kcg.system.team2.Cal.ctl;
+package kcg.system.team2.promion_mng.ctl;
 
 import java.util.List;
 
@@ -13,28 +13,23 @@ import common.utils.common.CmmnMap;
 import common.utils.common.PagingConfig;
 import common.utils.mybatis_paginator.domain.PageList;
 import kcg.common.svc.CommonSvc;
-import kcg.system.team2.Cal.svc.CalSvc;
+import kcg.system.team2.promion_mng.svc.PromionSvc;
 
 
 
 @Controller
-@RequestMapping("/sell")
-public class CalCtl {
+@RequestMapping("/cal")
+public class PromionCtl {
 	@SuppressWarnings("unused")
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	CalSvc calSvc;
+	PromionSvc promionSvc;
 	
 	@Autowired
 	CommonSvc commonSvc;
 	
-	@RequestMapping("/getProdList")
-	public List<CmmnMap> getProdList(CmmnMap params) {
-		System.out.println("==================================" + params);
-		return calSvc.getProdList(params);
-	}
-	
+
 	@RequestMapping("/list")
 	public String openPageCalc(Model model, CmmnMap params) {
 		return "kcg/system/team2/team2_cal/PlanList";
@@ -64,19 +59,19 @@ public class CalCtl {
 	
 	@RequestMapping("/getListPaging")
 	public PageList<CmmnMap> getListPaging(CmmnMap params, PagingConfig pagingConfig) {
-		return calSvc.getListPaging(params, pagingConfig);
+		return promionSvc.getListPaging(params, pagingConfig);
 	}
 	
 	@RequestMapping("/getDsgInfo")
 	public CmmnMap getDsgInfo(CmmnMap params) {
-		return calSvc.getDsgInfo(params);
+		return promionSvc.getDsgInfo(params);
 	}
 	
-	@RequestMapping("/getProdInfo")
+	@RequestMapping("/getProd")
 	public CmmnMap getProdInfo(CmmnMap params) {
-		
+		System.out.println("==========================" + params);
 		CmmnMap rsltMap = new CmmnMap();
-		rsltMap = calSvc.getProdInfo(params);
+		rsltMap = promionSvc.getProdInfo(params);
 		rsltMap.put("simpl_ty_cd", params.getString("simpl_ty_cd", "0"));
 		
 		return rsltMap;
@@ -84,6 +79,6 @@ public class CalCtl {
 	
 	@RequestMapping("/save")
 	public void save(CmmnMap params) {
-		calSvc.save(params);
+		promionSvc.save(params);
 	}
 }
