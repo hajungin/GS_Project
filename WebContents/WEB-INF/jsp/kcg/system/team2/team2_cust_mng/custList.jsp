@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
     <link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
     <link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
-    <title>관리자시스템</title>
+    <title>고객목록조회</title>
 </head>
 
 <body class="page-body">
@@ -34,7 +34,7 @@
             <div class="flex-column flex-gap-10" id="vueapp">
                 <template>
                     <div class="flex flex-100">
-                        <div class="flex-wrap flex-90 flex flex-gap-10 flex-padding-10">
+                        <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
                             <div class="form-group flex-60">
                                 <label style="text-align: center; margin-left: 100px;">고객명 :</label>
                                 <input class="form-control" v-model="cust_nm" value="" style="margin-right: 100px; ">
@@ -42,6 +42,11 @@
                                 <input type="text" class="form-control" v-model="birth" placeholder="yy-mm-dd" style="margin-right: 100px;">
                                 <label class="fix-width-15">관리담당자 :</label>
                                 <input class="form-control" v-model="emp_nm" value="" style="margin-right: 100px;">
+                                <button type="button" class="btn btn-primary btn-icon" 
+                                    @click="getCustInfoList(true)">
+                                    검색
+                                    <i class="entypo-search"></i>
+                                </button>
 <!--                                 <label class="fix-width-15">이벤트구분 :</label> -->
 <!--                                 <select id ="event" class="form-control"> -->
 <!--                                 	<option value="">전체</option> -->
@@ -51,21 +56,10 @@
 <!--                                 </select> -->
                             </div>
                         </div>
-
-                        <div class="flex-wrap flex-10 flex flex-center flex-gap-10 flex-padding-10">
-                            <div class="form-group" style="width:40%; margin-right: 5%;">
-                                <button type="button" class="btn btn-primary btn-icon" 
-                                    v-model="search_val" @click="getCustInfoList(true)">
-                                    검색
-                                    <i class="entypo-search"></i>
-                                </button>
-                            </div>
-                        </div>
                     </div>
-					</div>
                     <div class="flex flex-100 flex-padding-10 flex-gap-10"
                         style="justify-content:flex-end;border: 1px solid #999999;">
-                        <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"
+                        <button type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
                             @click="gotoDtl()">
                             신규회원등록
                             <i class="entypo-archive"></i>
@@ -76,7 +70,7 @@
 <!--                             관리대장출력 -->
 <!--                             <i class="entypo-vcard"></i> -->
 <!--                         </button> -->
-                        <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"
+                        <button type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
                             @click="cf_movePage('/communi/communiList')">
                             상담목록조회
                             <i class="entypo-user"></i>
@@ -92,8 +86,9 @@
                         style="border: 1px solid #999999;">
                         <thead>
                             <tr class="replace-inputs">
-                                <th style="width: 5%;" class="center"><input type="checkbox" id="allCheck"
-                                        @click="all_check(event.target)" style="cursor: pointer;"></th>
+<!--                                 <th style="width: 5%;" class="center"><input type="checkbox" id="allCheck" -->
+<!--                                         @click="all_check(event.target)" style="cursor: pointer;"></th> -->
+ 								<th style="width: 5%;" class="center">No</th>
                                 <th style="width: 10%;" class="center">성명</th>
                                 <th style="width: 15%;" class="center">생년월일</th>
                                 <th style="width: 15%;" class="center">이메일주소</th>
@@ -101,18 +96,19 @@
                                 <th style="width: 25%;" class="center">주소</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr v-for="item in dataList" @dblclick="gotoDtl(item.cust_mbl_telno)"
+                        <tbody class="table-group-divider">
+                            <tr v-for="(item, index) in dataList" @dblclick="gotoDtl(item.cust_mbl_telno)"
                                 style="cursor: pointer;">
-                                <td class="center" @dblclick.stop="return false;"><input type="checkbox"
-                                        :data-idx="item.cust_nm" name="is_check" @click.stop="onCheck"
-                                        style="cursor: pointer;">
-                                </td>
-                                <td class="center">{{item.cust_nm}}</td>
-                                <td class="center">{{item.cust_pridtf_no.substring(0,6)}}</td>
-                                <td class="center">{{item.cust_eml_addr}}</td>
-                                <td class="center">{{item.cust_mbl_telno}}</td>
-                                <td class="center">{{item.cust_road_addr}}</td>
+<!--                                 <td class="center" @dblclick.stop="return false;"><input type="checkbox" -->
+<!--                                         :data-idx="item.cust_nm" name="is_check" @click.stop="onCheck" -->
+<!--                                         style="cursor: pointer;"> -->
+<!--                                 </td> -->
+								<td class="center">{{ index + 1 }}</td>
+                                <td class="center">{{ item.cust_nm }}</td>
+                                <td class="center">{{ item.cust_pridtf_no.substring(0,6) }}</td>
+                                <td class="center">{{ item.cust_eml_addr }}</td>
+                                <td class="center">{{ item.cust_mbl_telno }}</td>
+                                <td class="center">{{ item.cust_road_addr }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -311,12 +307,10 @@
         el: "#vueapp",
         data: {
             dataList: [],
-            search_nm: "",
             cust_nm: "",
     		cust_pridtf_no: "",
     		birth: "",
     		emp_nm: "",
-            search_val: "",
         },
         mounted: function () {
             var fromDtl = cf_getUrlParam("fromDtl");
@@ -325,11 +319,9 @@
                 cv_pagingConfig.pageNo = pagingConfig.pageNo;
                 cv_pagingConfig.orders = pagingConfig.orders;
                 var params = cv_sessionStorage.getItem("params");
-                this.search_nm = params.search_nm;
                 this.cust_nm = params.cust_nm;
                 this.birth = params.birth;
                 this.emp_nm = params.emp_nm;
-                this.search_val = params.search_val;
 
                 this.getCustInfoList();
             } else {
@@ -349,8 +341,6 @@
                 }
 
                 var params = {
-                    search_nm: this.search_nm,
-                    search_val: this.search_val,
                     cust_nm: this.cust_nm,
                     emp_nm: this.emp_nm,
                     birth: this.birth,
@@ -471,12 +461,7 @@
             getInfoCB: function (data) {
                 this.info = data;
             },
-//             getCnsltList: function () {
-// 				var params = {
-// 						cust_mbl_telno: this.info.cust_mbl_telno
-// 	                }
-// 	                cf_ajax("/communi/getCnsltList", params, this.getCnsltCB);
-// 			},
+
 			getCnsltCB: function (data) {
 				this.cnsltList = data;
 			},
@@ -564,7 +549,6 @@
 				}
 				$('#pop_cust_info').modal('hide');
 				this.cnslt_cn_add = "";
-// 				this.custInfoReload();
 				window.location.reload();
 			},
 			

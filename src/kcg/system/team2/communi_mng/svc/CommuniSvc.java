@@ -30,6 +30,7 @@ public class CommuniSvc {
 	CmmnDao cmmnDao;
 	
 	public PageList<CmmnMap> getCommuniList(CmmnMap params, PagingConfig pagingConfig) {
+		  System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + params.get("cnslt_dt"));
 	      return cmmnDao.selectListPage("system.team2_communi_mng.communiList", params, pagingConfig);
 	   }
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='system.team2_commmon_mng'>
+
+	<select id="getAll" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT 
+			comm_no AS comm_no,
+			comm_nm AS comm_nm,
+			group_comm_nm AS gr_comm_nm,
+			reg_dt AS reg_dt,
+			note AS note
+		FROM kcgbd.e_common
+		WHERE 1=1
+		<if test='gr_comm_no != null and gr_comm_no != ""'>
+		AND group_comm_no = #{gr_comm_no}
+		</if>
+		<if test='comm_nm != null and comm_nm != ""'>
+		AND comm_nm like CONCAT('%',#{comm_nm},'%')
+		</if>
+		ORDER BY gr_comm_nm
+	</select>
+	<select id="getGrComm" resultType="cmmnMap">
+		SELECT
+			group_comm_no AS gr_comm_no,
+			group_comm_nm AS gr_comm_nm
+		FROM kcgbd.e_common
+		GROUP BY group_comm_no, group_comm_nm
+		ORDER BY gr_comm_no
+	</select>
+
+</mapper>

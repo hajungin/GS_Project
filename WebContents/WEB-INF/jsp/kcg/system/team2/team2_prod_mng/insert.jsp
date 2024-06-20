@@ -106,21 +106,21 @@
 							<label for="prod_air_max" class="fix-width-33">적용이율:</label>
 							<div class="form-control">
 								<label>(최소)</label>
-								<input type="text" id="prod_air_min" v-model="info.prod_air_min">
+								<input type="text" id="air_min" v-model="info.air_min">
 								<label>%  ~ </label>
 								<br>
 								<label>(최대)</label>
-								<input type="text"  id="prod_air_max" v-model="info.prod_air_max">
+								<input type="text"  id="air_max" v-model="info.air_max">
 								<label>%</label>
 							</div>
 						</div>
 		
 						<div class="form-group">
-							<label for="prod_air_bgng_ymd" class="fix-width-33">적용기간:</label>
+							<label for="prod_air_bgng_ymd" class="fix-width-33">이율 적용기간:</label>
 							<div class="form-control">
-								<input type="date"  id="prod_air_bgng_ymd" v-model="info.prod_air_bgng_ymd">
+								<input type="date"  id="air_beg_dt" v-model="info.air_beg_dt">
 								<label>To</label>
-								<input type="date"  id="prod_air_end_ymd" v-model="info.prod_air_end_ymd">
+								<input type="date"  id="air_end_dt" v-model="info.air_end_dt">
 								<label>End</label>
 							</div>
 						</div>
@@ -197,14 +197,23 @@ var vueapp = new Vue({
 	el : "#vueapp",
 	data : {
 		info : {
-			prod_type: "", // 초기 선택값을 빈 문자열로 설정
+			// 초기 선택값을 빈 문자열로 설정
+			prod_type: "", 
 			sale_stat: "",
 			pay_cycle: "",
 			sub_tg: "",
 			promtn_yn: "",
 			interest_ta: "",
-			save_mode : "insert",
-			code: "",
+			// 현재 날짜 적용하기 위해 초기화
+			air_beg_dt: "",
+            air_end_dt: "",
+            sale_beg_dt: "",
+            sale_end_dt: "",
+            price_min: "",
+            price_max: "",
+			
+            
+			code: ""
 		},
 	},
 	mounted() {
@@ -215,11 +224,37 @@ var vueapp = new Vue({
 	    this.info.promtn_yn = "";
 	    this.info.interest_ta = "";
 	    this.info.prod_no="";
+	    this.info.price_min="";
+	    this.info.price_max="";
+	    // 날짜 가져오기
+	    const today = new Date();
+        const nextMonth = new Date(today);
+        nextMonth.setMonth(today.getMonth() + 1);
+
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1); // getMonth()는 0부터 시작하므로 +1
+        const day = String(today.getDate());
+
+        const nextYear = nextMonth.getFullYear();
+        const nextMonthFormatted = String(nextMonth.getMonth() + 1).padStart(2, '0'); // getMonth()는 0부터 시작하므로 +1
+        const nextDay = String(nextMonth.getDate()).padStart(2, '0');
+
+        
+        // 현재 날짜를 'YYYY-MM-DD' 형식으로 설정
+//         this.info.air_beg_dt = `${year}-${month}-${day}`;
+//         this.info.air_end_dt = `${nextYear}-${nextMonthFormatted}-${nextDay}`;
+//         this.info.sale_beg_dt = `${year}-${month}-${day}`;
+//         this.info.sale_end_dt = `${nextYear}-${nextMonthFormatted}-${nextDay}`;
+        console.log(this.info.air_beg_dt); // 콘솔에서 값 확인
+        console.log(this.info.air_end_dt); // 콘솔에서 값 확인
+        console.log(this.info.sale_beg_dt); // 콘솔에서 값 확인
+        console.log(this.info.sale_end_dt); // 콘솔에서 값 확인
 	  },
 	methods : {
 		generateProductCode() {
 		    cf_ajax("/2team/prod/code", { prod_type: this.info.prod_type }, this.code.bind(this));
 		},
+		// 상품 유형 선택 시 자동으로 판매중으로 설정
 		updateProductStat() {
 		      if(this.info.prod_type != null){
 		    	  this.info.sale_stat = "SS01";
@@ -229,36 +264,78 @@ var vueapp = new Vue({
 		    this.info.prod_no = data.prod_no + 1; // 상품코드 + 1 값으로 변경
 		},
 
-		  handleBlur() {
-	            // blur event handling logic
-	            console.log('Select box blurred');
-	        },
 		 
 		save : function(){
+			// Date 객체로 변환
+            const air_beg_date = new Date(this.info.air_beg_dt);
+            const air_end_date = new Date(this.info.air_end_dt);
+            const sale_beg_date = new Date(this.info.sale_beg_dt);
+            const sale_end_date = new Date(this.info.sale_end_dt);
 			
 			if(cf_isEmpty(this.info.prod_nm)){
 				alert("상품명을 입력하세요.");
 				return;
-			}else if(cf_isEmpty(this.info.sale_stat)){
-				alert("판매상태를 입력하세요.");
-				return;
 			}
-			else if(cf_isEmpty(this.info.pay_cycle)){
-				alert("납입주기를 입력하세요.");
+			else if(cf_isEmpty(this.info.prod_type)){
+				alert("상품유형을 입력하세요.");
 				return;
 			}
 			else if(cf_isEmpty(this.info.sub_tg)){
 				alert("가입대상을 입력하세요.");
 				return;
 			}
-			else if(cf_isEmpty(this.info.promtn_yn)){
-				alert("프로모션 여부를 입력하세요.");
+			else if(cf_isEmpty(this.info.price_min && this.info.price_max)){
+				alert("가입금액을 입력하세요.");
 				return;
 			}
+			else if(parseInt(this.info.price_min) > parseInt(this.info.price_max)) {
+			    alert("가입금액 최소가 더 클 수 없습니다.");
+			    return;
+			}
+			else if(cf_isEmpty(this.info.pay_period)){
+				alert("납입기간을 입력하세요.");
+				return;
+			}
+			else if(cf_isEmpty(this.info.pay_cycle)){
+				alert("납입주기를 입력하세요.");
+				return;
+			}
+			else if(cf_isEmpty(this.info.air_min && this.info.air_max)){
+				alert("적용이율을 입력하세요.");
+				return;
+			}
+			else if(parseFloat(this.info.air_min) > parseFloat(this.info.air_max)) {
+			    alert("적용이율 최소가 더 클 수 없습니다.");
+			    return;
+			}
+			else if(cf_isEmpty(this.info.air_beg_dt && this.info.air_end_dt)) {
+			    alert("적용기간을 입력하세요.");
+			    return;
+			}
+			else if (air_beg_date > air_end_date) {
+                alert("적용기간의 시작일은 종료일보다 늦을 수 없습니다.");
+                return;
+            }
 			else if(cf_isEmpty(this.info.interest_ta)){
 				alert("이자과세를 입력하세요.");
 				return;
 			}
+			else if(cf_isEmpty(this.info.sale_stat)){
+				alert("판매상태를 입력하세요.");
+				return;
+			}
+			else if(cf_isEmpty(this.info.promtn_yn)){
+				alert("프로모션 여부를 입력하세요.");
+				return;
+			}
+			else if(cf_isEmpty(this.info.sale_beg_dt && this.info.sale_end_dt)){
+				alert("판매기간을 입력하세요.");
+				return;
+			}
+			else if (sale_beg_date > sale_end_date) {
+                alert("판매기간의 시작일은 종료일보다 늦을 수 없습니다.");
+                return;
+            }
 			
 			if(!confirm("저장하시겠습니까?")) return;
 			
@@ -266,10 +343,7 @@ var vueapp = new Vue({
 		},
 		saveCB : function(data){
 			alert("저장되었습니다.");
-			this.info.prod_cd = data.prod_cd;
-		},
-		delInfoCB : function(data){
-			this.gotoList();
+			cf_movePage('/2team/prod/insert');
 		},
 	}
 });
