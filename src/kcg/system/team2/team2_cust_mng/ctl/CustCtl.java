@@ -13,17 +13,17 @@ import common.utils.common.ConfigExcelDn;
 import common.utils.common.PagingConfig;
 import common.utils.mybatis_paginator.domain.PageList;
 import kcg.common.svc.CommonSvc;
-import kcg.system.team2.team2_cust_mng.svc.Team2CustMngSvc;
+import kcg.system.team2.team2_cust_mng.svc.CustSvc;
 
 
 @Controller
 @RequestMapping("/customer")
-public class Team2CustMngCtl {
+public class CustCtl {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
-	Team2CustMngSvc custMngSvc;
+	CustSvc custMngSvc;
 
 	// 고객 목록 페이지
 	@RequestMapping("/custMng")

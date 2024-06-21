@@ -16,7 +16,7 @@ import common.utils.mybatis_paginator.domain.PageList;
 import kcg.common.svc.CommonSvc;
 
 @Service
-public class Team2CustMngSvc {
+public class CustSvc {
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	

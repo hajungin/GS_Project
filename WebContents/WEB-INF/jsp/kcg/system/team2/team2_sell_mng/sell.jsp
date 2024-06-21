@@ -71,7 +71,7 @@
                         <option value="">전체</option>
                         <option value="ST01">일반개인</option>
                         <option value="ST02">청년</option>
-                        <option value="STO3">소상공인</option>
+                        <option value="ST03">소상공인</option>
                     </select>
                 </div>
 <!--                 <div class="form-group flex-20"> -->
@@ -208,6 +208,7 @@ var vueapp = new Vue({
             if (this.from_date && !regex.test(this.from_date)) {
                 alert('날짜 형식이 올바르지 않습니다. yyyy-mm-dd 형식으로 입력해주세요.');
                 // 형식에 맞지 않는 경우 입력을 초기화하거나 기타 작업을 수행할 수 있습니다.
+                return;
             }
 			this.all_srch = "N";
 			this.getList(isInit);

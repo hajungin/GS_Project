@@ -34,38 +34,33 @@
                     <div class="flex-column flex-gap-10" id="vueapp">
                         <template>
                             <div class="flex flex-100">
-                                <div class="flex-wrap flex-66 flex flex-gap-10 flex-padding-10">
-                                    <div class="form-group flex-40">
+                                <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
+                                    <div class="form-group flex-20">
                                         <label class="fix-width-33">상담일시:</label>
                                         <input type="date" class="form-control" v-model="cnslt_dt">
                                     </div>
-                                    <div class="form-group flex-40">
+                                    <div class="form-group flex-20">
                                         <label class="fix-width-33">고객명:</label>
                                         <input type="text" class="form-control" v-model="cust_nm">
                                     </div>
-                                    <div class="form-group flex-40">
+                                    <div class="form-group flex-20">
                                         <label class="fix-width-33">상담내용:</label>
                                         <input type="text" class="form-control" v-model="cnslt_cn">
                                     </div>
-                                    <div class="form-group flex-40">
+                                    <div class="form-group flex-20">
                                         <label class="fix-width-33">상담자:</label>
                                         <input type="text" class="form-control" v-model="emp_nm">
                                     </div>
-                                </div>
-
-                                <div class="flex-wrap flex-33 flex flex-center flex-gap-10 flex-padding-10">
-                                    <div class="form-group" style="width:45%;">
-                                        <button type="button" class="btn btn-blue btn-icon icon-left form-control "
-                                            v-model="cust_nm" @click="getCommuniList">
-                                            검색
-                                            <i class="entypo-search"></i>
-                                        </button>
-                                    </div>
+                               		<button type="button" class="btn btn-primary btn-icon" style="height: 23px;"
+                                        v-model="cust_nm" @click="getCommuniList">
+                                        검색
+                                        <i class="entypo-search"></i>
+                                   	</button>
                                 </div>
                             </div>
                             <div class="flex flex-100 flex-padding-10 flex-gap-10"
                                 style="justify-content:flex-end;border: 1px solid #999999;">
-                                <button type="button" class="btn btn-orange btn-icon icon-left"
+                                <button type="button" class="btn btn-orange btn-icon"
                                     style="margin-left: 5px;" @click="cnsltDelete">
                                     삭제
                                     <i class="entypo-users"></i>

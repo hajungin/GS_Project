@@ -31,7 +31,7 @@
 	
 	
 			<ul id="main-menu" class="main-menu">
-			<li data-lnb="10" data-snb="0">
+				<li data-lnb="10" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
 						<span class="title">EZEN 고객관리</span>
@@ -56,6 +56,12 @@
 							</a>
 						</li>						
 					</ul>
+				</li> 
+				<li data-lnb="10" data-snb="0">
+					<a href="#gm" onclick="cf_movePage('/common/commMng')">
+						<i class="entypo-newspaper"></i>
+						<span class="title">EZEN 공통옵션관리</span>
+					</a>
 				</li> 
 			
 				<li data-lnb="10" data-snb="0">
@@ -132,12 +138,6 @@
 							</a>
 							<a href="#gm" onclick="cf_movePage('/2team/prod/insert')">
 								<span class="title">상품등록</span>
-							</a>
-							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
-								<span class="title">상품수정</span>
-							</a>
-							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
-								<span class="title">상품삭제</span>
 							</a>
 						</li>
 					</ul>
