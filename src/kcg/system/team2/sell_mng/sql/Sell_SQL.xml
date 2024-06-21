@@ -47,8 +47,8 @@
 		</if>
 		UNION ALL
 		SELECT  
-			el.loan_prod_no,
-			el.loan_prod_nm,
+			el.prod_no,
+			el.prod_nm,
 			ec_type.comm_nm AS prod_type,
 			ec_target.comm_nm AS sub_tg,
 			el.pay_period,
@@ -56,8 +56,8 @@
 			el.price_max,
 			el.price_min,
 			ec_stat.comm_nm AS sale_stat,
-			el.loan_sale_beg_dt,
-			el.loan_sale_end_dt,
+			el.sale_beg_dt,
+			el.sale_end_dt,
 			el.promtn_yn,
 			el.air_max,
 			el.air_min,
@@ -72,12 +72,12 @@
 		LEFT JOIN 
 		    kcgbd.e_common ec_cycle ON el.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 		LEFT JOIN 
-		    kcgbd.e_common ec_stat ON el.loan_sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+		    kcgbd.e_common ec_stat ON el.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
 		    
-			where el.loan_sale_stat='SS02'
+			where el.sale_stat='SS02'
 			
 		<if test='prod_nm != null and prod_nm != ""'>
-		   and el.loan_prod_nm like CONCAT('%',#{prod_nm},'%')
+		   and el.prod_nm like CONCAT('%',#{prod_nm},'%')
 		</if>
 		<if test='prod_type != null and prod_type != ""'>
 		   and el.prod_type = #{prod_type}
@@ -86,7 +86,7 @@
 		   and el.sub_tg = #{sub_tg}
 		</if>
         <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN el.loan_sale_beg_dt AND el.loan_sale_end_dt
+   		 AND CAST(#{from_date} AS DATE) BETWEEN el.sale_beg_dt AND el.sale_end_dt
 		</if>
 		
 		UNION ALL

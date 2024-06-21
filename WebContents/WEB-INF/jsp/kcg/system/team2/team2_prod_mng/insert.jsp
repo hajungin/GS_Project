@@ -249,16 +249,19 @@ var vueapp = new Vue({
         },
 		generateProductCode() {
 		    cf_ajax("/2team/prod/code", { prod_type: this.info.prod_type }, this.code.bind(this));
+		    
 		},
 		
-		// 상품 유형 선택 시 자동으로 판매중으로 설정
-// 		updateProductStat() {
-// 		      if(this.info.prod_type != null){
-// 		    	  this.info.sale_stat = "SS01";
-// 		      }
-// 		    },
+		//상품 유형 선택 시 자동으로 판매중으로 설정
+		updateProductStat() {
+		      if(this.info.prod_type != null){
+		    	  this.info.sale_stat = "SS01";
+		      }
+		    },
 		code(data) {
 		    this.info.prod_no = data.prod_no + 1; // 상품코드 + 1 값으로 변경
+		    cf_ajax("/2team/prod/code", null, null);
+		    this.updateProductStat();
 		},
 		isYearlyDisabled() {
             return this.info.pay_period !== '' && parseInt(this.info.pay_period) <= 12;
@@ -288,6 +291,10 @@ var vueapp = new Vue({
 				alert("가입금액을 입력하세요.");
 				return;
 			}
+			else if (!Number.isInteger(parseFloat(this.info.price_min)) || !Number.isInteger(parseFloat(this.info.price_max))) {
+                alert("가입금액은 정수만 입력할 수 있습니다.");
+                return;
+            }
 			else if(parseInt(this.info.price_min) > parseInt(this.info.price_max)) {
 			    alert("가입금액 최소가 더 클 수 없습니다.");
 			    return;

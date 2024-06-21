@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,9 @@
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
+	<link rel="stylesheet" href="/static_resources/system/js/datatables/datatables.css">
+	<link rel="stylesheet" href="/static_resources/system/js/datatables/promion.css">
+	<link rel="stylesheet" href="/static_resources/system/js/datatables/billboard.css">
 	
 
 <title>상품정보조회</title>
@@ -32,21 +36,28 @@
 						class="fa fa-home"></i>Home</a></li>
 				<li class="active"><strong>상품정보조회</strong></li>
 			</ol>
-
-			<h2>상품관리 > 상품정보조회 > 일반상품</h2>
-			<br />
+			<h2>판매관리 > 상품정보조회 > 판매중 상품</h2>
+			<div class="right flex-column flex-100">
+			 	<div class="right-top">
+                        <ul class="nav">
+                            <li class="nav-tab" @click="tabChange(1)">일반상품</li>
+                            <li class="nav-tab active" @click="tabChange(2)">프로모션상품</li>
+                        </ul>
+                 </div>
+			</div>
+			
 
 			<div class="flex-column flex-gap-10" id="vueapp">
 				<template>
 					
         
         <div class="flex flex-100">
-            <div class="flex-wrap flex-60 flex flex-gap-10 flex-padding-10">
+            <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
                 <div class="form-group flex-20">
                     <label for="productName" class="form-control">상품명 :</label>
                     <input type="text" class="form-control" v-model="prod_nm" value=""/>
                 </div>
-                <div class="form-group flex-40">
+                <div class="form-group flex-20">
 				    <label for="productType" class="form-control">상품 유형 :</label>
 				    <select v-model="prod_type" class="form-control">
 				        <option value="">전체</option>
@@ -54,16 +65,16 @@
 				        <option value="PT03">대출</option>
 				        <option value="PT01">적금</option>
 				    </select>
-				</div>
+				</div><br>
 
 
-                <div class="form-group flex-40">
+                <div class="form-group flex-20">
                     <label for="from_date" class="form-control">판매 기간 :</label>
                     <input type="text" class="form-control" v-model="from_date" data-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"/>
 <!--                     <input type="text" v-model="sale_end_dt" data-format="yyyy-mm-dd"/> -->
                 </div>
-                <div class="form-group flex-40">
-                    <label for="subTarget" class="form-control">가입대상 :</label>
+                <div class="form-group flex-20">
+                    <label for="subTarget"  class="form-control">가입대상 :</label>
                     <select v-model="sub_tg" class="form-control" value="">
                         <option value="">전체</option>
                         <option value="ST01">일반개인</option>
@@ -71,15 +82,12 @@
                         <option value="ST03">소상공인</option>
                     </select>
                 </div>
-            </div>
-		    <div class="flex-wrap flex-20 flex flex-center flex-gap-10 flex-padding-110">
-			    <div class="form-group" style="width: 45%;">
+                <div class="form-group flex-10" style="width: 50%;">
 			        <button type="button" class="btn-icon" @click="getListCond(true)">
 			            검색 <i class="entypo-search"></i>
 			        </button>
 			    </div>
-			</div>
-
+            </div>
         </div>
        <div class="flex flex-100 flex-padding-10 flex-gap-10"
 						style="justify-content: flex-end; border: 1px solid #999999;">
@@ -255,7 +263,7 @@
                             <label for="err_eng_nm">변동 이율내역 :</label>
                         </div>	
                     <div>
-                        <textarea  id="tsk_dtl_cn" v-model="info.prod_hist"style="width:100%;" readonly="readonly" ></textarea>               
+                        <textarea  id="tsk_dtl_cn" v-model="info.prod_hist" style="width:100%; height: 400px; resize: none;" readonly="readonly" ></textarea>               
                     </div>
                     </div>
                 </div>          
@@ -267,9 +275,9 @@
 				    <i class="fa fa-save"></i> 
 				    상품정보수정
 				</button>
-				<button type="button" v-if="info.sale_stat !== 'SS04'" class="btn btn-danger btn-icon icon-left" data-dismiss="modal">
+				<button type="button" v-if="info.sale_stat !== 'SS04'" class="btn btn-danger btn-icon icon-left" @click=deleteOne()>
 				    <i class="fa fa-trash"></i> 
-				    상품판매중지
+				    상품판매종료
 				</button>
 				<button type="button" class="btn btn-secondary btn-icon icon-left" data-dismiss="modal">
 				    Close
@@ -294,8 +302,11 @@ var vueapp = new Vue({
         sale_beg_dt:"",
         sale_end_dt:"",
         all_srch : "Y",
+        pro: "",
+        selectedTab: 'general'
     },
     mounted: function(){
+    	 
         var fromDtl = cf_getUrlParam("fromDtl");
         var pagingConfig = cv_sessionStorage.getItem("pagingConfig");       
         if ("Y" === fromDtl && !cf_isEmpty(pagingConfig)) {
@@ -318,6 +329,9 @@ var vueapp = new Vue({
         }
     },
     methods: {
+    	selectTab(tab) {
+            this.selectedTab = tab;
+        },
     	getListCond : function(isInit){
     		var regex = /^\d{4}-\d{2}-\d{2}$/;
             if (this.from_date && !regex.test(this.from_date)) {
@@ -481,27 +495,33 @@ var pop_cust_info = new Vue({
             const sale_beg_date = new Date(this.info.sale_beg_dt);
             const sale_end_date = new Date(this.info.sale_end_dt);
 			
-			if(cf_isEmpty(this.info.price_min && this.info.price_max)){
-				alert("가입금액을 입력하세요.");
-				return;
-			}
-			else if(parseInt(this.info.price_min) > parseInt(this.info.price_max)) {
-			    alert("가입금액 최소가 더 클 수 없습니다.");
-			    return;
-			}
-			else if(cf_isEmpty(this.info.pay_period)){
+            if (cf_isEmpty(this.info.price_min) || cf_isEmpty(this.info.price_max)) {
+                alert("가입금액을 입력하세요.");
+                return;
+            } else if (!Number.isInteger(parseFloat(this.info.price_min)) || !Number.isInteger(parseFloat(this.info.price_max))) {
+                alert("가입금액은 정수만 입력할 수 있습니다.");
+                return;
+            } else if (parseInt(this.info.price_min) > parseInt(this.info.price_max)) {
+                alert("가입금액 최소가 더 클 수 없습니다.");
+                return;
+            }
+			else if (cf_isEmpty(this.info.pay_period)){
 				alert("납입기간을 입력하세요.");
 				return;
 			}
-			else if(cf_isEmpty(this.info.air_min && this.info.air_max)){
+			else if (cf_isEmpty(this.info.air_min && this.info.air_max)){
 				alert("적용이율을 입력하세요.");
 				return;
 			}
-			else if(parseFloat(this.info.air_min) > parseFloat(this.info.air_max)) {
+			else if (parseFloat(this.info.air_min) > parseFloat(this.info.air_max)) {
 			    alert("적용이율 최소가 더 클 수 없습니다.");
 			    return;
 			}
-			else if(cf_isEmpty(this.info.air_beg_dt && this.info.air_end_dt)) {
+			else if (parseInt(this.info.air_max) > 10  && parseInt(this.info.air_min) > 10) {
+			    alert("적용이율이 적합하지 않습니다.");
+			    return;
+			}
+			else if (cf_isEmpty(this.info.air_beg_dt && this.info.air_end_dt)) {
 			    alert("적용기간을 입력하세요.");
 			    return;
 			}
@@ -509,7 +529,7 @@ var pop_cust_info = new Vue({
                 alert("적용기간의 시작일은 종료일보다 늦을 수 없습니다.");
                 return;
             }
-			else if(cf_isEmpty(this.info.sale_beg_dt && this.info.sale_end_dt)){
+			else if (cf_isEmpty(this.info.sale_beg_dt && this.info.sale_end_dt)){
 				alert("판매기간을 입력하세요.");
 				return;
 			}
@@ -526,6 +546,21 @@ var pop_cust_info = new Vue({
 			alert("저장되었습니다.");
 			cf_movePage('/2team/prod/list');
 		},
+		
+		deleteOne : function(data) {
+			if(!confirm("판매종료하시겠습니까?")){
+				return;
+			}
+			if (!confirm("판매종료시 되돌릴 수 없습니다.")) {
+			    return;
+			}
+			this.info.sale_stat='SS04'
+			cf_ajax("/2team/prod/delete", this.info, this.deleteOneCB);
+		},
+		deleteOneCB : function(data){
+			alert("종료되었습니다.");
+			cf_movePage('/2team/prod/list');
+		}, 
 	},
 });
 </script>
