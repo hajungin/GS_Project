@@ -7,7 +7,7 @@
 			comm_no AS comm_no,
 			comm_nm AS comm_nm,
 			group_comm_nm AS gr_comm_nm,
-			reg_dt AS reg_dt,
+			TO_CHAR(reg_dt, 'YYYY-MM-DD') AS reg_dt,
 			note AS note
 		FROM kcgbd.e_common
 		WHERE 1=1
@@ -27,5 +27,18 @@
 		GROUP BY group_comm_no, group_comm_nm
 		ORDER BY gr_comm_no
 	</select>
+	<insert id="commInsert" parameterType="cmmnMap">
+      INSERT INTO kcgbd.e_common(group_comm_no, group_comm_nm, comm_no, comm_nm, red_dt, note)
+         VALUES (
+         #{gr_comm_no},
+         #{gr_comm_nm},
+         #{comm_no},
+         #{comm_nm},
+         now(),
+         #{note}
+         )
+	</insert>
+
+
 
 </mapper>

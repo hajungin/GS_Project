@@ -1,5 +1,7 @@
 package kcg.system.team2.comm_mng.svc;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,12 +29,23 @@ public class CommSvc {
 
 	public List<CmmnMap> getAll(CmmnMap params) {
 		List<CmmnMap> dataList = cmmnDao.selectList("system.team2_commmon_mng.getAll", params);
-		return dataList;
+		List<CmmnMap> newList = new ArrayList<>(); 
+		for(CmmnMap cmmnMap:dataList) {
+			cmmnMap.put("selected", false);
+			cmmnMap.put("update", false);
+			newList.add(cmmnMap);
+		}
+		return newList;
 	}
 
 	public List<CmmnMap> getGrCommList(CmmnMap params) {
 		List<CmmnMap> dataList = cmmnDao.selectList("system.team2_commmon_mng.getGrComm", params);
 		return dataList;
+	}
+
+	public CmmnMap commInsert(CmmnMap params) {
+		cmmnDao.insert("system.team2_comm_mng.commInsert", params);
+		return new CmmnMap().put("status", "OK");
 	}
 	
 

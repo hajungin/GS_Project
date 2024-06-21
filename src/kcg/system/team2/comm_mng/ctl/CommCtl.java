@@ -43,5 +43,11 @@ public class CommCtl {
 		log.debug(dataList.toString());	
 		return dataList;
 	}
+	
+	@RequestMapping("/commInsert")
+	public CmmnMap commInsert(CmmnMap params){
+		return commSvc.commInsert(params); 
+	}
+	
 
 }

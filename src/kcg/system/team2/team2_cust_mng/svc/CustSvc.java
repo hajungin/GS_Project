@@ -55,7 +55,7 @@ public class CustSvc {
 	}
 
 	public CmmnMap custInsert(CmmnMap params) {
-		cmmnDao.update("system.team2_cust_mng.custInsert", params);
+		cmmnDao.insert("system.team2_cust_mng.custInsert", params);
 		return new CmmnMap().put("status", "OK");
 	}
 

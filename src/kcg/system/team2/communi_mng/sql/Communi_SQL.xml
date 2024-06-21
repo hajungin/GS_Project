@@ -60,9 +60,9 @@
          now(),
          #{emp_no}
          )
-   </insert>
+	</insert>
    
-   <select id="getCnsltList" parameterType="cmmnMap" resultType="cmmnMap">
+	<select id="getCnsltList" parameterType="cmmnMap" resultType="cmmnMap">
       SELECT
          TO_CHAR(a.cnslt_dt, 'YYYY-MM-DD') AS cnslt_dt,
          a.cnslt_no AS cnslt_no,
@@ -76,6 +76,6 @@
       JOIN
          kcgbd.e_customer c ON c.cust_sn = a.cust_no
 	  WHERE c.cust_mbl_telno = #{cust_mbl_telno}
-   </select>
+	</select>
    
 </mapper>
