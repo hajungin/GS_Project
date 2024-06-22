@@ -103,10 +103,10 @@
 					<ul data-lnb="11" data-snb="0">
 						<li data-lnb="11" data-snb="1">
 							<a href="#gm" onclick="cf_movePage('/2team/prod/GLlist')">
-								<span class="title">일반상품조회</span>
+								<span class="title">일반상품</span>
 							</a>
 							<a href="#gm" onclick="cf_movePage('/2team/prod/PRlist')">
-								<span class="title">프로모션상품조회</span>
+								<span class="title">프로모션상품</span>
 							</a>
 							<a href="#gm" onclick="cf_movePage('/2team/prod/insert')">
 								<span class="title">상품등록</span>

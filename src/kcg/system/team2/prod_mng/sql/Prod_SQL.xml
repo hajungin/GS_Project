@@ -15,6 +15,7 @@
 		ep.sale_beg_dt,
 		ep.sale_end_dt,
 		ep.promtn_yn,
+		ec_interest.comm_nm AS interest_ta,
 		ep.air_max,
 		ep.air_min,
 		ep.air_beg_dt,
@@ -29,8 +30,10 @@
 			    kcgbd.e_common ec_cycle ON ep.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ep.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+			LEFT JOIN 
+			    kcgbd.e_common ec_interest ON ep.interest_ta = ec_interest.comm_no AND ec_interest.group_comm_no = 7
 			    
-				where ep.promtn_yn = 'N'
+				where ep.promtn_yn = #{promtn_yn}
 				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ep.prod_nm like CONCAT('%',#{prod_nm},'%')
@@ -43,6 +46,15 @@
 		</if>
         <if test='from_date != null and from_date != ""'>
    		 AND CAST(#{from_date} AS DATE) BETWEEN ep.sale_beg_dt AND ep.sale_end_dt
+		</if>
+		<if test='sale_stat != null and sale_stat != ""'>
+		   and ep.sale_stat = #{sale_stat}
+		</if>
+		<if test='price_max != null and price_max != ""'>
+		   and ep.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		</if>
+		<if test='price_min != null and price_min != ""'>
+		   and ep.price_min &gt; CAST(#{price_min} AS INTEGER)+1
 		</if>
 		
 		UNION ALL
@@ -59,6 +71,7 @@
 			el.sale_beg_dt,
 			el.sale_end_dt,
 			el.promtn_yn,
+			ec_interest.comm_nm AS interest_ta,
 			el.air_max,
 			el.air_min,
 			el.air_beg_dt,
@@ -73,8 +86,10 @@
 		    kcgbd.e_common ec_cycle ON el.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 		LEFT JOIN 
 		    kcgbd.e_common ec_stat ON el.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+		LEFT JOIN 
+			kcgbd.e_common ec_interest ON el.interest_ta = ec_interest.comm_no AND ec_interest.group_comm_no = 7
 		    
-			where el.promtn_yn = 'N'
+			where el.promtn_yn = #{promtn_yn}
 			
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and el.prod_nm like CONCAT('%',#{prod_nm},'%')
@@ -87,6 +102,15 @@
 		</if>
         <if test='from_date != null and from_date != ""'>
    		 AND CAST(#{from_date} AS DATE) BETWEEN el.sale_beg_dt AND el.sale_end_dt
+		</if>
+		<if test='sale_stat != null and sale_stat != ""'>
+		   and el.sale_stat = #{sale_stat}
+		</if>
+		<if test='price_max != null and price_max != ""'>
+		   and el.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		</if>
+		<if test='price_min != null and price_min != ""'>
+		   and el.price_min &gt; CAST(#{price_min} AS INTEGER)+1
 		</if>
 		
 		UNION ALL
@@ -103,6 +127,7 @@
 			ea.sale_beg_dt,
 			ea.sale_end_dt,
 			ea.promtn_yn,
+			ec_interest.comm_nm AS interest_ta,
 			ea.air_max,
 			ea.air_min,
 			ea.air_beg_dt,
@@ -117,8 +142,10 @@
 			    kcgbd.e_common ec_cycle ON ea.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ea.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+			LEFT JOIN 
+				kcgbd.e_common ec_interest ON ea.interest_ta = ec_interest.comm_no AND ec_interest.group_comm_no = 7
 			    
-				where ea.promtn_yn = 'N'
+				where ea.promtn_yn = #{promtn_yn}
 				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ea.prod_nm like CONCAT('%',#{prod_nm},'%')
@@ -131,6 +158,15 @@
 		</if>
         <if test='from_date != null and from_date != ""'>
    		 AND CAST(#{from_date} AS DATE) BETWEEN ea.sale_beg_dt AND ea.sale_end_dt
+		</if>
+		<if test='sale_stat != null and sale_stat != ""'>
+		   and ea.sale_stat = #{sale_stat}
+		</if>
+		<if test='price_max != null and price_max != ""'>
+		   and ea.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		</if>
+		<if test='price_min != null and price_min != ""'>
+		   and ea.price_min &gt; CAST(#{price_min} AS INTEGER)+1
 		</if>
 		
 		UNION ALL
@@ -147,6 +183,7 @@
 			ed.sale_beg_dt,
 			ed.sale_end_dt,
 			ed.promtn_yn,
+			ec_interest.comm_nm AS interest_ta,
 			ed.air_max,
 			ed.air_min,
 			ed.air_beg_dt,
@@ -161,8 +198,10 @@
 			    kcgbd.e_common ec_cycle ON ed.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ed.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+			LEFT JOIN 
+				kcgbd.e_common ec_interest ON ed.interest_ta = ec_interest.comm_no AND ec_interest.group_comm_no = 7
 			    
-				where ed.promtn_yn = 'N'
+				where ed.promtn_yn = #{promtn_yn}
 				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ed.prod_nm like CONCAT('%',#{prod_nm},'%')
@@ -175,6 +214,15 @@
 		</if>
         <if test='from_date != null and from_date != ""'>
    		 AND CAST(#{from_date} AS DATE) BETWEEN ed.sale_beg_dt AND ed.sale_end_dt
+		</if>
+		<if test='sale_stat != null and sale_stat != ""'>
+		   and ed.sale_stat = #{sale_stat}
+		</if>
+		<if test='price_max != null and price_max != ""'>
+		   and ed.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		</if>
+		<if test='price_min != null and price_min != ""'>
+		   and ed.price_min &gt; CAST(#{price_min} AS INTEGER)+1
 		</if>
 	</select>
 	
@@ -290,7 +338,7 @@
 	<update id="PSupdate">
 		update kcgbd.e_product_save set
 		sub_tg = #{sub_tg},
-		pay_period = #{pay_perioda},
+		pay_period = #{pay_period},
 		pay_cycle = #{pay_cycle},
 		interest_ta = #{interest_ta},
 		price_max = #{price_max},
@@ -308,7 +356,7 @@
 	<update id="DPupdate">
 		update kcgbd.e_product_dp set
 		sub_tg = #{sub_tg},
-		pay_period = #{pay_perioda},
+		pay_period = #{pay_period},
 		pay_cycle = #{pay_cycle},
 		interest_ta = #{interest_ta},
 		price_max = #{price_max},
@@ -326,7 +374,7 @@
 	<update id="ACupdate">
 		update kcgbd.e_product_ac set
 		sub_tg = #{sub_tg},
-		pay_period = #{pay_perioda},
+		pay_period = #{pay_period},
 		pay_cycle = #{pay_cycle},
 		interest_ta = #{interest_ta},
 		price_max = #{price_max},
@@ -344,7 +392,7 @@
 	<update id="LOupdate">
 		update kcgbd.e_product_loan set
 		sub_tg = #{sub_tg},
-		pay_period = #{pay_perioda},
+		pay_period = #{pay_period},
 		pay_cycle = #{pay_cycle},
 		interest_ta = #{interest_ta},
 		price_max = #{price_max},
@@ -361,6 +409,21 @@
 	
 	<update id="PSdelete">
 		update kcgbd.e_product_save set
+		sale_stat = #{sale_stat}
+		where prod_no = #{prod_no}
+	</update>
+	<update id="LOdelete">
+		update kcgbd.e_product_loan set
+		sale_stat = #{sale_stat}
+		where prod_no = #{prod_no}
+	</update>
+	<update id="DPdelete">
+		update kcgbd.e_product_dp set
+		sale_stat = #{sale_stat}
+		where prod_no = #{prod_no}
+	</update>
+	<update id="ACdelete">
+		update kcgbd.e_product_ac set
 		sale_stat = #{sale_stat}
 		where prod_no = #{prod_no}
 	</update>
