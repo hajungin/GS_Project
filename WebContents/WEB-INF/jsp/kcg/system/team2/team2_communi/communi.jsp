@@ -188,7 +188,7 @@
                this.cnslt_cn = params.cnslt_cn;
                this.emp_nm = params.emp_nm;
    
-               this.getCommuniList(true);
+               this.getCommuniList();
            } else {
                cv_sessionStorage
                    .removeItem("pagingConfig")

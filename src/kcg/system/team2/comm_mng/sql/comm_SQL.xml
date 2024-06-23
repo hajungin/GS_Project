@@ -30,7 +30,7 @@
 		ORDER BY gr_comm_no
 	</select>
 	
-	<select id="getComm" resultType="cmmnMap">
+	<select id="getComm" parameterType="cmmnMap" resultType="cmmnMap">
 		SELECT
 			comm_no AS comm_no,
 			comm_nm AS comm_nm

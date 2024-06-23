@@ -38,7 +38,7 @@
                             <div class="form-group flex-60">
                             	<label class="fix-width-10" style="margin-left: 50px;">이벤트구분 :</label>
 	                                <select id ="event" class="form-control" v-model="event" @change="getCustEventList()">
-	                                	<option value="">전체</option>
+	                                	<option value="all">전체</option>
 	                                	<option value="sel_birth">생일</option>
 	                                	<option value="expiration">만기도래</option>
 	                                </select>
@@ -150,13 +150,8 @@
                                     <label for="cust_cr_no" class="col-sm-4 control-label">직업</label>
                                     <div class="col-sm-8" id="selectcr">
                                        <select id="cust_cr_no" class="form-control" v-model="info.cust_cr_no" style="margin-left: 10px;">
-											<option value="JB01">학생</option>
-											<option value="JB02">공무원</option>
-											<option value="JB03">회사원</option>
-											<option value="JB04">자영업자</option>
-											<option value="JB05">프리랜서</option>
-											<option value="JB06">무직</option>
-											<option value="JB07">기타</option>
+											<option value="">선택</option>
+											<<option v-for="item in comm_List" :value="item.comm_no">{{ item.comm_nm }}</option>
 										</select>
 										<input v-if="showInput" type="text" class="form-control" v-model="info.other_cr" placeholder="직업명 입력">
                                     </div>
@@ -251,7 +246,7 @@
 		    <div class="modal-dialog" style="width: 500px;">
 		        <div class="modal-content">
 		       	 <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose" >&times;</button>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose" @click="getInfo" >&times;</button>
 						<h4 class="modal-title" id="modify_nm">담당자 설정</h4>
 					</div> 
 			            <div class="modal-body">
@@ -291,7 +286,7 @@
             cust_nm: "",
     		cust_pridtf_no: "",
     		cust_mbl_telno: "",
-    		event: "",
+    		event: "all",
     		emp_nm: "",
         },
         mounted: function () {
@@ -304,6 +299,7 @@
                 this.cust_nm = params.cust_nm;
                 this.cust_mbl_telno = params.cust_mbl_telno;
                 this.emp_nm = params.emp_nm;
+                this.cust_pridtf_no = params.cust_pridtf_no;
 
                 this.getCustInfoList();
             } else {
@@ -325,7 +321,7 @@
                 var params = {
                     cust_nm: this.cust_nm,
                     emp_nm: this.emp_nm,
-                    cust_mbl_telno: this.cust_mbl_telno,
+                    cust_mbl_telno: this.cust_mbl_telno
                 }
 
                 cv_sessionStorage
@@ -334,22 +330,25 @@
 
                 cf_ajax("/customer/getCustInfoList", params, this.getListCB);
             },
-            getCustEventList: function(isInit) {
-            	cv_pagingConfig.func = this.getCustInfoList;
-                if (isInit === true) {
-                    cv_pagingConfig.pageNo = 1;
-                    cv_pagingConfig.orders = [{ target: "cust_nm", isAsc: false }];
+            getCustEventList: function() {
+            	cv_pagingConfig.func = this.getCustEventList;
+                cv_pagingConfig.pageNo = 1;
+                cv_pagingConfig.orders = [{ target: "cust_nm", isAsc: false }];
+
+                if(this.event == "all") {
+                	this.getCustInfoList(true);
+                } else {
+                	var params = {
+                        	cust_nm: this.cust_nm,
+                            event: this.event,
+                        }
+
+                        cv_sessionStorage
+                            .setItem('pagingConfig', cv_pagingConfig)
+                            .setItem('params', params);
+
+                        cf_ajax("/customer/getCustEventList", params, this.getListCB);
                 }
-
-                var params = {
-                    event: this.event,
-                }
-
-                cv_sessionStorage
-                    .setItem('pagingConfig', cv_pagingConfig)
-                    .setItem('params', params);
-
-                cf_ajax("/customer/getCustEventList", params, this.getListCB);
             },
             getListCB: function (data) {
                 //console.log(data);
@@ -397,6 +396,7 @@
             cnslt_cn_add: "",
             cnsltList: [],
             cnsltItems: "",
+            comm_List: "",
                 
         },
         computed: {
@@ -404,14 +404,19 @@
               return this.info.cust_cr_no === 'JB07';
             }, 
          },
+//         mounted() {
+//         	 this.getComm();
+//         },
         methods: {
             init: function (cust_mbl_telno) {
                 this.info.cust_mbl_telno = cust_mbl_telno;
                 if (!cf_isEmpty(this.info.cust_mbl_telno)) {
                     this.getInfo();
+                    this.getComm();
 //                     this.getCnsltList();
                 } else {
                 	this.initInfo();
+                	this.getComm();
                 }
             },
             initInfo: function () {
@@ -462,6 +467,15 @@
 				}
 				cf_ajax("/customer/getEmpSelInfo", params, this.getEmpCB);
 			},
+			getComm: function () {
+				var gr_comm_no = 3;
+				var params = {
+					gr_comm_no: gr_comm_no
+				}
+				cf_ajax("/common/getCommList", params, (data) => {
+	        		this.comm_List = data;
+        		});
+        	},
 			custUpdate: function () {
 				var cust_nm = this.info.cust_nm;
 				var cust_pridtf_no = this.info.cust_pridtf_no;
@@ -491,10 +505,10 @@
 					alert("고객정보 변경 완료");
 				}
 				$('#pop_cust_info').modal('hide');
-				this.custInfoReload();
+				window.location.reload();
 			},
 			custInfoReload: function () {
-				vueapp.getCustInfoList();
+				this.getInfo();
 			},
 			
 			custInsert: function () {
@@ -595,6 +609,9 @@
             	var self = this;
             	$('#pop_emp_info').hide();
             	pop_cust_info.getEmpSelInfo(emp_nm);
+            },
+            getInfo: function () {
+            	pop_cust_info.getInfo();
             },
         },
         mounted() {

@@ -210,8 +210,8 @@
     		selected: false
         },
         mounted: function () {
-        		this.getGrCommList();
                 this.getCommonList();
+                this.getGrCommList();
         },
         computed: {
         	showButton() {
@@ -225,11 +225,12 @@
         		});
         	},
             getCommonList: function () {
+            	
             	var params = {
             	gr_comm_no: this.gr_comm_no,
             	gr_comm_nm: this.gr_comm_nm,
             	comm_nm: this.search_val,
-            	note: this.note
+            	note: this.note,
             	}
             	
         		cf_ajax("/common/getCommonList", params, this.getListCB);

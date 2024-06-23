@@ -1,6 +1,5 @@
 package kcg.system.team2.team2_cust_mng.svc;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,11 +29,11 @@ public class CustSvc {
 	@Autowired
 	CmmnDao cmmnDao;
 
-	public PageList<CmmnMap> getAll(CmmnMap params, PagingConfig pagingConfig) {
+	public PageList<CmmnMap> getCustInfoList(CmmnMap params, PagingConfig pagingConfig) {
 		return cmmnDao.selectListPage("system.team2_cust_mng.getAll", params, pagingConfig);
 	}
 	
-	public PageList<CmmnMap> getEvent(CmmnMap params, PagingConfig pagingConfig) {
+	public PageList<CmmnMap> getCustEventList(CmmnMap params, PagingConfig pagingConfig) {
 		return cmmnDao.selectListPage("system.team2_cust_mng.getEvent", params, pagingConfig);
 	}
 	

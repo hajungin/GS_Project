@@ -146,7 +146,7 @@
                         <br>
                     </div>
                     <div class="subjectItem">
-                        <h2>가입내역</h2>
+                        <h2>가입내역? 설계내역?</h2>
                         <table>
                             <tr>
                                 <td style="vertical-align: top;">
