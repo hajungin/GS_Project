@@ -13,13 +13,14 @@
 		ep.price_max,
 		ep.price_min,
 		ec_stat.comm_nm AS sale_stat,
-		ep.sale_beg_dt,
-		ep.sale_end_dt,
+		TO_CHAR(ep.sale_beg_dt, 'YYYY-MM-DD') AS sale_beg_dt,
+		TO_CHAR(ep.sale_end_dt, 'YYYY-MM-DD') AS sale_end_dt,
 		ep.promtn_yn,
+		ec_interest.comm_nm AS interest_ta,
 		ep.air_max,
 		ep.air_min,
-		ep.air_beg_dt,
-		ep.air_end_dt
+		TO_CHAR(ep.air_beg_dt, 'YYYY-MM-DD') AS air_beg_dt,
+		TO_CHAR(ep.air_end_dt, 'YYYY-MM-DD') AS air_end_dt
 	 FROM 
    		 kcgbd.e_product_save ep
 			LEFT JOIN 
@@ -30,8 +31,10 @@
 			    kcgbd.e_common ec_cycle ON ep.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ep.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+			LEFT JOIN 
+			    kcgbd.e_common ec_interest ON ep.interest_ta = ec_interest.comm_no AND ec_interest.group_comm_no = 7
 			    
-				where ep.sale_stat='SS02'
+				where ep.sale_stat = 'SS02'
 				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ep.prod_nm like CONCAT('%',#{prod_nm},'%')
@@ -42,9 +45,22 @@
 		<if test='sub_tg != null and sub_tg != ""'>
 		   and ep.sub_tg = #{sub_tg}
 		</if>
-        <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN ep.sale_beg_dt AND ep.sale_end_dt
+        <if test='sale_beg_dt != null and sale_beg_dt != ""'>
+   		 AND CAST(#{sale_beg_dt} AS DATE) &gt; ep.sale_beg_dt
 		</if>
+		<if test='sale_end_dt != null and sale_end_dt != ""'>
+   		 AND CAST(#{sale_end_dt} AS DATE) &lt; ep.sale_end_dt
+		</if>
+		<if test='price_max != null and price_max != ""'>
+		   and ep.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		</if>
+		<if test='price_min != null and price_min != ""'>
+		   and ep.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		</if>
+		<if test='promtn_yn != null and promtn_yn != ""'>
+		   and ep.promtn_yn = #{promtn_yn}
+		</if>
+		
 		UNION ALL
 		SELECT  
 			el.prod_no,
@@ -56,13 +72,14 @@
 			el.price_max,
 			el.price_min,
 			ec_stat.comm_nm AS sale_stat,
-			el.sale_beg_dt,
-			el.sale_end_dt,
+			TO_CHAR(el.sale_beg_dt, 'YYYY-MM-DD') AS sale_beg_dt,
+			TO_CHAR(el.sale_end_dt, 'YYYY-MM-DD') AS sale_end_dt,
 			el.promtn_yn,
+			ec_interest.comm_nm AS interest_ta,
 			el.air_max,
 			el.air_min,
-			el.air_beg_dt,
-			el.air_end_dt
+			TO_CHAR(el.air_beg_dt, 'YYYY-MM-DD') AS air_beg_dt,
+			TO_CHAR(el.air_end_dt, 'YYYY-MM-DD') AS air_end_dt
 		 FROM 
    			 kcgbd.e_product_loan el
 		LEFT JOIN 
@@ -73,8 +90,10 @@
 		    kcgbd.e_common ec_cycle ON el.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 		LEFT JOIN 
 		    kcgbd.e_common ec_stat ON el.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+		LEFT JOIN 
+			kcgbd.e_common ec_interest ON el.interest_ta = ec_interest.comm_no AND ec_interest.group_comm_no = 7
 		    
-			where el.sale_stat='SS02'
+			where el.sale_stat = 'SS02'
 			
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and el.prod_nm like CONCAT('%',#{prod_nm},'%')
@@ -85,8 +104,20 @@
 		<if test='sub_tg != null and sub_tg != ""'>
 		   and el.sub_tg = #{sub_tg}
 		</if>
-        <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN el.sale_beg_dt AND el.sale_end_dt
+        <if test='sale_beg_dt != null and sale_beg_dt != ""'>
+   		 AND CAST(#{sale_beg_dt} AS DATE) &gt; el.sale_beg_dt
+		</if>
+		<if test='sale_end_dt != null and sale_end_dt != ""'>
+   		 AND CAST(#{sale_end_dt} AS DATE) &lt; el.sale_end_dt
+		</if>
+		<if test='price_max != null and price_max != ""'>
+		   and el.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		</if>
+		<if test='price_min != null and price_min != ""'>
+		   and el.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		</if>
+		<if test='promtn_yn != null and promtn_yn != ""'>
+		   and el.promtn_yn = #{promtn_yn}
 		</if>
 		
 		UNION ALL
@@ -100,14 +131,14 @@
 			ea.price_max,
 			ea.price_min,
 			ec_stat.comm_nm AS sale_stat,
-			ea.sale_beg_dt,
-			ea.sale_end_dt,
+			TO_CHAR(ea.sale_beg_dt, 'YYYY-MM-DD') AS sale_beg_dt,
+			TO_CHAR(ea.sale_end_dt, 'YYYY-MM-DD') AS sale_end_dt,
 			ea.promtn_yn,
+			ec_interest.comm_nm AS interest_ta,
 			ea.air_max,
 			ea.air_min,
-			ea.air_beg_dt,
-			ea.air_end_dt
-			
+			TO_CHAR(ea.air_beg_dt, 'YYYY-MM-DD') AS air_beg_dt,
+			TO_CHAR(ea.air_end_dt, 'YYYY-MM-DD') AS air_end_dt
 		 FROM 
    			 kcgbd.e_product_ac ea
 			LEFT JOIN 
@@ -118,8 +149,10 @@
 			    kcgbd.e_common ec_cycle ON ea.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ea.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+			LEFT JOIN 
+				kcgbd.e_common ec_interest ON ea.interest_ta = ec_interest.comm_no AND ec_interest.group_comm_no = 7
 			    
-				where ea.sale_stat='SS02'
+				where ea.sale_stat = 'SS02'
 				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ea.prod_nm like CONCAT('%',#{prod_nm},'%')
@@ -130,9 +163,22 @@
 		<if test='sub_tg != null and sub_tg != ""'>
 		   and ea.sub_tg = #{sub_tg}
 		</if>
-        <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN ea.sale_beg_dt AND ea.sale_end_dt
+        <if test='sale_beg_dt != null and sale_beg_dt != ""'>
+   		 AND CAST(#{sale_beg_dt} AS DATE) &gt; ea.sale_beg_dt
 		</if>
+		<if test='sale_end_dt != null and sale_end_dt != ""'>
+   		 AND CAST(#{sale_end_dt} AS DATE) &lt; ea.sale_end_dt
+		</if>
+		<if test='price_max != null and price_max != ""'>
+		   and ea.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		</if>
+		<if test='price_min != null and price_min != ""'>
+		   and ea.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		</if>
+		<if test='promtn_yn != null and promtn_yn != ""'>
+		   and ea.promtn_yn = #{promtn_yn}
+		</if>
+		
 		
 		UNION ALL
 		SELECT  
@@ -145,13 +191,14 @@
 			ed.price_max,
 			ed.price_min,
 			ec_stat.comm_nm AS sale_stat,
-			ed.sale_beg_dt,
-			ed.sale_end_dt,
+			TO_CHAR(ed.sale_beg_dt, 'YYYY-MM-DD') AS sale_beg_dt,
+			TO_CHAR(ed.sale_end_dt, 'YYYY-MM-DD') AS sale_end_dt,
 			ed.promtn_yn,
+			ec_interest.comm_nm AS interest_ta,
 			ed.air_max,
 			ed.air_min,
-			ed.air_beg_dt,
-			ed.air_end_dt		
+			TO_CHAR(ed.air_beg_dt, 'YYYY-MM-DD') AS air_beg_dt,
+			TO_CHAR(ed.air_end_dt, 'YYYY-MM-DD') AS air_end_dt
 		FROM 
    		 kcgbd.e_product_dp ed
 			LEFT JOIN 
@@ -162,8 +209,10 @@
 			    kcgbd.e_common ec_cycle ON ed.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ed.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+			LEFT JOIN 
+				kcgbd.e_common ec_interest ON ed.interest_ta = ec_interest.comm_no AND ec_interest.group_comm_no = 7
 			    
-				where ed.sale_stat='SS02'
+				where ed.sale_stat = 'SS02'
 				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ed.prod_nm like CONCAT('%',#{prod_nm},'%')
@@ -174,8 +223,20 @@
 		<if test='sub_tg != null and sub_tg != ""'>
 		   and ed.sub_tg = #{sub_tg}
 		</if>
-        <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN ed.sale_beg_dt AND ed.sale_end_dt
+        <if test='sale_beg_dt != null and sale_beg_dt != ""'>
+   		 AND CAST(#{sale_beg_dt} AS DATE) &gt; ed.sale_beg_dt
+		</if>
+		<if test='sale_end_dt != null and sale_end_dt != ""'>
+   		 AND CAST(#{sale_end_dt} AS DATE) &lt; ed.sale_end_dt
+		</if>
+		<if test='price_max != null and price_max != ""'>
+		   and ed.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		</if>
+		<if test='price_min != null and price_min != ""'>
+		   and ed.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		</if>
+		<if test='promtn_yn != null and promtn_yn != ""'>
+		   and ed.promtn_yn = #{promtn_yn}
 		</if>
 		
 
