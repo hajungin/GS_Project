@@ -31,29 +31,29 @@
             <h2>고객정보 목록</h2>
             <br />
 
-            <div class="flex-column flex-gap-10" id="vueapp">
+            <div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
                 <template>
                     <div class="flex flex-100">
                         <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
                             <div class="form-group flex-60">
-                                <label style="text-align: center; margin-left: 100px;">고객명 :</label>
-                                <input class="form-control" v-model="cust_nm" value="" style="margin-right: 100px; ">
-                                <label class="fix-width-15">생년월일 :</label>
-                                <input type="text" class="form-control" v-model="birth" placeholder="yy-mm-dd" style="margin-right: 100px;">
-                                <label class="fix-width-15">관리담당자 :</label>
-                                <input class="form-control" v-model="emp_nm" value="" style="margin-right: 100px;">
+                            	<label class="fix-width-10" style="margin-left: 50px;">이벤트구분 :</label>
+	                                <select id ="event" class="form-control" v-model="event" @change="getCustEventList()">
+	                                	<option value="">전체</option>
+	                                	<option value="sel_birth">생일</option>
+	                                	<option value="expiration">만기도래</option>
+	                                </select>
+                                <label style="text-align: center; margin-left: 50px;">고객명 :</label>
+                                <input class="form-control" v-model="cust_nm" value="" style="margin-right: 50px; ">
+                                <label class="fix-width-10">전화번호 :</label>
+                                <input type="text" class="form-control" v-model="cust_mbl_telno" style="margin-right: 50px;">
+                                <label class="fix-width-10">관리담당자 :</label>
+                                <input class="form-control" v-model="emp_nm" value="" style="margin-right: 50px;">
                                 <button type="button" class="btn btn-primary btn-icon" 
                                     @click="getCustInfoList(true)">
                                     검색
                                     <i class="entypo-search"></i>
                                 </button>
-<!--                                 <label class="fix-width-15">이벤트구분 :</label> -->
-<!--                                 <select id ="event" class="form-control"> -->
-<!--                                 	<option value="">전체</option> -->
-<!--                                 	<option value="">생일</option> -->
-<!--                                 	<option value="">만기도래</option> -->
-<!--                                 	<option value="">기타</option> -->
-<!--                                 </select> -->
+                                
                             </div>
                         </div>
                     </div>
@@ -64,30 +64,16 @@
                             신규회원등록
                             <i class="entypo-archive"></i>
                         </button>
-<!--                         출력 기능 작업전 -->
-<!--                         <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;" -->
-<!--                             > -->
-<!--                             관리대장출력 -->
-<!--                             <i class="entypo-vcard"></i> -->
-<!--                         </button> -->
                         <button type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
                             @click="cf_movePage('/communi/communiList')">
                             상담목록조회
                             <i class="entypo-user"></i>
                         </button>
-<!--                         담당자 일괄설정 작업 전 -->
-<!--                         <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"  -->
-<!--                         	@click="popupEmpInfo"> -->
-<!--                             담당자설정 -->
-<!--                             <i class="entypo-clipboard"></i> -->
-<!--                         </button> -->
                     </div>
                     <table class="table table-bordered datatable dataTable" id="grid_app"
                         style="border: 1px solid #999999;">
                         <thead>
                             <tr class="replace-inputs">
-<!--                                 <th style="width: 5%;" class="center"><input type="checkbox" id="allCheck" -->
-<!--                                         @click="all_check(event.target)" style="cursor: pointer;"></th> -->
  								<th style="width: 5%;" class="center">No</th>
                                 <th style="width: 10%;" class="center">성명</th>
                                 <th style="width: 15%;" class="center">생년월일</th>
@@ -99,21 +85,16 @@
                         <tbody class="table-group-divider">
                             <tr v-for="(item, index) in dataList" @dblclick="gotoDtl(item.cust_mbl_telno)"
                                 style="cursor: pointer;">
-<!--                                 <td class="center" @dblclick.stop="return false;"><input type="checkbox" -->
-<!--                                         :data-idx="item.cust_nm" name="is_check" @click.stop="onCheck" -->
-<!--                                         style="cursor: pointer;"> -->
-<!--                                 </td> -->
 								<td class="center">{{ index + 1 }}</td>
                                 <td class="center">{{ item.cust_nm }}</td>
-                                <td class="center">{{ item.cust_pridtf_no.substring(0,6) }}</td>
+                                <td class="center">{{ item.birth }}</td>
                                 <td class="center">{{ item.cust_eml_addr }}</td>
                                 <td class="center">{{ item.cust_mbl_telno }}</td>
                                 <td class="center">{{ item.cust_road_addr }}</td>
                             </tr>
                         </tbody>
                     </table>
-               	<div class="dataTables_paginate paging_simple_numbers" id="div_paginate">
-				</div>
+               	<div class="dataTables_paginate paging_simple_numbers" id="div_paginate"></div>
                 </template>
             </div>
             <jsp:include page="/WEB-INF/jsp/kcg/_include/system/footer.jsp" flush="false" />
@@ -265,12 +246,12 @@
 </div>
 
 <!--// 담당자설정 팝업  -->
-            <!-- 팝업 -->
-            <div class="modal fade" id="pop_emp_info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			    <div class="modal-dialog" style="width: 500px;">
-			        <div class="modal-content">
-			        <div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose" >&times;</button>
+          <!-- 팝업 -->
+          <div class="modal fade" id="pop_emp_info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" style="width: 500px;">
+		        <div class="modal-content">
+		       	 <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose" >&times;</button>
 						<h4 class="modal-title" id="modify_nm">담당자 설정</h4>
 					</div> 
 			            <div class="modal-body">
@@ -298,7 +279,7 @@
 			        </div>
 			    </div>
 			</div>
-            <!-- 팝업 -->
+           <!-- 팝업 -->
 	   
 </body>
 
@@ -309,7 +290,8 @@
             dataList: [],
             cust_nm: "",
     		cust_pridtf_no: "",
-    		birth: "",
+    		cust_mbl_telno: "",
+    		event: "",
     		emp_nm: "",
         },
         mounted: function () {
@@ -320,7 +302,7 @@
                 cv_pagingConfig.orders = pagingConfig.orders;
                 var params = cv_sessionStorage.getItem("params");
                 this.cust_nm = params.cust_nm;
-                this.birth = params.birth;
+                this.cust_mbl_telno = params.cust_mbl_telno;
                 this.emp_nm = params.emp_nm;
 
                 this.getCustInfoList();
@@ -343,7 +325,7 @@
                 var params = {
                     cust_nm: this.cust_nm,
                     emp_nm: this.emp_nm,
-                    birth: this.birth,
+                    cust_mbl_telno: this.cust_mbl_telno,
                 }
 
                 cv_sessionStorage
@@ -351,6 +333,23 @@
                     .setItem('params', params);
 
                 cf_ajax("/customer/getCustInfoList", params, this.getListCB);
+            },
+            getCustEventList: function(isInit) {
+            	cv_pagingConfig.func = this.getCustInfoList;
+                if (isInit === true) {
+                    cv_pagingConfig.pageNo = 1;
+                    cv_pagingConfig.orders = [{ target: "cust_nm", isAsc: false }];
+                }
+
+                var params = {
+                    event: this.event,
+                }
+
+                cv_sessionStorage
+                    .setItem('pagingConfig', cv_pagingConfig)
+                    .setItem('params', params);
+
+                cf_ajax("/customer/getCustEventList", params, this.getListCB);
             },
             getListCB: function (data) {
                 //console.log(data);
@@ -370,25 +369,6 @@
                     $("[name=is_check]:checked").length === $("[name=is_check]").length
                 );
             },
-//             popupEmpInfo: function () {
-//                 var checkedList = $("[name=is_check]:checked");
-//                 if (checkedList.length == 0) {
-//                     alert("담당자 설정 대상을 선택하여 주십시오.");
-//                     return;
-//                 }
-//                 var dataCopyList = [];
-//                 var idx;
-//                 checkedList.each(function (i) {
-//                     idx = $(this).attr("data-idx");
-//                     dataCopyList.push(vueapp.dataList.getElementFirst("cust_nm", idx));
-//                 });
-
-//                 console.log(dataCopyList);
-
-//                 //설정팝업 띄우기
-// //                 pop_damdang_set.init(dateCopyList);
-//                 $('#pop_emp_info').modal('show');
-//             },
             
         }
     });
@@ -517,8 +497,6 @@
 				vueapp.getCustInfoList();
 			},
 			
-			
-
 			custInsert: function () {
 				var cust_nm = this.info.cust_nm;
 				var cust_pridtf_no = this.info.cust_pridtf_no;

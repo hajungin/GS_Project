@@ -42,28 +42,37 @@ public class CustCtl {
 	@RequestMapping("/getCustInfoList")
 	public List<CmmnMap> getCustInfoList(CmmnMap params, PagingConfig pagingConfig ) {
 		List<CmmnMap> dataList = custMngSvc.getAll(params, pagingConfig);
-		log.debug(dataList.toString());	
+//		log.debug(dataList.toString());	
 		return dataList;
 	}
+	
+	// 고객 목록 조회 (List)
+	@RequestMapping("/getCustEventList")
+	public List<CmmnMap> getCustEventList(CmmnMap params, PagingConfig pagingConfig ) {
+		List<CmmnMap> dataList = custMngSvc.getEvent(params, pagingConfig);
+//		log.debug(dataList.toString());	
+		return dataList;
+	}
+	
 	
 	@RequestMapping("/getEmpInfo")
 	public List<CmmnMap> getEmpInfo(CmmnMap params){
 		List<CmmnMap> dataList = custMngSvc.getEmpInfo(params); 
-		log.debug(dataList.toString());
+//		log.debug(dataList.toString());
 		return dataList;
 	}
 	
 	@RequestMapping("/getCustOne")
 	public CmmnMap getCustOne(CmmnMap params){
 		CmmnMap data = custMngSvc.getCustOne(params); 
-		log.debug(data.toString());
+//		log.debug(data.toString());
 		return data;
 	}
 	
 	@RequestMapping("/getEmpSelInfo")
 	public CmmnMap getEmpSelInfo(CmmnMap params){
 		CmmnMap data = custMngSvc.getEmpSelInfo(params); 
-		log.debug(data.toString());
+//		log.debug(data.toString());
 		return data;
 	}
 	

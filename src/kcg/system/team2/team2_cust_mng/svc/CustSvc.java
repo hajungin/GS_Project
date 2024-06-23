@@ -1,5 +1,6 @@
 package kcg.system.team2.team2_cust_mng.svc;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,11 @@ public class CustSvc {
 	public PageList<CmmnMap> getAll(CmmnMap params, PagingConfig pagingConfig) {
 		return cmmnDao.selectListPage("system.team2_cust_mng.getAll", params, pagingConfig);
 	}
-
+	
+	public PageList<CmmnMap> getEvent(CmmnMap params, PagingConfig pagingConfig) {
+		return cmmnDao.selectListPage("system.team2_cust_mng.getEvent", params, pagingConfig);
+	}
+	
 	public List<CmmnMap> getEmpInfo(CmmnMap params) {
 		List<CmmnMap> dataList = cmmnDao.selectList("system.team2_cust_mng.getEmpInfo");
 		System.out.println(dataList.toString());
@@ -55,6 +60,18 @@ public class CustSvc {
 	}
 
 	public CmmnMap custInsert(CmmnMap params) {
+		String pridtfNo = params.getString("cust_pridtf_no");
+		String year = pridtfNo.substring(0, 2);
+		String month = pridtfNo.substring(2, 4);
+		String day = pridtfNo.substring(4, 6);
+		String pridtfNo2 = pridtfNo.substring(7, 8);
+		String birth = null;
+		if(pridtfNo2.equals("1") || pridtfNo2.equals("2") || pridtfNo2.equals("5") || pridtfNo2.equals("6")){
+			birth = "19"+ year + "-" + month + "-" + day;
+		} else if(pridtfNo2.equals("3") || pridtfNo2.equals("4") || pridtfNo2.equals("7") || pridtfNo2.equals("8")){
+			birth = "20"+ year + "-" + month + "-" + day;
+		}
+		params.put("birth", birth);
 		cmmnDao.insert("system.team2_cust_mng.custInsert", params);
 		return new CmmnMap().put("status", "OK");
 	}

@@ -44,10 +44,32 @@ public class CommCtl {
 		return dataList;
 	}
 	
+	@RequestMapping("/getCommList")
+	public List<CmmnMap> getCommList(CmmnMap params) {
+		List<CmmnMap> dataList = commSvc.getCommList(params);
+		log.debug(dataList.toString());	
+		return dataList;
+	}
+	
 	@RequestMapping("/commInsert")
 	public CmmnMap commInsert(CmmnMap params){
 		return commSvc.commInsert(params); 
 	}
 	
-
+	@RequestMapping("/commUpdate")
+	public CmmnMap commUpdateRoof(CmmnMap params){
+		return commSvc.commUpdateRoof(params); 
+	}
+	
+	@RequestMapping("/commDelete")
+	   public CmmnMap commDeleteRoof(CmmnMap params) {
+	      return commSvc.commDeleteRoof(params);
+    }
+	
+	@RequestMapping("/grCommUpdate")
+	public CmmnMap grCommUpdateRoof(CmmnMap params){
+		return commSvc.grCommUpdateRoof(params); 
+	}
+	
+	
 }
