@@ -306,7 +306,7 @@
 				
 			},
 			commUpdate: function () {
-				const updateData = this.dataList.filter(item => item.update);
+				var updateData = this.dataList.filter(item => item.update);
                 var params = {
                 	updateData: updateData,
                 }

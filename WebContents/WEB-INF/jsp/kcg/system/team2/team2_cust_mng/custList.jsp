@@ -151,7 +151,7 @@
                                     <div class="col-sm-8" id="selectcr">
                                        <select id="cust_cr_no" class="form-control" v-model="info.cust_cr_no" style="margin-left: 10px;">
 											<option value="">선택</option>
-											<<option v-for="item in comm_List" :value="item.comm_no">{{ item.comm_nm }}</option>
+											<option v-for="item in comm_List" :value="item.comm_no">{{ item.comm_nm }}</option>
 										</select>
 										<input v-if="showInput" type="text" class="form-control" v-model="info.other_cr" placeholder="직업명 입력">
                                     </div>
@@ -193,7 +193,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6" style="display: flex; flex-direction: column; height: 100%;">
-                                <div class="form-group" v-if="isEmpty(info.cust_sn)" style="flex: 1;">
+                                <div class="form-group" v-if="isNotEmpty(info.cust_sn)" style="flex: 1;">
                                     <label for="cnslt_cn" class="col-sm-4 control-label">상담내역</label>
                                     <div class="col-sm-8">
                                    	<div class="form-control" style="background-color: #DCDCDC; height: 350px;">
@@ -202,14 +202,14 @@
 <!-- 										<textarea id="cnslt_cn" class="form-control" v-model="info.cnslt_cn" style="width: 100%; height: 350px; resize: none;" readonly>{{ cnsltItems }}</textarea> -->
                                     </div>
                                 </div>
-                                <div class="form-group" v-if="isEmpty(info.cust_sn)" >
+                                <div class="form-group" v-if="isNotEmpty(info.cust_sn)" >
                                     <label for="cnslt_cn_add" class="col-sm-4 control-label">상담추가입력</label>
                                     <div class="col-sm-8">
                                         <textarea id="cnslt_cn_add" class="form-control" v-model="cnslt_cn_add" style="width: 100%; height: 150px; resize: none;"></textarea>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6"  v-if="isNotEmpty(info.cust_sn)">
+                            <div class="col-sm-6"  v-if="isEmpty(info.cust_sn)">
                              	 <img src="/static_resources/system/team2/team2_images/customer2.jpg" style="width: 250px; height:500px; margin-left: 40%;">
                             </div>
                         </div>
@@ -217,19 +217,19 @@
                 </div>
                 <div class="modal-footer">
 					
-                	<button type="button" class="btn btn-success btn-icon btn-small" @click="custInsert" v-if="isNotEmpty(info.cust_sn)">
+                	<button type="button" class="btn btn-success btn-icon btn-small" @click="custInsert" v-if="isEmpty(info.cust_sn)">
 					고객정보등록
 					<i class="entypo-user"></i>
 					</button>
-					<button type="button" class="btn btn-success btn-icon btn-small" @click="custUpdate" v-if="isEmpty(info.cust_sn)">
+					<button type="button" class="btn btn-success btn-icon btn-small" @click="custUpdate" v-if="isNotEmpty(info.cust_sn)">
 					고객정보변경
 					<i class="entypo-user"></i>
 					</button>
-					<button type="button" class="btn btn-primary btn-icon btn-small" @click="cnsltInsert" v-if="isEmpty(info.cust_sn)">
+					<button type="button" class="btn btn-primary btn-icon btn-small" @click="cnsltInsert" v-if="isNotEmpty(info.cust_sn)">
 					상담내용저장
 					<i class="entypo-pencil"></i>
 					</button>
-					<button type="button" class="btn btn-danger btn-icon btn-small" @click="custChangeSts" v-if="isEmpty(info.cust_pridtf_no)">
+					<button type="button" class="btn btn-danger btn-icon btn-small" @click="custChangeSts" v-if="isNotEmpty(info.cust_pridtf_no)">
 					고객정보삭제
 					<i class="entypo-trash"></i>
 					</button>
@@ -278,7 +278,7 @@
 	   
 </body>
 
-    <script type="text/javascript">
+ <script type="text/javascript">
     var vueapp = new Vue({
         el: "#vueapp",
         data: {
@@ -558,10 +558,10 @@
 				cf_ajax("/communi/cnsltInsert", params, this.insertStsCB);
 			},
 			isEmpty(value) {
-                return value !== '';
+                return value === '';
             },
 			isNotEmpty(value){
-				return value === '';
+				return value !== '';
 			},
             custChangeSts: function () {
 				var cust_pridtf_no = this.info.cust_pridtf_no;

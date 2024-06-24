@@ -51,6 +51,12 @@ public class CustCtl {
 		return PageList;
 	}
 	
+	@RequestMapping("/getCustList")
+	public List<CmmnMap> getCustList(CmmnMap params){
+		log.debug(params.toString());
+		List<CmmnMap> dataList = custSvc.getCustList(params); 
+		return dataList;
+	}
 	
 	@RequestMapping("/getEmpInfo")
 	public List<CmmnMap> getEmpInfo(CmmnMap params){

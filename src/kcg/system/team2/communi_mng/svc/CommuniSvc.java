@@ -30,7 +30,6 @@ public class CommuniSvc {
 	CmmnDao cmmnDao;
 	
 	public PageList<CmmnMap> getCommuniList(CmmnMap params, PagingConfig pagingConfig) {
-		  System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + params.get("cnslt_dt"));
 	      return cmmnDao.selectListPage("system.team2_communi_mng.communiList", params, pagingConfig);
 	   }
 
@@ -48,9 +47,6 @@ public class CommuniSvc {
 
 
 	public CmmnMap cnsltInsert(CmmnMap params) {
-		String pridtfNo = params.getString("cust_pridtf_no");
-		int pridtfNo1 = Integer.parseInt(pridtfNo.substring(0, 6));
-		int pridtfNo2 = Integer.parseInt(pridtfNo.substring(7));
 		cmmnDao.insert("system.team2_communi_mng.cnsltInsert", params);
 		return new CmmnMap().put("status", "OK");
 	}
