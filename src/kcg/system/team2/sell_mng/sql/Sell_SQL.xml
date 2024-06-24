@@ -256,7 +256,18 @@
 		</if>
     </select>
     
-    <select id="joinList">
+    <select id="businessCustom" parameterType="cmmnMap" resultType="cmmnMap">
+    	select cust_nm, cust_mbl_telno, cust_pridtf_no, cust_cr_no, TO_CHAR(cust_birth, 'YYYY-MM-DD') AS cust_birth FROM kcgbd.e_customer  	
+   		where cust_cr_no = 'JB04'
+    </select>
+    
+    <select id="youthCustom" parameterType="cmmnMap" resultType="cmmnMap">
+    	select cust_nm, cust_mbl_telno, cust_pridtf_no, TO_CHAR(cust_birth, 'YYYY-MM-DD') AS cust_birth FROM kcgbd.e_customer
+        WHERE EXTRACT(YEAR FROM AGE(CURRENT_DATE, cust_birth)) BETWEEN 19 AND 34
+    	
+    </select>
+    
+    <select id="joinList" parameterType="cmmnMap" resultType="cmmnMap">
     	select * from kcgbd.e_product_init
     </select>
     
