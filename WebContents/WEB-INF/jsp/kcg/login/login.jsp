@@ -28,19 +28,24 @@
     <img src="/static_resources/login/images/loginBox.png">
 </div>
 <div id="container">
-  <h1> GS ITM 부트캠프 </h1>
-  <span class="close-btn">
-    <img src="/static_resources/login/images/deletBtn.png">
-  </span>
+	<span class="close-btn">
+    	<img src="/static_resources/login/images/closeButton.jpg">
+ 	</span>
+ 	<br>
+ 	<div class="logo">
+ 		<img class="logo" src="/static_resources/login/images/gsitm.jpg">
+ 	</div>
+<!--   <h1> GS ITM 부트캠프 </h1> -->
+  
 
   <form>
     <input type="text" id="usr_id"  name="usr_id" placeholder="아이디를 입력하세요">
     <input type="password" id = "usr_pw" name="usr_pw" placeholder="비밀번호를 입력하세요">
     <a href="#" onclick="login()">Log in</a>
-        <div class="account-container">
-            <span class="findId" id="findId">아이디 찾기</span>
-            <span class="findPw" id="findPw">비밀번호 찾기</span>
-        </div>
+<!--         <div class="account-container"> -->
+<!--             <span class="findId" id="findId">아이디 찾기</span> -->
+<!--             <span class="findPw" id="findPw">비밀번호 찾기</span> -->
+<!--         </div> -->
     <br>
     <!-- <span class="regist" id="regist">회원 등록</span> -->
 <!--     <input type="button" class="regist" onClick="location.href = '/login/getRegistUserForm'" value="회원 등록"/> -->

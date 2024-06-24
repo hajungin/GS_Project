@@ -40,9 +40,14 @@ public class UserInfoVO implements UserDetails {
 	private String adminYn; // 관리자여부
 	private String firstYn; // 최초접속여부
 	private String gisAuth; // GIS권한
+	private String EmpNo;
 	private List<MenuVO> menuList; // 
 
 	private Collection<SimpleGrantedAuthority> authorities;	// 계정이 가지고 있는 권한 목록
+	
+	public String getEmpNo() {
+		return EmpNo;
+	}
 	
 	public String getUserId() {
 		return userId;
