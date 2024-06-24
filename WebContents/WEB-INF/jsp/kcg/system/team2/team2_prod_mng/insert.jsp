@@ -62,7 +62,7 @@
 					<div class="center-panel flex-66" style="margin-left: auto;">
 						<div class="form-group" >
 							<label for="prod_nm" class="fix-width-50" style="margin-left: 90px;">상품명 :</label>
-							<input type="text" class="fix-width-50" style="margin-right: 260px;" id="prod_nm" v-model="info.prod_nm">
+							<input type="text" class="fix-width-50" style="margin-right: 200px;" id="prod_nm" v-model="info.prod_nm">
 							<label for="prod_no" class="fix-width-50">상품코드 :</label>
 							<input type="text" class="fix-width-50" style="margin-right: 120px;" id="prod_no" v-model="info.prod_no" disabled="disabled" >
 						</div>

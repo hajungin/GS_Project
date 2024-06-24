@@ -31,7 +31,38 @@
 	
 	
 			<ul id="main-menu" class="main-menu">
-			
+				<li data-lnb="10" data-snb="0">
+					<a href="#gm">
+						<i class="entypo-newspaper"></i>
+						<span class="title">EZEN 고객관리</span>
+					</a>
+					<ul data-lnb="10" data-snb="0">
+						<li data-lnb="10" data-snb="3">
+							<a href="#gm" onclick="cf_movePage('/customer/custMng')">
+								<span class="title">고객 정보 관리</span>
+							</a>
+						</li>	
+					
+						<li data-lnb="10" data-snb="3">
+							<a href="#gm" onclick="cf_movePage('/customer/custList')">
+								<span class="title">고객 목록 조회</span>
+							</a>
+						</li>						
+					</ul>
+					<ul data-lnb="10" data-snb="0">
+						<li data-lnb="10" data-snb="3">
+							<a href="#gm" onclick="cf_movePage('/communi/communiList')">
+								<span class="title">상담 내역 조회</span>
+							</a>
+						</li>						
+					</ul>
+				</li> 
+				<li data-lnb="10" data-snb="0">
+					<a href="#gm" onclick="cf_movePage('/common/commMng')">
+						<i class="entypo-newspaper"></i>
+						<span class="title">EZEN 공통옵션관리</span>
+					</a>
+				</li> 
 			
 				<li data-lnb="10" data-snb="0">
 					<a href="#gm">
@@ -103,11 +134,9 @@
 					<ul data-lnb="11" data-snb="0">
 						<li data-lnb="11" data-snb="1">
 							<a href="#gm" onclick="cf_movePage('/2team/prod/GLlist')">
-								<span class="title">일반상품</span>
+								<span class="title">상품관리</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/2team/prod/PRlist')">
-								<span class="title">프로모션상품</span>
-							</a>
+							
 							<a href="#gm" onclick="cf_movePage('/2team/prod/insert')">
 								<span class="title">상품등록</span>
 							</a>

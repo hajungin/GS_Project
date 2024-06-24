@@ -15,6 +15,8 @@
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/datatables.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/promion.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/billboard.css">
+	
+	
 <title>상품정보조회</title>
 <style>
     .header {
@@ -139,7 +141,7 @@
 
 			
 
-			<div class="flex-column flex-gap-10" id="vueapp">
+			<div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
 				<template>
 					
         
@@ -221,23 +223,23 @@
     
 		
 					<table class="table table-bordered datatable dataTable"
-						id="grid_app" style="border: 2px solid #00CDFF; background-color: #7FFFD4;">
+						id="grid_app" style="border: 2px solid #00CDFF; background-color: #5ACCFF;">
 						<thead>
 							<tr class="replace-inputs">
-								<th style="width: 4%; background-color: #00EBFF;" class="center hidden-xs nosort">
+								<th style="width: 4%; background-color: #B9FFFF;" class="center hidden-xs nosort">
 									<input type="checkbox" id="allCheck" @click="all_check(event.target)">
 								</th>
-								<th style="width: 15%; background-color: #00EBFF;" class="center sorting" 
+								<th style="width: 15%; background-color: #B9FFFF;" class="center sorting" 
 								@click="sortList(event.target)" sort_target="prod_nm">상품명</th>
-								<th style="width: 10%; background-color: #00EBFF;" class="center sorting"
+								<th style="width: 10%; background-color: #B9FFFF;" class="center sorting"
 								@click="sortList(event.target)" sort_target="prod_type">상품유형</th>
-								<th style="width: 11%; background-color: #00EBFF;" class="center sorting"
+								<th style="width: 11%; background-color: #B9FFFF;" class="center sorting"
 								@click="sortList(event.target)" sort_target="price_min">최소가입금액</th>
-								<th style="width: 11%; background-color: #00EBFF;" class="center sorting" 
+								<th style="width: 11%; background-color: #B9FFFF;" class="center sorting" 
 								@click="sortList(event.target)" sort_target="price_max">최대가입금액</th>
-								<th style="width: 9%; background-color: #00EBFF;" class="center sorting" 
+								<th style="width: 9%; background-color: #B9FFFF;" class="center sorting" 
 								@click="sortList(event.target)" sort_target="pay_period">납입기간</th>
-								<th style="width: 10%; background-color: #00EBFF;" class="center sorting" 
+								<th style="width: 10%; background-color: #B9FFFF;" class="center sorting" 
 								@click="sortList(event.target)" sort_target="sub_tg">이자과세</th>
 							</tr>
 						</thead>
@@ -255,8 +257,9 @@
 					</table>
 
 
-					<div class="dataTables_paginate paging_simple_numbers"
-						id="div_paginate"></div>
+					
+
+
 						
 				</template>
 			</div>
@@ -553,7 +556,7 @@ var vueapp = new Vue({
         getListCB: function(data){
             this.dataList = data.list;
             for (var i = 0; i < this.dataList.length; i++) {
-                this.dataList[i].prod_nm = this.dataList[i].prod_nm;
+                this.dataList[i].prod_no = this.dataList[i].prod_no;
             }
             
             cv_pagingConfig.renderPagenation("system");

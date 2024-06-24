@@ -138,7 +138,7 @@
 			</div>
 			
 
-			<div class="flex-column flex-gap-10" id="vueapp">
+			<div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
 				<template>
 					
         
@@ -223,20 +223,20 @@
 						id="grid_app" style="border: 2px solid #00CDFF; background-color: #7FFFD4;">
 						<thead>
 							<tr class="replace-inputs">
-								<th style="width: 4%; background-color: #00EBFF;" class="center hidden-xs nosort">
+								<th style="width: 4%; background-color: #B9FFFF;" class="center hidden-xs nosort">
 									<input type="checkbox" id="allCheck" @click="all_check(event.target)">
 								</th>
-								<th style="width: 15%; background-color: #00EBFF;" class="center sorting" 
+								<th style="width: 15%; background-color: #B9FFFF;" class="center sorting" 
 								@click="sortList(event.target)" sort_target="prod_nm">상품명</th>
-								<th style="width: 8%; background-color: #00EBFF;" class="center sorting"
+								<th style="width: 8%; background-color: #B9FFFF;" class="center sorting"
 								@click="sortList(event.target)" sort_target="prod_type">상품유형</th>
-								<th style="width: 10%; background-color: #00EBFF;" class="center sorting"
+								<th style="width: 10%; background-color: #B9FFFF;" class="center sorting"
 								@click="sortList(event.target)" sort_target="price_min">최소가입금액</th>
-								<th style="width: 10%; background-color: #00EBFF;" class="center sorting" 
+								<th style="width: 10%; background-color: #B9FFFF;" class="center sorting" 
 								@click="sortList(event.target)" sort_target="price_max">최대가입금액</th>
-								<th style="width: 6%; background-color: #00EBFF;" class="center sorting" 
+								<th style="width: 6%; background-color: #B9FFFF;" class="center sorting" 
 								@click="sortList(event.target)" sort_target="pay_period">납입기간</th>
-								<th style="width: 8%; background-color: #00EBFF;" class="center sorting" 
+								<th style="width: 8%; background-color: #B9FFFF;" class="center sorting" 
 								@click="sortList(event.target)" sort_target="sub_tg">이자과세</th>
 							</tr>
 						</thead>
@@ -253,8 +253,9 @@
 						</tbody>
 					</table>
 
-					<div class="dataTables_paginate paging_simple_numbers"
-						id="div_paginate"></div>
+					<div style="position: relative; width: 1600px;">
+					    <div class="dataTables_paginate paging_simple_numbers" id="div_paginate" style="position: absolute; right: 0; top: -90%;"></div>
+					</div>
 						
 				</template>
 			</div>
