@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='system.team2_communi_mng'>
+
+	<select id="communiList" parameterType="cmmnMap" resultType="cmmnMap">
+      SELECT
+         TO_CHAR(a.cnslt_dt, 'YYYY-MM-DD') AS cnslt_dt,
+         a.cnslt_no AS cnslt_no,
+         c.cust_nm AS cust_nm,
+         a.cnslt_cn AS cnslt_cn,
+         e.emp_nm AS emp_nm
+      FROM kcgbd.e_cnsltlist AS a
+      JOIN
+         kcgbd.e_customer c ON a.cust_no = c.cust_sn
+      JOIN
+         kcgbd.e_employee e ON e.emp_no = c.emp_no
+	  WHERE 1=1
+	    <if test='cust_nm != null and cust_nm != ""'>
+		AND c.cnslt_dt = cnslt_dt
+		</if>
+      	<if test='cust_nm != null and cust_nm != ""'>
+		AND c.cust_nm like CONCAT('%',#{cust_nm},'%')
+		</if>
+		<if test='emp_nm != null and emp_nm != ""'>
+		AND e.emp_nm like CONCAT('%',#{emp_nm},'%')
+		</if>
+		<if test='cnslt_cn != null and cnslt_sn != ""'>
+		AND a.cnslt_cn like CONCAT('%',#{cnslt_cn},'%')
+		</if>
+		ORDER BY a.cnslt_dt DESC
+   </select>
+   
+   	<select id="getCnsltDtl" parameterType="cmmnMap" resultType="cmmnMap">
+      SELECT
+         TO_CHAR(a.cnslt_dt, 'YYYY-MM-DD') AS cnslt_dt,
+         a.cnslt_no AS cnslt_no,
+         c.cust_nm AS cust_nm,
+         a.cnslt_cn AS cnslt_cn,
+         e.emp_nm AS emp_nm
+      FROM kcgbd.e_cnsltlist AS a
+      JOIN
+         kcgbd.e_customer c ON a.cust_no = c.cust_sn
+      JOIN
+         kcgbd.e_employee e ON e.emp_no = c.emp_no
+	  WHERE a.cnslt_no = CAST(#{cnslt_no} AS INTEGER);
+   </select>
+   
+   
+   <delete id="cnsltDelete" parameterType="cmmnMap">
+      DELETE
+      FROM kcgbd.e_cnsltlist
+      WHERE cnslt_no = #{cnslt_no}
+   </delete>
+
+	<insert id="cnsltInsert" parameterType="cmmnMap">
+      INSERT INTO kcgbd.e_cnsltlist(cust_no, cnslt_cn, cnslt_dt, emp_no)
+         VALUES (
+         #{cust_sn},
+         #{cnslt_cn},
+         now(),
+         #{emp_no}
+         )
+   </insert>
+   
+   <select id="getCnsltList" parameterType="cmmnMap" resultType="cmmnMap">
+      SELECT
+         TO_CHAR(a.cnslt_dt, 'YYYY-MM-DD') AS cnslt_dt,
+         a.cnslt_no AS cnslt_no,
+         c.cust_sn AS cust_no,
+         c.cust_mbl_telno AS cust_mbl_telno,
+         a.cnslt_cn AS cnslt_cn,
+         e.emp_nm AS emp_nm
+      FROM kcgbd.e_cnsltlist AS a
+      JOIN
+         kcgbd.e_employee e ON e.emp_no = a.emp_no
+      JOIN
+         kcgbd.e_customer c ON c.cust_sn = a.cust_no
+	  WHERE c.cust_mbl_telno = #{cust_mbl_telno}
+   </select>
+   
+</mapper>

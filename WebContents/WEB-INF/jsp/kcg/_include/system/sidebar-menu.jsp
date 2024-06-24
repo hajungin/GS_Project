@@ -31,15 +31,22 @@
 	
 	
 			<ul id="main-menu" class="main-menu">
-			
-				<li data-lnb="10" data-snb="0">
+
+			<li data-lnb="10" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
 						<span class="title">EZEN 고객관리</span>
 					</a>
 					<ul data-lnb="10" data-snb="0">
 						<li data-lnb="10" data-snb="1">
-							<a href="#gm" onclick="cf_movePage('/custMng/custInfoList')">
+							<a href="#gm" onclick="cf_movePage('/customer/custMng')">
+								<span class="title">고객 정보 관리</span>
+							</a>
+						</li>
+					</ul>
+					<ul data-lnb="10" data-snb="0">
+						<li data-lnb="10" data-snb="1">
+							<a href="#gm" onclick="cf_movePage('/customer/custList')">
 								<span class="title">고객정보 목록 조회</span>
 							</a>
 						</li>
@@ -52,7 +59,7 @@
 						</li>
 					</ul>
 				</li>
-				
+
 				<li data-lnb="10" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
@@ -61,11 +68,13 @@
 					<ul data-lnb="10" data-snb="0">
 						<li data-lnb="10" data-snb="1">
 							<a href="#gm" onclick="cf_movePage('/empMng/empMngList')">
-								<span class="title">담당자 목록 조회</span>
+								<span class="title">담당자정보 조회</span>
 							</a>
 						</li>
 					</ul>
 				</li>
+
+			
 			
 				<li data-lnb="10" data-snb="0">
 					<a href="#gm">

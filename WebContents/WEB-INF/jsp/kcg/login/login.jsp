@@ -43,12 +43,12 @@
         </div>
     <br>
     <!-- <span class="regist" id="regist">회원 등록</span> -->
-    <input type="button" class="regist" onClick="location.href = '/login/getRegistUserForm'" value="회원 등록"/>
+<!--     <input type="button" class="regist" onClick="location.href = '/login/getRegistUserForm'" value="회원 등록"/> -->
 
-    <div id="remember-container">
-      <input type="checkbox" id="checkbox-2-1" class="checkbox" checked="checked"/>
-      <span id="remember">Remember me</span>
-    </div>
+<!--     <div id="remember-container"> -->
+<!--       <input type="checkbox" id="checkbox-2-1" class="checkbox" checked="checked"/> -->
+<!--       <span id="remember">Remember me</span> -->
+<!--     </div> -->
          
   </form>
 </div>

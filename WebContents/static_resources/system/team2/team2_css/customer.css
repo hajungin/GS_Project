@@ -1,0 +1,10 @@
+@charset "UTF-8";
+.input-group .btn {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.form-group {
+	max-height: 50px;
+}
