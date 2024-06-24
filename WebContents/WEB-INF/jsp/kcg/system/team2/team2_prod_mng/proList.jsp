@@ -15,8 +15,8 @@
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/datatables.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/promion.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/billboard.css">
-<title>상품정보조회</title>
-<style>
+	
+	<style>
     .header {
         background-color: #A7EEFF;
         color: #333;
@@ -35,12 +35,12 @@
     .header:hover {
         background-color: #66CCFF;
     }
-    #Button:hover {
+     #Button:hover {
         background-color: #2980B9; /* Hover 시 배경색 변경 */
     }
 </style>
 
-</style>
+<title>상품정보조회</title>
 </head>
 <body class="page-body">
 
@@ -59,16 +59,15 @@
 						class="fa fa-home"></i>Home</a></li>
 				<li class="active"><strong>상품정보조회</strong></li>
 			</ol>
-			<h2 class="header"> 상품관리 &gt; 상품정보조회 &gt; 일반상품</h2>
+			<h2 class="header">상품관리 > 상품정보조회 > 프로모션 상품</h2>
 			<div class="right flex-column flex-100">
-			    <div class="right-top">
-			        <ul class="nav">
-			            <li class="nav-tab active" style="background-color: #64A0FF;" onclick="cf_movePage('/2team/prod/GLlist')">일반상품</li>
-			            <li class="nav-tab active" style="background-color: #5F9EA0;" onclick="cf_movePage('/2team/prod/PRlist')">프로모션상품</li>
-			        </ul>
-			    </div>
+			 	<div class="right-top">
+                        <ul class="nav">
+                            <li class="nav-tab active" style="background-color: #64A0FF;" onclick="cf_movePage('/2team/prod/GLlist')">일반상품</li>
+                            <li class="nav-tab active" style="background-color: #5F9EA0;" onclick="cf_movePage('/2team/prod/PRlist')">프로모션상품</li>
+                        </ul>
+                 </div>
 			</div>
-
 			
 
 			<div class="flex-column flex-gap-10" id="vueapp">
@@ -358,8 +357,7 @@ var vueapp = new Vue({
         sale_stat: "",
         price_max: "",
         price_min: "",
-        promtn_yn: "N",
- 
+        promtn_yn: "",
     },
     mounted: function(){
     	 
@@ -409,6 +407,7 @@ var vueapp = new Vue({
             var params = {}
             if(this.all_srch != "Y"){
             	params = {
+            			prod_nm: this.prod_nm,
                         prod_type: this.prod_type,
                         sub_tg: this.sub_tg,
                         sale_beg_dt: this.sale_beg_dt,
@@ -418,7 +417,6 @@ var vueapp = new Vue({
                         price_min: this.price_min,
                         sale_stat: this.sale_stat,
                         promtn_yn: this.promtn_yn,
-                        
             	}
             }
                 
@@ -427,8 +425,7 @@ var vueapp = new Vue({
             cv_sessionStorage
                 .setItem('pagingConfig', cv_pagingConfig)
                 .setItem('params', params);
-            
-			params.promtn_yn= 'N'
+			params.promtn_yn='Y'
             cf_ajax("/2team/prod/getList", params, this.getListCB);
         },
         
@@ -523,7 +520,6 @@ var pop_cust_info = new Vue({
 				air_beg_dt:"",
 				air_end_dt:"",
 				prod_hist:"",
-				
 			}
 		},
 		getInfo : function(){
@@ -608,7 +604,7 @@ var pop_cust_info = new Vue({
 		},
 		updateCB : function(data){
 			alert("저장되었습니다.");
-			cf_movePage('/2team/prod/GLlist');
+			cf_movePage('/2team/prod/PRlist');
 		},
 		
 		deleteOne : function(data) {
@@ -623,7 +619,7 @@ var pop_cust_info = new Vue({
 		},
 		deleteOneCB : function(data){
 			alert("종료되었습니다.");
-			cf_movePage('/2team/prod/GLlist');
+			cf_movePage('/2team/prod/PRlist');
 		}, 
 	},
 });

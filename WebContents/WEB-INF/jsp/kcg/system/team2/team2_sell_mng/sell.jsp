@@ -44,12 +44,12 @@
 					
         
         <div class="flex flex-100">
-            <div class="flex-wrap flex-60 flex flex-gap-10 flex-padding-10">
+            <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
                 <div class="form-group flex-20">
                     <label for="productName" class="form-control">상품명 :</label>
                     <input type="text" class="form-control" v-model="prod_nm" value=""/>
                 </div>
-                <div class="form-group flex-40">
+                <div class="form-group flex-20">
 				    <label for="productType" class="form-control">상품 유형 :</label>
 				    <select v-model="prod_type" class="form-control">
 				        <option value="">전체</option>
@@ -57,16 +57,16 @@
 				        <option value="PT03">대출</option>
 				        <option value="PT01">적금</option>
 				    </select>
-				</div>
+				</div><br>
 
 
-                <div class="form-group flex-40">
+                <div class="form-group flex-20">
                     <label for="from_date" class="form-control">판매 기간 :</label>
                     <input type="text" class="form-control" v-model="from_date" data-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"/>
 <!--                     <input type="text" v-model="sale_end_dt" data-format="yyyy-mm-dd"/> -->
                 </div>
-                <div class="form-group flex-40">
-                    <label for="subTarget" class="form-control">가입대상 :</label>
+                <div class="form-group flex-20">
+                    <label for="subTarget"  class="form-control">가입대상 :</label>
                     <select v-model="sub_tg" class="form-control" value="">
                         <option value="">전체</option>
                         <option value="ST01">일반개인</option>
@@ -74,22 +74,12 @@
                         <option value="ST03">소상공인</option>
                     </select>
                 </div>
-<!--                 <div class="form-group flex-20"> -->
-<!--                     <label>최대 최소 금액 :</label> -->
-<!--                     <div class="price-range"> -->
-<!--                         <input type="text" id="priceMin" placeholder="최소 금액"/>~ -->
-<!--                         <input type="text" id="priceMax" placeholder="최대 금액"/> -->
-<!--                     </div> -->
-<!--                 </div> -->
-            </div>
-		    <div class="flex-wrap flex-20 flex flex-center flex-gap-10 flex-padding-110">
-			    <div class="form-group" style="width: 45%;">
+                <div class="form-group flex-10" style="width: 50%;">
 			        <button type="button" class="btn-icon" @click="getListCond(true)">
 			            검색 <i class="entypo-search"></i>
 			        </button>
 			    </div>
-			</div>
-
+            </div>
         </div>
         <div class="flex flex-100 flex-padding-10 flex-gap-10"
 						style="justify-content: flex-end; border: 1px solid #999999;">
