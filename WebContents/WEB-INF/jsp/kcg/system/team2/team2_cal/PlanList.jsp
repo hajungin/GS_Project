@@ -118,7 +118,7 @@
 						<td class="center" @click="gotoDtl(item)">{{item.wrt_dt}}</td>
 						<td class="left" @click="gotoDtl(item)">{{item.cust_eml_addr}}</td>
 						<td class="center" @click="gotoDtl(item)">{{item.prod_type}}</td>
-						<td class="left" @click="gotoDtl(item)">{{item.prod_nm}}</td>
+						<td class="left" @click="gotoDtl(item)">{{getProdNm(item)}}</td>
 						<td class="right" @click="gotoDtl(item)" style="text-align: right;">{{item.suggest_amt}}</td>
 						<td class="left" @click="gotoDtl(item)">{{item.emp_nm}}</td>
 					</tr>
@@ -175,9 +175,13 @@ var vueapp = new Vue({
 	data : {
 		dataList : [],
 		prod_nm : "",
+		loan_prod_nm : "",
+		ac_prod_nm : "",
+		dp_prod_nm : "",
 		cust_nm  : "",
 		emp_nm : "",
 		wrt_dt : "",
+		init_yn : "",
 		all_srch : "N",
 	},
 	mounted : function(){
@@ -236,6 +240,9 @@ var vueapp = new Vue({
 			
 			cv_pagingConfig.renderPagenation("system");
 		},
+		 getProdNm(item) {
+		      return item.prod_nm || item.loan_prod_nm || item.dp_prod_nm || item.ac_prod_nm;
+		    },
 		gotoDtl : function(item){
 			var params = {
 					plan_no : cf_defaultIfEmpty(item.plan_no, ""),

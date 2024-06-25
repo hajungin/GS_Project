@@ -175,6 +175,9 @@
 						<button type="button" class="btn btn-orange btn-small" @click="save()">
 							설계저장
 						</button>
+						<button type="button" class="btn btn-orange btn-small" @click="saveSell()">
+							상품가입저장
+						</button>
 						<button type="button" class="btn btn-blue btn-icon btn-small" @click="popupPrint()">
 							설계발행 <i class="entypo-print"></i>
 						</button>
@@ -415,6 +418,7 @@ var vueapp = new Vue({
 			air_min : 0,
 			air_max : 0,
 			pay_cycle : "",
+			emp_no : "",
 			circle_acml_amt_fmt : "", //
 			tot_dpst_amt_fmt : "", //
 			tot_dpst_int_fmt : "", //
@@ -433,6 +437,7 @@ var vueapp = new Vue({
 			cust_home_telno : "",
 			cust_cr_no : "",
 			cust_road_nm_addr : "",
+			emp_no : "",
 			emp_nm : "",
 			emp_dept : "",
 			emp_posit : "",
@@ -458,7 +463,7 @@ var vueapp = new Vue({
 			}
 			
 			var params = {
-				cust_mbl_telno : cf_defaultIfEmpty(this.info.cust_sn, ""),
+				cust_sn : cf_defaultIfEmpty(this.info.cust_sn, ""),
 				prod_type : index,
 			}
 			cf_movePage("/cal/dtlCom", params);
@@ -496,6 +501,30 @@ var vueapp = new Vue({
 		saveCB : function(data){
 			alert("저장되었습니다.");
 			cf_movePage('/cal/listPlan');
+		},
+		saveSell : function(){
+			if(this.info.simpl_ty_cd != "1"){
+				alert("정상설계만 저장할 수 있습니다.");
+				return;
+			}else if(cf_isEmpty(this.info.atx_rcve_amt) || this.info.atx_rcve_amt == 0){
+				alert("이자계산 후 저장할 수 있습니다.");
+				return;
+			}else if(cf_isEmpty(this.custInfo.cust_nm)){
+				alert("고객정보를 선택하세요.");
+				return;
+			}
+			
+			if(!confirm("저장하시겠습니까?")) return;
+			
+			this.info.cust_sn = this.custInfo.cust_sn;
+			this.info.emp_no = this.custInfo.emp_no;
+			this.info.int_cty_cd = "1";
+			
+			cf_ajax("/cal/saveSell", this.info, this.saveSellCB);
+		},
+		saveSellCB : function(data){
+			alert("저장되었습니다.");
+			cf_movePage('/sell/init');
 		},
 		getProdInfo : function(){
 			cf_ajax("/cal/getProdInfo", this.info, this.getProdInfoCB);
@@ -538,7 +567,7 @@ var vueapp = new Vue({
 		},
 		prcCalc : function(){
 			
-			if(cf_isEmpty(this.info.plan_no)){
+			if(cf_isEmpty(this.info.prod_no)){
 				alert("상품을 선택하세요.");
 				return;
 			}else if(cf_isEmpty(this.info.circle_acml_amt) || this.info.circle_acml_amt == 0){
@@ -633,7 +662,7 @@ var vueapp = new Vue({
             });
 		},
 		gotoList : function(){
-			cf_movePage('/promion_mng/list');
+			cf_movePage('/cal/listPlan');
 		},
 		popupPrint : function(){
 			

@@ -117,5 +117,32 @@ public class PromionSvc {
 		
 		return result;
 	}
+
+	public void saveSell(CmmnMap params) {
+		UserInfoVO userInfoVO = commonSvc.getLoginInfo();
+		params.put("user_id", userInfoVO.getUserId());
+		System.out.println("===========================================saveSellSvc" + params);
+		if(StringUtil.isEmpty(params.getString("plan_no"))) {
+			if("PT01".equals(params.getString("prod_type"))) {
+				cmmnDao.insert("system.team2.promion_mng.insertSavgplSell", params);
+			}else if("PT02".equals(params.getString("prod_type"))) {
+				cmmnDao.insert("system.team2.promion_mng.insertDpstplSell", params);
+			}else if("PT03".equals(params.getString("prod_type"))) {
+				cmmnDao.insert("system.team2.promion_mng.insertLoanplSell", params);
+			}else if("PT04".equals(params.getString("prod_type"))) {
+				cmmnDao.insert("system.team2.promion_mng.insertAcmlplSell", params);
+			}
+		} else {
+			if("PT01".equals(params.getString("prod_type"))) {
+				cmmnDao.update("system.team2.promion_mng.updateInitYN", params);
+			}else if("PT02".equals(params.getString("prod_type"))) {
+				cmmnDao.update("system.team2.promion_mng.updateDpInitYN", params);
+			}else if("PT03".equals(params.getString("prod_type"))) {
+				cmmnDao.update("system.team2.promion_mng.updateLoanInitYN", params);
+			}else if("PT04".equals(params.getString("prod_type"))) {
+				cmmnDao.update("system.team2.promion_mng.updateAcInitYN", params);
+			}
+		}
+	}
 	
 }

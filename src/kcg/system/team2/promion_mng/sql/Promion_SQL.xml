@@ -65,20 +65,21 @@
 		  	  tot_dpst_amt suggest_amt
 		  	 , (select cust_nm from kcgbd.e_customer where cust_sn = a.cust_sn) cust_nm
 			 , (select cust_eml_addr from kcgbd.e_customer where cust_sn = a.cust_sn) cust_eml_addr
-		   	 ,	(select prod_nm from kcgbd.e_product_save where prod_no = a.prod_no) prod_nm
-		   	 ,	(select prod_nm from kcgbd.e_product_loan where prod_no = a.loan_prod_no) prod_nm
-		   	 ,	(select prod_nm from kcgbd.e_product_dp where prod_no = a.dp_prod_no) prod_nm
-		   	 ,	(select prod_nm from kcgbd.e_product_ac where prod_no = a.ac_prod_no) prod_nm
+		   	 , (select prod_nm from kcgbd.e_product_save where prod_no = a.prod_no) prod_nm
+		   	 , (select prod_nm from kcgbd.e_product_loan where prod_no = a.loan_prod_no) loan_prod_nm
+		   	 , (select prod_nm from kcgbd.e_product_dp where prod_no = a.dp_prod_no) dp_prod_nm
+		   	 , (select prod_nm from kcgbd.e_product_ac where prod_no = a.ac_prod_no) ac_prod_nm
 			 , to_char(a.wrt_dt,'yyyy-mm-dd') wrt_dt
 		  	 , (select comm_nm from kcgbd.e_common where comm_no = a.prod_type) prod_type
 		  	 , (select emp_nm from kcgbd.e_employee where emp_no = b.emp_no) emp_nm
 		  	 , plan_no
 		  	 , a.cust_sn
+		  	 , init_yn
 		  	 , '1' simpl_ty_cd
 		  	 from kcgbd.e_planlist a
 		  	 left join kcgbd.e_customer b
 		  	 on a.cust_sn = b.cust_sn
-		 where 1=1
+		 where init_yn = 'N'
 		<if test='cust_nm != null and cust_nm != ""'>
 		   and (select cust_nm from kcgbd.e_customer where cust_sn = a.cust_sn) like concat('%',#{cust_nm},'%')
 		</if>
@@ -112,6 +113,7 @@
 			,cust_home_telno 
 			,(select comm_nm from kcgbd.e_common where comm_no = a.cust_cr_no) cust_cr_no
 			,cust_road_nm_addr 
+			,a.emp_no
 			,(select emp_nm from kcgbd.e_employee where emp_no = a.emp_no) 
 			,(select comm_nm from kcgbd.e_common where comm_no = b.emp_dept) emp_dept
 			,(select comm_nm from kcgbd.e_common where comm_no = b.emp_posit) emp_posit 
@@ -350,7 +352,7 @@
 		     , b.sale_end_dt
 		     , a.loan_rpty_cd
 		     , circle_pay_amt
-			 , circle_repy
+			 , circle_repy_amt
 			 , circle_int
 			 , tot_int_amt
 			 , tot_pay_amt
@@ -464,7 +466,7 @@
 	</update>
 	
 	<insert id="insertDsgnDpstpl" parameterType="cmmnMap">
-	/* system.promion_mng.insertDsgnDpstpl */
+	/* system.team2.promion_mng.insertDsgnDpstpl */
 				insert 
 		  into kcgbd.e_planlist (
 		  	  circle_acml_amt
@@ -497,7 +499,7 @@
 	</insert>
 	
 	<update id="updateDsgnDpstpl" parameterType="cmmnMap">
-	/* system.promion_mng.updateDsgnDpstpl */
+	/* system.team2.promion_mng.updateDsgnDpstpl */
 		update kcgbd.e_planlist
 		   set circle_acml_amt = #{circle_acml_amt}
 		  	 , goal_prd = #{goal_prd}
@@ -517,7 +519,7 @@
 	
 	
 	<insert id="insertDsgnLoanpl" parameterType="cmmnMap">
-	/* system.promion_mng.insertDsgnLoanpl */
+	/* system.team2.promion_mng.insertDsgnLoanpl */
 		insert 
 		  into kcgbd.e_planlist (
 		  	  circle_acml_amt
@@ -560,7 +562,7 @@
 	</insert>
 	
 	<update id="updateDsgnLoanpl" parameterType="cmmnMap">
-	/* system.promion_mng.updateDsgnLoanpl */
+	/* system.team2.promion_mng.updateDsgnLoanpl */
 		update kcgbd.e_planlist
 		   set circle_acml_amt = #{circle_acml_amt}
 		  	 , goal_prd = #{goal_prd}
@@ -572,15 +574,140 @@
 		  	 , int_tax_amt = #{int_tax_amt}
 		  	 , atx_rcve_amt = #{atx_rcve_amt}
 		  	 , cust_sn = cast(#{cust_sn} as numeric(5))
-		  	 , dp_prod_no = #{prod_no}
+		  	 , loan_prod_no = #{prod_no}
 		  	 , prod_type = #{prod_type}
 		  	 , loan_rpty_cd = #{loan_rpty_cd}
 			 , circle_repy_amt = #{circle_repy_amt}
 			 , circle_int = #{circle_int}
-			 , tot_int_amt_fmt = #{tot_int_amt}
-			 , tot_pay_amt_fmt = #{tot_pay_amt}
+			 , tot_int_amt = #{tot_int_amt}
+			 , tot_pay_amt = #{tot_pay_amt}
 		 where plan_no = cast(#{plan_no} as numeric(5))
 	</update>
 	
+	<insert id="insertSavgplSell" parameterType="cmmnMap">
+	/* system.team2.promion_mng.insertSavgplSell */
+		insert 
+		  into kcgbd.e_product_init (
+		  	  sa_prod_no
+		  	  , cust_sn
+		  	  , sub_ymd
+		  	  , end_ymd
+		  	  , price
+		  	  , interest_rate
+		  	  , interest_ta
+		  	  ,emp_no
+		  	 )
+		values (
+		  	 cast(#{prod_no} as numeric(5)),
+			cast(#{cust_sn} as numeric(5)),
+			current_date,
+			current_date + INTERVAL '1 month' * cast(#{pay_period} as integer),
+			cast(#{tot_dpst_amt} as bigint),
+			cast(#{aply_rate} as numeric(3,1)),
+			#{interest_ta},
+			#{emp_no}
+		     )
+	</insert>
 	
+	<insert id="insertDpstplSell" parameterType="cmmnMap">
+	/* system.team2.promion_mng.insertDpstplSell */
+		insert 
+		  into kcgbd.e_product_init (
+		  	  dp_prod_no
+		  	  , cust_sn
+		  	  , sub_ymd
+		  	  , end_ymd
+		  	  , price
+		  	  , interest_rate
+		  	  , interest_ta
+		  	  ,emp_no
+		  	 )
+		values (
+		  	 cast(#{prod_no} as numeric(5)),
+			cast(#{cust_sn} as numeric(5)),
+			current_date,
+			current_date + INTERVAL '1 month' * cast(#{pay_period} as integer),
+			cast(#{tot_dpst_amt} as bigint),
+			cast(#{aply_rate} as numeric(3,1)),
+			#{interest_ta},
+			#{emp_no}
+		     )
+	</insert>
+	
+	<insert id="insertLoanplSell" parameterType="cmmnMap">
+	/* system.team2.promion_mng.insertLoanplSell */
+		insert 
+		  into kcgbd.e_product_init (
+		  	  loan_prod_no
+		  	  , cust_sn
+		  	  , sub_ymd
+		  	  , end_ymd
+		  	  , price
+		  	  , interest_rate
+		  	  , interest_ta
+		  	  ,emp_no
+		  	 )
+		values (
+		  	 cast(#{prod_no} as numeric(5)),
+			cast(#{cust_sn} as numeric(5)),
+			current_date,
+			current_date + INTERVAL '1 month' * cast(#{pay_period} as integer),
+			cast(#{tot_dpst_amt} as bigint),
+			cast(#{aply_rate} as numeric(3,1)),
+			#{interest_ta},
+			#{emp_no}
+		     )
+	</insert>
+	
+	<insert id="insertAcmlplSell" parameterType="cmmnMap">
+	/* system.team2.promion_mng.insertAcmlplSell */
+		insert 
+		  into kcgbd.e_product_init (
+		  	  ac_prod_no
+		  	  , cust_sn
+		  	  , sub_ymd
+		  	  , end_ymd
+		  	  , price
+		  	  , interest_rate
+		  	  , interest_ta
+		  	  ,emp_no
+		  	 )
+		values (
+		  	 cast(#{prod_no} as numeric(5)),
+			cast(#{cust_sn} as numeric(5)),
+			current_date,
+			current_date + INTERVAL '1 month' * cast(#{pay_period} as integer),
+			cast(#{tot_dpst_amt} as bigint),
+			cast(#{aply_rate} as numeric(3,1)),
+			#{interest_ta},
+			#{emp_no}
+		     )
+	</insert>
+	<update id="updateInitYN" parameterType="cmmnMap">
+	/* system.team2.promion_mng.updateInitYN */
+		update kcgbd.e_planlist
+		   set init_yn = 'Y'
+		 where plan_no = cast(#{plan_no} as numeric(5))
+	</update>
+	
+	<update id="updateDpInitYN" parameterType="cmmnMap">
+	/* system.team2.promion_mng.updateDpInitYN */
+		update kcgbd.e_planlist
+		   set init_yn = 'Y'
+		 where plan_no = cast(#{plan_no} as numeric(5))
+	</update>
+	
+	<update id="updateLoanInitYN" parameterType="cmmnMap">
+	/* system.team2.promion_mng.updateLoanInitYN */
+		update kcgbd.e_planlist
+		   set init_yn = 'Y'
+		 where plan_no = cast(#{plan_no} as numeric(5))
+	</update>
+	
+	<update id="updateAcInitYN" parameterType="cmmnMap">
+	/* system.team2.promion_mng.updateAcInitYN */
+		update kcgbd.e_planlist
+		   set init_yn = 'Y'
+		 where plan_no = cast(#{plan_no} as numeric(5))
+	</update>
 </mapper>

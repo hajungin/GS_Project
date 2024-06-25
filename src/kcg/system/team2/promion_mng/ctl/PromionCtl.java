@@ -81,6 +81,12 @@ public class PromionCtl {
 		promionSvc.save(params);
 	}
 	
+	@RequestMapping("/saveSell")
+	public void saveSell(CmmnMap params) {
+		System.out.println("==============================saveSellCtl" + params);
+		promionSvc.saveSell(params);
+	}
+	
 	@RequestMapping("/getCust")
 	public List<CmmnMap> getCust(CmmnMap params){
 		return promionSvc.getCust(params);
