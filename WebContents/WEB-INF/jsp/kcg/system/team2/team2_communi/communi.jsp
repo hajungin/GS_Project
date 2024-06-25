@@ -31,7 +31,7 @@
                     <h2>상담내역</h2>
                     <br />
 
-                    <div class="flex-column flex-gap-10" id="vueapp">
+                    <div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
                         <template>
                             <div class="flex flex-100">
                                 <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
@@ -93,6 +93,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <div class="dataTables_paginate paging_simple_numbers" id="div_paginate"></div>
                         </template>
                     </div>
 <!-- 상담내역 detail 팝업                 -->
@@ -187,7 +188,7 @@
                this.cnslt_cn = params.cnslt_cn;
                this.emp_nm = params.emp_nm;
    
-               this.getCommuniList(true);
+               this.getCommuniList();
            } else {
                cv_sessionStorage
                    .removeItem("pagingConfig")

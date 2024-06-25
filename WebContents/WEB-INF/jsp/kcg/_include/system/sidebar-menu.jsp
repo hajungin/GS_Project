@@ -151,12 +151,6 @@
 							<a href="#gm" onclick="cf_movePage('/2team/prod/insert')">
 								<span class="title">상품등록</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
-								<span class="title">상품수정</span>
-							</a>
-							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
-								<span class="title">상품삭제</span>
-							</a>
 						</li>
 					</ul>
 				</li>

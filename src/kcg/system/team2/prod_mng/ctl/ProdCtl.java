@@ -43,4 +43,11 @@ public class ProdCtl {
 	public CmmnMap code(CmmnMap params) {
 		return prodSvc.code(params);
 	}
+	
+	@RequestMapping("/getInfo")
+	public CmmnMap getInfo(CmmnMap params) {
+		return prodSvc.getInfo(params);
+	}
+	
+	
 }

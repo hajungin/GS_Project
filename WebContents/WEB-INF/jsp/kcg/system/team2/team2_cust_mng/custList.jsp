@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
     <link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
     <link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
-    <title>관리자시스템</title>
+    <title>고객목록조회</title>
 </head>
 
 <body class="page-body">
@@ -31,69 +31,50 @@
             <h2>고객정보 목록</h2>
             <br />
 
-            <div class="flex-column flex-gap-10" id="vueapp">
+            <div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
                 <template>
                     <div class="flex flex-100">
-                        <div class="flex-wrap flex-90 flex flex-gap-10 flex-padding-10">
+                        <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
                             <div class="form-group flex-60">
-                                <label style="text-align: center; margin-left: 100px;">고객명 :</label>
-                                <input class="form-control" v-model="cust_nm" value="" style="margin-right: 100px; ">
-                                <label class="fix-width-15">생년월일 :</label>
-                                <input type="text" class="form-control" v-model="birth" placeholder="yy-mm-dd" style="margin-right: 100px;">
-                                <label class="fix-width-15">관리담당자 :</label>
-                                <input class="form-control" v-model="emp_nm" value="" style="margin-right: 100px;">
-<!--                                 <label class="fix-width-15">이벤트구분 :</label> -->
-<!--                                 <select id ="event" class="form-control"> -->
-<!--                                 	<option value="">전체</option> -->
-<!--                                 	<option value="">생일</option> -->
-<!--                                 	<option value="">만기도래</option> -->
-<!--                                 	<option value="">기타</option> -->
-<!--                                 </select> -->
-                            </div>
-                        </div>
-
-                        <div class="flex-wrap flex-10 flex flex-center flex-gap-10 flex-padding-10">
-                            <div class="form-group" style="width:40%; margin-right: 5%;">
+                            	<label class="fix-width-10" style="margin-left: 50px;">이벤트구분 :</label>
+	                                <select id ="event" class="form-control" v-model="event" @change="getCustEventList()">
+	                                	<option value="all">전체</option>
+	                                	<option value="sel_birth">생일</option>
+	                                	<option value="expiration">만기도래</option>
+	                                </select>
+                                <label style="text-align: center; margin-left: 50px;">고객명 :</label>
+                                <input class="form-control" v-model="cust_nm" value="" style="margin-right: 50px; ">
+                                <label class="fix-width-10">전화번호 :</label>
+                                <input type="text" class="form-control" v-model="cust_mbl_telno" style="margin-right: 50px;">
+                                <label class="fix-width-10">관리담당자 :</label>
+                                <input class="form-control" v-model="emp_nm" value="" style="margin-right: 50px;">
                                 <button type="button" class="btn btn-primary btn-icon" 
-                                    v-model="search_val" @click="getCustInfoList(true)">
+                                    @click="getCustInfoList(true)">
                                     검색
                                     <i class="entypo-search"></i>
                                 </button>
+                                
                             </div>
                         </div>
                     </div>
-					</div>
                     <div class="flex flex-100 flex-padding-10 flex-gap-10"
                         style="justify-content:flex-end;border: 1px solid #999999;">
-                        <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"
+                        <button type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
                             @click="gotoDtl()">
                             신규회원등록
                             <i class="entypo-archive"></i>
                         </button>
-<!--                         출력 기능 작업전 -->
-<!--                         <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;" -->
-<!--                             > -->
-<!--                             관리대장출력 -->
-<!--                             <i class="entypo-vcard"></i> -->
-<!--                         </button> -->
-                        <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"
+                        <button type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
                             @click="cf_movePage('/communi/communiList')">
                             상담목록조회
                             <i class="entypo-user"></i>
                         </button>
-<!--                         담당자 일괄설정 작업 전 -->
-<!--                         <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"  -->
-<!--                         	@click="popupEmpInfo"> -->
-<!--                             담당자설정 -->
-<!--                             <i class="entypo-clipboard"></i> -->
-<!--                         </button> -->
                     </div>
                     <table class="table table-bordered datatable dataTable" id="grid_app"
                         style="border: 1px solid #999999;">
                         <thead>
                             <tr class="replace-inputs">
-                                <th style="width: 5%;" class="center"><input type="checkbox" id="allCheck"
-                                        @click="all_check(event.target)" style="cursor: pointer;"></th>
+ 								<th style="width: 5%;" class="center">No</th>
                                 <th style="width: 10%;" class="center">성명</th>
                                 <th style="width: 15%;" class="center">생년월일</th>
                                 <th style="width: 15%;" class="center">이메일주소</th>
@@ -101,23 +82,19 @@
                                 <th style="width: 25%;" class="center">주소</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr v-for="item in dataList" @dblclick="gotoDtl(item.cust_mbl_telno)"
+                        <tbody class="table-group-divider">
+                            <tr v-for="(item, index) in dataList" @dblclick="gotoDtl(item.cust_mbl_telno)"
                                 style="cursor: pointer;">
-                                <td class="center" @dblclick.stop="return false;"><input type="checkbox"
-                                        :data-idx="item.cust_nm" name="is_check" @click.stop="onCheck"
-                                        style="cursor: pointer;">
-                                </td>
-                                <td class="center">{{item.cust_nm}}</td>
-                                <td class="center">{{item.cust_pridtf_no.substring(0,6)}}</td>
-                                <td class="center">{{item.cust_eml_addr}}</td>
-                                <td class="center">{{item.cust_mbl_telno}}</td>
-                                <td class="center">{{item.cust_road_addr}}</td>
+								<td class="center">{{ index + 1 }}</td>
+                                <td class="center">{{ item.cust_nm }}</td>
+                                <td class="center">{{ item.birth }}</td>
+                                <td class="center">{{ item.cust_eml_addr }}</td>
+                                <td class="center">{{ item.cust_mbl_telno }}</td>
+                                <td class="center">{{ item.cust_road_addr }}</td>
                             </tr>
                         </tbody>
                     </table>
-               	<div class="dataTables_paginate paging_simple_numbers" id="div_paginate">
-				</div>
+               	<div class="dataTables_paginate paging_simple_numbers" id="div_paginate"></div>
                 </template>
             </div>
             <jsp:include page="/WEB-INF/jsp/kcg/_include/system/footer.jsp" flush="false" />
@@ -173,13 +150,8 @@
                                     <label for="cust_cr_no" class="col-sm-4 control-label">직업</label>
                                     <div class="col-sm-8" id="selectcr">
                                        <select id="cust_cr_no" class="form-control" v-model="info.cust_cr_no" style="margin-left: 10px;">
-											<option value="JB01">학생</option>
-											<option value="JB02">공무원</option>
-											<option value="JB03">회사원</option>
-											<option value="JB04">자영업자</option>
-											<option value="JB05">프리랜서</option>
-											<option value="JB06">무직</option>
-											<option value="JB07">기타</option>
+											<option value="">선택</option>
+											<<option v-for="item in comm_List" :value="item.comm_no">{{ item.comm_nm }}</option>
 										</select>
 										<input v-if="showInput" type="text" class="form-control" v-model="info.other_cr" placeholder="직업명 입력">
                                     </div>
@@ -269,12 +241,12 @@
 </div>
 
 <!--// 담당자설정 팝업  -->
-            <!-- 팝업 -->
-            <div class="modal fade" id="pop_emp_info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			    <div class="modal-dialog" style="width: 500px;">
-			        <div class="modal-content">
-			        <div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose" >&times;</button>
+          <!-- 팝업 -->
+          <div class="modal fade" id="pop_emp_info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" style="width: 500px;">
+		        <div class="modal-content">
+		       	 <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose" @click="getInfo" >&times;</button>
 						<h4 class="modal-title" id="modify_nm">담당자 설정</h4>
 					</div> 
 			            <div class="modal-body">
@@ -302,7 +274,7 @@
 			        </div>
 			    </div>
 			</div>
-            <!-- 팝업 -->
+           <!-- 팝업 -->
 	   
 </body>
 
@@ -311,12 +283,11 @@
         el: "#vueapp",
         data: {
             dataList: [],
-            search_nm: "",
             cust_nm: "",
     		cust_pridtf_no: "",
-    		birth: "",
+    		cust_mbl_telno: "",
+    		event: "all",
     		emp_nm: "",
-            search_val: "",
         },
         mounted: function () {
             var fromDtl = cf_getUrlParam("fromDtl");
@@ -325,11 +296,10 @@
                 cv_pagingConfig.pageNo = pagingConfig.pageNo;
                 cv_pagingConfig.orders = pagingConfig.orders;
                 var params = cv_sessionStorage.getItem("params");
-                this.search_nm = params.search_nm;
                 this.cust_nm = params.cust_nm;
-                this.birth = params.birth;
+                this.cust_mbl_telno = params.cust_mbl_telno;
                 this.emp_nm = params.emp_nm;
-                this.search_val = params.search_val;
+                this.cust_pridtf_no = params.cust_pridtf_no;
 
                 this.getCustInfoList();
             } else {
@@ -349,11 +319,9 @@
                 }
 
                 var params = {
-                    search_nm: this.search_nm,
-                    search_val: this.search_val,
                     cust_nm: this.cust_nm,
                     emp_nm: this.emp_nm,
-                    birth: this.birth,
+                    cust_mbl_telno: this.cust_mbl_telno
                 }
 
                 cv_sessionStorage
@@ -361,6 +329,26 @@
                     .setItem('params', params);
 
                 cf_ajax("/customer/getCustInfoList", params, this.getListCB);
+            },
+            getCustEventList: function() {
+            	cv_pagingConfig.func = this.getCustEventList;
+                cv_pagingConfig.pageNo = 1;
+                cv_pagingConfig.orders = [{ target: "cust_nm", isAsc: false }];
+
+                if(this.event == "all") {
+                	this.getCustInfoList(true);
+                } else {
+                	var params = {
+                        	cust_nm: this.cust_nm,
+                            event: this.event,
+                        }
+
+                        cv_sessionStorage
+                            .setItem('pagingConfig', cv_pagingConfig)
+                            .setItem('params', params);
+
+                        cf_ajax("/customer/getCustEventList", params, this.getListCB);
+                }
             },
             getListCB: function (data) {
                 //console.log(data);
@@ -407,6 +395,7 @@
             cnslt_cn_add: "",
             cnsltList: [],
             cnsltItems: "",
+            comm_List: "",
                 
         },
         computed: {
@@ -414,14 +403,19 @@
               return this.info.cust_cr_no === 'JB07';
             }, 
          },
+//         mounted() {
+//         	 this.getComm();
+//         },
         methods: {
             init: function (cust_mbl_telno) {
                 this.info.cust_mbl_telno = cust_mbl_telno;
                 if (!cf_isEmpty(this.info.cust_mbl_telno)) {
                     this.getInfo();
+                    this.getComm();
 //                     this.getCnsltList();
                 } else {
                 	this.initInfo();
+                	this.getComm();
                 }
             },
             initInfo: function () {
@@ -451,12 +445,7 @@
             getInfoCB: function (data) {
                 this.info = data;
             },
-//             getCnsltList: function () {
-// 				var params = {
-// 						cust_mbl_telno: this.info.cust_mbl_telno
-// 	                }
-// 	                cf_ajax("/communi/getCnsltList", params, this.getCnsltCB);
-// 			},
+
 			getCnsltCB: function (data) {
 				this.cnsltList = data;
 			},
@@ -477,6 +466,15 @@
 				}
 				cf_ajax("/customer/getEmpSelInfo", params, this.getEmpCB);
 			},
+			getComm: function () {
+				var gr_comm_no = 3;
+				var params = {
+					gr_comm_no: gr_comm_no
+				}
+				cf_ajax("/common/getCommList", params, (data) => {
+	        		this.comm_List = data;
+        		});
+        	},
 			custUpdate: function () {
 				var cust_nm = this.info.cust_nm;
 				var cust_pridtf_no = this.info.cust_pridtf_no;
@@ -506,14 +504,12 @@
 					alert("고객정보 변경 완료");
 				}
 				$('#pop_cust_info').modal('hide');
-				this.custInfoReload();
+				window.location.reload();
 			},
 			custInfoReload: function () {
-				vueapp.getCustInfoList();
+				this.getInfo();
 			},
 			
-			
-
 			custInsert: function () {
 				var cust_nm = this.info.cust_nm;
 				var cust_pridtf_no = this.info.cust_pridtf_no;
@@ -544,7 +540,6 @@
 				}
 				$('#pop_cust_info').modal('hide');
 				this.cnslt_cn_add = "";
-// 				this.custInfoReload();
 				window.location.reload();
 			},
 			
@@ -613,6 +608,9 @@
             	var self = this;
             	$('#pop_emp_info').hide();
             	pop_cust_info.getEmpSelInfo(emp_nm);
+            },
+            getInfo: function () {
+            	pop_cust_info.getInfo();
             },
         },
         mounted() {
