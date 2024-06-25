@@ -69,11 +69,11 @@
             <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
                 <div class="form-group flex-20">
                     <label for="productName" class="form-control">상품명 :</label>
-                    <input type="text" class="form-control" v-model="prod_nm" value=""/>
+                    <input type="text" style="height:30px;" class="form-control" v-model="prod_nm" value=""/>
                 </div>
                 <div class="form-group flex-20">
 				    <label for="productType" class="form-control">상품 유형 :</label>
-				    <select v-model="prod_type" class="form-control">
+				    <select v-model="prod_type" style="height:30px;" class="form-control">
 				        <option value="">전체</option>
 				        <option value="PT02">예금</option>
 				        <option value="PT03">대출</option>
@@ -85,14 +85,14 @@
                 <div class="form-group flex-40">
                     <label for="from_date" class="form-control">판매기간 :</label>
                     <span>시작 : </span>
-                    <input type="text" class="form-control" v-model="sale_beg_dt" data-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"/>
+                    <input type="text" style="height:30px;" class="form-control" v-model="sale_beg_dt" data-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"/>
                     <span style="margin-left: 22px;">종료 : </span>
-                    <input type="text" class="form-control" v-model="sale_end_dt" data-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"/>
+                    <input type="text" style="height:30px;" class="form-control" v-model="sale_end_dt" data-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"/>
                 </div>
                 
                 <div class="form-group flex-20">
                     <label for="promtn_yn"  class="form-control">프로모션 :</label>
-                    <select v-model="promtn_yn" class="form-control" value="">
+                    <select v-model="promtn_yn" style="height:30px;" class="form-control" value="">
                         <option value="">전체</option>
                         <option value="Y">Y</option>
                         <option value="N">N</option>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="form-group flex-20">
                     <label for="subTarget"  class="form-control">가입대상 :</label>
-                    <select v-model="sub_tg" class="form-control" value="">
+                    <select v-model="sub_tg" style="height:30px;" class="form-control" value="">
                         <option value="">전체</option>
                         <option value="ST01">일반개인</option>
                         <option value="ST02">청년</option>
@@ -110,9 +110,9 @@
                 <div class="form-group flex-40">
                  	<label for="price_max"  class="form-control">가입금액 :</label>
                  	<span>최대 : </span>
-                 	<input type="text" class="form-control" v-model="price_max" value=""/>
+                 	<input type="text" style="height:30px;" class="form-control" v-model="price_max" value=""/>
                  	<span style="margin-left: 10px;">~ 최소 : </span>
-                 	<input type="text" class="form-control" v-model="price_min" value=""/>
+                 	<input type="text" style="height:30px;" class="form-control" v-model="price_min" value=""/>
                  </div>
               </div>
              <div class="flex-wrap flex-10 flex flex-gap-10 flex-padding-10">
@@ -495,6 +495,9 @@ var vueapp = new Vue({
 			var chkedList = $("[name=is_check]:checked");
 			if (chkedList.length == 0) {
 				alert("출력할 대상을 선택하여 주십시오.");
+				return;
+			} else if(chkedList.length !== 1) {
+				alert("출력할 대상을 하나만 선택하여 주십시오");
 				return;
 			}
 			//check list 가져오기..
