@@ -12,13 +12,14 @@
 		ep.price_max,
 		ep.price_min,
 		ec_stat.comm_nm AS sale_stat,
-		ep.sale_beg_dt,
-		ep.sale_end_dt,
+		TO_CHAR(ep.sale_beg_dt, 'YYYY-MM-DD') AS sale_beg_dt,
+		TO_CHAR(ep.sale_end_dt, 'YYYY-MM-DD') AS sale_end_dt,
 		ep.promtn_yn,
+		ec_interest.comm_nm AS interest_ta,
 		ep.air_max,
 		ep.air_min,
-		ep.air_beg_dt,
-		ep.air_end_dt
+		TO_CHAR(ep.air_beg_dt, 'YYYY-MM-DD') AS air_beg_dt,
+		TO_CHAR(ep.air_end_dt, 'YYYY-MM-DD') AS air_end_dt
 	 FROM 
    		 kcgbd.e_product_save ep
 			LEFT JOIN 
@@ -29,8 +30,10 @@
 			    kcgbd.e_common ec_cycle ON ep.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ep.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+			LEFT JOIN 
+			    kcgbd.e_common ec_interest ON ep.interest_ta = ec_interest.comm_no AND ec_interest.group_comm_no = 7
 			    
-				where ep.promtn_yn = 'N'
+				where ep.promtn_yn = #{promtn_yn}
 				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ep.prod_nm like CONCAT('%',#{prod_nm},'%')
@@ -44,11 +47,20 @@
         <if test='from_date != null and from_date != ""'>
    		 AND CAST(#{from_date} AS DATE) BETWEEN ep.sale_beg_dt AND ep.sale_end_dt
 		</if>
+		<if test='sale_stat != null and sale_stat != ""'>
+		   and ep.sale_stat = #{sale_stat}
+		</if>
+		<if test='price_max != null and price_max != ""'>
+		   and ep.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		</if>
+		<if test='price_min != null and price_min != ""'>
+		   and ep.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		</if>
 		
 		UNION ALL
 		SELECT  
-			el.loan_prod_no,
-			el.loan_prod_nm,
+			el.prod_no,
+			el.prod_nm,
 			ec_type.comm_nm AS prod_type,
 			ec_target.comm_nm AS sub_tg,
 			el.pay_period,
@@ -56,13 +68,14 @@
 			el.price_max,
 			el.price_min,
 			ec_stat.comm_nm AS sale_stat,
-			el.loan_sale_beg_dt,
-			el.loan_sale_end_dt,
+			TO_CHAR(el.sale_beg_dt, 'YYYY-MM-DD') AS sale_beg_dt,
+			TO_CHAR(el.sale_end_dt, 'YYYY-MM-DD') AS sale_end_dt,
 			el.promtn_yn,
+			ec_interest.comm_nm AS interest_ta,
 			el.air_max,
 			el.air_min,
-			el.air_beg_dt,
-			el.air_end_dt
+			TO_CHAR(el.air_beg_dt, 'YYYY-MM-DD') AS air_beg_dt,
+			TO_CHAR(el.air_end_dt, 'YYYY-MM-DD') AS air_end_dt
 		 FROM 
    			 kcgbd.e_product_loan el
 		LEFT JOIN 
@@ -72,12 +85,14 @@
 		LEFT JOIN 
 		    kcgbd.e_common ec_cycle ON el.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 		LEFT JOIN 
-		    kcgbd.e_common ec_stat ON el.loan_sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+		    kcgbd.e_common ec_stat ON el.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+		LEFT JOIN 
+			kcgbd.e_common ec_interest ON el.interest_ta = ec_interest.comm_no AND ec_interest.group_comm_no = 7
 		    
-			where el.promtn_yn = 'N'
+			where el.promtn_yn = #{promtn_yn}
 			
 		<if test='prod_nm != null and prod_nm != ""'>
-		   and el.loan_prod_nm like CONCAT('%',#{prod_nm},'%')
+		   and el.prod_nm like CONCAT('%',#{prod_nm},'%')
 		</if>
 		<if test='prod_type != null and prod_type != ""'>
 		   and el.prod_type = #{prod_type}
@@ -86,7 +101,16 @@
 		   and el.sub_tg = #{sub_tg}
 		</if>
         <if test='from_date != null and from_date != ""'>
-   		 AND CAST(#{from_date} AS DATE) BETWEEN el.loan_sale_beg_dt AND el.loan_sale_end_dt
+   		 AND CAST(#{from_date} AS DATE) BETWEEN el.sale_beg_dt AND el.sale_end_dt
+		</if>
+		<if test='sale_stat != null and sale_stat != ""'>
+		   and el.sale_stat = #{sale_stat}
+		</if>
+		<if test='price_max != null and price_max != ""'>
+		   and el.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		</if>
+		<if test='price_min != null and price_min != ""'>
+		   and el.price_min &gt; CAST(#{price_min} AS INTEGER)+1
 		</if>
 		
 		UNION ALL
@@ -100,13 +124,14 @@
 			ea.price_max,
 			ea.price_min,
 			ec_stat.comm_nm AS sale_stat,
-			ea.sale_beg_dt,
-			ea.sale_end_dt,
+			TO_CHAR(ea.sale_beg_dt, 'YYYY-MM-DD') AS sale_beg_dt,
+			TO_CHAR(ea.sale_end_dt, 'YYYY-MM-DD') AS sale_end_dt,
 			ea.promtn_yn,
+			ec_interest.comm_nm AS interest_ta,
 			ea.air_max,
 			ea.air_min,
-			ea.air_beg_dt,
-			ea.air_end_dt
+			TO_CHAR(ea.air_beg_dt, 'YYYY-MM-DD') AS air_beg_dt,
+			TO_CHAR(ea.air_end_dt, 'YYYY-MM-DD') AS air_end_dt
 		 FROM 
    			 kcgbd.e_product_ac ea
 			LEFT JOIN 
@@ -117,8 +142,10 @@
 			    kcgbd.e_common ec_cycle ON ea.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ea.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+			LEFT JOIN 
+				kcgbd.e_common ec_interest ON ea.interest_ta = ec_interest.comm_no AND ec_interest.group_comm_no = 7
 			    
-				where ea.promtn_yn = 'N'
+				where ea.promtn_yn = #{promtn_yn}
 				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ea.prod_nm like CONCAT('%',#{prod_nm},'%')
@@ -132,6 +159,15 @@
         <if test='from_date != null and from_date != ""'>
    		 AND CAST(#{from_date} AS DATE) BETWEEN ea.sale_beg_dt AND ea.sale_end_dt
 		</if>
+		<if test='sale_stat != null and sale_stat != ""'>
+		   and ea.sale_stat = #{sale_stat}
+		</if>
+		<if test='price_max != null and price_max != ""'>
+		   and ea.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		</if>
+		<if test='price_min != null and price_min != ""'>
+		   and ea.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		</if>
 		
 		UNION ALL
 		SELECT  
@@ -144,13 +180,14 @@
 			ed.price_max,
 			ed.price_min,
 			ec_stat.comm_nm AS sale_stat,
-			ed.sale_beg_dt,
-			ed.sale_end_dt,
+			TO_CHAR(ed.sale_beg_dt, 'YYYY-MM-DD') AS sale_beg_dt,
+			TO_CHAR(ed.sale_end_dt, 'YYYY-MM-DD') AS sale_end_dt,
 			ed.promtn_yn,
+			ec_interest.comm_nm AS interest_ta,
 			ed.air_max,
 			ed.air_min,
-			ed.air_beg_dt,
-			ed.air_end_dt
+			TO_CHAR(ed.air_beg_dt, 'YYYY-MM-DD') AS air_beg_dt,
+			TO_CHAR(ed.air_end_dt, 'YYYY-MM-DD') AS air_end_dt
 		FROM 
    		 kcgbd.e_product_dp ed
 			LEFT JOIN 
@@ -161,8 +198,10 @@
 			    kcgbd.e_common ec_cycle ON ed.pay_cycle = ec_cycle.comm_no AND ec_cycle.group_comm_no = 5
 			LEFT JOIN 
 			    kcgbd.e_common ec_stat ON ed.sale_stat = ec_stat.comm_no AND ec_stat.group_comm_no = 8
+			LEFT JOIN 
+				kcgbd.e_common ec_interest ON ed.interest_ta = ec_interest.comm_no AND ec_interest.group_comm_no = 7
 			    
-				where ed.promtn_yn = 'N'
+				where ed.promtn_yn = #{promtn_yn}
 				
 		<if test='prod_nm != null and prod_nm != ""'>
 		   and ed.prod_nm like CONCAT('%',#{prod_nm},'%')
@@ -176,95 +215,218 @@
         <if test='from_date != null and from_date != ""'>
    		 AND CAST(#{from_date} AS DATE) BETWEEN ed.sale_beg_dt AND ed.sale_end_dt
 		</if>
+		<if test='sale_stat != null and sale_stat != ""'>
+		   and ed.sale_stat = #{sale_stat}
+		</if>
+		<if test='price_max != null and price_max != ""'>
+		   and ed.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		</if>
+		<if test='price_min != null and price_min != ""'>
+		   and ed.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		</if>
 	</select>
 	
 	
 	<insert id="COsave" parameterType="cmmnMap">
 		insert into kcgbd.e_interest (prod_no, prod_type, air_max, air_min, air_beg_dt, air_end_dt) values 
-		(#{prod_no}, #{prod_type}, #{air_max}, #{air_min}, #{air_beg_dt}, #{air_end_dt})
+		(#{prod_no}, #{prod_type}, #{air_max}, #{air_min}, CAST(#{air_beg_dt} AS DATE), CAST(#{air_end_dt} AS DATE))
 	</insert>
 	
 	<insert id="PSsave" parameterType="cmmnMap">
 		insert into kcgbd.e_product_save (prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, 
-		price_max, price_min, sale_stat, sale_beg_dt, sale_end_dt, promtn_yn, air_max, air_min,
+		interest_ta, price_max, price_min, sale_stat, sale_beg_dt, sale_end_dt, promtn_yn, air_max, air_min,
 		air_beg_dt, air_end_dt) 
 		values 
 		(#{prod_no},#{prod_nm},#{prod_type},#{sub_tg},#{pay_period},#{pay_cycle},
-		#{price_max},#{price_min},#{sale_stat}, 
+		#{interest_ta}, #{price_max},#{price_min},#{sale_stat}, 
 		CAST(#{sale_beg_dt} AS DATE), CAST(#{sale_end_dt} AS DATE), #{promtn_yn}, #{air_max}, #{air_min},
 		CAST(#{air_beg_dt} AS DATE), CAST(#{air_end_dt} AS DATE))
 	</insert>
 	
 	<insert id="Losave" parameterType="cmmnMap">
-		insert into kcgbd.e_product_loan (loan_prod_no, loan_prod_nm, prod_type, sub_tg, pay_period, pay_cycle, 
-		price_max, price_min, loan_sale_stat, loan_sale_beg_dt, loan_sale_end_dt, promtn_yn, air_max, air_min,
+		insert into kcgbd.e_product_loan (prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, 
+		interest_ta, price_max, price_min, sale_stat, sale_beg_dt, sale_end_dt, promtn_yn, air_max, air_min,
 		air_beg_dt, air_end_dt) 
 		values 
 		(#{prod_no},#{prod_nm},#{prod_type},#{sub_tg},#{pay_period},#{pay_cycle},
-		#{price_max},#{price_min},#{sale_stat}, 
+		#{interest_ta}, #{price_max},#{price_min},#{sale_stat}, 
 		CAST(#{sale_beg_dt} AS DATE), CAST(#{sale_end_dt} AS DATE), #{promtn_yn}, #{air_max}, #{air_min},
 		CAST(#{air_beg_dt} AS DATE), CAST(#{air_end_dt} AS DATE))
 	</insert>
 	
 	<insert id="DPsave" parameterType="cmmnMap">
 		insert into kcgbd.e_product_dp (prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, 
-		price_max, price_min, sale_stat, sale_beg_dt, sale_end_dt, promtn_yn, air_max, air_min,
+		interest_ta, price_max, price_min, sale_stat, sale_beg_dt, sale_end_dt, promtn_yn, air_max, air_min,
 		air_beg_dt, air_end_dt) 
 		values 
 		(#{prod_no},#{prod_nm},#{prod_type},#{sub_tg},#{pay_period},#{pay_cycle},
-		#{price_max},#{price_min},#{sale_stat}, 
+		#{interest_ta}, #{price_max},#{price_min},#{sale_stat}, 
 		CAST(#{sale_beg_dt} AS DATE), CAST(#{sale_end_dt} AS DATE), #{promtn_yn}, #{air_max}, #{air_min},
 		CAST(#{air_beg_dt} AS DATE), CAST(#{air_end_dt} AS DATE))
 	</insert>
 	
 	<insert id="ACsave" parameterType="cmmnMap">
 		insert into kcgbd.e_product_ac (prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, 
-		price_max, price_min, sale_stat, sale_beg_dt, sale_end_dt, promtn_yn, air_max, air_min,
+		interest_ta, price_max, price_min, sale_stat, sale_beg_dt, sale_end_dt, promtn_yn, air_max, air_min,
 		air_beg_dt, air_end_dt)
 		values 
 		(#{prod_no},#{prod_nm},#{prod_type},#{sub_tg},#{pay_period},#{pay_cycle},
-		#{price_max},#{price_min},#{sale_stat}, 
+		#{interest_ta}, #{price_max},#{price_min},#{sale_stat}, 
 		CAST(#{sale_beg_dt} AS DATE), CAST(#{sale_end_dt} AS DATE), #{promtn_yn}, #{air_max}, #{air_min},
 		CAST(#{air_beg_dt} AS DATE), CAST(#{air_end_dt} AS DATE))
 	</insert>
 	
 	
 	<select id="code" parameterType="cmmnMap" resultType="cmmnMap">
-		SELECT prod_no FROM kcgbd.e_prod_code WHERE prod_type =#{prod_type} ORDER BY prod_no DESC LIMIT 1;
+		SELECT prod_no FROM kcgbd.e_interest WHERE prod_type = #{prod_type} ORDER BY prod_no DESC LIMIT 1;
 	</select>
 
 
 	<select id="getPSInfo" parameterType="cmmnMap" resultType="cmmnMap">
 		select
-		prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, price_max, price_min, sale_stat, TO_CHAR(sale_beg_dt, 'YYYY-MM-DD'), TO_CHAR(sale_beg_dt, 'YYYY-MM-DD'), 
-		promtn_yn, interest_ta, air_min, 
-		air_max, TO_CHAR(air_beg_dt, 'YYYY-MM-DD'), TO_CHAR(air_end_dt, 'YYYY-MM-DD')
+		prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, interest_ta, price_max, price_min, sale_stat,
+		TO_CHAR(sale_beg_dt, 'YYYY-MM-DD') AS sale_beg_dt, TO_CHAR(sale_end_dt, 'YYYY-MM-DD') AS sale_end_dt, 
+		promtn_yn, interest_ta, 
+		ROUND(air_max::numeric, 1) AS air_max,
+       	ROUND(air_min::numeric, 1) AS air_min, 
+		TO_CHAR(air_beg_dt, 'YYYY-MM-DD') AS air_beg_dt, TO_CHAR(air_end_dt, 'YYYY-MM-DD') AS air_end_dt
 		from kcgbd.e_product_save where prod_no = #{prod_no}
 	</select>
 	
 	<select id="getLOInfo" parameterType="cmmnMap" resultType="cmmnMap">
 		select 
-		loan_prod_no, loan_prod_nm, prod_type, sub_tg, pay_period, pay_cycle, price_max, price_min, loan_sale_stat, TO_CHAR(loan_sale_beg_dt, 'YYYY-MM-DD'), TO_CHAR(loan_sale_end_dt, 'YYYY-MM-DD'), 
-		promtn_yn, interest_ta, air_min, 
-		air_max, TO_CHAR(air_beg_dt, 'YYYY-MM-DD'), TO_CHAR(air_end_dt, 'YYYY-MM-DD') 
-		from kcgbd.e_product_loan where loan_prod_no = #{prod_no}
+		prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, interest_ta ,price_max, price_min, sale_stat, 
+		TO_CHAR(sale_beg_dt, 'YYYY-MM-DD') AS sale_beg_dt, TO_CHAR(sale_end_dt, 'YYYY-MM-DD') as sale_end_dt, 
+		promtn_yn, interest_ta, 
+		ROUND(air_max::numeric, 1) AS air_max,
+      	ROUND(air_min::numeric, 1) AS air_min,
+		TO_CHAR(air_beg_dt, 'YYYY-MM-DD') AS air_beg_dt, TO_CHAR(air_end_dt, 'YYYY-MM-DD') AS air_end_dt 
+		from kcgbd.e_product_loan where prod_no = #{prod_no}
 	</select>
 	
 	<select id="getDPInfo" parameterType="cmmnMap" resultType="cmmnMap">
 		select
-		prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, price_max, price_min, sale_stat, TO_CHAR(sale_beg_dt, 'YYYY-MM-DD'), TO_CHAR(sale_end_dt, 'YYYY-MM-DD'), 
-		promtn_yn, interest_ta, air_min, 
-		air_max, TO_CHAR(air_beg_dt, 'YYYY-MM-DD'), TO_CHAR(air_end_dt, 'YYYY-MM-DD')
+		prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, interest_ta, price_max, price_min, sale_stat, 
+		TO_CHAR(sale_beg_dt, 'YYYY-MM-DD') AS sale_beg_dt, TO_CHAR(sale_end_dt, 'YYYY-MM-DD') AS sale_end_dt, 
+		promtn_yn, interest_ta, 
+		ROUND(air_max::numeric, 1) AS air_max,
+        ROUND(air_min::numeric, 1) AS air_min, 
+		TO_CHAR(air_beg_dt, 'YYYY-MM-DD'), TO_CHAR(air_end_dt, 'YYYY-MM-DD')
 		from kcgbd.e_product_dp where prod_no = #{prod_no}
 	</select>
 	
 	<select id="getACInfo" parameterType="cmmnMap" resultType="cmmnMap">
 		select 
-		prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, price_max, price_min, sale_stat, TO_CHAR(sale_beg_dt, 'YYYY-MM-DD'), TO_CHAR(sale_end_dt, 'YYYY-MM-DD'), 
-		promtn_yn, interest_ta, air_min, 
-		air_max, TO_CHAR(air_beg_dt, 'YYYY-MM-DD'), TO_CHAR(air_end_dt, 'YYYY-MM-DD')
+		prod_no, prod_nm, prod_type, sub_tg, pay_period, pay_cycle, interest_ta, price_max, price_min, sale_stat, 
+		TO_CHAR(sale_beg_dt, 'YYYY-MM-DD') AS sale_beg_dt, TO_CHAR(sale_end_dt, 'YYYY-MM-DD') AS sale_end_dt, 
+		promtn_yn, interest_ta, 
+		ROUND(air_max::numeric, 1) AS air_max,
+        ROUND(air_min::numeric, 1) AS air_min,
+		TO_CHAR(air_beg_dt, 'YYYY-MM-DD') AS air_beg_dt, TO_CHAR(air_end_dt, 'YYYY-MM-DD') AS air_end_dt
 		from kcgbd.e_product_ac where prod_no = #{prod_no}
 	</select>
+	
+	<select id="getIT" parameterType="cmmnMap" resultType="cmmnMap">
+		select 
+		ROUND(air_max::numeric, 1) AS air_max,
+        ROUND(air_min::numeric, 1) AS air_min,
+		TO_CHAR(air_beg_dt, 'YYYY-MM-DD') AS air_beg_dt, TO_CHAR(air_end_dt, 'YYYY-MM-DD') AS air_end_dt 
+		from kcgbd.e_interest where prod_no = #{prod_no}
+		order by code_no DESC
+	</select>
+	
+	<update id="PSupdate">
+		update kcgbd.e_product_save set
+		sub_tg = #{sub_tg},
+		pay_period = #{pay_period},
+		pay_cycle = #{pay_cycle},
+		interest_ta = #{interest_ta},
+		price_max = #{price_max},
+		price_min = #{price_min},
+		sale_stat = #{sale_stat},
+		sale_beg_dt = TO_DATE(#{sale_beg_dt}, 'YYYY-MM-DD'),
+		sale_end_dt = TO_DATE(#{sale_end_dt}, 'YYYY-MM-DD'),
+		air_max = #{air_max}::numeric,
+		air_min = #{air_min}::numeric,
+		air_beg_dt = TO_DATE(#{air_beg_dt}, 'YYYY-MM-DD'),
+		air_end_dt = TO_DATE(#{air_end_dt}, 'YYYY-MM-DD')
+		where prod_no = #{prod_no}
+	</update>
+	
+	<update id="DPupdate">
+		update kcgbd.e_product_dp set
+		sub_tg = #{sub_tg},
+		pay_period = #{pay_period},
+		pay_cycle = #{pay_cycle},
+		interest_ta = #{interest_ta},
+		price_max = #{price_max},
+		price_min = #{price_min},
+		sale_stat = #{sale_stat},
+		sale_beg_dt = TO_DATE(#{sale_beg_dt}, 'YYYY-MM-DD'),
+		sale_end_dt = TO_DATE(#{sale_end_dt}, 'YYYY-MM-DD'),
+		air_max = #{air_max}::numeric,
+		air_min = #{air_min}::numeric,
+		air_beg_dt = TO_DATE(#{air_beg_dt}, 'YYYY-MM-DD'),
+		air_end_dt = TO_DATE(#{air_end_dt}, 'YYYY-MM-DD')
+		where prod_no = #{prod_no}
+	</update>
+	
+	<update id="ACupdate">
+		update kcgbd.e_product_ac set
+		sub_tg = #{sub_tg},
+		pay_period = #{pay_period},
+		pay_cycle = #{pay_cycle},
+		interest_ta = #{interest_ta},
+		price_max = #{price_max},
+		price_min = #{price_min},
+		sale_stat = #{sale_stat},
+		sale_beg_dt = TO_DATE(#{sale_beg_dt}, 'YYYY-MM-DD'),
+		sale_end_dt = TO_DATE(#{sale_end_dt}, 'YYYY-MM-DD'),
+		air_max = #{air_max}::numeric,
+		air_min = #{air_min}::numeric,
+		air_beg_dt = TO_DATE(#{air_beg_dt}, 'YYYY-MM-DD'),
+		air_end_dt = TO_DATE(#{air_end_dt}, 'YYYY-MM-DD')
+		where prod_no = #{prod_no}
+	</update>
+	
+	<update id="LOupdate">
+		update kcgbd.e_product_loan set
+		sub_tg = #{sub_tg},
+		pay_period = #{pay_period},
+		pay_cycle = #{pay_cycle},
+		interest_ta = #{interest_ta},
+		price_max = #{price_max},
+		price_min = #{price_min},
+		sale_stat = #{sale_stat},
+		sale_beg_dt = TO_DATE(#{sale_beg_dt}, 'YYYY-MM-DD'),
+		sale_end_dt = TO_DATE(#{sale_end_dt}, 'YYYY-MM-DD'),
+		air_max = #{air_max}::numeric,
+		air_min = #{air_min}::numeric,
+		air_beg_dt = TO_DATE(#{air_beg_dt}, 'YYYY-MM-DD'),
+		air_end_dt = TO_DATE(#{air_end_dt}, 'YYYY-MM-DD')
+		where prod_no = #{prod_no}
+	</update>
+	
+	<update id="PSdelete">
+		update kcgbd.e_product_save set
+		sale_stat = #{sale_stat}
+		where prod_no = #{prod_no}
+	</update>
+	<update id="LOdelete">
+		update kcgbd.e_product_loan set
+		sale_stat = #{sale_stat}
+		where prod_no = #{prod_no}
+	</update>
+	<update id="DPdelete">
+		update kcgbd.e_product_dp set
+		sale_stat = #{sale_stat}
+		where prod_no = #{prod_no}
+	</update>
+	<update id="ACdelete">
+		update kcgbd.e_product_ac set
+		sale_stat = #{sale_stat}
+		where prod_no = #{prod_no}
+	</update>
 
 
 

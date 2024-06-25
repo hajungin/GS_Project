@@ -18,12 +18,12 @@ public class ProdCtl {
 	@Autowired
 	ProdSvc prodSvc;
 	
-	// 상품관리 조회 페이지(메인)
-	@RequestMapping("/list")
-    public String prodPage(ModelMap model) {
+	// 일반상품관리 조회 페이지(메인)
+	@RequestMapping("/GLlist")
+    public String prodGPage() {
         return "kcg/system/team2/team2_prod_mng/list";
  }
-	// 상품 프로모션 제외 리스트 가져오기
+	// 상품 리스트 가져오기
 	@RequestMapping("/getList")
 	public PageList<CmmnMap> getListProd(CmmnMap params , PagingConfig pagingConfig){
 		return prodSvc.getList(params, pagingConfig); 
@@ -44,10 +44,31 @@ public class ProdCtl {
 		return prodSvc.code(params);
 	}
 	
+	// 모달창에서 선택 상품 정보
 	@RequestMapping("/getInfo")
 	public CmmnMap getInfo(CmmnMap params) {
 		return prodSvc.getInfo(params);
 	}
+	
+	//상품 수정
+	@RequestMapping("/update")
+	public CmmnMap update(CmmnMap params) {
+		return prodSvc.update(params);
+	}
+	
+	//일반상품 판매종료
+	@RequestMapping("/delete")
+	public CmmnMap delete(CmmnMap params) {
+		return prodSvc.delete(params);
+	}
+	
+	// 프로모션상품관리 조회 페이지(메인)
+	@RequestMapping("/PRlist")
+	public String prodPPage() {
+		 return "kcg/system/team2/team2_prod_mng/proList";
+	}
+	
+	
 	
 	
 }

@@ -16,8 +16,6 @@
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/promion.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/billboard.css">
 	
-	
-<title>상품정보조회</title>
 <style>
     .header {
         background-color: #A7EEFF;
@@ -107,10 +105,10 @@
 #popup_print.btn-secondary:hover {
     background-color: #7f8c8d;
     border-color: #7f8c8d;
-}
+}  
 </style>
 
-</style>
+<title>상품정보조회</title>
 </head>
 <body class="page-body">
 
@@ -129,16 +127,15 @@
 						class="fa fa-home"></i>Home</a></li>
 				<li class="active"><strong>상품정보조회</strong></li>
 			</ol>
-			<h2 class="header"> 상품관리 &gt; 상품정보조회 &gt; 일반상품</h2>
+			<h2 class="header">상품관리 > 상품정보조회 > 프로모션 상품</h2>
 			<div class="right flex-column flex-100">
-			    <div class="right-top">
-			        <ul class="nav">
-			            <li class="nav-tab active" style="background-color: #64A0FF;" onclick="cf_movePage('/2team/prod/GLlist')">일반상품</li>
-			            <li class="nav-tab active" style="background-color: #5F9EA0;" onclick="cf_movePage('/2team/prod/PRlist')">프로모션상품</li>
-			        </ul>
-			    </div>
+			 	<div class="right-top">
+                        <ul class="nav">
+                            <li class="nav-tab active" style="background-color: #64A0FF;" onclick="cf_movePage('/2team/prod/GLlist')">일반상품</li>
+                            <li class="nav-tab active" style="background-color: #5F9EA0;" onclick="cf_movePage('/2team/prod/PRlist')">프로모션상품</li>
+                        </ul>
+                 </div>
 			</div>
-
 			
 
 			<div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
@@ -221,7 +218,7 @@
     
 		
 					<table class="table table-bordered datatable dataTable"
-						id="grid_app" style="border: 2px solid #00CDFF; background-color: #5ACCFF;">
+						id="grid_app" style="border: 2px solid #00CDFF; background-color: #7FFFD4;">
 						<thead>
 							<tr class="replace-inputs">
 								<th style="width: 4%; background-color: #B9FFFF;" class="center hidden-xs nosort">
@@ -229,15 +226,15 @@
 								</th>
 								<th style="width: 15%; background-color: #B9FFFF;" class="center sorting" 
 								@click="sortList(event.target)" sort_target="prod_nm">상품명</th>
-								<th style="width: 10%; background-color: #B9FFFF;" class="center sorting"
+								<th style="width: 8%; background-color: #B9FFFF;" class="center sorting"
 								@click="sortList(event.target)" sort_target="prod_type">상품유형</th>
-								<th style="width: 11%; background-color: #B9FFFF;" class="center sorting"
+								<th style="width: 10%; background-color: #B9FFFF;" class="center sorting"
 								@click="sortList(event.target)" sort_target="price_min">최소가입금액</th>
-								<th style="width: 11%; background-color: #B9FFFF;" class="center sorting" 
-								@click="sortList(event.target)" sort_target="price_max">최대가입금액</th>
-								<th style="width: 9%; background-color: #B9FFFF;" class="center sorting" 
-								@click="sortList(event.target)" sort_target="pay_period">납입기간</th>
 								<th style="width: 10%; background-color: #B9FFFF;" class="center sorting" 
+								@click="sortList(event.target)" sort_target="price_max">최대가입금액</th>
+								<th style="width: 6%; background-color: #B9FFFF;" class="center sorting" 
+								@click="sortList(event.target)" sort_target="pay_period">납입기간</th>
+								<th style="width: 8%; background-color: #B9FFFF;" class="center sorting" 
 								@click="sortList(event.target)" sort_target="sub_tg">이자과세</th>
 							</tr>
 						</thead>
@@ -254,12 +251,9 @@
 						</tbody>
 					</table>
 
-
 					<div style="position: relative; width: 1600px;">
 					    <div class="dataTables_paginate paging_simple_numbers" id="div_paginate" style="position: absolute; right: 0; top: -90%;"></div>
 					</div>
-
-
 						
 				</template>
 			</div>
@@ -414,7 +408,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"
                             aria-hidden="true" id="btn_popClose">&times;</button>
-                        <h4 class="modal-title" id="modify_nm">일반상품이율</h4>
+                        <h4 class="modal-title" id="modify_nm">프로모션상품이율</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal form-groups-bordered">
@@ -432,7 +426,6 @@
                                             <th style="width: 10%;" class="center">현재이율최대</th>
                                             <th style="width: 10%;" class="center">현재이율최소</th>
                                             <th style="width: 20%;" class="center">이율적용기간</th>
-                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -479,8 +472,7 @@ var vueapp = new Vue({
         sale_stat: "",
         price_max: "",
         price_min: "",
-        promtn_yn: "N",
- 
+        promtn_yn: "",
     },
     mounted: function(){
     	 
@@ -530,6 +522,7 @@ var vueapp = new Vue({
             var params = {}
             if(this.all_srch != "Y"){
             	params = {
+            			prod_nm: this.prod_nm,
                         prod_type: this.prod_type,
                         sub_tg: this.sub_tg,
                         sale_beg_dt: this.sale_beg_dt,
@@ -539,7 +532,6 @@ var vueapp = new Vue({
                         price_min: this.price_min,
                         sale_stat: this.sale_stat,
                         promtn_yn: this.promtn_yn,
-                        
             	}
             }
                 
@@ -548,32 +540,23 @@ var vueapp = new Vue({
             cv_sessionStorage
                 .setItem('pagingConfig', cv_pagingConfig)
                 .setItem('params', params);
-            
-			params.promtn_yn= 'N'
+			params.promtn_yn='Y'
             cf_ajax("/2team/prod/getList", params, this.getListCB);
         },
         
         getListCB: function(data){
             this.dataList = data.list;
             for (var i = 0; i < this.dataList.length; i++) {
-                this.dataList[i].prod_no = this.dataList[i].prod_no;
+                this.dataList[i].prod_nm = this.dataList[i].prod_nm;
             }
             
             cv_pagingConfig.renderPagenation("system");
         },
         sortList: function(obj){
-            cf_setSortConf(obj, "prod_no");
+            cf_setSortConf(obj, "prod_nm");
             this.getList();
         },
-		formatCurrency(value) {
-            if (!value) return '';
-            return parseFloat(value).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
-        },
-        gotoDtl : function(prod_no){	
-			pop_cust_info.init(prod_no);
-			$('#pop_cust_info').modal('show');
-		},
-		all_check : function(obj) {
+        all_check : function(obj) {
 			$('[name=is_check]').prop('checked', obj.checked);
 		},
 		onCheck : function() {
@@ -581,6 +564,14 @@ var vueapp = new Vue({
 					.prop(
 							'checked',
 							$("[name=is_check]:checked").length === $("[name=is_check]").length);
+		},
+		formatCurrency(value) {
+            if (!value) return '';
+            return parseFloat(value).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
+        },
+        gotoDtl : function(prod_no){	
+			pop_cust_info.init(prod_no);
+			$('#pop_cust_info').modal('show');
 		},
 		popupPrint : function(prod_no) {
 			var chkedList = $("[name=is_check]:checked");
@@ -610,7 +601,7 @@ var vueapp = new Vue({
 			popup_print.init(dateCopyList);
 			$('#popup_print').modal('show');
 		},
-    },
+    }
 });
 var popup_print = new Vue(
 		{
@@ -729,7 +720,6 @@ var pop_cust_info = new Vue({
 				air_beg_dt:"",
 				air_end_dt:"",
 				prod_hist:"",
-				
 			}
 		},
 		getInfo : function(){
@@ -814,7 +804,7 @@ var pop_cust_info = new Vue({
 		},
 		updateCB : function(data){
 			alert("저장되었습니다.");
-			cf_movePage('/2team/prod/GLlist');
+			cf_movePage('/2team/prod/PRlist');
 		},
 		
 		deleteOne : function(data) {
@@ -829,7 +819,7 @@ var pop_cust_info = new Vue({
 		},
 		deleteOneCB : function(data){
 			alert("종료되었습니다.");
-			cf_movePage('/2team/prod/GLlist');
+			cf_movePage('/2team/prod/PRlist');
 		}, 
 	},
 });

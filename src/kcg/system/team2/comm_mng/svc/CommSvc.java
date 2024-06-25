@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import common.dao.CmmnDao;
 import common.utils.common.CmmnMap;
 import common.utils.common.PagingConfig;
+import common.utils.mybatis_paginator.domain.PageList;
 import kcg.common.svc.CommonSvc;
 
 @Service
@@ -36,6 +37,7 @@ public class CommSvc {
 			cmmnMap.put("update", false);
 			newList.add(cmmnMap);
 		}
+		CmmnMap cmmnMap = new CmmnMap();
 		return newList;
 	}
 

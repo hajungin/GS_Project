@@ -17,7 +17,7 @@
 
     <div class="page-container">
 
-        <jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu.jsp" flush="false" />
+        <jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu-team2.jsp" flush="false" />
 
         <div class="main-content">
 
@@ -151,7 +151,7 @@
                                     <div class="col-sm-8" id="selectcr">
                                        <select id="cust_cr_no" class="form-control" v-model="info.cust_cr_no" style="margin-left: 10px;">
 											<option value="">선택</option>
-											<<option v-for="item in comm_List" :value="item.comm_no">{{ item.comm_nm }}</option>
+											<option v-for="item in comm_List" :value="item.comm_no">{{ item.comm_nm }}</option>
 										</select>
 										<input v-if="showInput" type="text" class="form-control" v-model="info.other_cr" placeholder="직업명 입력">
                                     </div>
@@ -193,7 +193,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6" style="display: flex; flex-direction: column; height: 100%;">
-                                <div class="form-group" v-if="isEmpty(info.cust_sn)" style="flex: 1;">
+                                <div class="form-group" v-if="isNotEmpty(info.cust_sn)" style="flex: 1;">
                                     <label for="cnslt_cn" class="col-sm-4 control-label">상담내역</label>
                                     <div class="col-sm-8">
                                    	<div class="form-control" style="background-color: #DCDCDC; height: 350px;">
@@ -202,14 +202,14 @@
 <!-- 										<textarea id="cnslt_cn" class="form-control" v-model="info.cnslt_cn" style="width: 100%; height: 350px; resize: none;" readonly>{{ cnsltItems }}</textarea> -->
                                     </div>
                                 </div>
-                                <div class="form-group" v-if="isEmpty(info.cust_sn)" >
+                                <div class="form-group" v-if="isNotEmpty(info.cust_sn)" >
                                     <label for="cnslt_cn_add" class="col-sm-4 control-label">상담추가입력</label>
                                     <div class="col-sm-8">
                                         <textarea id="cnslt_cn_add" class="form-control" v-model="cnslt_cn_add" style="width: 100%; height: 150px; resize: none;"></textarea>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6"  v-if="isNotEmpty(info.cust_sn)">
+                            <div class="col-sm-6"  v-if="isEmpty(info.cust_sn)">
                              	 <img src="/static_resources/system/team2/team2_images/customer2.jpg" style="width: 250px; height:500px; margin-left: 40%;">
                             </div>
                         </div>
@@ -278,7 +278,7 @@
 	   
 </body>
 
-    <script type="text/javascript">
+ <script type="text/javascript">
     var vueapp = new Vue({
         el: "#vueapp",
         data: {

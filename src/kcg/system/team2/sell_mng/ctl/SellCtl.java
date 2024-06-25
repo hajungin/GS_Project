@@ -1,5 +1,7 @@
 package kcg.system.team2.sell_mng.ctl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,13 +35,6 @@ public class SellCtl {
 			return sellsvc.getList(params, pagingConfig); 
 	 }
 	 
-	 // 상품 디테일 페이지 이동 해야됨
-	 @RequestMapping("/dtl")
-	 	public String openPageDtl(Model model, CmmnMap params) {
-			model.addAttribute("prod_cd", params.getString("prod_no", ""));
-			return "kcg/system/team2/team2_sell_mng/dtl";
-		}
-	 
 	 // 가입관리 페이지
 	 @RequestMapping("/join")
 	 	public String joinPage() {
@@ -63,6 +58,13 @@ public class SellCtl {
 	 	public PageList<CmmnMap> joinList(CmmnMap params , PagingConfig pagingConfig){
 			return sellsvc.joinList(params, pagingConfig); 
 	 }
+	 
+	 @RequestMapping("/custom")
+		public List<CmmnMap> custom(CmmnMap params) {
+			return sellsvc.custom(params);
+		}
+	 
+	 
 	 
 	 
 	 
