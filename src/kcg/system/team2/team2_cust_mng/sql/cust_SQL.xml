@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='system.team2_cust_mng'>
+
+	<select id="getAll" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT 
+			c.cust_sn AS cust_sn,
+			c.cust_nm AS cust_nm,
+			c.cust_eml_addr AS cust_eml_addr, 
+			TO_CHAR(c.cust_birth, 'YYYY-MM-DD') AS birth,
+			c.cust_home_telno AS cust_home_telno, 
+			c.cust_mbl_telno AS cust_mbl_telno,
+			c.cust_pridtf_no AS cust_pridtf_no,
+			c.cust_road_nm_addr AS cust_road_addr,
+			e.emp_nm AS emp_nm,
+			cm.comm_nm AS emp_dept_nm
+		FROM kcgbd.e_customer AS c
+		JOIN kcgbd.e_employee AS e ON c.emp_no = e.emp_no
+		JOIN kcgbd.e_common AS cm ON e.emp_dept = cm.comm_no
+		WHERE c.use_yn = 'Y'
+		<if test='cust_nm != null and cust_nm != ""'>
+		AND c.cust_nm like CONCAT('%',#{cust_nm},'%')
+		</if>
+		<if test='emp_nm != null and emp_nm != ""'>
+		AND e.emp_nm like CONCAT('%',#{emp_nm},'%')
+		</if>
+		<if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
+		AND c.cust_mbl_telno like CONCAT('%',#{cust_mbl_telno},'%')
+		</if>
+	</select>
+	
+	<select id="getEvent" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT 
+			c.cust_sn AS cust_sn,
+			c.cust_nm AS cust_nm,
+			c.cust_eml_addr AS cust_eml_addr, 
+			TO_CHAR(c.cust_birth, 'YYYY-MM-DD') AS birth,
+			c.cust_home_telno AS cust_home_telno, 
+			c.cust_mbl_telno AS cust_mbl_telno,
+			c.cust_pridtf_no AS cust_pridtf_no,
+			c.cust_road_nm_addr AS cust_road_addr,
+			e.emp_nm AS emp_nm,
+			cm.comm_nm AS emp_dept_nm
+		FROM kcgbd.e_customer AS c
+		JOIN kcgbd.e_employee AS e ON c.emp_no = e.emp_no
+		JOIN kcgbd.e_common AS cm ON e.emp_dept = cm.comm_no
+		<choose>
+			<when test='event == "sel_birth"'>
+				WHERE c.use_yn = 'Y'
+				AND TO_CHAR(c.cust_birth, 'MM-DD') BETWEEN TO_CHAR(CURRENT_DATE, 'MM-DD') 
+	        	AND TO_CHAR((CURRENT_DATE + INTERVAL '1 month'), 'MM-DD')
+			</when>
+			<when test='event == "expiration"'>
+				JOIN kcgbd.e_product_init AS ps ON c.cust_sn = ps.cust_sn
+				WHERE c.use_yn = 'Y'
+				AND ps.end_ymd BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '1 month'
+			</when>
+			<otherwise></otherwise>
+		</choose>
+	</select>
+	
+	
+	<select id="getEmpInfo" resultType="cmmnMap">
+		SELECT
+			e.emp_nm AS emp_nm,
+			c.comm_nm AS emp_posit,
+			d.comm_nm AS emp_dept,
+			e.emp_mbl_telno AS emp_mbl_telno
+		FROM kcgbd.e_employee AS e
+		JOIN
+        	kcgbd.e_common c ON e.emp_posit = c.comm_no
+	    JOIN
+	        kcgbd.e_common d ON e.emp_dept = d.comm_no
+	</select>
+	
+	<select id="getCustOne" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT
+			c.cust_sn AS cust_sn,
+			c.cust_nm AS cust_nm,
+			c.cust_eml_addr AS cust_eml_addr, 
+			c.cust_home_telno AS cust_home_telno, 
+			c.cust_mbl_telno AS cust_mbl_telno,
+			c.cust_pridtf_no AS cust_pridtf_no,
+			c.cust_cr_no AS cust_cr_no,
+			a.comm_nm AS cust_cr_nm,
+			c.other_cr AS other_cr,
+			c.cust_road_nm_addr AS cust_road_addr,
+			e.emp_no AS emp_no,
+			e.emp_nm AS emp_nm,
+			b.comm_nm AS emp_dept,
+			d.comm_nm AS emp_posit,
+			e.emp_mbl_telno AS emp_mbl_telno
+		FROM kcgbd.e_customer AS c
+		JOIN kcgbd.e_employee AS e ON c.emp_no = e.emp_no
+		JOIN kcgbd.e_common AS a ON c.cust_cr_no = a.comm_no
+		JOIN kcgbd.e_common AS d ON e.emp_posit = d.comm_no
+		JOIN kcgbd.e_common AS b ON e.emp_dept = b.comm_no
+		WHERE c.cust_mbl_telno = #{cust_mbl_telno}
+	</select>
+	<select id="getEmpSelInfo" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT
+			e.emp_no AS emp_no,
+			e.emp_nm AS emp_nm,
+			c.comm_nm AS emp_posit,
+			d.comm_nm AS emp_dept,
+			e.emp_mbl_telno AS emp_mbl_telno
+		FROM kcgbd.e_employee AS e
+		JOIN
+        	kcgbd.e_common c ON e.emp_posit = c.comm_no
+	    JOIN
+	        kcgbd.e_common d ON e.emp_dept = d.comm_no
+	    WHERE 
+	    	e.emp_mbl_telno = #{emp_mbl_telno}
+	</select>
+	<update id="custUpdate" parameterType="cmmnMap">
+		UPDATE 
+			kcgbd.e_customer 
+		SET
+			cust_nm = #{cust_nm},
+		    last_mdf_dt = now(),
+		    cust_eml_addr = #{cust_eml_addr},
+		    cust_home_telno = #{cust_home_telno},
+		    cust_mbl_telno = #{cust_mbl_telno},
+		    cust_cr_no = #{cust_cr_no},
+		    cust_road_nm_addr = #{cust_road_addr},
+		    emp_no = #{emp_no}
+		<if test='cust_cr_no == "JB07"'>
+		 	,other_cr = #{other_cr}
+		</if>
+		WHERE 1=1
+		  AND cust_pridtf_no = #{cust_pridtf_no}
+	</update>
+	
+	<insert id="custInsert" parameterType="cmmnMap">
+      INSERT INTO kcgbd.e_customer(
+      	 frst_reg_dt, cust_nm, cust_pridtf_no, cust_eml_addr, cust_home_telno, cust_mbl_telno, cust_cr_no, other_cr, cust_road_nm_addr, emp_no, cust_birth)
+         VALUES ( 
+         now(),
+         #{cust_nm},
+         #{cust_pridtf_no},
+         #{cust_eml_addr},
+         #{cust_home_telno},
+         #{cust_mbl_telno},
+         #{cust_cr_no},
+         #{other_cr},
+         #{cust_road_addr},
+         #{emp_no},
+         TO_DATE(#{birth}, 'YYYY-MM-DD')
+         )
+   </insert>
+	
+	<update id="custChangeSts" parameterType="cmmnMap">
+		UPDATE 
+			kcgbd.e_customer 
+		SET
+			use_yn = 'N'
+		WHERE 1=1
+		  AND cust_pridtf_no = #{cust_pridtf_no}
+	</update>
+	
+</mapper>
+

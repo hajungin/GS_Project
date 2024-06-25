@@ -2,7 +2,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="wilih=device-wilih, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+
 <title>GSITM-부트캠프환영합니다.</title>
+
   
 <link rel="shortcut icon" href="/static_resources/portal/as_is/images/favicon.png?rscVer=${properties.rscVer}"/>
 

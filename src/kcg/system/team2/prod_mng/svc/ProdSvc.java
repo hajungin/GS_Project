@@ -22,6 +22,7 @@ public class ProdSvc {
 	}
 
 	public CmmnMap save(CmmnMap params) {
+		
 	    CmmnMap resultMap = new CmmnMap();
 	    params.put("pay_period", Integer.parseInt(params.getString("pay_period")));
 	    params.put("price_max", Integer.parseInt(params.getString("price_max")));
@@ -65,6 +66,8 @@ public class ProdSvc {
 
 	public CmmnMap getInfo(CmmnMap params) {
 	    CmmnMap rslt = null; // 반환할 결과 변수 선언 및 초기화
+	    
+	    System.out.println(params.toString());
 	    
 	    String prodNo = params.getString("prod_no");
 	    if (prodNo != null && prodNo.length() > 0) {
