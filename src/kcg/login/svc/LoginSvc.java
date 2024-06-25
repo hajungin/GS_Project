@@ -98,6 +98,7 @@ public class LoginSvc implements AuthenticationProvider {
 		params.put("dept", userInfoVO.getDept());
 		params.put("tdept_nm", userInfoVO.getTdeptNm());
 		params.put("email", userInfoVO.getEmail());
+		params.put("emp_no", userInfoVO.getEmpNo());
 
 		CmmnMap authInfo = cmmnDao.selectOne("login.getUserAuthInfo", params);
 		if(authInfo == null) {

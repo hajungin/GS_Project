@@ -16,6 +16,7 @@
 		,USR.dept
 		,USR.tdept_nm
 		,USR.email
+		,USR.emp_no AS empNo
 		,USR.gis_auth
 		,USR.del_yn AS delYn
 		,USR.user_pw AS userPw
@@ -119,6 +120,7 @@
 		,USR.jikgubcd AS jikgub_cd
 		,USR.jikgubnm AS jikgub_nm
 		,USR.statuscd AS status_cd
+		,USR.empNo
 		FROM AO_IAM.VAOI_PPSS_USER_MAP_BD USR
 		WHERE
 		1=1

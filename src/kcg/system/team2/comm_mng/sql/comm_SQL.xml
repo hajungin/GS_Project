@@ -33,10 +33,25 @@
 	<select id="getComm" parameterType="cmmnMap" resultType="cmmnMap">
 		SELECT
 			comm_no AS comm_no,
-			comm_nm AS comm_nm
+			comm_nm AS comm_nm,
+			group_comm_no AS gr_comm_no
 		FROM kcgbd.e_common
 		WHERE 1=1
+		<if test='gr_comm_no != null and gr_comm_no != ""'>
 		  AND group_comm_no = #{gr_comm_no}
+		</if>
+		<if test='gr_comm_no1 != null and gr_comm_no1 != ""'>
+		  OR group_comm_no = #{gr_comm_no1}
+		</if>
+		<if test='gr_comm_no2 != null and gr_comm_no2 != ""'>
+		  OR group_comm_no = #{gr_comm_no2}
+		</if>
+		<if test='gr_comm_no != null and gr_comm_no3 != ""'>
+		  OR group_comm_no = #{gr_comm_no3}
+		</if>
+		<if test='gr_comm_no != null and gr_comm_no4 != ""'>
+		  OR group_comm_no = #{gr_comm_no4}
+		</if>
 	</select>
 	
 	<insert id="commInsert" parameterType="cmmnMap">

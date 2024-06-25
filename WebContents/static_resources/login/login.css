@@ -20,6 +20,12 @@ img{
   height: auto;
 }
 
+.logo {
+	width: 160px;
+	height: 50px;
+	margin-left: 25px;
+}
+
 #login-button{
   cursor: pointer;
   position: absolute;
@@ -32,7 +38,7 @@ img{
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: rgba(3,3,3);
+  background: #0f2e3b;
   overflow: hidden;
   opacity: 0.4;
   box-shadow: 10px 10px 30px #000;
@@ -47,9 +53,10 @@ img{
   bottom: 0;
   margin: auto;
   width: 260px;
-  height: 350px;
+  height: 230px;
   border-radius: 5px;
-  background: rgba(3,3,3,0.9);
+  background: #00567A;
+  opacity: 0.8;
   box-shadow: 1px 1px 50px #000;
   display: none;
 }
@@ -58,12 +65,13 @@ img{
   position: absolute;
   cursor: pointer;
   font-family: 'Open Sans Condensed', sans-serif;
+  font-weight: bolder ;
   line-height: 18px;
-  top: 3px;
-  right: 3px;
+  top: 5px;
+  right: 5px;
   width: 20px;
   height: 20px;
-  text-align: center;
+  text-align: right;
   border-radius: 10px;
   opacity: .2;
   -webkit-transition: all 2s ease-in-out;
@@ -101,6 +109,7 @@ h1{
   font-family: 'Open Sans Condensed', sans-serif;
   position: relative;
   margin-top: 0px;
+  font-weight: bolder ;
   text-align: center;
   font-size: 25px;
   color: #ddd;
@@ -186,7 +195,7 @@ a{
   font-family: 'Open Sans Condensed', sans-serif;
   text-align: center;
   padding: 4px 8px;
-  background: rgba(107,255,3,0.3);
+  background: #0f2e3b;
 }
 
 a:hover{
