@@ -1,5 +1,7 @@
 package kcg.system.team2.prod_mng.ctl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +46,7 @@ public class ProdCtl {
 		return prodSvc.code(params);
 	}
 	
+
 	// 모달창에서 선택 상품 정보
 	@RequestMapping("/getInfo")
 	public CmmnMap getInfo(CmmnMap params) {
@@ -71,4 +74,11 @@ public class ProdCtl {
 	
 	
 	
+
+	@RequestMapping("/getProdList")
+	public List<CmmnMap> getProdList(CmmnMap params) {
+		System.out.println("================================" + params);
+		return prodSvc.getProdList(params);
+	}
+
 }

@@ -40,6 +40,7 @@
 **/src/kcg/system/stat_mng
 **/src/kcg/system/team_main
 **/src/kcg/system/user_auth_mng
+**/src/kcg/common
 **/WebContents/root
 **/WebContents/static_resources/admin
 **/WebContents/static_resources/asset
