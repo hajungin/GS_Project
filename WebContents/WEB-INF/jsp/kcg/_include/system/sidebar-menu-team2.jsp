@@ -27,7 +27,7 @@
 				<li data-lnb="10" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
-						<span class="title">EZEN 고객관리</span>
+						<span class="title">TEAM2 고객관리</span>
 					</a>
 					<ul data-lnb="10" data-snb="0">
 						<li data-lnb="10" data-snb="3">
@@ -53,48 +53,66 @@
 				<li data-lnb="10" data-snb="0">
 					<a href="#gm" onclick="cf_movePage('/common/commMng')">
 						<i class="entypo-newspaper"></i>
-						<span class="title">EZEN 공통옵션관리</span>
+						<span class="title">TEAM2 공통옵션관리</span>
 					</a>
 				</li> 
-			
+				<li data-lnb="10" data-snb="0">
+					<a href="#gm" onclick="cf_movePage('/common/commMng')">
+						<i class="entypo-newspaper"></i>
+						<span class="title">TEAM2 담당자관리</span>
+					</a>
+				</li> 
+
+				<li data-lnb="10" data-snb="0">
+					<a href="#gm" onclick="cf_movePage('/common/commMng')">
+						<i class="entypo-newspaper"></i>
+						<span class="title">TEAM2 공지사항</span>
+					</a>
+				</li> 
+				<li data-lnb="10" data-snb="0">
+					<a href="#gm" onclick="cf_movePage('/common/commMng')">
+						<i class="entypo-newspaper"></i>
+						<span class="title">TEAM2 스케줄관리</span>
+					</a>
+				</li> 
+				<li data-lnb="10" data-snb="0">
+					<a href="#gm" onclick="cf_movePage('/common/commMng')">
+						<i class="entypo-newspaper"></i>
+						<span class="title">TEAM2 환율정보</span>
+					</a>
+				</li> 
 				
 				<li data-lnb="11" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
-						<span class="title">EZEN 판매관리(사용자)</span>
+						<span class="title">TEAM2 판매관리(사용자)</span>
 					</a>
 					<ul data-lnb="11" data-snb="0">
 						<li data-lnb="11" data-snb="1">
 							<a href="#gm" onclick="cf_movePage('/sell/list')">
 								<span class="title">상품정보 조회</span>
 							</a>
+							<a href="#gm" onclick="cf_movePage('/sell/list')">
+								<span class="title">금융계산기</span>
+							</a>
 							<a href="#gm" onclick="cf_movePage('/sell/join')">
-								<span class="title">가입관리</span>
+								<span class="title">설계이력조회</span>
 							</a>
 							<a href="#gm" onclick="cf_movePage('/sell/membership')">
 								<span class="title">가입현황</span>
 							</a>
-<!-- 							<a href="#gm" onclick="cf_movePage('/prod_mng/list')"> -->
-<!-- 								<span class="title">판매달성률관리(관리자)</span> -->
-<!-- 							</a> -->
-<!-- 							<a href="#gm" onclick="cf_movePage('/prod_mng/list')"> -->
-<!-- 								<span class="title">판매달성률조회</span> -->
-<!-- 							</a> -->
 						</li>
 					</ul>
 				</li>
 				<li data-lnb="11" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
-						<span class="title">EZEN 상품관리(관리자)</span>
+						<span class="title">TEAM2 상품관리(관리자)</span>
 					</a>
 					<ul data-lnb="11" data-snb="0">
 						<li data-lnb="11" data-snb="1">
 							<a href="#gm" onclick="cf_movePage('/2team/prod/GLlist')">
-								<span class="title">일반상품</span>
-							</a>
-							<a href="#gm" onclick="cf_movePage('/2team/prod/PRlist')">
-								<span class="title">프로모션상품</span>
+								<span class="title">상품관리</span>
 							</a>
 							<a href="#gm" onclick="cf_movePage('/2team/prod/insert')">
 								<span class="title">상품등록</span>
@@ -102,6 +120,12 @@
 						</li>
 					</ul>
 				</li>
+				<li data-lnb="10" data-snb="0">
+					<a href="#gm" onclick="cf_movePage('/common/commMng')">
+						<i class="entypo-newspaper"></i>
+						<span class="title">TEAM2 마이페이지</span>
+					</a>
+				</li> 
 				 
 			</ul>
 		</div>
