@@ -16,7 +16,7 @@
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/promion.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/billboard.css">
 	
-	<style>
+<style>
     .header {
         background-color: #A7EEFF;
         color: #333;
@@ -35,9 +35,77 @@
     .header:hover {
         background-color: #66CCFF;
     }
-     #Button:hover {
+    #Button:hover {
         background-color: #2980B9; /* Hover 시 배경색 변경 */
     }
+   /* Modal Content */
+#popup_print .modal-content {
+    border: none;
+    border-radius: 0;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+/* Modal Header */
+#popup_print .modal-header {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 15px;
+}
+
+/* Modal Title */
+#popup_print .modal-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Modal Body */
+#popup_print .modal-body {
+    padding: 20px;
+}
+
+/* Form Group Style */
+#popup_print .form-group {
+    margin-bottom: 15px;
+}
+
+/* Table Style */
+#popup_print table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+#popup_print table th, #popup_print table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+ #popup_print table th { 
+    background-color: #f0f0f0; 
+    color: #333;
+ } 
+
+/* Modal Footer */
+.modal-footer {
+    border-top: 1px solid #ddd;
+    padding: 15px;
+    text-align: right;
+}
+
+/* Primary Button */
+#popup_print.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+/* Secondary Button */
+#popup_print.btn-secondary:hover {
+    background-color: #7f8c8d;
+    border-color: #7f8c8d;
+}  
 </style>
 
 <title>상품정보조회</title>
@@ -70,7 +138,7 @@
 			</div>
 			
 
-			<div class="flex-column flex-gap-10" id="vueapp">
+			<div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
 				<template>
 					
         
@@ -144,7 +212,7 @@
 						 	상품등록 <i class="entypo entypo-info"></i>
 						</button><button type="button" id="Button" class="btn btn-blue btn-icon icon-right"
 							@click="popupPrint()">
-							상세내역 <i class="entypo entypo-info"></i>
+							이율내역 <i class="entypo entypo-info"></i>
 						</button>
 					</div>
         
@@ -152,55 +220,42 @@
     
 		
 					<table class="table table-bordered datatable dataTable"
-						id="grid_app" style="border: 2px solid #00CDFF;">
+						id="grid_app" style="border: 2px solid #00CDFF; background-color: #7FFFD4;">
 						<thead>
-							<tr class="replace-inputs" style="background-color: #289AFF;">
-								<th style="width: 4%;" class="center hidden-xs nosort"><input
-									type="checkbox" id="allCheck" @click="all_check(event.target)"></th>
-								<th style="width: 15%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="prod_nm">상품명</th>
-									<th style="width: 10%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="prod_type">상품유형</th>
-<!-- 								<th style="width: 10%;" class="center sorting" -->
-<!-- 									@click="sortList(event.target)" sort_target="sub_tg">가입대상</th> -->
-								<th style="width: 11%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="price_min">최소가입금액</th>
-								<th style="width: 11%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="price_max">최대가입금액</th>
-<!-- 								<th style="width: 9%;" class="center sorting" -->
-<!-- 									@click="sortList(event.target)" sort_target="pay_cycle">납입주기</th> -->
-								<th style="width: 9%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="pay_period">납입기간</th>
-								<th style="width: 10%;" class="center sorting"
-									@click="sortList(event.target)" sort_target="sub_tg">이자과세</th>
+							<tr class="replace-inputs">
+								<th style="width: 4%; background-color: #B9FFFF;" class="center hidden-xs nosort">
+									<input type="checkbox" id="allCheck" @click="all_check(event.target)">
+								</th>
+								<th style="width: 15%; background-color: #B9FFFF;" class="center sorting" 
+								@click="sortList(event.target)" sort_target="prod_nm">상품명</th>
+								<th style="width: 8%; background-color: #B9FFFF;" class="center sorting"
+								@click="sortList(event.target)" sort_target="prod_type">상품유형</th>
+								<th style="width: 10%; background-color: #B9FFFF;" class="center sorting"
+								@click="sortList(event.target)" sort_target="price_min">최소가입금액</th>
+								<th style="width: 10%; background-color: #B9FFFF;" class="center sorting" 
+								@click="sortList(event.target)" sort_target="price_max">최대가입금액</th>
+								<th style="width: 6%; background-color: #B9FFFF;" class="center sorting" 
+								@click="sortList(event.target)" sort_target="pay_period">납입기간</th>
+								<th style="width: 8%; background-color: #B9FFFF;" class="center sorting" 
+								@click="sortList(event.target)" sort_target="sub_tg">이자과세</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr v-for="item in dataList" style="cursor: pointer;">
-								<td class="center"><input type="checkbox"
-									:data-idx="item.prod_cd" name="is_check" @click="onCheck">
-								</td>
+								<td class="center"><input type="checkbox" :data-idx="item.prod_no" name="is_check" @click="onCheck"></td>
 								<td class="center" @click="gotoDtl(item.prod_no)">{{item.prod_nm}}</td>
 								<td class="center" @click="gotoDtl(item.prod_no)">{{item.prod_type}}</td>
-<!-- 								<td class="right" @click="gotoDtl(item.prod_no)" -->
-<!-- 									style="text-align: right;">{{item.sub_tg}}</td> -->
-								<td class="right" @click="gotoDtl(item.prod_no)" style="text-align: right;">
-								    {{ formatCurrency(item.price_min) }}</td>
-								<td class="right" @click="gotoDtl(item.prod_no)" style="text-align: right;">
-								    {{ formatCurrency(item.price_max) }}</td>
-<!-- 								<td class="right" @click="gotoDtl(item.prod_no)" -->
-<!-- 									style="text-align: right;">{{item.pay_cycle}}</td> -->
-								<td class="right" @click="gotoDtl(item.prod_no)"
-									style="text-align: right;">{{item.pay_period}}개월</td>
-								<td class="right" @click="gotoDtl(item.prod_no)"
-									style="text-align: right;">{{item.interest_ta}}</td>
-
+								<td class="right" @click="gotoDtl(item.prod_no)" style="text-align: right;">{{ formatCurrency(item.price_min) }}</td>
+								<td class="right" @click="gotoDtl(item.prod_no)" style="text-align: right;">{{ formatCurrency(item.price_max) }}</td>
+								<td class="right" @click="gotoDtl(item.prod_no)" style="text-align: right;">{{item.pay_period}}개월</td>
+								<td class="right" @click="gotoDtl(item.prod_no)" style="text-align: right;">{{item.interest_ta}}</td>
 							</tr>
 						</tbody>
 					</table>
 
-					<div class="dataTables_paginate paging_simple_numbers"
-						id="div_paginate"></div>
+					<div style="position: relative; width: 1600px;">
+					    <div class="dataTables_paginate paging_simple_numbers" id="div_paginate" style="position: absolute; right: 0; top: -90%;"></div>
+					</div>
 						
 				</template>
 			</div>
@@ -214,97 +269,103 @@
 	<!-- 고객기본정보조회 팝업 -->
 <div class="modal fade" id="pop_cust_info">
 <template>
-	<div class="modal-dialog" style="width: 80%;">
+	<div class="modal-dialog" style="width: 80%; height: 300%;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click=cancel() id="btn_popClose">&times;</button>
 				<h4 class="modal-title" id="modify_nm">상품기본정보</h4>
 			</div>
 			<span v-if="info.sale_stat === 'SS04'" style="display: inline-block; text-align: center; width: 100%; font-size: 24px;">해당상품은 판매종료입니다.</span>
-			<div class="modal-body">
+			<div class="modal-body" style="font-size: 14px">
                 <div class="panel-body" style="display: flex;border: 2px solid #00CDFF;width: 100%;">	
-                    <div class="left-panel" style="width: 70%; border: 2px solid #6FCC98;">
+                    <div class="left-panel" style="width: 70%; height: 80%; border: 2px solid #6FCC98;">
                         <div class="form-group">
-                            <label for="err_eng_nm" class="fix-width-33">상품코드 :</label>
-                            <input type="text" class="form-control" id="prod_no" v-model="info.prod_no" disabled="disabled">
+                            <label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50" style="margin-left: 40px;">상품코드 :</label>
+                            <input type="text" style="width: 70px; margin-right: 170px;" class="fix-width-50" 
+                            id="prod_no" v-model="info.prod_no" disabled="disabled">
+                            <label for="err_eng_nm" class="fix-width-50">상품명 :</label>
+                            <input type="text" style="width: 150px; margin-right: 30px;" class="fix-width-50" id="prod_nm " v-model="info.prod_nm" disabled="disabled">
                          </div>
-                        <div class="form-group">
-                           <label for="err_eng_nm" class="fix-width-33">상품명 :</label>
-                            <input type="text" class="form-control" id="prod_nm " v-model="info.prod_nm" disabled="disabled">
-                        </div>
     
                         <div class="form-group">
-                            <label for="err_eng_nm" class="fix-width-33">상품유형 :</label>
-                            <select type="text" class="form-control" id="prod_type" v-model="info.prod_type" disabled="disabled">
+                            <label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">상품유형 :</label>
+                            <select type="text" class="fix-width-50" id="prod_type" v-model="info.prod_type" disabled="disabled">
 						        <option value="PT01">적금</option>
 						        <option value="PT02">예금</option>
 						        <option value="PT03">대출</option>
 						        <option value="PT04">목돈마련</option>
 						    </select>
-                            <label for="err_eng_nm" class="fix-width-33">가입대상 :</label>
-                            <select class="form-control" id="sub_tg" v-model="info.sub_tg" :disabled="!isEditing">
+                            <label for="err_eng_nm" style="margin-left: 100px;" class="fix-width-50">가입대상 :</label>
+                            <select class="fix-width-50" style="margin-right: 30px;" id="sub_tg" v-model="info.sub_tg" :disabled="!isEditing">
 						        <option value="ST01">일반개인</option>
 						        <option value="ST02">청년생활</option>
 						        <option value="ST03">소상공인</option>
 						    </select>
                         </div>
       
-                        <div class="form-group">
-                            <label for="err_eng_nm" class="fix-width-33">납입 기간 :</label>
-                            <input type="text" class="form-control" id="pay_period" v-model="info.pay_period" :disabled="!isEditing" placeholder="개월">
-                            <label for="err_eng_nm" class="fix-width-33">납입 주기 :</label>
-                            <select class="form-control" id="pay_cycle" v-model="info.pay_cycle" :disabled="!isEditing">
-						        <option value="PC01">월납</option>
-						        <option value="PC02">년납</option>
-						        <option value="PC03">일시납</option>
-						    </select>
-                        </div>
-      
-                        <div class="form-group">
-                            <label for="err_eng_nm" class="fix-width-33">가입 금액 MAX :</label>
-                            <input type="text" class="form-control" id="price_max" v-model="info.price_max" :disabled="!isEditing">
-                            <label for="err_eng_nm" class="fix-width-33">가입 금액 MIN  :</label>
-                            <input type="text" class="form-control" id="price_min" v-model="info.price_min" :disabled="!isEditing">
-                        </div>
                         
                         <div class="form-group">
-                       		<label for="err_eng_nm" class="fix-width-33">이자과세 :</label>
-                            <select class="form-control" id="interest_ta" v-model="info.interest_ta" :disabled="!isEditing">
+                       		<label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">이자과세 :</label>
+                            <select class="fix-width-50" id="interest_ta" v-model="info.interest_ta" :disabled="!isEditing">
 						        <option value="IT01">일반과세</option>
 						        <option value="IT02">세금우대</option>
 						        <option value="IT03">비과세</option>
 						    </select>
-                            <label for="err_eng_nm" class="fix-width-33">판매상태 :</label>
-                            <select class="form-control" id="sale_stat" v-model="info.sale_stat" :disabled="!isEditing">
+                            <label for="err_eng_nm" style="margin-left: 100px;" class="fix-width-50">판매상태 :</label>
+                            <select class="fix-width-50" style="margin-right: 30px;" id="sale_stat" v-model="info.sale_stat" :disabled="!isEditing">
 						        <option value="SS01">판매예정</option>
 						        <option value="SS02">판매진행</option>
 						        <option value="SS03">판매중지</option>
 						    </select>
                         </div>
                         
-                        
                         <div class="form-group">
-                            <label for="err_eng_nm" class="fix-width-33">판매기간 :</label>
-                            <input type="date" class="form-control" id="sale_beg_dt" v-model="info.sale_beg_dt" :disabled="!isEditing">
-                            <div>To  .</div>
-                            <input type="date" class="form-control" id="sale_end_dt" v-model="info.sale_end_dt" :disabled="!isEditing">
-                            <div>End .</div>
-                        </div> 
-                        
-                        <div class="form-group">
-                            <label for="err_eng_nm" class="fix-width-33">적용이율 최대 :</label>
-                            <input type="text" class="form-control" id="air_max" v-model="info.air_max" :disabled="!isEditing">
-                            <label for="err_eng_nm" class="fix-width-33">적용이율 최소 :</label>
-                            <input type="text" class="form-control" id="air_min" v-model="info.air_min" :disabled="!isEditing">
+                            <label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">납입 기간 :</label>
+                            <input type="text" style="width: 100px;"class="fix-width-50" id="pay_period" v-model="info.pay_period" :disabled="!isEditing" placeholder="개월">
+                            <label for="err_eng_nm" style="margin-left: 140px;" class="fix-width-50">납입 주기 :</label>
+                            <select class="fix-width-50" style="margin-right: 30px;" id="pay_cycle" v-model="info.pay_cycle" :disabled="!isEditing">
+						        <option value="PC01">월납</option>
+						        <option value="PC02">년납</option>
+						        <option value="PC03">일시납</option>
+						    </select>
                         </div>
                         
                         <div class="form-group">
-                            <label for="err_eng_nm" class="fix-width-33">적용기간 :</label>
-                            <input type="date" class="form-control" id="air_beg_dt" v-model="info.air_beg_dt" :disabled="!isEditing">
+                            <label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">판매기간 :</label>
+                            <input type="date" class="fix-width-50" id="sale_beg_dt" v-model="info.sale_beg_dt" :disabled="!isEditing">
                             <div>To  .</div>
-                            <input type="date" class="form-control" id="air_end_dt" v-model="info.air_end_dt" :disabled="!isEditing">
-                            <div>End .</div>
-                        </div>  
+                            <input type="date" style="margin-left: 100px;" class="fix-width-50" id="sale_end_dt" v-model="info.sale_end_dt" :disabled="!isEditing">
+                            <div style="margin-right: 30px;">End .</div>
+                        </div> 
+                        
+                        <div class="form-group">
+                            <label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">적용기간 :</label>
+                            <input type="date" class="fix-width-50" id="air_beg_dt" v-model="info.air_beg_dt" :disabled="!isEditing">
+                            <div>To  .</div>
+                            <input type="date" style="margin-left: 100px;" class="fix-width-50" id="air_end_dt" v-model="info.air_end_dt" :disabled="!isEditing">
+                            <div style="margin-right: 30px;">End .</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">가입금액 MAX :</label>
+                            	<input type="text" class="fix-width-50" id="price_max" v-model="info.price_max" :disabled="!isEditing">
+                        </div>
+                        
+                        <div class="form-group">
+                        	<label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">가입금액 MIN :</label>
+                            	<input type="text" class="fix-width-50" id="price_min" v-model="info.price_min" :disabled="!isEditing">
+                        </div>
+                        <div class="form-group">
+                            <label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">적용이율 최대 :</label>
+                           	 	<input type="text" class="fix-width-50" id="air_max" v-model="info.air_max" :disabled="!isEditing">
+                            
+                        </div>
+                        <div class="form-group">
+                        	<label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">적용이율 최소 :</label>
+                            	<input type="text" class="fix-width-50" id="air_min" v-model="info.air_min" :disabled="!isEditing">
+                        </div>
+                        
+                          
       
                     </div>
                     <div class="right-panel"  style="width: 30%; border: 2px solid #6FCC98;">
@@ -341,6 +402,62 @@
 </template>
 </div>
 <!--// 고객기본정보조회 팝업  -->
+<!-- 출력팝업DIV -->
+    <div class="modal fade" id="popup_print">
+        <template>
+            <div class="modal-dialog" style="width: 80%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true" id="btn_popClose">&times;</button>
+                        <h4 class="modal-title" id="modify_nm">프로모션상품이율</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal form-groups-bordered">
+                            
+                            <div class="form-group">
+                                <div class="col-sm-10">출력건수 : {{printInfo.prodCount}}건</div>
+                            </div>
+                            <div class="form-group" id="printArea">
+                                <table class="table datatable dataTable">
+                                    <thead>
+                                        <tr class="replace-inputs">
+                                            <th style="width: 15%;" class="center">상품코드</th>
+                                            <th style="width: 15%;" class="center">상품명</th>
+                                            <th style="width: 15%;" class="center">상품유형</th>
+                                            <th style="width: 10%;" class="center">현재이율최대</th>
+                                            <th style="width: 10%;" class="center">현재이율최소</th>
+                                            <th style="width: 20%;" class="center">이율적용기간</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="item in printInfo.prodList">
+                                            <td class="center">{{item.prod_no}}</td>
+                                            <td class="center">{{item.prod_nm}}</td>
+                                            <td class="center">{{item.prod_type}}</td>
+                                            <td class="center">{{item.air_max}}%</td>
+                                            <td class="center">{{item.air_min}}%</td>
+                                            <td class="center">{{item.air_beg_dt}}~{{item.air_end_dt}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+					    <button type="button" class="btn btn-primary btn-icon icon-left" @click="print">
+					        <i class="fa fa-print"></i> 인쇄
+					    </button>
+					    <button type="button" class="btn btn-secondary btn-icon icon-left" data-dismiss="modal">
+					        Close 
+					    </button>
+					</div>
+
+                </div>
+            </div>
+        </template>
+    </div>
 </body>
 <script>
 var vueapp = new Vue({
@@ -458,8 +575,93 @@ var vueapp = new Vue({
 			pop_cust_info.init(prod_no);
 			$('#pop_cust_info').modal('show');
 		},
+		popupPrint : function(prod_no) {
+			var chkedList = $("[name=is_check]:checked");
+			if (chkedList.length == 0) {
+				alert("출력할 대상을 선택하여 주십시오.");
+				return;
+			}
+			//check list 가져오기..
+			var dateCopyList = [];
+			var idx;
+			 // 선택된 각 체크박스를 순회
+		    chkedList.each(function() {
+		        idx = $(this).attr("data-idx");
+		        // dataList에서 prod_no가 idx와 일치하는 항목을 찾기
+		        var item = vueapp.dataList.find(function(item) {
+		            return item.prod_no == idx;
+		        });
+		        if (item) {
+		            dateCopyList.push(item);
+		        } else {
+		            console.error('유효하지 않은 데이터:', idx);
+		        }
+		    });
+			console.log(dateCopyList);
+
+			//출력팝업 띄우기
+			popup_print.init(dateCopyList);
+			$('#popup_print').modal('show');
+		},
     }
 });
+var popup_print = new Vue(
+		{
+			el : "#popup_print",
+			data : {
+				printInfo : {
+					prodCount : 0,
+					prodList : [],
+				}
+			},
+			methods : {
+				init : function(dateCopyList) {
+					this.initInfo(dateCopyList);
+				},
+				initInfo : function(dateCopyList) {
+					this.printInfo = {
+						prodCount : dateCopyList.length,
+						prodList : dateCopyList,
+					};
+				},
+				print : function() {
+					const printArea = document.getElementById('printArea').innerHTML;
+					console.log(printArea);
+
+					win = window.open();
+					self.focus();
+					win.document.open();
+
+					/*
+					1. div 안의 모든 태그들을 innerHTML을 사용하여 매개변수로 받는다.
+					2. window.open() 을 사용하여 새 팝업창을 띄운다.
+					3. 열린 새 팝업창에 기본 <html><head><body>를 추가한다.
+					4. <body> 안에 매개변수로 받은 printArea를 추가한다.
+					5. window.print() 로 인쇄
+					6. 인쇄 확인이 되면 팝업창은 자동으로 window.close()를 호출하여 닫힘
+					 */
+					win.document.write('<html><head>');
+
+					win.document
+							.write('<link rel="stylesheet" href="/static_resources/system/js/datatables/datatables.css">');
+					win.document
+							.write('<link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">');
+					win.document
+							.write('<link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">');
+
+					win.document.write('<title></title><style>');
+					win.document.write('td.center {text-align: center;}');
+					win.document.write('th.center {text-align: center;}');
+					win.document.write('body {font-size: 14px;}');
+					win.document.write('</style></head><body>');
+					win.document.write(printArea);
+					win.document.write('</body></html>');
+					win.document.close();
+					win.print();
+					win.close();
+				},
+			}
+		});
 var pop_cust_info = new Vue({
 	el : "#pop_cust_info",
 	data : {
