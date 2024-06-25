@@ -30,8 +30,22 @@ public class CustSvc {
 	CmmnDao cmmnDao;
 
 	public PageList<CmmnMap> getCustInfoList(CmmnMap params, PagingConfig pagingConfig) {
-		return cmmnDao.selectListPage("system.team2_cust_mng.getAll", params, pagingConfig);
+		 PageList<CmmnMap> custInfoList = cmmnDao.selectListPage("system.team2_cust_mng.getAll", params, pagingConfig);
+		 
+		 PageList<CmmnMap> eventList = cmmnDao.selectListPage("system.team2_cust_mng.getEvent", params, pagingConfig);
+		 for(int i=0; i<eventList.size(); i++) {
+			 for(int j=0; j<custInfoList.size(); j++) {
+				 if(eventList.get(i).getCmmnMap("cust_sn").equals(custInfoList.get(j).getCmmnMap("cust_sn"))) {
+					 custInfoList.get(i).put("event_y", true);
+				 } else {
+					 custInfoList.get(i).put("event_y", false);
+				 }
+			 }
+		}
+		 return custInfoList; 
 	}
+		
+		
 	
 	public PageList<CmmnMap> getCustEventList(CmmnMap params, PagingConfig pagingConfig) {
 		return cmmnDao.selectListPage("system.team2_cust_mng.getEvent", params, pagingConfig);

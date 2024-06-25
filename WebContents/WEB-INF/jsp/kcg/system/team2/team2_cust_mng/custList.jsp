@@ -288,8 +288,8 @@
     		cust_mbl_telno: "",
     		event: "all",
     		emp_nm: "",
-    		current_page: 1,
-    		page_item: 10,
+    		event_cust: [],
+    		event_y: false,
         },
         mounted: function () {
             var fromDtl = cf_getUrlParam("fromDtl");
@@ -304,11 +304,20 @@
                 this.cust_pridtf_no = params.cust_pridtf_no;
 
                 this.getCustInfoList();
+                this.getCustEventList();
             } else {
                 cv_sessionStorage
                     .removeItem("pagingConfig")
                     .removeItem("params");
                 this.getCustInfoList(true);
+            }
+        },
+        computed: {
+            enriched_cust_list: function() {
+                return this.cust_list.map(cust => ({
+                    ...cust,
+                    isEventCust: this.event_list.some(event => event.cust_nm === cust.cust_nm)
+                }));
             }
         },
         methods: {
@@ -331,11 +340,6 @@
                     .setItem('params', params);
 
                 cf_ajax("/customer/getCustInfoList", params, this.getListCB);
-            },
-            currentPage: function (){
-            	console.log(this.current_page)
-            	this.current_page = this.pagingConfig.pageNo;
-            	console.log(this.pagingConfig.pageNo)
             },
             getCustEventList: function() {
             	cv_pagingConfig.func = this.getCustEventList;
@@ -367,15 +371,6 @@
                 pop_cust_info.init(cust_mbl_telno);
                 $('#pop_cust_info').modal('show');
             },
-            all_check: function (obj) {
-                $('[name=is_check]').prop('checked', obj.checked);
-            },
-            onCheck: function () {
-                $("#allCheck").prop('checked',
-                    $("[name=is_check]:checked").length === $("[name=is_check]").length
-                );
-            },
-            
         }
     });
     var pop_cust_info = new Vue({
@@ -403,6 +398,7 @@
             cnsltList: [],
             cnsltItems: "",
             comm_List: "",
+            
                 
         },
         computed: {

@@ -55,6 +55,13 @@
 				WHERE c.use_yn = 'Y'
 				AND ps.end_ymd BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '1 month'
 			</when>
+			<when test='event == "event"'>
+				JOIN kcgbd.e_product_init AS ps ON c.cust_sn = ps.cust_sn
+				WHERE c.use_yn = 'Y'
+				AND ps.end_ymd BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '1 month'
+				OR TO_CHAR(c.cust_birth, 'MM-DD') BETWEEN TO_CHAR(CURRENT_DATE, 'MM-DD') 
+	        	AND TO_CHAR((CURRENT_DATE + INTERVAL '1 month'), 'MM-DD')
+			</when>
 			<otherwise></otherwise>
 		</choose>
 	</select>
