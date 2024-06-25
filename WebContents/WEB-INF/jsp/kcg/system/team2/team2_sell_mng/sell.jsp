@@ -128,9 +128,7 @@
 
 						style="justify-content: flex-end; border: 1px solid #999999;">
 						
-						<button type="button" class="btn btn-blue btn-icon icon-left"
-
-						style="justify-content: flex-end; border: 2px solid #00CDFF;">
+					
 						<button type="button"  id="Customer" class="btn btn-blue btn-icon icon-right"
 							@click="popupCustomer()">
 							고객조회 <i class="entypo entypo-info"></i>
