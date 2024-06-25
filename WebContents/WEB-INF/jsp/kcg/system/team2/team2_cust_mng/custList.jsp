@@ -85,7 +85,8 @@
                         <tbody class="table-group-divider">
                             <tr v-for="(item, index) in dataList" @dblclick="gotoDtl(item.cust_mbl_telno)"
                                 style="cursor: pointer;">
-                                <td class="center"><i class="entypo-user"></i></td>
+                                <td class="center" v-if="item.emp_no === login_emp"><i class="entypo-user" style="color: steelblue"></i></td>
+                                <td class="center" v-else><i class="entypo-user" style="color: lightgray" ></i></td>
                                 <td class="center">{{ item.cust_nm }}</td>
                                 <td class="center">{{ item.birth }}</td>
                                 <td class="center">{{ item.cust_eml_addr }}</td>
@@ -94,7 +95,7 @@
                             </tr>
                         </tbody>
                     </table>
-               	<div class="dataTables_paginate paging_simple_numbers" id="div_paginate" @click="currentPage()"></div>
+               	<div class="dataTables_paginate paging_simple_numbers" id="div_paginate"></div>
                 </template>
             </div>
             <jsp:include page="/WEB-INF/jsp/kcg/_include/system/footer.jsp" flush="false" />
@@ -290,6 +291,7 @@
     		emp_nm: "",
     		event_cust: [],
     		event_y: false,
+    		login_emp: "${emp_no}"
         },
         mounted: function () {
             var fromDtl = cf_getUrlParam("fromDtl");

@@ -6,7 +6,7 @@
 			<div class="col-md-6 col-sm-8 hidden-xs">
 		
 				<ul class="user-info pull-left pull-none-xsm" style="padding: unset;margin: unset;">
-					<div style="font-size: 25px;font-weight: bold;color: #31271e;"> K-디지털트레이닝 GSITM 부트캠프 금융Project 참여를 환영합니다...</div>				
+					<div style="font-size: 25px;font-weight: bold;color: #31271e;"> 집에 가고 싶다 ...</div>				
 <!-- 					<div style="font-size: 20px;font-weight: bold;color: #31271e;">관리자시스템</div> -->
 				</ul>
 
