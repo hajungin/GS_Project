@@ -74,7 +74,7 @@
                         style="border: 1px solid #999999;">
                         <thead>
                             <tr class="replace-inputs">
- 								<th style="width: 5%;" class="center">No</th>
+                            	<th style="width: 3%;" class="center"></th>
                                 <th style="width: 10%;" class="center">성명</th>
                                 <th style="width: 15%;" class="center">생년월일</th>
                                 <th style="width: 15%;" class="center">이메일주소</th>
@@ -85,7 +85,7 @@
                         <tbody class="table-group-divider">
                             <tr v-for="(item, index) in dataList" @dblclick="gotoDtl(item.cust_mbl_telno)"
                                 style="cursor: pointer;">
-								<td class="center">{{ index + 1 }}</td>
+                                <td class="center"><i class="entypo-user"></i></td>
                                 <td class="center">{{ item.cust_nm }}</td>
                                 <td class="center">{{ item.birth }}</td>
                                 <td class="center">{{ item.cust_eml_addr }}</td>
@@ -94,7 +94,7 @@
                             </tr>
                         </tbody>
                     </table>
-               	<div class="dataTables_paginate paging_simple_numbers" id="div_paginate"></div>
+               	<div class="dataTables_paginate paging_simple_numbers" id="div_paginate" @click="currentPage()"></div>
                 </template>
             </div>
             <jsp:include page="/WEB-INF/jsp/kcg/_include/system/footer.jsp" flush="false" />
@@ -288,6 +288,8 @@
     		cust_mbl_telno: "",
     		event: "all",
     		emp_nm: "",
+    		current_page: 1,
+    		page_item: 10,
         },
         mounted: function () {
             var fromDtl = cf_getUrlParam("fromDtl");
@@ -329,6 +331,11 @@
                     .setItem('params', params);
 
                 cf_ajax("/customer/getCustInfoList", params, this.getListCB);
+            },
+            currentPage: function (){
+            	console.log(this.current_page)
+            	this.current_page = this.pagingConfig.pageNo;
+            	console.log(this.pagingConfig.pageNo)
             },
             getCustEventList: function() {
             	cv_pagingConfig.func = this.getCustEventList;
