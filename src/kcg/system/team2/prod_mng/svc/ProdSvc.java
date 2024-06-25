@@ -1,9 +1,8 @@
 package kcg.system.team2.prod_mng.svc;
 
-<<<<<<< HEAD
-=======
+
 import java.math.BigInteger;
->>>>>>> 1-주성
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -92,10 +92,10 @@
 							<a href="#gm" onclick="cf_movePage('/sell/list')">
 								<span class="title">상품정보 조회</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/system')">
+							<a href="#gm" onclick="cf_movePage('/cal/dtlCom')">
 								<span class="title">금융계산기</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/system')">
+							<a href="#gm" onclick="cf_movePage('/cal/listPlan')">
 								<span class="title">설계이력조회</span>
 							</a>
 							<a href="#gm" onclick="cf_movePage('/system')">
