@@ -114,7 +114,7 @@
 
 	<div class="page-container">
 
-		<jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu.jsp"
+		<jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu-team2.jsp"
 			flush="false" />
 
 		<div class="main-content">
@@ -144,13 +144,13 @@
         
         <div class="flex flex-100" style="border: 2px solid #00CDFF;">
             <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
-                <div class="form-group flex-20" style="position: relative; top:50px;">
+                <div class="form-group flex-20" style="position: relative;">
                     <label for="productName" class="form-control">상품명 :</label>
-                    <input type="text" class="form-control" v-model="prod_nm" value=""/>
+                    <input type="text" style="height:30px;" class="form-control" v-model="prod_nm" value=""/>
                 </div>
-                <div class="form-group flex-20" style="position: relative; top:10px;">
+                <div class="form-group flex-20" style="position: relative;">
 				    <label for="productType" class="form-control">상품 유형 :</label>
-				    <select v-model="prod_type" class="form-control">
+				    <select v-model="prod_type" class="form-control" style="height:30px;">
 				        <option value="">전체</option>
 				        <option value="PT02">예금</option>
 				        <option value="PT03">대출</option>
@@ -160,24 +160,23 @@
 				</div><br>
 
 
-                <div class="form-group flex-20" style="position: relative; top:10px;">
+                <div class="form-group flex-20" style="position: relative;">
                     <label for="from_date" class="form-control">판매 기간 :</label>
-                    <input type="text" class="form-control" v-model="from_date" data-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"/>
+                    <input type="text" style="height:30px;" class="form-control" v-model="from_date" data-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"/>
                 </div>
-                <div class="form-group flex-20" style="position: relative; top:10px;">
+                <div class="form-group flex-20">
                     <label for="subTarget"  class="form-control">가입대상 :</label>
-                    <select v-model="sub_tg" class="form-control">
+                    <select v-model="sub_tg" class="form-control" style="height:30px;">
                         <option value="">전체</option>
                         <option value="ST01">일반개인</option>
                         <option value="ST02">청년</option>
                         <option value="ST03">소상공인</option>
                     </select>
                 </div>
-                <div class="form-group flex-20">
-                 </div>
-                <div class="form-group flex-20" style="position: relative; top:20px;">
+                
+                <div class="form-group flex-20" style="position: relative; top:10px; margin-left: 100px;">
                     <label for="saleStat"  class="form-control">판매상태 :</label>
-                    <select v-model="sale_stat" class="form-control">
+                    <select v-model="sale_stat" class="form-control" style="height:30px; width:300px;">
                         <option value="">전체</option>
                         <option value="SS01">판매예정</option>
                         <option value="SS02">판매진행</option>
@@ -185,14 +184,13 @@
                         <option value="SS04">판매종료</option>
                     </select>
                 </div>
-                 <div class="form-group flex-40" style="position: relative; top:20px;">
-                 	<label for="price_max"  class="form-control">가입금액 :</label>
-                 	최대 :<input type="text" class="form-control" v-model="price_max" value=""/>
+                 <div class="form-group flex-40" style="position: relative; top:10px; margin-left: 235px;">
+                 	<label for="price_max"  class="form-control" style="margin-left: 20px;">가입금액 :</label>
+                 	최대 :<input type="text" style="height:30px;" class="form-control" v-model="price_max" value=""/>
                  	<span>~ </span>
-                 	최소 :<input type="text" class="form-control" v-model="price_min" value=""/>
+                 	최소 :<input type="text" style="height:30px; margin-right: 50px;" class="form-control" v-model="price_min" value=""/>
                  </div>
-                 <div class="form-group flex-20">
-                 </div>
+                 
                  
                  
                 

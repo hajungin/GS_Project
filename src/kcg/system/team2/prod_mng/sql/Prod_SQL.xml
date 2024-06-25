@@ -428,9 +428,4 @@
 		where prod_no = #{prod_no}
 	</update>
 
-
-
-
-
-
 </mapper>

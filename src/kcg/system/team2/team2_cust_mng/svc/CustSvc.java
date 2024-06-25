@@ -37,6 +37,12 @@ public class CustSvc {
 		return cmmnDao.selectListPage("system.team2_cust_mng.getEvent", params, pagingConfig);
 	}
 	
+	public List<CmmnMap> getCustList(CmmnMap params) {
+		List<CmmnMap> dataList = cmmnDao.selectList("system.team2_cust_mng.getCustList", params);
+		log.debug(dataList.toString());
+		return dataList;
+	}
+	
 	public List<CmmnMap> getEmpInfo(CmmnMap params) {
 		List<CmmnMap> dataList = cmmnDao.selectList("system.team2_cust_mng.getEmpInfo");
 		System.out.println(dataList.toString());
@@ -79,6 +85,8 @@ public class CustSvc {
 		cmmnDao.update("system.team2_cust_mng.custChangeSts", params);
 		return new CmmnMap().put("status", "OK");
 	}
+
+
 
 
 }
