@@ -15,6 +15,9 @@
       <if test='prod_nm != null and prod_nm != ""'>
          and prod_nm like concat('%',#{prod_nm},'%')
       </if>
+      <if test='prod_type != null and prod_type != ""'>
+		   and prod_type = #{prod_type}
+		</if>
 	</select>
 
 	<select id="getList" parameterType="cmmnMap" resultType="cmmnMap">

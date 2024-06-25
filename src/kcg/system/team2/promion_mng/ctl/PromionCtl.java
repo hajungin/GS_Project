@@ -30,35 +30,38 @@ public class PromionCtl {
 	CommonSvc commonSvc;
 	
 
-	@RequestMapping("/list")
+	@RequestMapping("/listPlan")
 	public String openPageCalc(Model model, CmmnMap params) {
 		return "kcg/system/team2/team2_cal/PlanList";
 	}
-	
+	@RequestMapping("/getListPaging")
+	public PageList<CmmnMap> getListPaging(CmmnMap params, PagingConfig pagingConfig) {
+		return promionSvc.getListPaging(params, pagingConfig);
+	}
 	@RequestMapping("/dtlCom")
-	public String openPageDtl(Model model, CmmnMap params) {
-		
-		String sProdTyCd = params.getString("prod_type", "PT01");
+	public String openDtl(Model model, CmmnMap params) {
+		System.out.println("=====================dtlCom" + params);
+		String prodType = params.getString("prod_type", "PT01");
 		model.addAttribute("plan_no", params.getString("plan_no", ""));			// 설계설계번호
-		model.addAttribute("cust_mbl_telno", params.getString("cust_mbl_telno", ""));	// 고객KEY
-		model.addAttribute("prod_type", sProdTyCd);										// 설계타입코드 : 1.적금설계, 2.목돈마련설계, 3.예금설계, 4.대출설계
+		model.addAttribute("cust_sn", params.getString("cust_sn", ""));	// 고객KEY
+		model.addAttribute("prod_type", prodType);										// 설계타입코드 : 1.적금설계, 2.목돈마련설계, 3.예금설계, 4.대출설계
 		
 		String sRsltUrl = "";
-		if("PT01".equals(sProdTyCd)) {
+		if("PT01".equals(prodType)) {
 			sRsltUrl = "kcg/system/team2/team2_cal/CalcDpst";
-		}else if("PT02".equals(sProdTyCd)) {
-			sRsltUrl = "kcg/system/team2_cal/CalcDpstplDtl";
-		}else if("PT03".equals(sProdTyCd)) {
-			sRsltUrl = "kcg/system/team2_cal/CalcAcmlplDtl";
-		}else if("PT04".equals(sProdTyCd)) {
-			sRsltUrl = "kcg/system/team2_cal/CalcLoanDtl";
+		}else if("PT02".equals(prodType)) {
+			sRsltUrl = "kcg/system/team2/team2_cal/CalcDpstplDtl";
+		}else if("PT03".equals(prodType)) {
+			sRsltUrl = "kcg/system/team2/team2_cal/CalcLoanDtl";
+		}else if("PT04".equals(prodType)) {
+			sRsltUrl = "kcg/system/team2/team2_cal/CalcAcmlplDtl";
 		}
 		
 		return sRsltUrl;
 	}
 	
-	@RequestMapping("/getDsgInfo")
-	public CmmnMap getDsgInfo(CmmnMap params) {
+	@RequestMapping("/getDsgInfos")
+	public CmmnMap getDsgInfos(CmmnMap params) {
 		return promionSvc.getDsgInfo(params);
 	}
 	
@@ -72,8 +75,25 @@ public class PromionCtl {
 		return rsltMap;
 	}
 	
-	@RequestMapping("/save")
+	@RequestMapping("/savePlan")
 	public void save(CmmnMap params) {
+		System.out.println("==============================save" + params);
 		promionSvc.save(params);
+	}
+	
+	@RequestMapping("/getCust")
+	public List<CmmnMap> getCust(CmmnMap params){
+		return promionSvc.getCust(params);
+	}
+	
+	@RequestMapping("/getCustCard")
+	public CmmnMap getCustCard(CmmnMap params) {
+		return promionSvc.getCustCard(params);
+	}
+	
+	@RequestMapping("/getProdLists")
+	public List<CmmnMap> getProdList(CmmnMap params) {
+		System.out.println("================================" + params);
+		return promionSvc.getProdList(params);
 	}
 }

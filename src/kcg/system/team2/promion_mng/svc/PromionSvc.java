@@ -1,5 +1,6 @@
 package kcg.system.team2.promion_mng.svc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,51 +39,83 @@ public class PromionSvc {
 	}
 	
 	public CmmnMap getDsgInfo(CmmnMap params) {
+		System.out.println("============================DsgInfo" + params);
 		CmmnMap rsltMap = new CmmnMap();
 		if("PT01".equals(params.getString("prod_type"))) {
 			rsltMap = cmmnDao.selectOne("system.team2.promion_mng.getDsgnSavgpl", params);
 		}else if("PT02".equals(params.getString("prod_type"))) {
-			rsltMap = cmmnDao.selectOne("system.team2.promion_mng.getDsgnAcmlpl", params);
-		}else if("PT03".equals(params.getString("prod_type"))) {
 			rsltMap = cmmnDao.selectOne("system.team2.promion_mng.getDsgnDpstpl", params);
-		}else if("PT04".equals(params.getString("prod_type"))) {
+		}else if("PT03".equals(params.getString("prod_type"))) {
 			rsltMap = cmmnDao.selectOne("system.team2.promion_mng.getDsgnLoanpl", params);
+		}else if("PT04".equals(params.getString("prod_type"))) {
+			rsltMap = cmmnDao.selectOne("system.team2.promion_mng.getDsgnAcmlpl", params);
 		}
 		return rsltMap;
 	}
 	
 	public CmmnMap getProdInfo(CmmnMap params) {
 		System.out.println("====================svc" + params);
-
-		CmmnMap result = cmmnDao.selectOne("system.team2.promion_mng.getProdInfo", params);
+		CmmnMap result = new CmmnMap();
+		if("PT01".equals(params.getString("prod_type"))) {
+			result = cmmnDao.selectOne("system.team2.promion_mng.getProdInfo", params);
+		}else if("PT02".equals(params.getString("prod_type"))) {
+			result = cmmnDao.selectOne("system.team2.promion_mng.getProdDp", params);
+		}else if("PT03".equals(params.getString("prod_type"))) {
+			result = cmmnDao.selectOne("system.team2.promion_mng.getProdLoan", params);
+		}else if("PT04".equals(params.getString("prod_type"))) {
+			result = cmmnDao.selectOne("system.team2.promion_mng.getProdAc", params);
+		}
+		
 		return result;
 	}
 
 	public void save(CmmnMap params) {
 		UserInfoVO userInfoVO = commonSvc.getLoginInfo();
 		params.put("user_id", userInfoVO.getUserId());
-		
-		if(StringUtil.isEmpty(params.getString("prod_ds_sn"))) {
+		System.out.println("================================================================save" + params);
+		if(StringUtil.isEmpty(params.getString("plan_no"))) {
 			if("PT01".equals(params.getString("prod_type"))) {
 				cmmnDao.insert("system.team2.promion_mng.insertDsgnSavgpl", params);
 			}else if("PT02".equals(params.getString("prod_type"))) {
-				cmmnDao.insert("system.team2.promion_mng.insertDsgnAcmlpl", params);
-			}else if("PT03".equals(params.getString("prod_type"))) {
 				cmmnDao.insert("system.team2.promion_mng.insertDsgnDpstpl", params);
-			}else if("PT04".equals(params.getString("prod_type"))) {
+			}else if("PT03".equals(params.getString("prod_type"))) {
 				cmmnDao.insert("system.team2.promion_mng.insertDsgnLoanpl", params);
+			}else if("PT04".equals(params.getString("prod_type"))) {
+				cmmnDao.insert("system.team2.promion_mng.insertDsgnAcmlpl", params);
 			}
 		} else {
 			if("PT01".equals(params.getString("prod_type"))) {
 				cmmnDao.update("system.team2.promion_mng.updateDsgnSavgpl", params);
 			}else if("PT02".equals(params.getString("prod_type"))) {
-				cmmnDao.update("system.team2.promion_mng.updateDsgnAcmlpl", params);
-			}else if("PT03".equals(params.getString("prod_type"))) {
 				cmmnDao.update("system.team2.promion_mng.updateDsgnDpstpl", params);
-			}else if("PT04".equals(params.getString("prod_type"))) {
+			}else if("PT03".equals(params.getString("prod_type"))) {
 				cmmnDao.update("system.team2.promion_mng.updateDsgnLoanpl", params);
+			}else if("PT04".equals(params.getString("prod_type"))) {
+				cmmnDao.update("system.team2.promion_mng.updateDsgnAcmlpl", params);
 			}
 		}
+	}
+
+	public List<CmmnMap> getCust(CmmnMap params) {
+		
+		return cmmnDao.selectList("system.team2.promion_mng.getCust", params);
+	}
+
+	public CmmnMap getCustCard(CmmnMap params) {
+		return cmmnDao.selectOne("system.team2.promion_mng.getCustCard", params);
+	}
+
+	public List<CmmnMap> getProdList(CmmnMap params) {
+		List<CmmnMap> result = new ArrayList<CmmnMap>();
+		if("PT02".equals(params.getString("prod_type"))) {
+			result = cmmnDao.selectList("system.team2.promion_mng.getDp", params);
+		}else if("PT03".equals(params.getString("prod_type"))) {
+			result = cmmnDao.selectList("system.team2.promion_mng.getLoan", params);
+		}else if("PT04".equals(params.getString("prod_type"))) {
+			result = cmmnDao.selectList("system.team2.promion_mng.getAc", params);
+		}
+		
+		return result;
 	}
 	
 }

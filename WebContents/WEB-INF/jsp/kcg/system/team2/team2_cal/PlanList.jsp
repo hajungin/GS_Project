@@ -43,7 +43,7 @@
 							
 							<label class="sys_label_01 control-label">관리담당자:</label>
 							<div class="sys_col_02" style="width: 246px;">
-								<input class="form-control" v-model="pic_nm" value="" />
+								<input class="form-control" v-model="emp_nm" value="" />
 							</div>
 						</td>
 						<td class="right" style="width: 200px;">
@@ -87,7 +87,7 @@
 <!-- 						인쇄 -->
 <!-- 						<i class="entypo-print"></i> -->
 <!-- 					</button> -->
-					<button type="button" class="btn btn-orange btn-icon icon-left btn-small" @click="cf_movePage('/promion_mng/dtl')">
+					<button type="button" class="btn btn-orange btn-icon icon-left btn-small" @click="cf_movePage('/cal/dtlCom')">
 						등록
 						<i class="entypo-plus"></i>
 					</button>
@@ -103,24 +103,24 @@
 						<th style="width: 10%;" class="center sorting" @click="sortList(event.target)" sort_target="cust_nm">성명</th>
 						<th style="width: 10%;" class="center sorting" @click="sortList(event.target)" sort_target="wrt_dt">제안일자</th>
 						<th style="width: 15%;" class="center sorting" @click="sortList(event.target)" sort_target="cust_eml_addr">이메일ID</th>
-						<th style="width: 10%;" class="center sorting" @click="sortList(event.target)" sort_target="prod_ty_cd_nm">상품유형</th>						
+						<th style="width: 10%;" class="center sorting" @click="sortList(event.target)" sort_target="prod_type">상품유형</th>						
 						<th style="width: 25%;" class="center sorting" @click="sortList(event.target)" sort_target="prod_nm">상품명</th>			
 						<th style="width: 15%;" class="center sorting" @click="sortList(event.target)" sort_target="suggest_amt">제안금액</th>	
-						<th style="width: 10%;" class="center">진행상태</th>							
+						<th style="width: 10%;" class="center" @click="sortList(event.target)" sort_target="emp_nm">관리담당자</th>							
 					</tr>
 				</thead>
 				<tbody>
 					<tr v-for="item in dataList" style="cursor: pointer;">
 						<td class="center">
-							<input type="checkbox" :data-idx="item.prod_cd" name="is_check" @click="onCheck">
+							<input type="checkbox" :data-idx="item.prod_no" name="is_check" @click="onCheck">
 						</td>
 						<td class="left" @click="gotoDtl(item)">{{item.cust_nm}}</td>
 						<td class="center" @click="gotoDtl(item)">{{item.wrt_dt}}</td>
 						<td class="left" @click="gotoDtl(item)">{{item.cust_eml_addr}}</td>
-						<td class="center" @click="gotoDtl(item)">{{item.prod_ty_cd_nm}}</td>
+						<td class="center" @click="gotoDtl(item)">{{item.prod_type}}</td>
 						<td class="left" @click="gotoDtl(item)">{{item.prod_nm}}</td>
 						<td class="right" @click="gotoDtl(item)" style="text-align: right;">{{item.suggest_amt}}</td>
-						<td class="left" @click="gotoDtl(item)"></td>
+						<td class="left" @click="gotoDtl(item)">{{item.emp_nm}}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -176,7 +176,7 @@ var vueapp = new Vue({
 		dataList : [],
 		prod_nm : "",
 		cust_nm  : "",
-		pic_nm : "",
+		emp_nm : "",
 		wrt_dt : "",
 		all_srch : "N",
 	},
@@ -216,7 +216,7 @@ var vueapp = new Vue({
 			if(this.all_srch != "Y") {
 				params = {
 					cust_nm : this.cust_nm,
-					pic_nm : this.pic_nm,
+					emp_nm : this.emp_nm,
 					wrt_dt : this.wrt_dt,
 					prod_nm : this.prod_nm,
 				}
@@ -226,7 +226,7 @@ var vueapp = new Vue({
 				.setItem('pagingConfig', cv_pagingConfig)
 				.setItem('params', params);
 
-			cf_ajax("/promion_mng/getListPaging", params, this.getListCB);
+			cf_ajax("/cal/getListPaging", params, this.getListCB);
 		},
 		getListCB : function(data){
  			this.dataList = data.list;
@@ -238,11 +238,20 @@ var vueapp = new Vue({
 		},
 		gotoDtl : function(item){
 			var params = {
-					prod_ds_sn : cf_defaultIfEmpty(item.prod_ds_sn, ""),
-					cust_mbl_telno : cf_defaultIfEmpty(item.cust_mbl_telno, ""),
-					prod_ty_cd : cf_defaultIfEmpty(item.prod_ty_cd, ""),
+					plan_no : cf_defaultIfEmpty(item.plan_no, ""),
+					cust_sn : cf_defaultIfEmpty(item.cust_sn, ""),
+					prod_type : cf_defaultIfEmpty(item.prod_type, ""),
 				}
-			cf_movePage("/promion_mng/dtl", params);
+			if(params.prod_type == "적금"){
+				params.prod_type = "PT01"
+			} else if(params.prod_type == "예금"){
+				params.prod_type = "PT02"
+			}else if(params.prod_type == "대출"){
+				params.prod_type = "PT03"
+			}else if(params.prod_type == "목돈마련"){
+				params.prod_type = "PT04"
+			}
+			cf_movePage("/cal/dtlCom", params);
 		},
 		sortList : function(obj){
 			cf_setSortConf(obj, "prod_nm");
@@ -256,7 +265,7 @@ var vueapp = new Vue({
 					$("[name=is_check]:checked").length === $("[name=is_check]").length
 			);
 		},
-		popupPrint : function(prod_cd){
+		popupPrint : function(prod_no){
 			var chkedList = $("[name=is_check]:checked");			 
 			if(chkedList.length == 0){
 				alert("출력할 대상을 선택하여 주십시오.");
@@ -267,7 +276,7 @@ var vueapp = new Vue({
 			var idx;
 			chkedList.each(function(i) {
 				idx = $(this).attr("data-idx");
-				dateCopyList.push(vueapp.dataList.getElementFirst("prod_cd", idx));
+				dateCopyList.push(vueapp.dataList.getElementFirst("prod_no", idx));
 			});			
 			
 			console.log(dateCopyList);		
