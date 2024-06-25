@@ -46,7 +46,7 @@
 
 	<div class="page-container">
 
-		<jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu.jsp"
+		<jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu-team2.jsp"
 			flush="false" />
 
 		<div class="main-content">

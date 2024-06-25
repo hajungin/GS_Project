@@ -74,12 +74,12 @@
 							<a href="#gm" onclick="cf_movePage('/sell/membership')">
 								<span class="title">가입현황</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
-								<span class="title">판매달성률관리(관리자)</span>
-							</a>
-							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
-								<span class="title">판매달성률조회</span>
-							</a>
+<!-- 							<a href="#gm" onclick="cf_movePage('/prod_mng/list')"> -->
+<!-- 								<span class="title">판매달성률관리(관리자)</span> -->
+<!-- 							</a> -->
+<!-- 							<a href="#gm" onclick="cf_movePage('/prod_mng/list')"> -->
+<!-- 								<span class="title">판매달성률조회</span> -->
+<!-- 							</a> -->
 						</li>
 					</ul>
 				</li>
