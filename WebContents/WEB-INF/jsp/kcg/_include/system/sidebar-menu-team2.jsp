@@ -30,11 +30,11 @@
 						<span class="title">TEAM2 고객관리</span>
 					</a>
 					<ul data-lnb="10" data-snb="0">
-						<li data-lnb="10" data-snb="3">
-							<a href="#gm" onclick="cf_movePage('/customer/custMng')">
-								<span class="title">고객 정보 관리</span>
-							</a>
-						</li>	
+<!-- 						<li data-lnb="10" data-snb="3"> -->
+<!-- 							<a href="#gm" onclick="cf_movePage('/customer/custMng')"> -->
+<!-- 								<span class="title">고객 정보 관리</span> -->
+<!-- 							</a> -->
+<!-- 						</li>	 -->
 					
 						<li data-lnb="10" data-snb="3">
 							<a href="#gm" onclick="cf_movePage('/customer/custList')">
@@ -57,26 +57,26 @@
 					</a>
 				</li> 
 				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/common/commMng')">
+					<a href="#gm" onclick="cf_movePage('/empMng/empMngList')">
 						<i class="entypo-newspaper"></i>
 						<span class="title">TEAM2 담당자관리</span>
 					</a>
 				</li> 
 
 				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/common/commMng')">
+					<a href="#gm" onclick="cf_movePage('/system')">
 						<i class="entypo-newspaper"></i>
 						<span class="title">TEAM2 공지사항</span>
 					</a>
 				</li> 
 				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/common/commMng')">
+					<a href="#gm" onclick="cf_movePage('/system')">
 						<i class="entypo-newspaper"></i>
 						<span class="title">TEAM2 스케줄관리</span>
 					</a>
 				</li> 
 				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/common/commMng')">
+					<a href="#gm" onclick="cf_movePage('/system')">
 						<i class="entypo-newspaper"></i>
 						<span class="title">TEAM2 환율정보</span>
 					</a>
@@ -92,13 +92,13 @@
 							<a href="#gm" onclick="cf_movePage('/sell/list')">
 								<span class="title">상품정보 조회</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/sell/list')">
+							<a href="#gm" onclick="cf_movePage('/system')">
 								<span class="title">금융계산기</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/sell/join')">
+							<a href="#gm" onclick="cf_movePage('/system')">
 								<span class="title">설계이력조회</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/sell/membership')">
+							<a href="#gm" onclick="cf_movePage('/system')">
 								<span class="title">가입현황</span>
 							</a>
 						</li>
@@ -121,7 +121,7 @@
 					</ul>
 				</li>
 				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/common/commMng')">
+					<a href="#gm" onclick="cf_movePage('/system')">
 						<i class="entypo-newspaper"></i>
 						<span class="title">TEAM2 마이페이지</span>
 					</a>
