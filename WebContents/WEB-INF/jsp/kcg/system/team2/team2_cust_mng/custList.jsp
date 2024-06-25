@@ -395,7 +395,6 @@
                 emp_dept: "",
                 emp_posit: "",
                 emp_mbl_telno: "",
-                
             },
 			cnslt_dt: "",
             cnslt_emp_nm: "",
