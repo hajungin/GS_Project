@@ -68,12 +68,10 @@
 							<a href="#gm" onclick="cf_movePage('/sell/list')">
 								<span class="title">상품정보 조회</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/sell/join')">
-								<span class="title">가입관리</span>
-							</a>
-							<a href="#gm" onclick="cf_movePage('/sell/membership')">
+							<a href="#gm" onclick="cf_movePage('/sell/init')">
 								<span class="title">가입현황</span>
 							</a>
+							
 <!-- 							<a href="#gm" onclick="cf_movePage('/prod_mng/list')"> -->
 <!-- 								<span class="title">판매달성률관리(관리자)</span> -->
 <!-- 							</a> -->

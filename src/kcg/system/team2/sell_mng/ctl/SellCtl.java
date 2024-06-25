@@ -36,12 +36,12 @@ public class SellCtl {
 	 }
 	 
 	 // 가입관리 페이지
-	 @RequestMapping("/join")
+	 @RequestMapping("/init")
 	 	public String joinPage() {
-		 return "kcg/system/team2/team2_sell_mng/join";
+		 return "kcg/system/team2/team2_sell_mng/init";
 	 }
 	 
-	 // 고객정보 리스트 및 검색
+	 // 가입현황 리스트 및 검색
 	 @RequestMapping("/getcustomer")
 	 	public PageList<CmmnMap> getcustomer(CmmnMap params , PagingConfig pagingConfig){
 			return sellsvc.getcustomer(params, pagingConfig); 
@@ -59,6 +59,7 @@ public class SellCtl {
 			return sellsvc.joinList(params, pagingConfig); 
 	 }
 	 
+	 // 가입대상 고객 추천
 	 @RequestMapping("/custom")
 		public List<CmmnMap> custom(CmmnMap params) {
 			return sellsvc.custom(params);

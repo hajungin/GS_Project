@@ -267,8 +267,81 @@
     	
     </select>
     
-    <select id="joinList" parameterType="cmmnMap" resultType="cmmnMap">
-    	select * from kcgbd.e_product_init
-    </select>
+    <select id="joinList" parameterType="cmmnMap" resultType="cmmnMap"> 
+		    SELECT 
+		        cu.cust_nm,
+		        cu.cust_mbl_telno,
+		        TO_CHAR(cu.cust_birth, 'YYYY-MM-DD') AS cust_birth,
+		        ee.emp_nm,
+		        sa.prod_nm AS sa_prod_nm,
+		        lo.prod_nm AS loan_prod_nm,
+		        ac.prod_nm AS ac_prod_nm,
+		        dp.prod_nm AS dp_prod_nm,
+		        sa.prod_type AS sa_prod_type,
+		        lo.prod_type AS loan_prod_type,
+		        ac.prod_type AS ac_prod_type,
+		        dp.prod_type AS dp_prod_type
+		    FROM 
+		        kcgbd.e_product_init a
+		    LEFT JOIN 
+		        kcgbd.e_customer cu ON a.cust_sn = cu.cust_sn
+		    LEFT JOIN 
+		        kcgbd.e_employee ee ON a.emp_no = ee.emp_no
+		    LEFT JOIN 
+		        kcgbd.e_product_save sa ON a.sa_prod_no = sa.prod_no
+		    LEFT JOIN 
+		        kcgbd.e_product_loan lo ON a.loan_prod_no = lo.prod_no
+		    LEFT JOIN 
+		        kcgbd.e_product_ac ac ON a.ac_prod_no = ac.prod_no
+		    LEFT JOIN 
+		        kcgbd.e_product_dp dp ON a.dp_prod_no = dp.prod_no
+		    WHERE 
+		        1=1
+		        <if test='cust_nm != null and cust_nm != ""'>
+		            AND cu.cust_nm LIKE CONCAT('%', #{cust_nm}, '%')
+		        </if>
+		        <if test='cust_birth != null and cust_birth != ""'>
+		            AND cu.cust_birth = CAST(#{cust_birth} AS DATE)
+		        </if>
+		        <if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
+		            AND cu.cust_mbl_telno LIKE CONCAT('%', #{cust_mbl_telno}, '%')
+		        </if>
+		        <if test='prod_nm != null and prod_nm != ""'>
+		            <if test='sa != null and sa.prod_nm != null and sa.prod_nm != ""'>
+		                AND sa.prod_nm LIKE CONCAT('%', #{prod_nm}, '%')
+		            </if>
+		            <if test='lo != null and lo.prod_nm != null and lo.prod_nm != ""'>
+		                AND lo.prod_nm LIKE CONCAT('%', #{prod_nm}, '%')
+		            </if>
+		            <if test='ac != null and ac.prod_nm != null and ac.prod_nm != ""'>
+		                AND ac.prod_nm LIKE CONCAT('%', #{prod_nm}, '%')
+		            </if>
+		            <if test='dp != null and dp.prod_nm != null and dp.prod_nm != ""'>
+		                AND dp.prod_nm LIKE CONCAT('%', #{prod_nm}, '%')
+		            </if>
+		        </if>
+<!-- 		        <if test='prod_nm != null and prod_nm != ""'> -->
+<!-- 					AND  -->
+<!-- 					(a.sa_prod_nm LIKE '%' || #{prod_nm} || '%' OR a.loan_prod_nm LIKE '%' || #{prod_nm} || '%' OR  -->
+<!-- 					 a.ac_prod_nm LIKE '%' || #{prod_nm} || '%' OR 	a.dp_prod_nm LIKE '%' || #{prod_nm} || '%') -->
+<!-- 				</if> -->
+<!-- 		        <if test='prod_nm != null and prod_nm != ""'> -->
+<!-- 		            <if test='sa != null and sa.prod_nm != null and sa.prod_nm != ""'> -->
+<!-- 		                AND sa_prod_nm LIKE CONCAT('%', #{prod_nm}, '%') -->
+<!-- 		            </if> -->
+<!-- 		            <if test='lo != null and lo.prod_nm != null and lo.prod_nm != ""'> -->
+<!-- 		                AND loan_prod_nm LIKE CONCAT('%', #{prod_nm}, '%') -->
+<!-- 		            </if> -->
+<!-- 		            <if test='ac != null and ac.prod_nm != null and ac.prod_nm != ""'> -->
+<!-- 		                AND ac_prod_nm LIKE CONCAT('%', #{prod_nm}, '%') -->
+<!-- 		            </if> -->
+<!-- 		            <if test='dp != null and dp.prod_nm != null and dp.prod_nm != ""'> -->
+<!-- 		                AND dp_prod_nm LIKE CONCAT('%', #{prod_nm}, '%') -->
+<!-- 		            </if> -->
+<!-- 		        </if> -->
+		        
+
+	</select>
+
     
 </mapper>
