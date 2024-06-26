@@ -10,9 +10,101 @@
             <link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
             <link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
             <link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
+            
+<style>
+.header {
+        background-color: #A7EEFF;
+        color: #333;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        font-size: 1.5em;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin: 20px 0;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+    .header:hover {
+        background-color: #66CCFF;
+    }
+    #Button:hover {
+        background-color: #2980B9; /* Hover 시 배경색 변경 */
+    }
+   /* Modal Content */
+#pop_emp_register .modal-content, #pop_emp_info .modal-content {
+    border: none;
+    border-radius: 0;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+/* Modal Header */
+#pop_emp_register .modal-header, #pop_emp_info .modal-header {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 15px;
+}
+
+/* Modal Title */
+#pop_emp_register .modal-title, #pop_emp_info .modal-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Modal Body */
+#pop_emp_register .modal-body, #pop_emp_info .modal-body {
+    padding: 20px;
+}
+
+/* Form Group Style */
+#pop_emp_register .form-group, #pop_emp_info .form-group {
+    margin-bottom: 15px;
+}
+
+/* Table Style */
+#pop_emp_register table, #pop_emp_info table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+#pop_emp_register table th, #pop_emp_info table th, #pop_emp_register table td, #pop_emp_info table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+ #pop_emp_register table th, #pop_emp_info table th { 
+    background-color: #f0f0f0; 
+    color: #333;
+ } 
+
+/* Modal Footer */
+.modal-footer {
+    border-top: 1px solid #ddd;
+    padding: 15px;
+    text-align: right;
+}
+
+/* Primary Button */
+#pop_emp_register .btn-primary:hover, #pop_emp_info .btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+/* Secondary Button */
+#pop_emp_register .btn-secondary:hover, #pop_emp_info .btn-secondary:hover {
+    background-color: #7f8c8d;
+    border-color: #7f8c8d;
+}  
+</style>
+            
             <title>관리자시스템</title>
         </head>
-
 
 		<body class="page-body">
 		    <div class="page-container">
@@ -23,54 +115,44 @@
 		
 		            <ol class="breadcrumb bc-3">
 		                <li><a href="#none" onclick="cf_movePage('/system')"><i class="fa fa-home"></i>Home</a></li>
-		                <li class="active"><strong>담당자정보 조회</strong></li>
+		                <li class="active"><strong>담당자 관리</strong></li>
 		            </ol>
 		
-		            <h2>담당자 목록</h2>
+		            <h2 class="header">담당자 목록</h2>
 		            <br />
 		
 		            <div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
 		                <template>
-		                    <div class="flex flex-100">
-		                        <div class="flex-wrap flex-66 flex flex-gap-10 flex-padding-10">
-		                            <div class="form-group flex-40">
-		                                <label class="fix-width-33">사원번호 :</label>
-		                                <input class="form-control" v-model="emp_no" value="">
-		                            </div>
-		                            <div class="form-group flex-40">
-		                                <label class="fix-width-33">성명 :</label>
-		                                <input class="form-control" v-model="emp_nm" value="">
-		                            </div>
-		                            <div class="form-group flex-40">
-		                                <label class="fix-width-33">부서 :</label>
-		                                <input type="text" class="form-control" v-model="emp_dept">
-		                            </div>
-		                            <div class="form-group flex-40">
-		                                <label class="fix-width-33">직위 :</label>
-		                                <input type="text" class="form-control" v-model="emp_posit">
-		                            </div>
-		                        </div>
-		
-		                        <div class="flex-wrap flex-33 flex flex-center flex-gap-10 flex-padding-10">
-		                            <div class="form-group" style="width:20%;">
-		                                <button type="button" class="btn btn-blue btn-icon icon-left form-control"
-		                                    v-model="search_val" @click="getEmpMngList(true)">
-		                                    검색
-		                                    <i class="entypo-search"></i>
-		                                </button>
-		                            </div>
-		                        </div>
-		                    </div>
+		                    <div class="flex flex-100" style="border: 2px solid #00CDFF;">
+							    <div class="flex-wrap flex-66 flex flex-gap-10 flex-padding-10">
+							        <div class="form-group flex-40" style="display: flex; flex-wrap: wrap; gap: 20px;">
+							            <label class="fix-width-10">사원번호 :</label>
+							            <input class="form-control" v-model="emp_no" value="" style="margin-bottom: 10px;">
+							            <label class="fix-width-10">성명 :</label>
+							            <input class="form-control" v-model="emp_nm" value="" style="margin-bottom: 10px;">
+							            <label class="fix-width-10">부서 :</label>
+							            <input type="text" class="form-control" v-model="emp_dept" style="margin-bottom: 10px;">
+							            <label class="fix-width-10">직위 :</label>
+							            <input type="text" class="form-control" v-model="emp_posit" style="margin-bottom: 10px;">
+							            <button type="button" class="btn btn-primary btn-icon"
+							                v-model="search_val" @click="getEmpMngList(true)" style="margin-top: 10px;">
+							                검색
+							                <i class="entypo-search"></i>
+							            </button>
+							        </div>
+							    </div>
+							</div>
+
 		                    <div class="flex flex-100 flex-padding-10 flex-gap-10"
-		                        style="justify-content:flex-end;border: 1px solid #999999;">
-		                        <button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;"
+		                        style="justify-content:flex-end; border: 2px solid #00CDFF;">
+		                        <button type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
 		                            @click="showRegisterPopup">
 		                            담당자 등록
-		                            <i class="entypo-archive"></i>
+		                            <i class="entypo-user"></i>
 		                        </button>
 		                    </div>
 		                    <table class="table table-bordered datatable dataTable" id="grid_app"
-		                        style="border: 1px solid #999999;">
+		                         style="border: 2px solid #00CDFF;">
 		                        <thead>
 		                            <tr class="replace-inputs">
 		                                <th>No</th>
@@ -93,8 +175,9 @@
 		                            </tr>
 		                        </tbody>
 		                    </table>
-		                    <div class="dataTables_paginate paging_simple_numbers" id="div_paginate">
-		                    </div>
+		                    <div style="position: relative; width: 1600px;">
+					    		<div class="dataTables_paginate paging_simple_numbers" id="div_paginate" style="position: absolute; right: 0; top: -90%;"></div>
+							</div>
 		                </template>
 		            </div>
 		
