@@ -128,7 +128,7 @@
 					</ul>
 				</li>
 				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/system')">
+					<a href="#gm" onclick="cf_movePage('/myPage/getMyPage')">
 						<i class="entypo-newspaper"></i>
 						<span class="title">TEAM2 마이페이지</span>
 					</a>

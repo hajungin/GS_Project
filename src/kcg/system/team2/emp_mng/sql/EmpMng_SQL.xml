@@ -130,12 +130,13 @@
 		WHERE emp_no = #{emp_no}
 	</delete>
 	
-	<update id="userPwInit" parameterType="cmmnMap">
+	<update id="userPwUpdate" parameterType="cmmnMap">
 		UPDATE kcgbd.t_user SET
 		user_pw = #{user_pw}
 		WHERE 1=1
 		AND emp_no = #{emp_no}
 	</update>
+	
 	
 </mapper>
 

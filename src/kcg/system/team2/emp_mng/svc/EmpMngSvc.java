@@ -72,6 +72,13 @@ public class EmpMngSvc {
 		return new CmmnMap().put("status", "pwInit");
 	}
 
+	public CmmnMap userPwUpdate(CmmnMap params) {
+		String pw = params.getString("update_user_pw");
+		params.put("user_pw", CryptUtil.hashSHA512HexString(pw));
+		cmmnDao.update("system.team2_emp_mng.userPwUpdate", params);
+		return new CmmnMap().put("status", "OK");
+	}
+
 	
 	
 	
