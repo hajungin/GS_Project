@@ -114,7 +114,6 @@
                        		<tr>
                        			<th style="width: 4%;" class="center hidden-xs nosort"><input
 								type="checkbox" id="allCheck" @click="all_check(event.target)"></th>
-                           		<th style="width: 5%;" class="center">No</th>
                                 <th style="width: 10%;" class="center">항목코드</th>
                                 <th style="width: 15%;" class="center">항목명</th>
                                 <th style="width: 15%;" class="center">항목구분</th>
@@ -124,7 +123,6 @@
                         </thead>
                         <tbody class="table-group-divider">
                             <tr class="input-row" v-if="insert">
-                            	<td></td>
                           		<td class="center" style="color: blue;">추가</td>
                            		<td><input type="text" v-model="comm_no" placeholder="항목코드 입력" /></td>
                            		<td><input type="text" v-model="comm_nm" placeholder="항목명 입력" /></td>
@@ -140,7 +138,6 @@
                             	<td class="center"><input type="checkbox"
 									:data-idx="item.comm_no" name="is_check" @click="onCheck" v-model="item.selected">
 								</td>
-                                <td class="center">{{ index + 1 }}</td>
                                 <td class="center">{{ item.comm_no }}</td>
                                 <td class="center" v-if="item.update"><input type="text"  v-model="item.comm_nm"/></td>
                                 <td class="center" v-else>{{ item.comm_nm }}</td>

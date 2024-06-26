@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="system.team2.schedule2_mng">
+	<select id="getSch" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT
+		s.title,
+		s.schdul_beg_yml AS start,
+		s.schdul_end_yml AS end
+		FROM
+		kcgbd.e_schedule s
+		WHERE 1=1
+		<!-- 추가적인 조건을 여기에 추가할 수 있습니다 -->
+	</select>
+</mapper>
+
+
+
+
+
+
+
+</mapper>
