@@ -122,8 +122,7 @@
 		<div class="main-content">
 
 			<jsp:include page="/WEB-INF/jsp/kcg/_include/system/header.jsp"
-				flush="false" />
-
+ 				flush="false" /> 
 			<ol class="breadcrumb bc-3">
 				<li><a href="#none" onclick="cf_movePage('/system')"><i
 						class="fa fa-home"></i>Home</a></li>
