@@ -138,6 +138,7 @@
                             <div class="form-group" style="justify-content: left">
                                 <label>목표기간 (개월):</label>
                                 <input class="form-control flex-50" type="text" id="goal_prd" v-model="info.goal_prd" style="width: 700px;"/>
+                                
                                 <button type="button" class="btn btn-transparent flex-20" @click="setGoalPrd(3)">+3개월</button>
                                 <button type="button" class="btn btn-transparent flex-20" @click="setGoalPrd(6)">+6개월</button>
                                 <button type="button" class="btn btn-transparent flex-20" @click="setGoalPrd(12)">+12개월</button>

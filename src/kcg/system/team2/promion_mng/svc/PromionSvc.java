@@ -34,6 +34,7 @@ public class PromionSvc {
 	
 	
 	public PageList<CmmnMap> getListPaging(CmmnMap params, PagingConfig pagingConfig) {
+		System.out.println("==============================planlist" + params);
 		PageList<CmmnMap> rslt = cmmnDao.selectListPage("system.team2.promion_mng.getList", params, pagingConfig);
 		return rslt;
 	}
