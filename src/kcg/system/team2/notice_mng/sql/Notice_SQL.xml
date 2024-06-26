@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace='share.mng.team2.notice'>
+<mapper namespace='system.team2.notice_mng'>
 	
 	<select id="getNoticeList" parameterType="cmmnMap" resultType="cmmnMap">  <!-- 공지 리스트 불러오기 -->
-	/* share.mng.team2.notice.getList */
+		/* system.team2.notice_mng.getNoticeList */
 		SELECT 
 			n.notice_no
 			, n.notice_sb
@@ -14,10 +14,18 @@
 		FROM 
 			kcgbd.e_notice n
 		WHERE 1=1
+		<if test='search_val != ""'>
+			<if test='search_nm == "notice_sb"'>
+				AND n.notice_sb like concat('%',#{search_val},'%')
+			</if>
+			<if test='search_nm == "notice_cn"'>
+				AND n.notice_cn like concat('%',#{search_val},'%')
+			</if>
+		</if>
 	</select>
 	
 	<select id="getNoticeDetail" parameterType="cmmnMap" resultType="cmmnMap">	<!-- 공지 디테일 불러오기 -->
-	/* share.mng.team2.notice.getList */
+			/* system.team2.notice_mng.getNoticeDetail */
 		SELECT 
 			n.notice_no
 			, n.notice_sb
@@ -28,66 +36,46 @@
 		FROM 
 			kcgbd.e_notice n
 		WHERE 1=1
-			AND n.notice_no = #{notice_no}
+			AND n.notice_no = CAST(#{notice_no} AS INTEGER)
 	</select>
+	
+	<update id="incrementViewCount" parameterType="cmmnMap"> 		<!-- 조회수 증가 -->
+			/* system.team2.notice_mng.incrementViewCount */
+        UPDATE kcgbd.e_notice
+        SET rdcnt = rdcnt + 1
+        WHERE 1=1
+        	AND notice_no = CAST(#{notice_no} AS INTEGER)
+    </update>
 	
 	
 	<insert id="insertInfo" parameterType="cmmnMap">	<!-- 공지 새로 추가하기 -->
-		/* share.mng.team2.notice.insertInfo */
-		INSERT INTO kcgbd.t_anal_idea(
-			idx
-			,sbjt
-			,ctnt
-			,add_desc
-			,atch_file_1
-			,atch_file_2
-			,atch_file_3
-			,atch_file_4
-			,atch_file_5
-			,read_cnt
-			,reg_dt
-			,updt_dt
-			,reg_user_id
-			,updt_user_id
+			/* system.team2.notice_mng.insertInfo */
+		INSERT INTO kcgbd.e_notice(
+			notice_sb
+			,notice_cn
+			,frst_reg_ymd
 		)VALUES(
-			#{idx}
-			,#{sbjt}
-			,#{ctnt}
-			,#{add_desc}
-			,#{atch_file_1}
-			,#{atch_file_2}
-			,#{atch_file_3}
-			,#{atch_file_4}
-			,#{atch_file_5}
-			,'0'
-			,NOW()
-			,NOW()
-			,#{user_id}
-			,#{user_id}
+			#{notice_sb}
+			,#{notice_cn}
+			,current_date
 		)
 	</insert>
 	
-	<update id="updateInfo" parameterType="cmmnMap">		<!-- 공지 올렸던 공지 수정하기 -->
-	/* share.mng.anal.idea.updateInfo */
-		UPDATE kcgbd.t_anal_idea
+	<update id="updateInfo" parameterType="cmmnMap">		<!-- 공지 수정하기 -->
+		/* system.team2.notice_mng.updateInfo */
+		UPDATE kcgbd.e_notice
 		SET 
-			sbjt = #{sbjt}
-			,ctnt = #{ctnt}
-			,add_desc = #{add_desc}
-			,atch_file_1 = #{atch_file_1}
-			,atch_file_2 = #{atch_file_2}
-			,atch_file_3 = #{atch_file_3}
-			,atch_file_4 = #{atch_file_4}
-			,atch_file_5 = #{atch_file_5}
-			,updt_dt = NOW()
-			,updt_user_id = #{user_id}
+			notice_sb = #{notice_sb}
+			,notice_cn = #{notice_cn}
+			,last_mdf_ymd = current_date
 		WHERE 1=1
-			AND idx = #{idx}
+			AND notice_no = #{notice_no}
 	</update>
 	
 	<delete id="deleteInfo" parameterType="cmmnMap">		<!-- 공지 삭제하기 -->
-	/* share.mng.anal.idea.deleteInfo */
-		DELETE FROM kcgbd.t_anal_idea
-		WHERE idx = #{idx}
+	/* system.team2.notice_mng.deleteInfo */
+		DELETE FROM kcgbd.e_notice
+		WHERE 1=1 
+			AND notice_no = #{notice_no}
 	</delete>
 </mapper>

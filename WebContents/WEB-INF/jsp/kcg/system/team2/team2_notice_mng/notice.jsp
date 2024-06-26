@@ -31,40 +31,40 @@
 		<div class="dataTables_wrapper" id="vueapp">
 			<template>
 				<div class="dt-buttons" style="padding-top: 15px;">
-					<button type="button" class="btn btn-orange btn-icon icon-left btn-small" @click="gotoDtl()">
-						추가<i class="entypo-plus"></i>
+					<button type="button" class="btn btn-orange btn-icon icon-left btn-small" @click="gotoNew()">
+						새글작성<i class="entypo-plus"></i>
 					</button>
 				</div>
-				<div class="dataTables_filter">
+				
+				<div class="dataTables_filter">  
 					<select id="search_nm" v-model="search_nm">
-						<option value="sbjt">제목</option>
-						<option value="ctnt">내용</option>
-						<option value="reg_user_name">작성자</option>
+						<option value="notice_sb">제목</option>
+						<option value="notice_cn">내용</option>
 					</select>	
 					<input type="search" placeholder="" style="width: 120px;" id="search_val" v-model="search_val" @keyup.enter="getList(true)">
 					<button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;" @click="getList(true)">
 						검색
 						<i class="entypo-search"></i>
 					</button>
-				</div>
+				</div> 
 				
 				<table class="table table-bordered datatable dataTable" id="grid_app">
 					<thead>
 						<tr class="replace-inputs">
 							<th style="width: 5%;" class="center nosort">No</th>
-							<th style="width: 50%;" class="center sorting" @click="sortList(event.target)" sort_target="sbjt">제목</th>
-							<th style="width: 20%;" class="center sorting" @click="sortList(event.target)" sort_target="reg_user_name">작성자</th>
-							<th style="width: 15%;" class="center sorting" @click="sortList(event.target)" sort_target="reg_dt">작성일</th>
-							<th style="width: 10%;" class="center sorting" @click="sortList(event.target)" sort_target="read_cnt">조회</th>
+							<th style="width: 20%;" class="center sorting" @click="sortList(event.target)" sort_target="notice_sb">제목</th>
+							<th style="width: 50%;" class="center sorting" @click="sortList(event.target)" sort_target="notice_cn">내용</th>
+							<th style="width: 15%;" class="center sorting" @click="sortList(event.target)" sort_target="frst_reg_ymd">작성일</th>
+							<th style="width: 10%;" class="center sorting" @click="sortList(event.target)" sort_target="rdcnt">조회</th>
 						</tr>
 					</thead>
 					<tbody id="tbody_list">
-						<tr v-for="item in dataList" @click="gotoDtl(item.idx)" style="cursor: pointer;">
-							<td class="center">{{item.rownum}}</td>
-							<td class="center">{{item.sbjt}}</td>
-							<td class="center">{{item.reg_user_name}}</td>
-							<td class="center">{{item.reg_dt_char}}</td>
-							<td class="center">{{item.read_cnt}}</td>
+						<tr v-for="item in dataList" @click="gotoDtl(item.notice_no)" style="cursor: pointer;">
+							<td class="center">{{item.notice_no}}</td>
+							<td class="center">{{item.notice_sb}}</td>
+							<td class="center">{{item.notice_cn}}</td>
+							<td class="center">{{ new Date(parseInt(item.frst_reg_ymd)).toISOString().slice(0, 10) }}</td>
+							<td class="center">{{item.rdcnt}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -84,10 +84,10 @@ var vueapp = new Vue({
 	el : "#vueapp",
 	data : {
 		dataList : [],
-		search_nm : "sbjt",
+		search_nm : "",
 		search_val : "",
 	},
-	mounted : function(){
+	mounted : function(){		// 리로드 될때 바로 실행
 		var fromDtl = cf_getUrlParam("fromDtl");
 		var pagingConfig = cv_sessionStorage.getItem("pagingConfig");		
 		if("Y" === fromDtl && !cf_isEmpty(pagingConfig)){
@@ -112,7 +112,7 @@ var vueapp = new Vue({
 			cv_pagingConfig.func = this.getList;
 			if(isInit === true){
 				cv_pagingConfig.pageNo = 1;
-				cv_pagingConfig.orders = [{target : "reg_dt", isAsc : false}];
+				cv_pagingConfig.orders = [{target : "notice_no", isAsc : false}]; 		// frst_reg_ymd(등록일) 필드를 기준으로 내림차순(isAsc: false)으로 정렬
 			}
 			
 			var params = {
@@ -120,28 +120,33 @@ var vueapp = new Vue({
 					search_val : this.search_val,
 				}
 			
-			cv_sessionStorage
+			cv_sessionStorage		// cv_sessionStorage 객체에 pagingConfig와 params를 저장
 				.setItem('pagingConfig', cv_pagingConfig)
 				.setItem('params', params);
 
-			cf_ajax("/system/share_mng/analIdea/getList", params, this.getListCB);
+			cf_ajax("/system/notice_mng/getList", params, this.getListCB);  // 접속되는 URL을 적어야한다. (시스템 파일 경로 말고)
 		},
 		getListCB : function(data){  // ajax로 데이터를 받아와서 dataList에 담는다
 			this.dataList = data.list;
 			for(var i=0; i<this.dataList.length; i++){
-				this.dataList[i].read_cnt = this.dataList[i].read_cnt.numformat();
+				this.dataList[i].read_cnt = this.dataList[i].notice_no.numformat();
 			}
 			
 			cv_pagingConfig.renderPagenation("system");
 		},
-		gotoDtl : function(idx){		// 상세 페이지로 이동하는 함수
+		gotoNew : function(){		// 새 글 작성 페이지로 이동하는 함수
+			
+			cf_movePage("/system/notice_mng/new_notice"); // 새글 작성 페이지로 이동
+		},
+		
+		gotoDtl : function(notice_no){		// 상세 보기 페이지로 이동하는 함수
 			var params = {
-					idx : cf_defaultIfEmpty(idx, ""),
+					notice_no : cf_defaultIfEmpty(notice_no, ""),
 				}
-			cf_movePage("/system/share_mng/analIdea/dtl", params);
+			cf_movePage("/system/notice_mng/notice", params); // 자세히 보기 페이지로 이동
 		},		
 		sortList : function(obj){		// 목록 정렬 함수 (클릭시 정렬 기준이 바뀜)
-			cf_setSortConf(obj, "reg_dt");
+			cf_setSortConf(obj, "notice_no");
 			this.getList();
 		},
 	},
