@@ -1,6 +1,5 @@
 package kcg.system.team2.sell_mng.ctl;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,30 +35,37 @@ public class SellCtl {
 			return sellsvc.getList(params, pagingConfig); 
 	 }
 	 
-	 // 상품 디테일 페이지 이동
-	 @RequestMapping("/dtl")
-		public String openPageDtl(Model model, CmmnMap params) {
-			model.addAttribute("prod_cd", params.getString("prod_no", ""));
-			return "kcg/system/team2/team2_sell_mng/dtl";
-		}
-	 
 	 // 가입관리 페이지
-	 @RequestMapping("/join")
-	 public String joinPage() {
-		 return "kcg/system/team2/team2_sell_mng/join";
+	 @RequestMapping("/init")
+	 	public String joinPage() {
+		 return "kcg/system/team2/team2_sell_mng/init";
 	 }
 	 
-	 // 고객정보 리스트 및 검색
+	 // 가입현황 리스트 및 검색
 	 @RequestMapping("/getcustomer")
-		public PageList<CmmnMap> getcustomer(CmmnMap params , PagingConfig pagingConfig){
+	 	public PageList<CmmnMap> getcustomer(CmmnMap params , PagingConfig pagingConfig){
 			return sellsvc.getcustomer(params, pagingConfig); 
+	 }
+	 
+	 // 가입내역 확인 페이지
+	 @RequestMapping("/membership")
+	 	public String membership() {
+		  return "kcg/system/team2/team2_sell_mng/membership"; 
 	 }
 	 
 	 //가입현황 리스트 및 검색
 	 @RequestMapping("/joinList")
-		public PageList<CmmnMap> joinList(CmmnMap params , PagingConfig pagingConfig){
+	 	public PageList<CmmnMap> joinList(CmmnMap params , PagingConfig pagingConfig){
 			return sellsvc.joinList(params, pagingConfig); 
 	 }
+	 
+	 // 가입대상 고객 추천
+	 @RequestMapping("/custom")
+		public List<CmmnMap> custom(CmmnMap params) {
+			return sellsvc.custom(params);
+		}
+	 
+	 
 	 
 	 
 	 

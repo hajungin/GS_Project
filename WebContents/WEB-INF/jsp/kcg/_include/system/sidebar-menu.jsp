@@ -31,6 +31,49 @@
 	
 	
 			<ul id="main-menu" class="main-menu">
+
+			<li data-lnb="10" data-snb="0">
+					<a href="#gm">
+						<i class="entypo-newspaper"></i>
+						<span class="title">EZEN 고객관리</span>
+					</a>
+					<ul data-lnb="10" data-snb="0">
+						<li data-lnb="10" data-snb="1">
+							<a href="#gm" onclick="cf_movePage('/customer/custMng')">
+								<span class="title">고객 정보 관리</span>
+							</a>
+						</li>
+					</ul>
+					<ul data-lnb="10" data-snb="0">
+						<li data-lnb="10" data-snb="1">
+							<a href="#gm" onclick="cf_movePage('/customer/custList')">
+								<span class="title">고객정보 목록 조회</span>
+							</a>
+						</li>
+					</ul>
+					<ul data-lnb="10" data-snb="0">
+						<li data-lnb="10" data-snb="2">
+							<a href="#gm" onclick="cf_movePage('/communi/communiList')">
+								<span class="title">상담내역 조회</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<li data-lnb="10" data-snb="0">
+					<a href="#gm">
+						<i class="entypo-newspaper"></i>
+						<span class="title">EZEN 담당자 관리</span>
+					</a>
+					<ul data-lnb="10" data-snb="0">
+						<li data-lnb="10" data-snb="1">
+							<a href="#gm" onclick="cf_movePage('/empMng/empMngList')">
+								<span class="title">담당자정보 조회</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+
 			
 			
 				<li data-lnb="10" data-snb="0">
@@ -73,21 +116,34 @@
 				<li data-lnb="11" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
-						<span class="title">GSITM 판매관리</span>
+						<span class="title">EZEN 판매관리(사용자)</span>
 					</a>
 					<ul data-lnb="11" data-snb="0">
 						<li data-lnb="11" data-snb="1">
 							<a href="#gm" onclick="cf_movePage('/sell/list')">
 								<span class="title">상품정보 조회</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/sell/join')">
-								<span class="title">가입관리</span>
+							
+							<a href="#gm" onclick="cf_movePage('/sell/init')">
+								<span class="title">가입현황</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
-								<span class="title">판매달성률관리</span>
+							
+						</li>
+					</ul>
+				</li>
+				<li data-lnb="11" data-snb="0">
+					<a href="#gm">
+						<i class="entypo-newspaper"></i>
+						<span class="title">EZEN 상품관리(관리자)</span>
+					</a>
+					<ul data-lnb="11" data-snb="0">
+						<li data-lnb="11" data-snb="1">
+							<a href="#gm" onclick="cf_movePage('/2team/prod/GLlist')">
+								<span class="title">상품관리</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/prod_mng/list')">
-								<span class="title">판매달성률조회</span>
+							
+							<a href="#gm" onclick="cf_movePage('/2team/prod/insert')">
+								<span class="title">상품등록</span>
 							</a>
 						</li>
 					</ul>

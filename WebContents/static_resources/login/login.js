@@ -13,7 +13,7 @@ function login(){
     		cf_movePage('/system')
     	} else if("SUCC_CLIENT" === rslt){
     		auth_menulist = data.auth_menulist;
-    		cf_movePage('/')
+    		cf_movePage('/system/team2')
     	} else if("NO_USER" === rslt){
     		alert("입력하신 아이디는 존재하지 않습니다.");
     	} else if("FAIL_PW_ERR" === rslt){

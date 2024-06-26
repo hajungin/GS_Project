@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='system.team2_emp_mng'>
+
+	<select id="getEmpMngList" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT
+		    e.emp_no AS emp_no,
+		    e.emp_nm AS emp_nm,
+		    d.comm_nm AS emp_dept,
+		    p.comm_nm AS emp_posit,
+		    e.emp_eml_addr AS emp_eml_addr
+		FROM kcgbd.e_employee AS e
+		INNER JOIN
+			kcgbd.e_common d ON e.emp_dept = d.comm_no
+		INNER JOIN
+			kcgbd.e_common p ON e.emp_posit = p.comm_no
+		WHERE 1=1
+	    <if test='emp_no != null and emp_no != ""'>
+	        AND e.emp_no LIKE CONCAT('%', #{emp_no}, '%')
+	    </if>
+	    <if test='emp_nm != null and emp_nm != ""'>
+	        AND e.emp_nm LIKE CONCAT('%', #{emp_nm}, '%')
+	    </if>
+	    <if test='emp_dept != null and emp_dept != ""'>
+	        AND d.comm_nm LIKE CONCAT('%', #{emp_dept}, '%')
+	    </if>
+	    <if test='emp_posit != null and emp_posit != ""'>
+	        AND p.comm_nm LIKE CONCAT('%', #{emp_posit}, '%')
+	    </if>
+	    ORDER BY e.emp_no DESC
+	    <if test='limit != null'>
+	        LIMIT #{limit}::integer
+	    </if>
+	</select>
+	
+	<select id="getEmpOne" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT
+			e.emp_no AS emp_no,
+			e.emp_nm AS emp_nm,
+			d.comm_no AS emp_dept,
+			p.comm_no AS emp_posit,
+			e.emp_ecny_dt AS emp_ecny_dt,
+			e.emp_mbl_telno AS emp_mbl_telno,
+			e.emp_eml_addr AS emp_eml_addr
+		FROM kcgbd.e_employee AS e
+		JOIN kcgbd.e_common d ON e.emp_dept = d.comm_no
+		JOIN kcgbd.e_common p ON e.emp_posit = p.comm_no
+		WHERE e.emp_no = #{emp_no}
+	</select>
+	
+	<insert id="empInsert" parameterType="cmmnMap">
+		INSERT INTO kcgbd.e_employee
+		(emp_no, emp_nm, emp_dept, emp_posit, emp_ecny_dt, emp_mbl_telno, emp_eml_addr)
+		VALUES(
+			#{emp_no},
+			#{emp_nm},
+			#{emp_dept},
+			#{emp_posit},
+			TO_DATE(#{emp_ecny_dt}, 'YYYY-MM-DD'),
+			#{emp_mbl_telno},
+			#{emp_eml_addr}
+		)
+	</insert>
+	
+	<update id="empUpdate" parameterType="cmmnMap">
+		UPDATE
+			kcgbd.e_employee
+		SET
+			emp_no = #{emp_no},
+			emp_nm = #{emp_nm},
+			emp_dept = #{emp_dept},
+			emp_posit = #{emp_posit},
+			emp_ecny_dt = #{emp_ecny_dt},
+			emp_mbl_telno = #{emp_mbl_telno},
+			emp_eml_addr = #{emp_eml_addr}
+	</update>
+	
+	<delete id="empDelete" parameterType="cmmnMap">
+		DELETE FROM kcgbd.e_employee
+		WHERE emp_no = #{emp_no}
+	</delete>
+	
+</mapper>
+
+
+
+
