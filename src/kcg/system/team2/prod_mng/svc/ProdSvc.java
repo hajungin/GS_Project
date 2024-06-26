@@ -1,5 +1,8 @@
 package kcg.system.team2.prod_mng.svc;
 
+
+import java.math.BigInteger;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +66,7 @@ public class ProdSvc {
 		CmmnMap rslt = cmmnDao.selectOne("system.team2.prod_mng.code",params);
 		return rslt;
 	}
+
 
 	public CmmnMap getInfo(CmmnMap params) {
 	    CmmnMap rslt = null; // 반환할 결과 변수 선언 및 초기화
@@ -147,6 +151,14 @@ public class ProdSvc {
 			return rslt;
 	}
 
+
+
+
+	public List<CmmnMap> getProdList(CmmnMap params) {
+		
+		List<CmmnMap> rslt = cmmnDao.selectList("system.team2.prod_mng.getProdList", params);
+		return rslt;
+	}
 
 
 }

@@ -212,9 +212,21 @@
 						</li>
 					</ul>
 				</li>
-
-	
-				 
+				<li data-lnb="14" data-snb="0">
+				    <a href="#gm">
+				        <i class="entypo-newspaper"></i>
+				        <span class="title">공지사항 관리</span>
+				    </a>
+				    <ul data-lnb="14" data-snb="0">
+				        <li data-lnb="14" data-snb="1">
+				            <a href="#gm" onclick="cf_movePage('/system/notice_mng/list')">
+				                <span class="title">공지사항 목록</span>
+				            </a>
+				        </li>
+				    </ul>
+				</li>
+				
+				
 			</ul>
 		</div>
 
@@ -294,6 +306,8 @@ var menulvlconst = [
 	
 	//{lnb : 13, snb : 1, url : "/scheduleMng/list"},
 	//{lnb : 13, snb : 2, url : "/scheduleMng/list2"},
+	
+	{lnb : 14, snb : 1, url : "/system/notice_mng/list"},
 	
 ]
 
