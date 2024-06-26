@@ -15,102 +15,10 @@
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/datatables.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/promion.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/billboard.css">
-	
+	<link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
 	
 <title>상품정보조회</title>
-<style>
-    .header {
-        background-color: #A7EEFF;
-        color: #333;
-        padding: 12px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        font-size: 1.5em;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin: 20px 0;
-        transition: background-color 0.3s ease;
-        cursor: pointer;
-    }
 
-    .header:hover {
-        background-color: #66CCFF;
-    }
-    #Button:hover {
-        background-color: #2980B9; /* Hover 시 배경색 변경 */
-    }
-   /* Modal Content */
-#popup_print .modal-content {
-    border: none;
-    border-radius: 0;
-    background-color: #fff;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-}
-
-/* Modal Header */
-#popup_print .modal-header {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 15px;
-}
-
-/* Modal Title */
-#popup_print .modal-title {
-    font-weight: bold;
-    font-size: 18px;
-}
-
-/* Modal Body */
-#popup_print .modal-body {
-    padding: 20px;
-}
-
-/* Form Group Style */
-#popup_print .form-group {
-    margin-bottom: 15px;
-}
-
-/* Table Style */
-#popup_print table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #ddd;
-}
-
-#popup_print table th, #popup_print table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
-
- #popup_print table th { 
-    background-color: #f0f0f0; 
-    color: #333;
- } 
-
-/* Modal Footer */
-.modal-footer {
-    border-top: 1px solid #ddd;
-    padding: 15px;
-    text-align: right;
-}
-
-/* Primary Button */
-#popup_print.btn-primary:hover {
-    background-color: #2980b9;
-    border-color: #2980b9;
-}
-
-/* Secondary Button */
-#popup_print.btn-secondary:hover {
-    background-color: #7f8c8d;
-    border-color: #7f8c8d;
-}
-</style>
-
-</style>
 </head>
 <body class="page-body">
 
@@ -255,7 +163,7 @@
 					</table>
 
 
-					<div style="position: relative; width: 1600px;">
+					<div style="position: relative; width: 100%;">
 					    <div class="dataTables_paginate paging_simple_numbers" id="div_paginate" style="position: absolute; right: 0; top: -90%;"></div>
 					</div>
 

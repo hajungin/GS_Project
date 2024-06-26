@@ -9,13 +9,12 @@
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
-	
+	<link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
 	<title>마이페이지</title>
 </head>
+
 <body class="page-body">
-
 <div class="page-container">
-
 	<jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu.jsp" flush="false"/>
 	<div class="main-content">
 		<jsp:include page="/WEB-INF/jsp/kcg/_include/system/header.jsp" flush="false"/>
@@ -24,64 +23,62 @@
 			<li class="active"><strong>마이페이지</strong></li>
 		</ol>
 	
-		<h2>마이페이지</h2>
+		<h2 class="header" onclick="location.reload();">마이페이지</h2>
 		<br/>
 		
 		<div class="row">
-			<div id="vueapp" style="display: flex; justify-items: center;">
-			<template>
-				<div class="panel-body flex-100" >			
-					<div class="left-panel flex-66">
-						<div class="form-group">
-							<label for="emp_no" class="fix-width-33">사원번호 :</label>
-							<input type="text" class="form-control" id="emp_no" v-model="info.emp_no" readonly>
-						</div>
-						
-						<div class="form-group">
-							<label for="emp_nm" class="fix-width-33">성명 :</label>
-							<input type="text" class="form-control" id="emp_nm" v-model="info.emp_nm">
-						</div>
-						
-						<div class="form-group">
-							<label for="emp_dept" class="fix-width-33">부서 :</label>
-							<input type="text" class="form-control" id="emp_dept" v-model="info.emp_dept_nm" readonly>
-						</div>
-			
-						<div class="form-group">
-							<label for="emp_posit" class="fix-width-33">직위 :</label>
-							<input type="text" class="form-control" id="emp_posit" v-model="info.emp_posit_nm" readonly>
-						</div>
-						
-						<div class="form-group">
-							<label for="emp_ecny_dt" class="fix-width-33">입사일자 :</label>
-							<input type="date" class="form-control" id="emp_ecny_dt" v-model="info.emp_ecny_dt">
-						</div>
-						
-						<div class="form-group">
-							<label for="emp_mbl_telno" class="fix-width-33">전화번호 :</label>
-							<input type="text" class="form-control" id="emp_mbl_telno" v-model="info.emp_mbl_telno">
-						</div>
-						
-						<div class="form-group">
-							<label for="emp_eml_addr" class="fix-width-33">E-mail :</label>
-							<input type="text" class="form-control" id="emp_eml_addr" v-model="info.emp_eml_addr">
-						</div>
-						
-						<div class="form-group">
-							<div class="">
+			<div id="vueapp" style="display: flex; justify-content: center; width: 100%;">
+				<template>
+					<div class="panel-body" style="border: 2px solid #00CDFF; width: 100%; display: flex; justify-content: center;">
+						<div class="left-panel" style="width: 50%; border: none;">
+							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+								<label for="emp_no" class="fix-width-33" style="width: 150px;">사원번호 :</label>
+								<input type="text" class="form-control" id="emp_no" v-model="info.emp_no" readonly style="flex: 1;">
+							</div>
+							
+							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+								<label for="emp_nm" class="fix-width-33" style="width: 150px;">성명 :</label>
+								<input type="text" class="form-control" id="emp_nm" v-model="info.emp_nm" style="flex: 1;">
+							</div>
+							
+							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+								<label for="emp_dept" class="fix-width-33" style="width: 150px;">부서 :</label>
+								<input type="text" class="form-control" id="emp_dept" v-model="info.emp_dept_nm" readonly style="flex: 1;">
+							</div>
+				
+							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+								<label for="emp_posit" class="fix-width-33" style="width: 150px;">직위 :</label>
+								<input type="text" class="form-control" id="emp_posit" v-model="info.emp_posit_nm" readonly style="flex: 1;">
+							</div>
+							
+							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+								<label for="emp_ecny_dt" class="fix-width-33" style="width: 150px;">입사일자 :</label>
+								<input type="date" class="form-control" id="emp_ecny_dt" v-model="info.emp_ecny_dt" style="flex: 1;">
+							</div>
+							
+							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+								<label for="emp_mbl_telno" class="fix-width-33" style="width: 150px;">전화번호 :</label>
+								<input type="text" class="form-control" id="emp_mbl_telno" v-model="info.emp_mbl_telno" style="flex: 1;">
+							</div>
+							
+							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+								<label for="emp_eml_addr" class="fix-width-33" style="width: 150px;">E-mail :</label>
+								<input type="text" class="form-control" id="emp_eml_addr" v-model="info.emp_eml_addr" style="flex: 1;">
+							</div>
+							
+							<div class="form-group" style="display: flex; gap: 10px;">
 								<button type="button" class="btn btn-green btn-icon btn-small" @click="empUpdate">
 									저장
 									<i class="entypo-check"></i>
 								</button>
 								<button type="button" class="btn btn-blue btn-icon btn-small" onclick="cf_movePage('/system')">
 									HOME
-									<i class="entypo-list"></i>
+									<i class="fa fa-home"></i>
 								</button>
 							</div>
 						</div>
-					</div>
-				</div>						
-			</template>		
+					</div>						
+				</template>		
 			</div>
 		</div>
 		<br />
@@ -91,6 +88,7 @@
 	</div>
 </div>
 </body>
+
 <script type="text/javascript">
 	var vueapp = new Vue({
 	    el: "#vueapp",

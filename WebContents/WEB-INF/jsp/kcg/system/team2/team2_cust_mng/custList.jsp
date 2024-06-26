@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
     <link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
     <link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
+    <link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
     <title>고객목록조회</title>
 </head>
 
@@ -28,13 +29,13 @@
                 <li class="active"><strong>고객정보 목록 조회</strong></li>
             </ol>
 
-            <h2>고객정보 목록</h2>
+            <h2 class="header" onclick="location.reload();">고객정보 목록</h2>
             <br />
 
             <div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
                 <template>
-                    <div class="flex flex-100">
-                        <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
+                    <div class="flex flex-100" style="border: 2px solid #00CDFF;">
+                        <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10" style="border: none;">
                             <div class="form-group flex-60">
                             	<label class="fix-width-10" style="margin-left: 50px;">이벤트구분 :</label>
 	                                <select id ="event" class="form-control" v-model="event" @change="getCustEventList()">
@@ -58,7 +59,7 @@
                         </div>
                     </div>
                     <div class="flex flex-100 flex-padding-10 flex-gap-10"
-                        style="justify-content:flex-end;border: 1px solid #999999;">
+                        style="justify-content:flex-end;  border: 2px solid #00CDFF;">
                         <button type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
                             @click="gotoDtl()">
                             신규회원등록
@@ -71,15 +72,15 @@
                         </button>
                     </div>
                     <table class="table table-bordered datatable dataTable" id="grid_app"
-                        style="border: 1px solid #999999;">
+                         style="border: 2px solid #00CDFF;">
                         <thead>
                             <tr class="replace-inputs">
-                            	<th style="width: 3%;" class="center"></th>
-                                <th style="width: 10%;" class="center">성명</th>
-                                <th style="width: 15%;" class="center">생년월일</th>
-                                <th style="width: 15%;" class="center">이메일주소</th>
-                                <th style="width: 15%;" class="center">핸드폰번호</th>
-                                <th style="width: 25%;" class="center">주소</th>
+                            	<th style="width: 3%; background-color: #B9FFFF;" class="center"></th>
+                                <th style="width: 10%; background-color: #B9FFFF;" class="center">성명</th>
+                                <th style="width: 15%; background-color: #B9FFFF;" class="center">생년월일</th>
+                                <th style="width: 15%; background-color: #B9FFFF;" class="center">이메일주소</th>
+                                <th style="width: 15%; background-color: #B9FFFF;" class="center">핸드폰번호</th>
+                                <th style="width: 25%; background-color: #B9FFFF;" class="center">주소</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
@@ -95,7 +96,13 @@
                             </tr>
                         </tbody>
                     </table>
+<<<<<<< HEAD
                	<div class="dataTables_paginate paging_simple_numbers" id="div_paginate"></div>
+=======
+               		<div style="position: relative; width: 100%;">
+					    <div class="dataTables_paginate paging_simple_numbers" id="div_paginate" style="position: absolute; right: 0; top: -90%;"></div>
+					</div>
+>>>>>>> b180239212b0156e966a9f65e6ff783c058eaa04
                 </template>
             </div>
             <jsp:include page="/WEB-INF/jsp/kcg/_include/system/footer.jsp" flush="false" />

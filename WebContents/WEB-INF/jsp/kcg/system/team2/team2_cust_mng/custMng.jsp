@@ -25,7 +25,7 @@
          <li class="active"><strong>고객정보관리</strong></li>
         </ol>
 
-        <h2>고객정보관리</h2>
+        <h2 class="header" onclick="location.reload();">고객정보관리</h2>
         <br />
  		<div class="flex flex-100 flex-padding-10 flex-gap-10"
             style="justify-content:flex-end;">
