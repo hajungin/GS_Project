@@ -10,30 +10,8 @@
     <link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
     <link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
     <link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
+    <link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
     <title>관리자시스템</title>
-    <style>
-    .input-row td {
-	   padding: 0;
-	   margin: 0;
-	   height: 30px;
-	   }
-
-	.input-row input[type="text"] {
-    	border: 1px solid #ccc;
-        width: 100%;
-        height: 100%; 
-        box-sizing: border-box;
-        padding: 0; 
-        margin: 0;
-        text-align: center;
-        border-radius: 4px;
-       }
-    .input-row input[type="text"]::placeholder {
-    	color: #999;
-    	text-align: center;
-    	font-style: italic;
-		}
-    </style>
 </head>
 
 <body class="page-body">
@@ -51,13 +29,13 @@
                 <li class="active"><strong>공통옵션관리</strong></li>
             </ol>
 
-            <h2>공통옵션관리</h2>
+            <h2 class="header" onclick="location.reload();">공통옵션관리</h2>
             <br />
 
             <div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
                 <template>
-                    <div class="flex flex-100">
-                        <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
+                    <div class="flex flex-100" style="border: 2px solid #00CDFF;">
+                        <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10" style="border: none;">
                             <div class="form-group flex-100">
                              	<label class="fix-width-50" style="margin-left: 200px;">항목구분</label>
                                 <select id ="group_comm" class="form-control" v-model="gr_comm_no" @change="getCommonList()">
@@ -76,7 +54,7 @@
 					</div>
 
                     <div class="flex flex-100 flex-padding-10 flex-gap-10"
-                        style="justify-content:flex-end;border: 1px solid #999999;">
+                        style="justify-content:flex-end; border: 2px solid #00CDFF;">
                         <button v-if="!showButton" type="button" class="btn btn-gold btn-icon" style="margin-left: 5px;"
                             @click="popGrComm">
                             항목구분관리
@@ -85,7 +63,7 @@
                         <button v-if="!showButton" type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
                             @click="showInputRow">
                             항목코드추가
-                            <i class="entypo-archive"></i>
+                            <i class="fa fa-plus"></i>
                         </button>
                          <button v-if="!showButton" type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
                             @click="showUpdateColumn">
@@ -105,20 +83,20 @@
                         <button v-if="!showButton" type="button" class="btn btn-danger btn-icon " style="margin-left: 5px;"
                             @click="commDelete">
                             항목코드삭제
-                            <i class="entypo-archive"></i>
+                            <i class="entypo-trash"></i>
                         </button>
                     </div>
                     <table class="table table-bordered datatable dataTable" id="grid_app"
-                        style="border: 1px solid #999999;">
+                        style="border: 2px solid #00CDFF;">
                         <thead>
                        		<tr>
-                       			<th style="width: 4%;" class="center hidden-xs nosort"><input
+                       			<th style="width: 4%; background-color: #B9FFFF;" class="center hidden-xs nosort"><input
 								type="checkbox" id="allCheck" @click="all_check(event.target)"></th>
-                                <th style="width: 10%;" class="center">항목코드</th>
-                                <th style="width: 15%;" class="center">항목명</th>
-                                <th style="width: 15%;" class="center">항목구분</th>
-                                <th style="width: 15%;" class="center">비고</th>
-                                <th style="width: 10%;" class="center">등록(수정)일</th>
+                                <th style="width: 10%; background-color: #B9FFFF;" class="center">항목코드</th>
+                                <th style="width: 15%; background-color: #B9FFFF;" class="center">항목명</th>
+                                <th style="width: 15%; background-color: #B9FFFF;" class="center">항목구분</th>
+                                <th style="width: 15%; background-color: #B9FFFF;" class="center">비고</th>
+                                <th style="width: 10%; background-color: #B9FFFF;" class="center">등록(수정)일</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
@@ -148,7 +126,6 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="dataTables_paginate paging_simple_numbers" id="div_paginate"></div>
                 </template>
             </div>
             <jsp:include page="/WEB-INF/jsp/kcg/_include/system/footer.jsp" flush="false" />

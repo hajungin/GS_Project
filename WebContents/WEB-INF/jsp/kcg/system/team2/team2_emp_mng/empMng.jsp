@@ -10,99 +10,7 @@
             <link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
             <link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
             <link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
-            
-<style>
-.header {
-        background-color: #A7EEFF;
-        color: #333;
-        padding: 12px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        font-size: 1.5em;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin: 20px 0;
-        transition: background-color 0.3s ease;
-        cursor: pointer;
-    }
-
-    .header:hover {
-        background-color: #66CCFF;
-    }
-    #Button:hover {
-        background-color: #2980B9; /* Hover 시 배경색 변경 */
-    }
-   /* Modal Content */
-#pop_emp_register .modal-content, #pop_emp_info .modal-content {
-    border: none;
-    border-radius: 0;
-    background-color: #fff;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-}
-
-/* Modal Header */
-#pop_emp_register .modal-header, #pop_emp_info .modal-header {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 15px;
-}
-
-/* Modal Title */
-#pop_emp_register .modal-title, #pop_emp_info .modal-title {
-    font-weight: bold;
-    font-size: 18px;
-}
-
-/* Modal Body */
-#pop_emp_register .modal-body, #pop_emp_info .modal-body {
-    padding: 20px;
-}
-
-/* Form Group Style */
-#pop_emp_register .form-group, #pop_emp_info .form-group {
-    margin-bottom: 15px;
-}
-
-/* Table Style */
-#pop_emp_register table, #pop_emp_info table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #ddd;
-}
-
-#pop_emp_register table th, #pop_emp_info table th, #pop_emp_register table td, #pop_emp_info table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
-
- #pop_emp_register table th, #pop_emp_info table th { 
-    background-color: #f0f0f0; 
-    color: #333;
- } 
-
-/* Modal Footer */
-.modal-footer {
-    border-top: 1px solid #ddd;
-    padding: 15px;
-    text-align: right;
-}
-
-/* Primary Button */
-#pop_emp_register .btn-primary:hover, #pop_emp_info .btn-primary:hover {
-    background-color: #2980b9;
-    border-color: #2980b9;
-}
-
-/* Secondary Button */
-#pop_emp_register .btn-secondary:hover, #pop_emp_info .btn-secondary:hover {
-    background-color: #7f8c8d;
-    border-color: #7f8c8d;
-}  
-</style>
-            
+            <link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
             <title>관리자시스템</title>
         </head>
 
@@ -118,13 +26,13 @@
 		                <li class="active"><strong>담당자 관리</strong></li>
 		            </ol>
 		
-		            <h2 class="header">담당자 목록</h2>
+		            <h2 class="header" onclick="location.reload();">담당자 목록</h2>
 		            <br />
 		
 		            <div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
 		                <template>
 		                    <div class="flex flex-100" style="border: 2px solid #00CDFF;">
-							    <div class="flex-wrap flex-66 flex flex-gap-10 flex-padding-10">
+							    <div class="flex-wrap flex-66 flex flex-gap-10 flex-padding-10" style="border: none;">
 							        <div class="form-group flex-40" style="display: flex; flex-wrap: wrap; gap: 20px;">
 							            <label class="fix-width-10">사원번호 :</label>
 							            <input class="form-control" v-model="emp_no" value="" style="margin-bottom: 10px;">
@@ -155,12 +63,12 @@
 		                         style="border: 2px solid #00CDFF;">
 		                        <thead>
 		                            <tr class="replace-inputs">
-		                                <th>No</th>
-		                                <th style="width: 20%;" class="center">사원번호</th>
-		                                <th style="width: 15%;" class="center">성명</th>
-		                                <th style="width: 15%;" class="center">부서</th>
-		                                <th style="width: 10%;" class="center">직위</th>
-		                                <th style="width: 40%;" class="center">E-mail</th>
+		                                <th style="background-color: #B9FFFF;">No</th>
+		                                <th style="width: 20%; background-color: #B9FFFF;" class="center">사원번호</th>
+		                                <th style="width: 15%; background-color: #B9FFFF;" class="center">성명</th>
+		                                <th style="width: 15%; background-color: #B9FFFF;" class="center">부서</th>
+		                                <th style="width: 10%; background-color: #B9FFFF;" class="center">직위</th>
+		                                <th style="width: 40%; background-color: #B9FFFF;" class="center">E-mail</th>
 		                            </tr>
 		                        </thead>
 		                        <tbody>
@@ -175,7 +83,7 @@
 		                            </tr>
 		                        </tbody>
 		                    </table>
-		                    <div style="position: relative; width: 1600px;">
+		                    <div style="position: relative; width: 100%">
 					    		<div class="dataTables_paginate paging_simple_numbers" id="div_paginate" style="position: absolute; right: 0; top: -90%;"></div>
 							</div>
 		                </template>
