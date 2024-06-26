@@ -62,37 +62,56 @@
 <select id="getList" parameterType="cmmnMap" resultType="cmmnMap">
 	/* system.team2.promion_mng.getlist */
 		select 
-		  	  tot_dpst_amt suggest_amt
-		  	 , (select cust_nm from kcgbd.e_customer where cust_sn = a.cust_sn) cust_nm
-			 , (select cust_eml_addr from kcgbd.e_customer where cust_sn = a.cust_sn) cust_eml_addr
-		   	 , (select prod_nm from kcgbd.e_product_save where prod_no = a.prod_no) prod_nm
-		   	 , (select prod_nm from kcgbd.e_product_loan where prod_no = a.loan_prod_no) loan_prod_nm
-		   	 , (select prod_nm from kcgbd.e_product_dp where prod_no = a.dp_prod_no) dp_prod_nm
-		   	 , (select prod_nm from kcgbd.e_product_ac where prod_no = a.ac_prod_no) ac_prod_nm
-			 , to_char(a.wrt_dt,'yyyy-mm-dd') wrt_dt
-		  	 , (select comm_nm from kcgbd.e_common where comm_no = a.prod_type) prod_type
-		  	 , (select emp_nm from kcgbd.e_employee where emp_no = b.emp_no) emp_nm
-		  	 , plan_no
-		  	 , a.cust_sn
-		  	 , init_yn
-		  	 , '1' simpl_ty_cd
-		  	 from kcgbd.e_planlist a
-		  	 left join kcgbd.e_customer b
-		  	 on a.cust_sn = b.cust_sn
-		 where init_yn = 'N'
-		<if test='cust_nm != null and cust_nm != ""'>
-		   and (select cust_nm from kcgbd.e_customer where cust_sn = a.cust_sn) like concat('%',#{cust_nm},'%')
-		</if>
-		<if test='prod_nm != null and prod_nm != ""'>
-		   and (select prod_nm from kcgbd.e_product_save where prod_no = a.prod_no) like concat('%',#{prod_nm},'%')
-		</if>
-		<if test='emp_nm != null and emp_nm != ""'>
-		   and (select emp_nm from kcgbd.e_employee where emp_no = b.emp_no) like concat('%',#{emp_nm},'%')
-		</if>
-		<if test='wrt_dt != null and wrt_dt != ""'>
-		   and to_char(a.wrt_dt,'yyyy-mm-dd') = #{wrt_dt}
-		</if>
-		order by wrt_dt desc
+        a.tot_dpst_amt as suggest_amt,
+        b.cust_nm,
+        b.cust_eml_addr,
+        s.prod_nm as prod_nm,
+        l.prod_nm as loan_prod_nm,
+        d.prod_nm as dp_prod_nm,
+        c.prod_nm as ac_prod_nm,
+        to_char(a.wrt_dt,'yyyy-mm-dd') as wrt_dt,
+        cm.comm_nm as prod_type,
+        e.emp_nm,
+        a.plan_no,
+        a.cust_sn,
+        a.init_yn,
+        '1' as simpl_ty_cd
+    from 
+        kcgbd.e_planlist a
+    left join 
+        kcgbd.e_customer b on a.cust_sn = b.cust_sn
+    left join 
+        kcgbd.e_product_save s on a.prod_no = s.prod_no
+    left join 
+        kcgbd.e_product_loan l on a.loan_prod_no = l.prod_no
+    left join 
+        kcgbd.e_product_dp d on a.dp_prod_no = d.prod_no
+    left join 
+        kcgbd.e_product_ac c on a.ac_prod_no = c.prod_no
+    left join 
+        kcgbd.e_common cm on a.prod_type = cm.comm_no
+    left join 
+        kcgbd.e_employee e on b.emp_no = e.emp_no
+    where 
+        a.init_yn = 'N'
+        <if test='cust_nm != null and cust_nm != ""'>
+            and b.cust_nm like concat('%', #{cust_nm}, '%')
+        </if>
+        <if test='prod_nm != null and prod_nm != ""'>
+            and (
+                s.prod_nm like concat('%', #{prod_nm}, '%')
+                or l.prod_nm like concat('%', #{prod_nm}, '%')
+                or d.prod_nm like concat('%', #{prod_nm}, '%')
+                or c.prod_nm like concat('%', #{prod_nm}, '%')
+            )
+        </if>
+        <if test='emp_nm != null and emp_nm != ""'>
+            and e.emp_nm like concat('%', #{emp_nm}, '%')
+        </if>
+        <if test='wrt_dt != null and wrt_dt != ""'>
+            and to_char(a.wrt_dt, 'yyyy-mm-dd') = #{wrt_dt}
+        </if>
+    order by a.wrt_dt desc
 	</select>
 
 	<select id="getCust" parameterType="cmmnMap" resultType="cmmnMap">
