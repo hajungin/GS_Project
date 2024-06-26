@@ -63,7 +63,19 @@ public class SellCtl {
 	 @RequestMapping("/custom")
 		public List<CmmnMap> custom(CmmnMap params) {
 			return sellsvc.custom(params);
-		}
+	 }
+	 
+	 // 판매달성률
+	 @RequestMapping("/sales")
+	    public String sales(ModelMap model) {
+	        return "kcg/system/team2/team2_sell_mng/sales";
+	 }
+	 
+	 // 판매달성률
+	 @RequestMapping("/achievement")
+		public List<CmmnMap> achievement(CmmnMap params) {
+			return sellsvc.achievement(params);
+	 }
 	 
 	 
 	 

@@ -353,7 +353,7 @@
         ROUND(air_min::numeric, 1) AS air_min,
 		TO_CHAR(air_beg_dt, 'YYYY-MM-DD') AS air_beg_dt, TO_CHAR(air_end_dt, 'YYYY-MM-DD') AS air_end_dt 
 		from kcgbd.e_interest where prod_no = #{prod_no}
-		order by code_no DESC
+		order by code_no ASC
 	</select>
 	
 	<update id="PSupdate">

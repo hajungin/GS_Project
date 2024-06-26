@@ -336,6 +336,25 @@
 		        
 
 	</select>
+	
+	<select id="achievement" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT 
+		    ee.emp_nm,
+		    COUNT(ee.emp_no) AS count,
+		    SUM(a.price) AS total_price
+		FROM 
+		    kcgbd.e_product_init a
+		LEFT JOIN 
+		    kcgbd.e_employee ee ON a.emp_no = ee.emp_no
+		WHERE 
+		    a.prod_type  = #{prod_type} 
+		GROUP BY 
+		    ee.emp_nm
+		ORDER by
+			total_price DESC, count DESC;
+	</select>
+	
+	
 
     
 </mapper>

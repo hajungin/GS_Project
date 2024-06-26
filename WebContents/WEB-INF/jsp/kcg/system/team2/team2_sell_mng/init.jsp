@@ -85,7 +85,7 @@
     <div class="flex flex-100 flex-padding-10 flex-gap-10" 
 						style="justify-content: flex-end; border: 2px solid #00CDFF;">
 						<button type="button" id="Button" class="btn btn-blue btn-icon icon-right"
-							@click="cf_movePage('/2team/prod/insert')">
+							@click="moveCalc()">
 						 	등록 <i class="entypo entypo-info"></i>
 						
 					</div>
@@ -134,6 +134,7 @@
                     cust_nm: "",
                     cust_mbl_telno:"",
                     prod_nm: "",
+                    simpl_ty_cd : "1"
                 },
                 mounted: function () {
                     var fromDtl = cf_getUrlParam("fromDtl");
@@ -205,6 +206,12 @@
                 			  item.ac_prod_type = "목돈마련";
                 	  }
                           return item.sa_prod_type || item.loan_prod_type || item.dp_prod_type || item.ac_prod_type;
+                       },
+                       moveCalc : function(){
+                    	  var params = {
+                    			   simpl_ty_cd : this.simpl_ty_cd
+                			}
+                    	   cf_movePage("/cal/dtlCom", params);
                        },
                 },
             });   
