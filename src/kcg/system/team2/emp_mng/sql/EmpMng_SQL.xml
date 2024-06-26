@@ -39,7 +39,9 @@
 			e.emp_nm AS emp_nm,
 			d.comm_no AS emp_dept,
 			p.comm_no AS emp_posit,
-			e.emp_ecny_dt AS emp_ecny_dt,
+			d.comm_nm AS emp_dept_nm,
+			p.comm_nm AS emp_posit_nm,
+			TO_CHAR(e.emp_ecny_dt, 'YYYY-MM-DD') AS emp_ecny_dt,
 			e.emp_mbl_telno AS emp_mbl_telno,
 			e.emp_eml_addr AS emp_eml_addr
 		FROM kcgbd.e_employee AS e
@@ -66,13 +68,13 @@
 		UPDATE
 			kcgbd.e_employee
 		SET
-			emp_no = #{emp_no},
 			emp_nm = #{emp_nm},
 			emp_dept = #{emp_dept},
 			emp_posit = #{emp_posit},
-			emp_ecny_dt = #{emp_ecny_dt},
+			emp_ecny_dt = TO_DATE(#{emp_ecny_dt}, 'YYYY-MM-DD'),
 			emp_mbl_telno = #{emp_mbl_telno},
 			emp_eml_addr = #{emp_eml_addr}
+		WHERE emp_no = #{emp_no}
 	</update>
 	
 	<delete id="empDelete" parameterType="cmmnMap">

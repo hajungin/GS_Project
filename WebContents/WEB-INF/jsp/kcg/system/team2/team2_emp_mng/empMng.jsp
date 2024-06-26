@@ -114,60 +114,54 @@
 		                    <div class="modal-body">
 		                        <form class="form-horizontal">
 		                            <div class="row">
-		                                <div class="col-sm-6">
-		                                    <div class="form-group">
-		                                        <label for="reg_emp_no" class="col-sm-4 control-label">사원번호:</label>
-		                                        <div class="col-sm-8">
-		                                            <input type="text" id="reg_emp_no" v-model="reg_info.emp_no" class="form-control">
-		                                        </div>
-		                                    </div>
-		                                    <div class="form-group">
-		                                        <label for="reg_emp_nm" class="col-sm-4 control-label">성명 :</label>
-		                                        <div class="col-sm-8">
-		                                            <input type="text" id="reg_emp_nm" v-model="reg_info.emp_nm" class="form-control">
-		                                        </div>
-		                                    </div>
-		                                    <div class="form-group">
-		                                        <label for="reg_emp_dept" class="col-sm-4 control-label">부서 :</label>
-		                                        <div class="col-sm-8" id="selectcr">
-		                                            <select id="reg_emp_dept" class="form-control" v-model="reg_info.emp_dept" style="margin-left: 10px;">
-		                                                <option value="DP01">영업1팀</option>
-		                                                <option value="DP02">영업2팀</option>
-		                                                <option value="DP03">영업3팀</option>
-		                                            </select>
-		                                        </div>
-		                                    </div>
-		                                    <div class="form-group">
-		                                        <label for="reg_emp_posit" class="col-sm-4 control-label">직위 :</label>
-		                                        <div class="col-sm-8" id="selectcr">
-		                                            <select id="reg_emp_posit" class="form-control" v-model="reg_info.emp_posit" style="margin-left: 10px;">
-		                                                <option value="PS01">부장</option>
-		                                                <option value="PS02">차장</option>
-		                                                <option value="PS03">과장</option>
-		                                                <option value="PS04">대리</option>
-		                                                <option value="PS05">사원</option>
-		                                            </select>
-		                                        </div>
-		                                    </div>
-		                                    <div class="form-group">
-		                                        <label for="reg_emp_ecny_dt" class="col-sm-4 control-label">입사일자 :</label>
-		                                        <div class="col-sm-8">
-		                                            <input type="date" id="reg_emp_ecny_dt" v-model="reg_info.emp_ecny_dt" class="form-control">
-		                                        </div>
-		                                    </div>
-		                                    <div class="form-group">
-		                                        <label for="reg_emp_mbl_telno" class="col-sm-4 control-label">전화번호 :</label>
-		                                        <div class="col-sm-8">
-		                                            <textarea id="reg_emp_mbl_telno" v-model="reg_info.emp_mbl_telno" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
-		                                        </div>
-		                                    </div>
-		                                    <div class="form-group">
-		                                        <label for="reg_emp_eml_addr" class="col-sm-4 control-label">E-mail :</label>
-		                                        <div class="col-sm-8">
-		                                            <textarea id="reg_emp_eml_addr" v-model="reg_info.emp_eml_addr" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
-		                                        </div>
-		                                    </div>
-		                                </div>
+	                                    <div class="form-group">
+	                                        <label for="reg_emp_no" class="col-sm-4 control-label">사원번호:</label>
+	                                        <div class="col-sm-8">
+	                                            <input type="text" id="reg_emp_no" v-model="reg_info.emp_no" class="form-control">
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label for="reg_emp_nm" class="col-sm-4 control-label">성명 :</label>
+	                                        <div class="col-sm-8">
+	                                            <input type="text" id="reg_emp_nm" v-model="reg_info.emp_nm" class="form-control">
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label for="reg_emp_dept" class="col-sm-4 control-label">부서 :</label>
+	                                        <div class="col-sm-8" id="selectcr">
+	                                            <select id="reg_emp_dept" class="form-control" v-model="reg_info.emp_dept" style="margin-left: 10px;">
+	                                                <option value="">선택</option>
+	                                                <option v-for="item in deptList" :value="item.comm_no">{{item.comm_nm}}</option>
+	                                            </select>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label for="reg_emp_posit" class="col-sm-4 control-label">직위 :</label>
+	                                        <div class="col-sm-8" id="selectcr">
+	                                            <select id="reg_emp_posit" class="form-control" v-model="reg_info.emp_posit" style="margin-left: 10px;">
+	                                                <option value="">선택</option>
+	                                                <option v-for="item in positList" :value="item.comm_no">{{item.comm_nm}}</option>
+	                                            </select>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label for="reg_emp_ecny_dt" class="col-sm-4 control-label">입사일자 :</label>
+	                                        <div class="col-sm-8">
+	                                            <input type="date" id="reg_emp_ecny_dt" v-model="reg_info.emp_ecny_dt" class="form-control">
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label for="reg_emp_mbl_telno" class="col-sm-4 control-label">전화번호 :</label>
+	                                        <div class="col-sm-8">
+	                                            <textarea id="reg_emp_mbl_telno" v-model="reg_info.emp_mbl_telno" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label for="reg_emp_eml_addr" class="col-sm-4 control-label">E-mail :</label>
+	                                        <div class="col-sm-8">
+	                                            <textarea id="reg_emp_eml_addr" v-model="reg_info.emp_eml_addr" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
+	                                        </div>
+	                                    </div>
 		                        </form>
 		                    </div>
 		                    <div class="modal-footer">
@@ -193,60 +187,54 @@
 		                    <div class="modal-body">
 		                        <form class="form-horizontal">
 		                            <div class="row">
-		                                <div class="col-sm-6">
-		                                    <div class="form-group">
-		                                        <label for="emp_no" class="col-sm-4 control-label">사원번호:</label>
-		                                        <div class="col-sm-8">
-		                                            <input type="text" id="emp_no" v-model="info.emp_no" class="form-control" readonly>
-		                                        </div>
-		                                    </div>
-		                                    <div class="form-group">
-		                                        <label for="emp_nm" class="col-sm-4 control-label">성명 :</label>
-		                                        <div class="col-sm-8">
-		                                            <input type="text" id="emp_nm" v-model="info.emp_nm" class="form-control">
-		                                        </div>
-		                                    </div>
-		                                    <div class="form-group">
-		                                        <label for="emp_dept" class="col-sm-4 control-label">부서 :</label>
-		                                        <div class="col-sm-8" id="selectcr">
-		                                            <select id="emp_dept" class="form-control" v-model="info.emp_dept" style="margin-left: 10px;">
-		                                                <option value="DP01">영업1팀</option>
-		                                                <option value="DP02">영업2팀</option>
-		                                                <option value="DP03">영업3팀</option>
-		                                            </select>
-		                                        </div>
-		                                    </div>
-		                                    <div class="form-group">
-		                                        <label for="emp_posit" class="col-sm-4 control-label">직위 :</label>
-		                                        <div class="col-sm-8" id="selectcr">
-		                                            <select id="emp_posit" class="form-control" v-model="info.emp_posit" style="margin-left: 10px;">
-		                                                <option value="PS01">부장</option>
-		                                                <option value="PS02">차장</option>
-		                                                <option value="PS03">과장</option>
-		                                                <option value="PS04">대리</option>
-		                                                <option value="PS05">사원</option>
-		                                            </select>
-		                                        </div>
-		                                    </div>
-		                                    <div class="form-group">
-		                                        <label for="emp_ecny_dt" class="col-sm-4 control-label">입사일자 :</label>
-		                                        <div class="col-sm-8">
-		                                            <input type="date" id="emp_ecny_dt" v-model="info.emp_ecny_dt" class="form-control">
-		                                        </div>
-		                                    </div>
-		                                    <div class="form-group">
-		                                        <label for="emp_mbl_telno" class="col-sm-4 control-label">전화번호 :</label>
-		                                        <div class="col-sm-8">
-		                                            <textarea id="emp_mbl_telno" v-model="info.emp_mbl_telno" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
-		                                        </div>
-		                                    </div>
-		                                    <div class="form-group">
-		                                        <label for="emp_eml_addr" class="col-sm-4 control-label">E-mail :</label>
-		                                        <div class="col-sm-8">
-		                                            <textarea id="emp_eml_addr" v-model="info.emp_eml_addr" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
-		                                        </div>
-		                                    </div>
-		                                </div>
+	                                    <div class="form-group">
+	                                        <label for="emp_no" class="col-sm-4 control-label">사원번호:</label>
+	                                        <div class="col-sm-8">
+	                                            <input type="text" id="emp_no" v-model="info.emp_no" class="form-control" readonly>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label for="emp_nm" class="col-sm-4 control-label">성명 :</label>
+	                                        <div class="col-sm-8">
+	                                            <input type="text" id="emp_nm" v-model="info.emp_nm" class="form-control">
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label for="emp_dept" class="col-sm-4 control-label">부서 :</label>
+	                                        <div class="col-sm-8" id="selectcr">
+	                                            <select id="emp_dept" class="form-control" v-model="info.emp_dept" style="margin-left: 10px;">
+	                                                <option value="" disabled selected>부서를 선택하세요</option>
+	                                                <option v-for="item in deptList" :value="item.comm_no">{{item.comm_nm}}</option>
+	                                            </select>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label for="emp_posit" class="col-sm-4 control-label">직위 :</label>
+	                                        <div class="col-sm-8" id="selectcr">
+	                                            <select id="emp_posit" class="form-control" v-model="info.emp_posit" style="margin-left: 10px;">
+	                                                <option value="" disabled selected>부서를 선택하세요</option>
+	                                                <option v-for="item in positList" :value="item.comm_no">{{item.comm_nm}}</option>
+	                                            </select>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label for="emp_ecny_dt" class="col-sm-4 control-label">입사일자 :</label>
+	                                        <div class="col-sm-8">
+	                                            <input type="date" id="emp_ecny_dt" v-model="info.emp_ecny_dt" class="form-control">
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label for="emp_mbl_telno" class="col-sm-4 control-label">전화번호 :</label>
+	                                        <div class="col-sm-8">
+	                                            <textarea id="emp_mbl_telno" v-model="info.emp_mbl_telno" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label for="emp_eml_addr" class="col-sm-4 control-label">E-mail :</label>
+	                                        <div class="col-sm-8">
+	                                            <textarea id="emp_eml_addr" v-model="info.emp_eml_addr" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
+	                                        </div>
+	                                    </div>
 		                        </form>
 		                    </div>
 		                    <div class="modal-footer">
@@ -323,11 +311,9 @@
 		                },
 		                getListCB: function (data) {
 		                    this.dataList = data.list;
-		                    console.log(this.dataList);
 		                    cv_pagingConfig.renderPagenation("system");
 		                },
 		                showDetailPopup: function (emp_no) {
-		                    console.log(emp_no);
 		                    pop_emp_info.init(emp_no);
 		                    $('#pop_emp_info').modal('show');
 		                },
@@ -350,6 +336,9 @@
 		                    emp_mbl_telno: "",
 		                    emp_eml_addr: ""
 		                },
+		                commList: [],
+		                deptList: [],
+		                positList: []
 		            },
 		            methods: {
 		                init: function () {
@@ -362,6 +351,7 @@
 		                        emp_mbl_telno: "",
 		                        emp_eml_addr: ""
 		                    };
+		                    this.getComm();
 		                },
 		                empInsert: function () {
 		                	
@@ -411,6 +401,20 @@
 		                    }
 		                    $('#pop_emp_register').modal('hide');
 		                    window.location.reload();
+		                },
+		                getComm: function() {
+		                	var gr_comm_no = 1;
+		                	var gr_comm_no1 = 2;
+		                	var params = {
+		                		gr_comm_no: gr_comm_no,
+		                		gr_comm_no1: gr_comm_no1
+		                	}
+		                	cf_ajax("/common/getCommList", params, this.getCommCB);
+		                },
+		                getCommCB: function(data) {
+		                	this.commList = data;
+		                	this.deptList = this.commList.filter(item => item.gr_comm_no === 1);
+		                	this.positList = this.commList.filter(item => item.gr_comm_no === 2);
 		                }
 		            }
 		        });
@@ -427,25 +431,26 @@
 		                    emp_mbl_telno: "",
 		                    emp_eml_addr: ""
 		                },
+		                commList: [],
+		                deptList: [],
+		                positList: [],
 		            },
 		            methods: {
 		                init: function (emp_no) {
 		                    this.info.emp_no = emp_no;
-		                    console.log(emp_no);
 		                    if (!cf_isEmpty(this.info.emp_no)) {
 		                        this.getInfo(); 
-		                        }
+	                        }
 		                },
 		                getInfo: function () {
 		                    var params = {
 		                        emp_no: this.info.emp_no
 		                    }
-		                    console.log(params);
 		                    cf_ajax("/empMng/getEmpOne", params, this.getInfoCB);
 		                },
 		                getInfoCB: function (data) {
 		                    this.info = data;
-		                    console.log(data);
+		                    this.getComm();
 		                },
 		                empUpdate: function () {
 		                	
@@ -508,6 +513,20 @@
 		                    }
 		                    $('#pop_emp_info').modal('hide');
 		                    window.location.reload();
+		                },
+		                getComm: function() {
+		                	var gr_comm_no = 1;
+		                	var gr_comm_no1 = 2;
+		                	var params = {
+		                		gr_comm_no: gr_comm_no,
+		                		gr_comm_no1: gr_comm_no1
+		                	}
+		                	cf_ajax("/common/getCommList", params, this.getCommCB);
+		                },
+		                getCommCB: function(data) {
+		                	this.commList = data;
+		                	this.deptList = this.commList.filter(item => item.gr_comm_no === 1);
+		                	this.positList = this.commList.filter(item => item.gr_comm_no === 2);
 		                }
 		            }
 		        });

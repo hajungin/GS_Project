@@ -47,7 +47,7 @@ public class EmpMngCtl {
 	public CmmnMap empDelete(CmmnMap params) {
 		return empMngSvc.empDelete(params); 
 	}
-	
+		
 }
 
 
