@@ -70,13 +70,13 @@
 					</a>
 				</li> 
 				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/system')">
+					<a href="#gm" onclick="cf_movePage('/system/schedule')">
 						<i class="entypo-newspaper"></i>
 						<span class="title">TEAM2 스케줄관리</span>
 					</a>
 				</li> 
 				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/system')">
+					<a href="#gm" onclick="cf_movePage('/system/exchange_mng')">
 						<i class="entypo-newspaper"></i>
 						<span class="title">TEAM2 환율정보</span>
 					</a>

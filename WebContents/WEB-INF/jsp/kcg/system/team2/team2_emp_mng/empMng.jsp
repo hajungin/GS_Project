@@ -175,7 +175,7 @@
 		                            </tr>
 		                        </tbody>
 		                    </table>
-		                    <div style="position: relative; width: 1600px;">
+		                    <div style="position: relative; width: 100%;">
 					    		<div class="dataTables_paginate paging_simple_numbers" id="div_paginate" style="position: absolute; right: 0; top: -90%;"></div>
 							</div>
 		                </template>
@@ -243,6 +243,12 @@
 	                                        <label for="reg_emp_eml_addr" class="col-sm-4 control-label">E-mail :</label>
 	                                        <div class="col-sm-8">
 	                                            <textarea id="reg_emp_eml_addr" v-model="reg_info.emp_eml_addr" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label for="reg_user_id" class="col-sm-4 control-label">User ID :</label>
+	                                        <div class="col-sm-8">
+	                                            <textarea id="reg_user_id" v-model="reg_info.user_id" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
 	                                        </div>
 	                                    </div>
 		                        </form>
@@ -321,6 +327,14 @@
 		                        </form>
 		                    </div>
 		                    <div class="modal-footer">
+		                    <button type="button" id="Button" class="btn btn-blue btn-icon btn-small" @click="userPwInit">
+		                            비밀번호 초기화
+		                            <i class="entypo-user"></i>
+		                        </button>
+		                        <button type="button" class="btn btn-danger btn-icon btn-small" @click="empUserDelete">
+		                            사용자 삭제
+		                            <i class="entypo-trash"></i>
+		                        </button>
 		                        <button type="button" class="btn btn-success btn-icon btn-small" @click="empUpdate">
 		                            담당자정보 변경
 		                            <i class="entypo-user"></i>
@@ -417,7 +431,8 @@
 		                    emp_posit: "",
 		                    emp_ecny_dt: "",
 		                    emp_mbl_telno: "",
-		                    emp_eml_addr: ""
+		                    emp_eml_addr: "",
+		                    user_id: "",
 		                },
 		                commList: [],
 		                deptList: [],
@@ -432,7 +447,8 @@
 		                        emp_posit: "",
 		                        emp_ecny_dt: "",
 		                        emp_mbl_telno: "",
-		                        emp_eml_addr: ""
+		                        emp_eml_addr: "",
+	                        	user_id: ""
 		                    };
 		                    this.getComm();
 		                },
@@ -474,7 +490,8 @@
 		                        emp_posit: this.reg_info.emp_posit,
 		                        emp_ecny_dt: this.reg_info.emp_ecny_dt,
 		                        emp_mbl_telno: this.reg_info.emp_mbl_telno,
-		                        emp_eml_addr: this.reg_info.emp_eml_addr
+		                        emp_eml_addr: this.reg_info.emp_eml_addr,
+		                        user_id: this.reg_info.user_id,
 		                    }
 		                    cf_ajax("/empMng/empInsert", params, this.insertStsCB);
 		                },
@@ -512,7 +529,7 @@
 		                    emp_posit: "",
 		                    emp_ecny_dt: "",
 		                    emp_mbl_telno: "",
-		                    emp_eml_addr: ""
+		                    emp_eml_addr: "",
 		                },
 		                commList: [],
 		                deptList: [],
@@ -573,13 +590,15 @@
 		                        emp_posit: this.info.emp_posit,
 		                        emp_ecny_dt: this.info.emp_ecny_dt,
 		                        emp_mbl_telno: this.info.emp_mbl_telno,
-		                        emp_eml_addr: this.info.emp_eml_addr
+		                        emp_eml_addr: this.info.emp_eml_addr,
 		                    }
 		                    cf_ajax("/empMng/empUpdate", params, this.updateStsCB);
 		                },
 		                updateStsCB: function (data) {
 		                    if (data.status == "OK") {
 		                        alert("변경 완료");
+		                    } else if (data.status == "pwInit") {
+		                    	alert("초기화 완료")
 		                    }
 		                    $('#pop_emp_info').modal('hide');
 		                    window.location.reload();
@@ -588,14 +607,30 @@
 		                    var params = {
 		                        emp_no: this.info.emp_no,
 		                    }
-		                    cf_ajax("/empMng/empDelete", params, this.changeStsCB);
+		                    cf_ajax("/empMng/empDelete", params, this.deleteStsCB);
 		                },
-		                changeStsCB: function (data) {
+		                deleteStsCB: function (data) {
 		                    if (data.status == "OK") {
 		                        alert("삭제 완료");
+		                    } else if (data.status == "error") {
+		                    	alert("담당 고객이 존재합니다. \n 확인 후 다시 시도해주시기 바랍니다.");
+		                    } else if (data.status == "userError") {
+		                    	alert("유저 정보가 없습니다.")
 		                    }
 		                    $('#pop_emp_info').modal('hide');
 		                    window.location.reload();
+		                },
+		                empUserDelete: function() {
+		                	var params = {
+	                			emp_no: this.info.emp_no,
+		                	}
+		                	cf_ajax("/empMng/empUserDelete", params, this.deleteStsCB);
+		                },
+		                userPwInit: function() {
+		                	var params = {
+	                			emp_no: this.info.emp_no,
+		                	}
+		                	cf_ajax("/empMng/userPwInit", params, this.updateStsCB);
 		                },
 		                getComm: function() {
 		                	var gr_comm_no = 1;
