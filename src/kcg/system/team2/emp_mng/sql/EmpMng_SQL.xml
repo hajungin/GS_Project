@@ -82,6 +82,62 @@
 		WHERE emp_no = #{emp_no}
 	</delete>
 	
+	<insert id="empUserInfo" parameterType="cmmnMap">
+		INSERT INTO
+		kcgbd.t_user (
+		auth_cd
+		,user_id
+		,iam_yn
+		,reg_dt
+		,status_cd
+		,name
+		,jikgub_nm
+		,tdept_nm
+		,email
+		,del_yn
+		,user_pw
+		,emp_no
+		) VALUES (
+		'user'
+		,#{user_id}
+		,'N'
+		,now()
+		,'AAA'
+		,#{emp_nm}
+		,#{emp_posit_nm}
+		,#{emp_dept_nm}
+		,#{emp_eml_addr}
+		,'N'
+		,#{user_pw}
+		,#{emp_no}
+		)
+	</insert>
+	
+	
+	<update id="updateEmpUserInfo" parameterType="cmmnMap">
+		UPDATE kcgbd.t_user SET
+		,name = #{emp_nm}
+		,jikgub_nm = #{emp_posit_nm}
+		,tdept_nm = #{emp_dept_nm}
+		,email
+		= #{emp_eml_addr}
+		WHERE 1=1
+		AND emp_no = #{emp_no}
+	</update>
+	
+	<delete id="empUserDelete" parameterType="cmmnMap">
+		DELETE FROM kcgbd.t_user
+		WHERE emp_no = #{emp_no}
+	</delete>
+	
+	<update id="userPwUpdate" parameterType="cmmnMap">
+		UPDATE kcgbd.t_user SET
+		user_pw = #{user_pw}
+		WHERE 1=1
+		AND emp_no = #{emp_no}
+	</update>
+	
+	
 </mapper>
 
 

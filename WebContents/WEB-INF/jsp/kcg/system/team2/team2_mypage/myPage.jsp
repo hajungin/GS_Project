@@ -15,7 +15,7 @@
 
 <body class="page-body">
 <div class="page-container">
-	<jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu.jsp" flush="false"/>
+	<jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu-team2.jsp" flush="false"/>
 	<div class="main-content">
 		<jsp:include page="/WEB-INF/jsp/kcg/_include/system/header.jsp" flush="false"/>
 		<ol class="breadcrumb bc-3">
@@ -52,8 +52,10 @@
 							</div>
 							
 							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+
 								<label for="emp_ecny_dt" class="fix-width-33" style="width: 80px;">입사일자 :</label>
 								<input type="date" class="form-control" id="emp_ecny_dt" v-model="info.emp_ecny_dt" style="flex: 1;">
+
 							</div>
 							
 							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
@@ -67,6 +69,10 @@
 							</div>
 							
 							<div class="form-group" style="display: flex; gap: 10px;">
+								<button type="button" class="btn btn-green btn-icon btn-small" @click="popUserPw">
+									비밀번호변경
+									<i class="entypo-check"></i>
+								</button>
 								<button type="button" class="btn btn-green btn-icon btn-small" @click="empUpdate">
 									저장
 									<i class="entypo-check"></i>
@@ -82,6 +88,29 @@
 			</div>
 		</div>
 		<br />
+		<div class="modal fade" id="pop_user_pw" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" style="width: 400px;">
+		        <div class="modal-content">
+		       	 <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" @click="close" aria-hidden="true" id="btn_popClose" >&times;</button>
+						<h4 class="modal-title" id="modify_nm">비밀번호 변경</h4>
+					</div> 
+			            <div class="modal-body">
+			                <div style="max-height: 700px; overflow: auto;" class="dataTables_wrapper">
+			                    <div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+									<label for="user_pw" class="fix-width-33" style="width: 150px;">비밀번호 :</label>
+									<input type="text" class="form-control" id="user_pw" v-model="user_pw" style="flex: 1;">
+								</div>
+			                    <div style="text-align: center; margin-bottom: 5px;">
+			                		<button type="button" class="btn btn-green" style="margin-left: 5px;" @click="UserPwUpdate">변경</button>
+		                		</div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		
+		
 		
 		<jsp:include page="/WEB-INF/jsp/kcg/_include/system/footer.jsp" flush="false"/>
 		
@@ -102,7 +131,8 @@
 	            emp_mbl_telno: "",
 	            emp_eml_addr: "",
 	            emp_dept_nm: "",
-	            emp_posit_nm: ""
+	            emp_posit_nm: "",
+            	user_pw: ""
 	        }
 	    },
 	    mounted() {
@@ -159,7 +189,8 @@
 	                emp_posit: this.info.emp_posit,
 	                emp_ecny_dt: this.info.emp_ecny_dt,
 	                emp_mbl_telno: this.info.emp_mbl_telno,
-	                emp_eml_addr: this.info.emp_eml_addr
+	                emp_eml_addr: this.info.emp_eml_addr,
+	                user_pw: this.info.user_pw
 	            }
 	            cf_ajax("/empMng/empUpdate", params, this.updateStsCB);
 	        },
@@ -168,8 +199,38 @@
 	                alert("변경 완료");
 	            }
 	            window.location.reload();
-	        }
+	        },
+	        popUserPw: function () {
+            	$('#pop_user_pw').modal('show');
+            },
 	    }
 	});
+	
+	var pop_user_pw = new Vue({
+	       el: "#pop_user_pw",
+	       data: {
+	           user_pw: "",
+	       },
+	       methods: {
+	           UserPwUpdate: function() {
+	        	   if (!this.user_pw) {
+		                alert("비밀번호가 공란입니다.");
+		                return;
+		            }
+	               var params = {
+	               	update_user_pw: this.user_pw,
+	               	emp_no: vueapp.info.emp_no,
+	               }
+	               cf_ajax("/empMng/userPwUpdate", params, this.updateStsCB);
+	           },
+	           updateStsCB: function (data) {
+				if (data.status == "OK") {
+					alert("비밀번호 변경이 완료되었습니다.");
+				} $('#pop_user_pw').modal('hide');
+	          }
+	       }
+	   });
+	
+	
 </script>
 </html>
