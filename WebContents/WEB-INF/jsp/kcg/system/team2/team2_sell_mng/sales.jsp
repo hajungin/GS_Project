@@ -35,6 +35,85 @@
     #Button:hover {
         background-color: #2980B9; /* Hover 시 배경색 변경 */
     }
+
+	/* 기본 스타일 초기화 */
+	body, h3, li {
+	    margin: 0;
+	    padding: 0;
+	    font-family: 'Noto Sans KR', sans-serif;
+	    box-sizing: border-box;
+	}
+	
+	/* 섹션 헤더 스타일 */
+	.section-header {
+	    text-align: center;
+	    margin: 40px 0 20px;
+	}
+	
+	.section-header h5 {
+	    font-size: 1.5em;
+	    color: #ffffff;
+	    background: linear-gradient(135deg, #4A90E2, #00796b);
+	    padding: 15px 20px;
+	    border-radius: 12px;
+	    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+	    transition: transform 0.3s ease-in-out;
+	}
+	
+	.section-header h3:hover {
+	    transform: scale(1.05);
+	}
+	
+	/* 타겟 리스트 스타일 */
+	.target-list {
+	    list-style: none;
+	    padding: 0;
+	    margin: 0 auto;
+	    max-width: 600px;
+	    text-align: left;
+	}
+	
+	.target-list li {
+	    font-size: 1.8em;
+	    color: #333;
+	    background-color: #ffffff;
+	    padding: 20px 25px;
+	    margin: 15px 0;
+	    border-left: 8px solid #4A90E2;
+	    border-radius: 10px;
+	    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	    transition: all 0.3s ease-in-out;
+	}
+	
+	.target-list li:hover {
+	    background-color: #f0f8ff;
+	    border-left-color: #00796b;
+	    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+	}
+	
+	/* 반응형 디자인 */
+	@media (max-width: 768px) {
+	    .section-header h3 {
+	        font-size: 2em;
+	    }
+	
+	    .target-list li {
+	        font-size: 1.5em;
+	        padding: 15px 20px;
+	    }
+	}
+	
+	@media (max-width: 480px) {
+	    .section-header h3 {
+	        font-size: 1.5em;
+	        padding: 10px 15px;
+	    }
+	
+	    .target-list li {
+	        font-size: 1.2em;
+	        padding: 10px 15px;
+	    }
+	}
 </style>
             
             <title>관리자시스템</title>
@@ -65,33 +144,32 @@
                             
 							  <li class="nav-tab active"  @click="updateProdType('PT01')" style="background-color: #64A0FF;">적금</li>
 							  <li class="nav-tab active"  @click="updateProdType('PT02')" style="background-color: #4DB6AC;">예금</li>
-							  <li class="nav-tab active"  @click="updateProdType('PT03')" style="background-color: #81C784;">목돈마련</li>
-							  <li class="nav-tab active"  @click="updateProdType('PT04')" style="background-color: #FFB74D;">대출</li>
+							  <li class="nav-tab active"  @click="updateProdType('PT03')" style="background-color: #70D2B4;">목돈마련</li>
+							  <li class="nav-tab active"  @click="updateProdType('PT04')" style="background-color: #bc3cbc;">대출</li>
 							
                         </ul>
                  </div>
 			</div>
-			<div>
-<!-- 		     선택된 상품 유형: {{ prod_type }} -->
-		     <h3 v-if="prod_type == 'PT01'">적금</h3>
-            <h3 v-if="prod_type == 'PT02'">예금</h3>
-            <h3 v-if="prod_type == 'PT03'">목돈마련</h3>
-            <h3 v-if="prod_type == 'PT04'">대출</h3>
+			 <div class="section-header">
+		        <h5 v-if="prod_type == 'PT01'">적금</h5>
+		        <h5 v-if="prod_type == 'PT02'">예금</h5>
+		        <h5 v-if="prod_type == 'PT03'">목돈마련</h5>
+		        <h5 v-if="prod_type == 'PT04'">대출</h5>
 		    </div>
-		    
-		    <div>
-		    <li v-if="prod_type == 'PT01'">
-		    적금 판매 달성 금액 : {{sa_target}}
-		    </li>
-		    <li v-if="prod_type == 'PT02'">
-		    예금 판매 달성 금액 : {{ac_target}}
-		    </li>
-		    <li  v-if="prod_type == 'PT03'">
-		    목돈마련 판매 달성 금액 : {{dp_target}}
-		    </li>
-		    <li v-if="prod_type == 'PT04'">
-		    대출 판매 달성 금액 : {{lo_target}}
-		    </li>	
+		
+		    <div class="target-list">
+		        <li v-if="prod_type == 'PT01'">
+		            적금 판매 달성 금액 : {{ formatCurrency(sa_target) }}
+		        </li>
+		        <li v-if="prod_type == 'PT02'">
+		            예금 판매 달성 금액 : {{ formatCurrency(ac_target) }}
+		        </li>
+		        <li v-if="prod_type == 'PT03'">
+		            목돈마련 판매 달성 금액 : {{ formatCurrency(dp_target) }}
+		        </li>
+		        <li v-if="prod_type == 'PT04'">
+		            대출 판매 달성 금액 : {{ formatCurrency(lo_target) }}
+		        </li>
 		    </div>
 		    
 			
@@ -101,7 +179,7 @@
 						style="justify-content: flex-end; border: 2px solid #00CDFF;">
 						<button type="button" id="Button" class="btn btn-blue btn-icon icon-right"
 							@click="pop_price_max">
-						 	목표금액 등록 <i class="entypo entypo-info"></i>
+						 	목표금액 등록 <i class="entypo entypo-trophy"></i>
 						
 					</div>
 
@@ -116,12 +194,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(item,index) in dataList"style="cursor: pointer;">
+            <tr v-for="(item,index) in dataList">
                	<td class="center">{{index+1}}</td>
                 <td class="center">{{item.emp_nm}}</td>
                 <td class="center">{{item.count}}</td>
                 <td class="center">{{formatCurrency(item.total_price)}}</td>
-                <td class="center"></td>
+                <td class="center">{{ calculateAchievementRate(item.total_price) }}</td>
+               
             </tr>
         </tbody>
     </table>
@@ -155,14 +234,14 @@
 			                        </thead>
 			                        <tbody>
 			                            <tr  class="input-row">
-			                                <td class="center"><input type="text" v-model="sa_target"></td>
-			                                <td class="center"><input type="text" v-model="ac_target"></td>
-			                                <td class="center"><input type="text" v-model="dp_target"></td>
-			                                <td class="center"><input type="text" v-model="lo_target"></td>
+			                                <td class="center"><input type="text" v-model="modalSaTarget "></td>
+			                                <td class="center"><input type="text" v-model="modalAcTarget "></td>
+			                                <td class="center"><input type="text" v-model="modalDpTarget "></td>
+			                                <td class="center"><input type="text" v-model="modalLoTarget "></td>
 			                        </tbody>
 			                    </table>
 			                    <div style="text-align: center; margin-bottom: 5px;">
-			                		<button type="button" class="btn btn-green" style="margin-left: 5px;" @click="save">변경사항저장</button>
+			                		<button type="button" class="btn btn-green" style="margin-left: 5px;" @click="saveModal">변경사항저장</button>
 		                		</div>
 			                </div>
 			            </div>
@@ -176,30 +255,29 @@
         var vueapp = new Vue({
             el: "#vueapp",
             data: {
-                dataList: [], 
+                dataList: [],
                 prod_type: "PT01",
-                sa_target: "1000",
-                ac_target: "",
-                dp_target: "",
-                lo_target: "",
+                sa_target: "50000000",
+                ac_target: "50000000",
+                dp_target: "50000000",
+                lo_target: "50000000",
             },
-            mounted: function(){
-                    this.getInfoList();
+            mounted: function() {
+                this.getInfoList();
+                this.initModalEventListeners();
             },
             methods: {
                 updateProdType(type) {
                     this.prod_type = type;
                     this.getInfoList();
                 },
-   
-                getInfoList: function () {
+                getInfoList: function() {
                     var params = {
                         prod_type: this.prod_type
                     };
-
                     cf_ajax("/sell/achievement", params, this.getListCB);
                 },
-                getListCB: function (data) {
+                getListCB: function(data) {
                     console.log(data);
                     this.dataList = data;
                 },
@@ -207,57 +285,65 @@
                     if (!value) return '';
                     return parseFloat(value).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
                 },
-                pop_price_max: function () {
-                	$('#pop_price_max').modal('show');
-                	pop_price_max.init(this.sa_target, this.ac_target, this.dp_target, this.lo_target);
-                	
+                pop_price_max: function() {
+                    $('#pop_price_max').modal('show');
+                    pop_price_max.init(this.sa_target, this.ac_target, this.dp_target, this.lo_target);
                 },
-                Saveinit : function(sa_target, ac_target, dp_target, lo_target) {
-                	this.sa_target = sa_target;
-                	this.ac_target = ac_target;
-                	this.dp_target = dp_target;
-                	this.lo_target = lo_target;
-                   	 },
-                
-
-            },
-        });
-        var pop_price_max = new Vue({
-            el: "#pop_price_max",
-            data: {
-            	sa_target: "",
-                ac_target: "",
-                dp_target: "",
-                lo_target: "",
-            },
-            mounted: function(){
-            	this.init();
-                
-            },
-            methods: {
-            	save() {
-                    this.$emit('submit', {
-                        sa_target: this.sa_target,
-                        ac_target: this.ac_target,
-                        dp_target: this.dp_target,
-                        lo_target: this.lo_target
-                    });
-                    this.close();
+                Saveinit(modalSaTarget, modalAcTarget, modalDpTarget, modalLoTarget) {
+                    this.sa_target = modalSaTarget;
+                    this.ac_target = modalAcTarget;
+                    this.dp_target = modalDpTarget;
+                    this.lo_target = modalLoTarget;
                 },
-                
-                init : function(sa_target, ac_target, dp_target, lo_target) {
-                	this.sa_target = sa_target;
-                	this.ac_target = ac_target;
-                	this.dp_target = dp_target;
-                	this.lo_target = lo_target;
-                   	 },
-                   	 
-                vueapp: function () {
-                   	vueapp.Saveinit(this.sa_target, this.ac_target, this.dp_target, this.lo_target);     	
-                     },
+                calculateAchievementRate(total_price) {
+                    let target;
+                    switch (this.prod_type) {
+                        case 'PT01':
+                            target = parseFloat(this.sa_target);
+                            break;
+                        case 'PT02':
+                            target = parseFloat(this.ac_target);
+                            break;
+                        case 'PT03':
+                            target = parseFloat(this.dp_target);
+                            break;
+                        case 'PT04':
+                            target = parseFloat(this.lo_target);
+                            break;
+                        default:
+                            target = 0;
+                    }
+                    if (!target) return 'N/A';
+                    const achievementRate = (parseFloat(total_price) / target) * 100;
+                    return achievementRate.toFixed(1) + '%';
+                }
+            
             }
         });
-
+        pop_price_max = new Vue({
+            el: "#pop_price_max",
+            data: {
+            	modalSaTarget: "",
+            	modalAcTarget: "",
+            	modalDpTarget: "",
+            	modalLoTarget: "",
+            },
+            methods: {
+            	saveModal() {
+                    	 vueapp.Saveinit(this.modalSaTarget, this.modalAcTarget, this.modalDpTarget, this.modalLoTarget);                    	
+                    	this.close();
+                },
+                init(sa_target, ac_target, dp_target, lo_target) {
+                    this.modalSaTarget = sa_target;
+                    this.modalAcTarget = ac_target;
+                    this.modalDpTarget = dp_target;
+                    this.modalLoTarget = lo_target;
+                },
+                close() {
+                    $('#pop_price_max').modal('hide');
+                }
+            }
+        });
         </script>
 
         </html>
