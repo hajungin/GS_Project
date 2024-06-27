@@ -34,8 +34,9 @@
     </style>
 </head>
 <body class="page-body" data-url="http://neon.dev">
-    <div class="page-container main-content">
+    <div class="page-container">
         <jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu.jsp" flush="false"/>
+        <div class="main-content">
         <div style="opacity:0.9">
             <div style="width: 80%;">
                 <!-- 헤더 -->
@@ -47,15 +48,14 @@
                 <br/>
                 <div>캘린더</div>
                 <span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.userId}</span>&nbsp;님 <br/>
-                <div id='calendar' style="padding:30px;">
-                </div>
-                
+	               <div id='calendar' style="padding:30px; z-indax: 999999px;" ></div>
+                </div>  
                 
                 
             </div>
         </div>
     </div>
-    
+    </div>
     <!-- 모달 창 -->
                 <div id="app">
                     <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
@@ -91,6 +91,7 @@
                     </div>
                 </div>
                 <!-- 모달 창 끝 -->
+
     
     
 </body>

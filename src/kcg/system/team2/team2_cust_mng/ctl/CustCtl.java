@@ -2,16 +2,20 @@ package kcg.system.team2.team2_cust_mng.ctl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import common.utils.common.CmmnMap;
 import common.utils.common.PagingConfig;
 import common.utils.mybatis_paginator.domain.PageList;
 import kcg.common.svc.CommonSvc;
+import kcg.login.vo.UserInfoVO;
 import kcg.system.team2.team2_cust_mng.svc.CustSvc;
 
 
@@ -33,7 +37,9 @@ public class CustCtl {
 	
 	// 고객 목록 페이지
 	@RequestMapping("/custList")
-	public String CustListPage() {
+	public String CustListPage(Model model, HttpSession session) {
+		UserInfoVO userInfoVO = (UserInfoVO) session.getAttribute("userInfoVO");
+		model.addAttribute("emp_no", userInfoVO.getEmpNo());
 		return "kcg/system/team2/team2_cust_mng/custList";
 	}
 	

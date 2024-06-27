@@ -52,6 +52,7 @@
 		<if test='gr_comm_no != null and gr_comm_no4 != ""'>
 		  OR group_comm_no = #{gr_comm_no4}
 		</if>
+		ORDER BY comm_no
 	</select>
 	
 	<insert id="commInsert" parameterType="cmmnMap">

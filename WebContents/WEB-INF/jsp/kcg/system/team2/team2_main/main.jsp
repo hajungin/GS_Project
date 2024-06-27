@@ -8,6 +8,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="common.utils.common.CmmnMap" %>
 <%@ page import="common.utils.json.JsonUtil" %>
+<jsp:useBean id="nowday" class="java.util.Date" />
+<fmt:formatDate var="now" value="${today}" pattern="yyyy-MM-dd" />
 
 <!DOCTYPE html>
 <html>
@@ -23,6 +25,23 @@
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/googlecalendar@6.1.8/index.global.min.js"></script>
    
     <style>
+    html{
+/*     	background-color: lightblue; */
+ 	    background-position: center; 
+ 	 	background-size: cover; 
+	  	background-image: url(system/team2/team2_images/team2bg.jpg); 
+ 		background-repeat: no-repeat; 
+   		 }
+    
+    
+    	body{
+/*     	background-color: lightblue; */
+ 	    background-position: center; 
+ 	 	background-size: cover; 
+	  	background-image: url(kcg/system/team2/team2_images/team2bg.jpg); 
+ 		background-repeat: no-repeat; 
+   		 }
+    	  
         .news-container {
             display: flex;
             justify-content: center;
@@ -61,13 +80,35 @@
 		    margin: auto;
 		    border: 1px solid #ccc; /* 경계선을 추가하여 위치 확인 */
 		}
+		.card {
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .card-body {
+            text-align: center;
+        }
+        .card-title {
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
     </style>
     <meta charset="UTF-8">
     <title>GSITM | 메인</title>
 </head>
 <body class="page-body" data-url="http://neon.dev">
-    <div class="page-container main-content";">
-        <jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu.jsp" flush="false"/>
+
+    <div class="page-container main-content";" style="backgroud-img: url(team2/team2_images/team2bg.jpg);">
+
+        <jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu-team2.jsp" flush="false"/>
         <div style="opacity:0.9">
         	<div style= "width: 80%;">
 	        	<!-- 헤더 -->
@@ -107,15 +148,28 @@
 	            <div id='calendar'></div>
         	</div>
             
-            
            <div class="main-info" style= "width: 15%;">
-	           <div>로그인 정보</div>
 	            <div>
-	            	<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.userId}</span>&nbsp;님 <br/>
-	            	<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.name}</span>&nbsp;님 <br/>
-	            	<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.tdeptNm}</span>&nbsp;부서 <br/>
-	            	<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.jikgubNm}</span>&nbsp;직급 <br/>
-	            	<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.email}</span>&nbsp;이메일 <br/>
+	            <div class="row justify-content-center">
+           			<div class="col-md-4 mb-0">
+                <div class="card text-bg-light">
+                    <div class="card-header">
+                        <i class="fas fa-user"></i>
+                        <span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.name}</span>&nbsp;님 <br/>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <span th:text="부서 : ${userInfoVO.tdeptNm}"></span><br>
+                            <span th:text="로그인 일시 : "></span>
+                        </p>
+                    </div>
+                </div>
+           	 </div>
+<%-- 	            	<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.userId}</span>&nbsp;님 <br/> --%>
+<%-- 	            	<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.name}</span>&nbsp;님 <br/> --%>
+<%-- 	            	<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.tdeptNm}</span>&nbsp;부서 <br/> --%>
+<%-- 	            	<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.jikgubNm}</span>&nbsp;직급 <br/> --%>
+<%-- 	            	<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.email}</span>&nbsp;이메일 <br/> --%>
 	            </div>
 	            
 	            <div>
