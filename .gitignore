@@ -27,7 +27,8 @@
 **/src/kcg/system/cust_mng
 **/src/kcg/system/etc_mng
 **/src/kcg/system/externalApi
-**/src/kcg/system/main
+**/src/kcg/system/main/sql
+**/src/kcg/system/main/svc
 **/src/kcg/system/menu_mng
 **/src/kcg/system/poli_person_mng
 **/src/kcg/system/prod_mng
@@ -48,7 +49,6 @@
 **/WebContents/static_resources/download
 **/WebContents/static_resources/gis
 **/WebContents/static_resources/img
-**/WebContents/static_resources/js
 **/WebContents/static_resources/lib
 **/WebContents/static_resources/portal
 **/WebContents/static_resources/test
