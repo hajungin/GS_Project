@@ -94,7 +94,7 @@ public class ProdSvc {
 		int number = 0;
 		for(CmmnMap map : rsltHist) {
 			number+=1;
-			strHist =  strHist + number + " : " + map.getString("air_beg_dt") + " ~ " + map.getString("air_end_dt") + "\n" + "(최저)" + map.get("air_min") + "%  ~  (최고)" + map.get("air_max") + "%\n";
+			strHist =  strHist + number + " : " + map.getString("air_beg_dt") + " ~ " + map.getString("air_end_dt") + "&&" + "(최저)" + map.get("air_min") + "%  ~  (최고)" + map.get("air_max") + "%\n";
 		}
 		rslt.put("prod_hist", strHist);
 	    return rslt;
