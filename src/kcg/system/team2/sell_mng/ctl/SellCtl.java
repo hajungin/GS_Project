@@ -82,6 +82,11 @@ public class SellCtl {
 			return sellsvc.topCustomer(params);
 	 }
 	 
+	 @RequestMapping("/Notice")
+	    public List<CmmnMap> Notice(CmmnMap params) {
+			return sellsvc.Notice(params);
+	 }
+	 
 	 
 	 
 	 

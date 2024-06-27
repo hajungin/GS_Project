@@ -349,6 +349,11 @@
 		LIMIT 5
 	</select>
 	
+	<select id="Notice" parameterType="cmmnMap" resultType="cmmnMap">
+		
+	
+	</select>
+	
 	
 
     

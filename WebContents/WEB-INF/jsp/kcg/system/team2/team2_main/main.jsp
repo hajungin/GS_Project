@@ -256,6 +256,7 @@ var vueapp = new Vue({
     mounted : function() { // 페이지 로드 시 실행
         this.getCalendarEvents();
     	this.getInfo();
+    	this.getNotice();
     },
     methods : {
     	getInfo: function() {
@@ -264,6 +265,12 @@ var vueapp = new Vue({
     	getInfoCB : function(data){
     		this.dataLis = data;
     		console.log(this.dataLis);
+    	},
+    	getNotice: function() {
+    		cf_ajax("/sell/Notice", null, this.getNoticeCB);
+    	},
+    	getNoticeCB: function(data){
+    		this.dataList = data;
     	},
     	
        getCalendarEvents: function() {
