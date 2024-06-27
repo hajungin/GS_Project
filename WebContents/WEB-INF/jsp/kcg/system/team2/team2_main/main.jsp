@@ -87,6 +87,49 @@
             font-weight: bold;
             font-size: 1.2em;
         }
+        h4.main-header {
+            color: #4A90E2;  /* 부드러운 파란색 */
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            font-family: 'Arial', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;  /* 테두리 제거 */
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        .table th, .table td {
+            padding: 12px 15px;
+        }
+
+        .table thead tr {
+            background-color: #009879;  /* 눈에 띄는 배경색 */
+            color: #ffffff;
+            text-align: center;  /* 헤더 가운데 정렬 */
+            font-weight: bold;
+        }
+
+        .table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+		.center {
+            text-align: center;
+        }
+
+        .table-bordered td, .table-bordered th {
+            border: none;  /* 테두리 제거 */
+        }
+
     </style>
     <meta charset="UTF-8">
     <title>GSITM | 메인</title>
@@ -165,23 +208,21 @@
                
                
                <div id="vueapp">
-                  <h4>우수사원 리스트 출력 예정!!!!</h4>
-                     <table class="table table-bordered dataTable" style="border: 2px solid #464646; width: 200px;" id="grid_app">
-                       <thead>
-                           <tr class="replace-inputs" >
-                              <th style="width: 3%; background-color: #B9FFFF;" class="center">순위</th>
-                               <th style="width: 5%; background-color: #B9FFFF;" class="center">담당자</th>
-                                     
-                           </tr>
-                       </thead>
-                       <tbody>
-				            <tr v-for="(ite,index) in dataLis">
-				               	<td class="center">{{index+1}}</td>
-				                <td class="center">{{ite.emp_nm}}</td>
-				                
-                           </tr>
-                       </tbody>
-                   </table>
+                  <h4 class="main-header">우수사원</h4>
+				    <table class="table table-bordered dataTable" style="width: 200px;" id="grid_app">
+				        <thead>
+				            <tr class="replace-inputs">
+				                <th style="width: 3%;" class="center">순위</th>
+				                <th style="width: 5%;" class="center">담당자</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr v-for="(ite, index) in dataLis" :key="index">
+				                <td class="center">{{ index + 1 }}</td>
+				                <td class="center">{{ ite.emp_nm }}</td>
+				            </tr>
+				        </tbody>
+				    </table>
                </div>
                <br>
            
