@@ -53,7 +53,7 @@
 
 		                    <div class="flex flex-100 flex-padding-10 flex-gap-10"
 		                        style="justify-content:flex-end; border: 2px solid #00CDFF;">
-		                        <button type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
+		                        <button type="button" class="btn btn-success btn-icon icon-right btn-small" style="margin-left: 5px;"
 		                            @click="showRegisterPopup">
 		                            담당자 등록
 		                            <i class="entypo-user"></i>
