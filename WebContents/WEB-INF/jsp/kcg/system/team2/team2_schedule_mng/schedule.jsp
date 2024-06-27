@@ -55,7 +55,6 @@
             </div>
         </div>
     </div>
-    </div>
     <!-- 모달 창 -->
                 <div id="app">
                     <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
