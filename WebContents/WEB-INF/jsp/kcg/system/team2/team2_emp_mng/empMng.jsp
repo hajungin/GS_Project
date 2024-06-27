@@ -106,20 +106,20 @@
 		                        <form class="form-horizontal">
 		                            <div class="row">
 	                                    <div class="form-group">
-	                                        <label for="reg_emp_no" class="col-sm-4 control-label">사원번호:</label>
-	                                        <div class="col-sm-8">
+	                                        <label for="reg_emp_no" class="col-sm-2 control-label">사원번호:</label>
+	                                        <div class="col-sm-5">
 	                                            <input type="text" id="reg_emp_no" v-model="reg_info.emp_no" class="form-control">
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
-	                                        <label for="reg_emp_nm" class="col-sm-4 control-label">성명 :</label>
-	                                        <div class="col-sm-8">
+	                                        <label for="reg_emp_nm" class="col-sm-2 control-label">성명 :</label>
+	                                        <div class="col-sm-5">
 	                                            <input type="text" id="reg_emp_nm" v-model="reg_info.emp_nm" class="form-control">
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
-	                                        <label for="reg_emp_dept" class="col-sm-4 control-label">부서 :</label>
-	                                        <div class="col-sm-8" id="selectcr">
+	                                        <label for="reg_emp_dept" class="col-sm-2 control-label">부서 :</label>
+	                                        <div class="col-sm-5" id="selectcr">
 	                                            <select id="reg_emp_dept" class="form-control" v-model="reg_info.emp_dept" style="margin-left: 10px;">
 	                                                <option value="">선택</option>
 	                                                <option v-for="item in deptList" :value="item.comm_no">{{item.comm_nm}}</option>
@@ -127,8 +127,8 @@
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
-	                                        <label for="reg_emp_posit" class="col-sm-4 control-label">직위 :</label>
-	                                        <div class="col-sm-8" id="selectcr">
+	                                        <label for="reg_emp_posit" class="col-sm-2 control-label">직위 :</label>
+	                                        <div class="col-sm-5" id="selectcr">
 	                                            <select id="reg_emp_posit" class="form-control" v-model="reg_info.emp_posit" style="margin-left: 10px;">
 	                                                <option value="">선택</option>
 	                                                <option v-for="item in positList" :value="item.comm_no">{{item.comm_nm}}</option>
@@ -136,21 +136,21 @@
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
-	                                        <label for="reg_emp_ecny_dt" class="col-sm-4 control-label">입사일자 :</label>
-	                                        <div class="col-sm-8">
+	                                        <label for="reg_emp_ecny_dt" class="col-sm-2 control-label">입사일자 :</label>
+	                                        <div class="col-sm-5">
 	                                            <input type="date" id="reg_emp_ecny_dt" v-model="reg_info.emp_ecny_dt" class="form-control">
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
-	                                        <label for="reg_emp_mbl_telno" class="col-sm-4 control-label">전화번호 :</label>
-	                                        <div class="col-sm-8">
-	                                            <textarea id="reg_emp_mbl_telno" v-model="reg_info.emp_mbl_telno" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
+	                                        <label for="reg_emp_mbl_telno" class="col-sm-2 control-label">전화번호 :</label>
+	                                        <div class="col-sm-5">
+	                                        	<input type="text" id="reg_emp_mbl_telno" v-model="reg_info.emp_mbl_telno" class="form-control">
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
-	                                        <label for="reg_emp_eml_addr" class="col-sm-4 control-label">E-mail :</label>
-	                                        <div class="col-sm-8">
-	                                            <textarea id="reg_emp_eml_addr" v-model="reg_info.emp_eml_addr" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
+	                                        <label for="reg_emp_eml_addr" class="col-sm-2 control-label">E-mail :</label>
+	                                        <div class="col-sm-5">
+	                                        	<input type="text" id="reg_emp_eml_addr" v-model="reg_info.emp_eml_addr" class="form-control">
 	                                        </div>
 	                                    </div>
 		                        </form>
@@ -179,20 +179,20 @@
 		                        <form class="form-horizontal">
 		                            <div class="row">
 	                                    <div class="form-group">
-	                                        <label for="emp_no" class="col-sm-4 control-label">사원번호:</label>
-	                                        <div class="col-sm-8">
+	                                        <label for="emp_no" class="col-sm-2 control-label">사원번호:</label>
+	                                        <div class="col-sm-5">
 	                                            <input type="text" id="emp_no" v-model="info.emp_no" class="form-control" readonly>
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
-	                                        <label for="emp_nm" class="col-sm-4 control-label">성명 :</label>
-	                                        <div class="col-sm-8">
+	                                        <label for="emp_nm" class="col-sm-2 control-label">성명 :</label>
+	                                        <div class="col-sm-5">
 	                                            <input type="text" id="emp_nm" v-model="info.emp_nm" class="form-control">
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
-	                                        <label for="emp_dept" class="col-sm-4 control-label">부서 :</label>
-	                                        <div class="col-sm-8" id="selectcr">
+	                                        <label for="emp_dept" class="col-sm-2 control-label">부서 :</label>
+	                                        <div class="col-sm-5" id="selectcr">
 	                                            <select id="emp_dept" class="form-control" v-model="info.emp_dept" style="margin-left: 10px;">
 	                                                <option value="" disabled selected>부서를 선택하세요</option>
 	                                                <option v-for="item in deptList" :value="item.comm_no">{{item.comm_nm}}</option>
@@ -200,8 +200,8 @@
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
-	                                        <label for="emp_posit" class="col-sm-4 control-label">직위 :</label>
-	                                        <div class="col-sm-8" id="selectcr">
+	                                        <label for="emp_posit" class="col-sm-2 control-label">직위 :</label>
+	                                        <div class="col-sm-5" id="selectcr">
 	                                            <select id="emp_posit" class="form-control" v-model="info.emp_posit" style="margin-left: 10px;">
 	                                                <option value="" disabled selected>부서를 선택하세요</option>
 	                                                <option v-for="item in positList" :value="item.comm_no">{{item.comm_nm}}</option>
@@ -209,21 +209,21 @@
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
-	                                        <label for="emp_ecny_dt" class="col-sm-4 control-label">입사일자 :</label>
-	                                        <div class="col-sm-8">
+	                                        <label for="emp_ecny_dt" class="col-sm-2 control-label">입사일자 :</label>
+	                                        <div class="col-sm-5">
 	                                            <input type="date" id="emp_ecny_dt" v-model="info.emp_ecny_dt" class="form-control">
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
-	                                        <label for="emp_mbl_telno" class="col-sm-4 control-label">전화번호 :</label>
-	                                        <div class="col-sm-8">
-	                                            <textarea id="emp_mbl_telno" v-model="info.emp_mbl_telno" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
+	                                        <label for="emp_mbl_telno" class="col-sm-2 control-label">전화번호 :</label>
+	                                        <div class="col-sm-5">
+	                                        	<input type="text" id="emp_mbl_telno" v-model="info.emp_mbl_telno" class="form-control">
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
-	                                        <label for="emp_eml_addr" class="col-sm-4 control-label">E-mail :</label>
-	                                        <div class="col-sm-8">
-	                                            <textarea id="emp_eml_addr" v-model="info.emp_eml_addr" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
+	                                        <label for="emp_eml_addr" class="col-sm-2 control-label">E-mail :</label>
+	                                        <div class="col-sm-5">
+	                                        	<input type="text" id="emp_eml_addr" v-model="info.emp_eml_addr" class="form-control">
 	                                        </div>
 	                                    </div>
 		                        </form>
