@@ -15,98 +15,7 @@
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/datatables.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/promion.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/billboard.css">
-	
-<style>
-    .header {
-        background-color: #A7EEFF;
-        color: #333;
-        padding: 12px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        font-size: 1.5em;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin: 20px 0;
-        transition: background-color 0.3s ease;
-        cursor: pointer;
-    }
-
-    .header:hover {
-        background-color: #66CCFF;
-    }
-    #Button:hover {
-        background-color: #2980B9; /* Hover 시 배경색 변경 */
-    }
-   /* Modal Content */
-#popup_print .modal-content {
-    border: none;
-    border-radius: 0;
-    background-color: #fff;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-}
-
-/* Modal Header */
-#popup_print .modal-header {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 15px;
-}
-
-/* Modal Title */
-#popup_print .modal-title {
-    font-weight: bold;
-    font-size: 18px;
-}
-
-/* Modal Body */
-#popup_print .modal-body {
-    padding: 20px;
-}
-
-/* Form Group Style */
-#popup_print .form-group {
-    margin-bottom: 15px;
-}
-
-/* Table Style */
-#popup_print table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #ddd;
-}
-
-#popup_print table th, #popup_print table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
-
- #popup_print table th { 
-    background-color: #f0f0f0; 
-    color: #333;
- } 
-
-/* Modal Footer */
-.modal-footer {
-    border-top: 1px solid #ddd;
-    padding: 15px;
-    text-align: right;
-}
-
-/* Primary Button */
-#popup_print.btn-primary:hover {
-    background-color: #2980b9;
-    border-color: #2980b9;
-}
-
-/* Secondary Button */
-#popup_print.btn-secondary:hover {
-    background-color: #7f8c8d;
-    border-color: #7f8c8d;
-}  
-</style>
+	<link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
 
 <title>상품정보조회</title>
 </head>
@@ -128,7 +37,7 @@
 				<li class="active"><strong>상품관리</strong></li>
 				<li class="active"><strong>상품정보조회</strong></li>
 			</ol>
-			<h2 class="header">프로모션 상품</h2>
+			<h2 class="header" onclick="location.reload();">프로모션 상품</h2>
 			<div class="right flex-column flex-100">
 			 	<div class="right-top">
                         <ul class="nav">
@@ -144,7 +53,7 @@
 					
         
         <div class="flex flex-100" style="border: 2px solid #00CDFF;">
-            <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
+            <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10" style="border: none;">
                 <div class="form-group flex-20" style="position: relative;">
                     <label for="productName" class="form-control">상품명 :</label>
                     <input type="text" style="height:30px;" class="form-control" v-model="prod_nm" value=""/>
@@ -196,9 +105,9 @@
                  
                 
             </div>
-         	<div class="flex-wrap flex-10 flex flex-gap-10 flex-padding-10">
+         	<div class="flex-wrap flex-10 flex flex-gap-10 flex-padding-10" style="border: none;">
             	<div class="form-group flex-10" style="width: 30%;">
-			        <button type="button" id="Button" class="btn btn-blue btn-icon icon-right" @click="getListCond(true)">
+			        <button type="button" id="Button" class="btn btn-primary btn-icon" @click="getListCond(true)">
 					    검색 <i class="entypo entypo-search"></i>
 					</button>
 				</div>
@@ -206,9 +115,9 @@
         </div>
        <div class="flex flex-100 flex-padding-10 flex-gap-10" 
 						style="justify-content: flex-end; border: 2px solid #00CDFF;">
-						<button type="button" id="Button" class="btn btn-blue btn-icon icon-right"
+						<button type="button" id="Button" class="btn btn-success btn-icon icon-right btn-small"
 							@click="cf_movePage('/2team/prod/insert')">
-						 	상품등록 <i class="entypo entypo-info"></i>
+						 	상품등록 <i class="fa fa-plus"></i>
 						</button><button type="button" id="Button" class="btn btn-blue btn-icon icon-right"
 							@click="popupPrint()">
 							이율내역 <i class="entypo entypo-info"></i>

@@ -29,40 +29,42 @@
 		<div class="row">
 			<div id="vueapp" style="display: flex; justify-content: center; width: 100%;">
 				<template>
-					<div class="panel-body" style="border: 2px solid #00CDFF; width: 100%; display: flex; justify-content: center;">
+					<div class="panel-body" style="border: 2px solid #00CDFF; width: 97%; display: flex; justify-content: center;">
 						<div class="left-panel" style="width: 50%; border: none;">
 							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
-								<label for="emp_no" class="fix-width-33" style="width: 150px;">사원번호 :</label>
+								<label for="emp_no" class="fix-width-33" style="width: 80px;">사원번호 :</label>
 								<input type="text" class="form-control" id="emp_no" v-model="info.emp_no" readonly style="flex: 1;">
 							</div>
 							
 							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
-								<label for="emp_nm" class="fix-width-33" style="width: 150px;">성명 :</label>
+								<label for="emp_nm" class="fix-width-33" style="width: 80px;">성명 :</label>
 								<input type="text" class="form-control" id="emp_nm" v-model="info.emp_nm" style="flex: 1;">
 							</div>
 							
 							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
-								<label for="emp_dept" class="fix-width-33" style="width: 150px;">부서 :</label>
+								<label for="emp_dept" class="fix-width-33" style="width: 80px;">부서 :</label>
 								<input type="text" class="form-control" id="emp_dept" v-model="info.emp_dept_nm" readonly style="flex: 1;">
 							</div>
 				
 							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
-								<label for="emp_posit" class="fix-width-33" style="width: 150px;">직위 :</label>
+								<label for="emp_posit" class="fix-width-33" style="width: 80px;">직위 :</label>
 								<input type="text" class="form-control" id="emp_posit" v-model="info.emp_posit_nm" readonly style="flex: 1;">
 							</div>
 							
 							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
-								<label for="emp_ecny_dt" class="fix-width-33" style="width: 150px;">입사일자 :</label>
-								<input type="date" class="form-control" id="emp_ecny_dt" v-model="info.emp_ecny_dt" readonly style="flex: 1;">
+
+								<label for="emp_ecny_dt" class="fix-width-33" style="width: 80px;">입사일자 :</label>
+								<input type="date" class="form-control" id="emp_ecny_dt" v-model="info.emp_ecny_dt" style="flex: 1;">
+
 							</div>
 							
 							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
-								<label for="emp_mbl_telno" class="fix-width-33" style="width: 150px;">전화번호 :</label>
+								<label for="emp_mbl_telno" class="fix-width-33" style="width: 80px;">전화번호 :</label>
 								<input type="text" class="form-control" id="emp_mbl_telno" v-model="info.emp_mbl_telno" style="flex: 1;">
 							</div>
 							
 							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
-								<label for="emp_eml_addr" class="fix-width-33" style="width: 150px;">E-mail :</label>
+								<label for="emp_eml_addr" class="fix-width-33" style="width: 80px;">E-mail :</label>
 								<input type="text" class="form-control" id="emp_eml_addr" v-model="info.emp_eml_addr" style="flex: 1;">
 							</div>
 							

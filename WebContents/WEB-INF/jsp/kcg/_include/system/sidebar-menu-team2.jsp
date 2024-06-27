@@ -61,7 +61,7 @@
 				</li> 
 				<% } %>
 				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/system/notice_mng/list)">
+					<a href="#gm" onclick="cf_movePage('/system/notice_mng/list')">
 						<i class="entypo-newspaper"></i>
 						<span class="title">TEAM2 공지사항</span>
 					</a>
