@@ -159,6 +159,7 @@ var vueapp = new Vue({
             var today = new Date();
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialDate: today,
+                timeZone: 'local',
                 initialView: 'dayGridMonth',
                 nowIndicator: true,
                 locale: 'ko',
