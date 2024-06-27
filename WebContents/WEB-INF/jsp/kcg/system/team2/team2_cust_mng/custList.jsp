@@ -124,13 +124,13 @@
                                 <div class="form-group">
                                     <label for="cust_nm" class="col-sm-4 control-label">성명</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="cust_nm" v-model="info.cust_nm" class="form-control" :readonly="isEmpty(info.cust_sn)">
+                                        <input type="text" id="cust_nm" v-model="info.cust_nm" class="form-control" :readonly="isNotEmpty(info.cust_sn)">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="cust_pridtf_no" class="col-sm-4 control-label">실명번호</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="cust_pridtf_no" v-model="info.cust_pridtf_no" class="form-control" :readonly="isEmpty(info.cust_sn)">
+                                        <input type="text" id="cust_pridtf_no" v-model="info.cust_pridtf_no" class="form-control" :readonly="isNotEmpty(info.cust_sn)">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -374,6 +374,7 @@
         data: {
             info: {
             	cust_pridtf_no: "${cust_pridtf_no}",
+            	cust_sn: "",
                 cust_nm: "",
                 cust_eml_addr: "",
                 cust_home_telno: "",
