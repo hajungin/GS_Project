@@ -36,16 +36,16 @@
 		            </div>
 						<div>
 							<select v-model="selectedCurrency1" >
-								<option v-for="item in dataList" :key="item.cur_unit"
-									:value="item">{{ item.cur_nm }}</option>
-							</select> <input type="number" v-model="amount1" @input="calculateExchange">
+								<option v-for="item in dataList" :key="item.cur_unit" :value="item.cur_unit">{{ item.cur_nm }}</option>
+							</select>
+							<input type="text" v-model="amount1" @input="calculateExchange">
 						</div>
 						<div> = </div>
 	                <div>
 		                <select v-model="selectedCurrency2">
-		                    <option v-for="item in dataList" :value="item.cur_unit" :selected="item.cur_unit === 'KRW'">{{ item.cur_nm }}</option>
+		                    <option v-for="item in dataList" :key="item.cur_unit" :value="item.cur_unit">{{ item.cur_nm }}</option>
 		                </select>
-		                <input type="number" v-model="amount2" disable>
+		                <input type="text" v-model="amount2" @input="calculateExchange2">
 	                </div>
 	            </div>
 	        </div>
@@ -102,8 +102,14 @@ var vueapp = new Vue({
     computed: {
         // cur_nm 값에서 통화국을 추출하는 메서드
         getCountry() {
+        	
             return (cur_nm) => {
                 if (!cur_nm) return '';
+                if(cur_nm == "위안화"){
+            		cur_nm = "중국 위안화"
+            	}else if(cur_nm =="유로"){
+            		cur_nm ="EU 유로"
+            	}
                 const parts = cur_nm.split(' ');
                 return parts.slice(0, -1).join(' '); // 맨 마지막 단어를 제외한 나머지는 통화국
             };
@@ -112,10 +118,15 @@ var vueapp = new Vue({
         getCurrency() {
             return (cur_nm) => {
                 if (!cur_nm) return '';
+                if(cur_nm == "위안화"){
+            		cur_nm = "중국 위안화"
+            	}else if(cur_nm =="유로"){
+            		cur_nm ="EU 유로"
+            	}
                 const parts = cur_nm.split(' ');
                 return parts.slice(-1).join(' '); // 맨 마지막 단어는 통화단위
             };
-        }
+        },
     },
     mounted: function() {
         this.getList(true);
@@ -139,22 +150,89 @@ var vueapp = new Vue({
         	
         	// selectedCurrency1에는 선택된 통화의 cur_unit 값이 들어 있음
             const selectedCurrency = this.dataList.find(item => item.cur_unit === this.selectedCurrency1);
-            
+            const selectedCurrencyAfter = this.dataList.find(item => item.cur_unit === this.selectedCurrency2);
             console.dir(selectedCurrency);
+            console.dir(selectedCurrencyAfter)
         	let amount1 = Number(this.amount1);
-        	let ttb = Number(this.selectedCurrency.ttb);
-        	console.log("============================" + ttb);
+            if(selectedCurrency.cur_unit == "KRW"){
+            	selectedCurrency.ttb = "1";
+            	selectedCurrency.tts = "1";
+            }else if(selectedCurrencyAfter.cur_unit =="KRW"){
+            	selectedCurrencyAfter.ttb = "1";
+            	selectedCurrencyAfter.tts = "1";
+            }
+        	 
+        	 const ttb1 = parseFloat(selectedCurrency.ttb.replace(/,/g, ''));
+        	const ttb2 = parseFloat(selectedCurrencyAfter.ttb.replace(/,/g, ''));
+        	 const tts1 = parseFloat(selectedCurrency.tts.replace(/,/g, ''));
+        	 const tts2 = parseFloat(selectedCurrencyAfter.tts.replace(/,/g, ''));
+        	 const deal_bas_r1 = parseFloat(selectedCurrency.deal_bas_r.replace(/,/g, ''));
+        	 const deal_bas_r2 = parseFloat(selectedCurrencyAfter.deal_bas_r.replace(/,/g, ''));
+        	 
+        	var formatAmount = this.amount1;
+        	var formatAmount2 = this.amount2;
             if (!selectedCurrency) {
                 console.error("Selected currency not found in dataList:", this.selectedCurrency1);
                 return;
             }
-           
+           console.log(this.selectedType)
             // ttb 값을 이용하여 계산
             if (this.selectedType === "ttb") {
-                this.amount2 = amount1 * ttb;
+                formatAmount2 = ttb1/ttb2*amount1;
+            }else if(this.selectedType === "tts"){
+            	formatAmount2 = tts1/tts2*amount1;
+            } else if(this.selectedType === "deal_bas_r"){
+            	formatAmount2 = deal_bas_r1/deal_bas_r2*amount1;
             }
-        
+            var currencyFormat = formatAmount2.toLocaleString('en-US');
+            this.amount2 = currencyFormat;
             cf_ajax("/system/exchange_mng", this.data);
+        },
+		calculateExchange2: function() {
+        	
+        	// selectedCurrency1에는 선택된 통화의 cur_unit 값이 들어 있음
+            const selectedCurrency = this.dataList.find(item => item.cur_unit === this.selectedCurrency1);
+            const selectedCurrencyAfter = this.dataList.find(item => item.cur_unit === this.selectedCurrency2);
+            console.dir(selectedCurrency);
+            console.dir(selectedCurrencyAfter)
+        	let amount2 = Number(this.amount2);
+            if(selectedCurrency.cur_unit == "KRW"){
+            	selectedCurrency.ttb = "1";
+            	selectedCurrency.tts = "1";
+            }else if(selectedCurrencyAfter.cur_unit =="KRW"){
+            	selectedCurrencyAfter.ttb = "1";
+            	selectedCurrencyAfter.tts = "1";
+            }
+        	 
+        	 const ttb1 = parseFloat(selectedCurrency.ttb.replace(/,/g, ''));
+        	const ttb2 = parseFloat(selectedCurrencyAfter.ttb.replace(/,/g, ''));
+        	 const tts1 = parseFloat(selectedCurrency.tts.replace(/,/g, ''));
+        	 const tts2 = parseFloat(selectedCurrencyAfter.tts.replace(/,/g, ''));
+        	 const deal_bas_r1 = parseFloat(selectedCurrency.deal_bas_r.replace(/,/g, ''));
+        	 const deal_bas_r2 = parseFloat(selectedCurrencyAfter.deal_bas_r.replace(/,/g, ''));
+        	 
+        	var formatAmount = this.amount1;
+        	var formatAmount2 = this.amount2;
+            if (!selectedCurrency) {
+                console.error("Selected currency not found in dataList:", this.selectedCurrency1);
+                return;
+            }
+           console.log(this.selectedType)
+            // ttb 값을 이용하여 계산
+            if (this.selectedType === "ttb") {
+                formatAmount = ttb2/ttb1*amount2;
+            }else if(this.selectedType === "tts"){
+            	formatAmount = tts2/tts1*amount2;
+            } else if(this.selectedType === "deal_bas_r"){
+            	formatAmount = deal_bas_r2/deal_bas_r1*amount2;
+            }
+            var currencyFormat = formatAmount.toLocaleString('en-US');
+            this.amount1 = currencyFormat;
+            cf_ajax("/system/exchange_mng", this.data);
+        },
+        formatCurrency: function(value) {
+            if (!value) return '';
+            return value.toLocaleString('en-US');
         },
         gotoDtl: function(cust_mbl_telno) {
             pop_cust_info.init(cust_mbl_telno);
