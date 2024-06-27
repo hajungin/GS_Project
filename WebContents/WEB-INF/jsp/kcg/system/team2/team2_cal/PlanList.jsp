@@ -8,8 +8,28 @@
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/datatables.css">
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
-	
 	<title>설계이력조회</title>
+	
+<style>
+.header {
+    background-color: #A7EEFF;
+    color: #333;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 20px 0;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.header:hover {
+   	background-color: #66CCFF;
+}
+</style>
 </head>
 <body class="page-body">
 
@@ -26,7 +46,7 @@
 			<li class="active"><strong>설계이력조회</strong></li>
 		</ol>
 	
-		<h2>프로모션 > 설계이력조회</h2>
+		<h2 class="header" onclick="location.reload();">설계이력조회</h2>
 		<br/>
 		
 		<div class="dataTables_wrapper" id="vueapp">
@@ -47,7 +67,7 @@
 							</div>
 						</td>
 						<td class="right" style="width: 200px;">
-							<button type="button" class="btn btn-blue btn-icon icon-left" @click="getListCond(true)">
+							<button type="button" class="btn btn-primary btn-icon" @click="getListCond(true)">
 								조건검색
 								<i class="entypo-search"></i>
 							</button>
@@ -71,7 +91,7 @@
 							</div>
 						</td>
 						<td class="right" style="width: 200px;">
-							<button type="button" class="btn btn-blue btn-icon icon-left" @click="getListAll(true)">
+							<button type="button" class="btn btn-primary btn-icon" @click="getListAll(true)">
 								전체검색
 								<i class="entypo-search"></i>
 							</button>
@@ -87,7 +107,7 @@
 <!-- 						인쇄 -->
 <!-- 						<i class="entypo-print"></i> -->
 <!-- 					</button> -->
-					<button type="button" class="btn btn-orange btn-icon icon-left btn-small" @click="cf_movePage('/cal/dtlCom')">
+					<button type="button" class="btn btn-success btn-icon icon-right btn-small" @click="cf_movePage('/cal/dtlCom')">
 						등록
 						<i class="entypo-plus"></i>
 					</button>

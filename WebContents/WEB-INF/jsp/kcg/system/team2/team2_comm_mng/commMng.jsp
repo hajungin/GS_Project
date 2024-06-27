@@ -60,7 +60,7 @@
                             항목구분관리
                             <i class="entypo-archive"></i>
                         </button>
-                        <button v-if="!showButton" type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
+                        <button v-if="!showButton" type="button" class="btn btn-success btn-icon icon-right btn-small" style="margin-left: 5px;"
                             @click="showInputRow">
                             항목코드추가
                             <i class="fa fa-plus"></i>

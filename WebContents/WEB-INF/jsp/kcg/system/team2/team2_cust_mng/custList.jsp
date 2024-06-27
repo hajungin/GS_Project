@@ -60,15 +60,15 @@
                     </div>
                     <div class="flex flex-100 flex-padding-10 flex-gap-10"
                         style="justify-content:flex-end;  border: 2px solid #00CDFF;">
-                        <button type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
+                        <button type="button" class="btn btn-success btn-icon icon-right btn-small" style="margin-left: 5px;"
                             @click="gotoDtl()">
                             신규회원등록
-                            <i class="entypo-archive"></i>
+                            <i class="entypo-user"></i>
                         </button>
                         <button type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
                             @click="cf_movePage('/communi/communiList')">
                             상담목록조회
-                            <i class="entypo-user"></i>
+                            <i class="entypo-list"></i>
                         </button>
                     </div>
                     <table class="table table-bordered datatable dataTable" id="grid_app"
