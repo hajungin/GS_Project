@@ -154,7 +154,7 @@ public class LoginCtl {
 
 		log.debug(">>> Go to login Success Page.");
 		if ("Y".equals(userInfoVO.getAdminYn())) {
-			return "redirect:/system";
+			return "redirect:/system/main";
 		} else {
 			if ("temp_dev".equals(runEnv)) {
 				return "redirect:/portal";

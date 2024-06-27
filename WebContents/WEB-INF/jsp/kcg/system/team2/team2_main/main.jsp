@@ -104,7 +104,7 @@
     <meta charset="UTF-8">
     <title>GSITM | 메인</title>
 </head>
-<body class="page-body" data-url="http://neon.dev">
+<body class="page-body" data-url="http://neon.dev" style="backgroud-img: url(team2/team2_images/team2bg.jpg);">
 
     <div class="page-container main-content";" style="backgroud-img: url(team2/team2_images/team2bg.jpg);">
 
@@ -174,7 +174,23 @@
 	            
 	            <div>
 	            	<h4>우수사원 리스트 출력 예정!!!!</h4>
+		            	<table class="table table-bordered dataTable" style="border: 2px solid #00CDFF;" id="grid_app">
+					        <thead>
+					            <tr class="replace-inputs">
+					            	<th style="width: 5%; background-color: #B9FFFF;" class="center">순위</th>
+					                <th style="width: 10%; background-color: #B9FFFF;" class="center">담당자</th>
+					                      
+					            </tr>
+					        </thead>
+					        <tbody>
+					            <tr v-for="(item,index) in dataList">
+					               	<td class="center">{{index+1}}</td>
+					                <td class="center">{{item.emp_nm}}</td>
+					            </tr>
+					        </tbody>
+					    </table>
 	            </div>
+	            <br>
            
            
 	            <h4>공지사항</h4>
@@ -237,7 +253,7 @@ var vueapp = new Vue({
         events: []
     },
     mounted : function() { // 페이지 로드 시 실행
-        this.getList();
+//         this.getList();
         this.getCalendarEvents();
     },
     methods : {
@@ -313,45 +329,45 @@ var vueapp = new Vue({
             });
             calendar.render();
         },
-    	getList : function(isInit){ // 목록을 가져오는 함수 검색 조건과 정렬 조건을 설정 ajax 요청 후 데이터 가져옴
+//     	getList : function(isInit){ // 목록을 가져오는 함수 검색 조건과 정렬 조건을 설정 ajax 요청 후 데이터 가져옴
 
-			cv_pagingConfig.func = this.getList;
-			if(isInit === true){
-				cv_pagingConfig.pageNo = 1;
-				cv_pagingConfig.orders = [{target : "frst_reg_ymd", isAsc : false}]; 		// frst_reg_ymd(등록일) 필드를 기준으로 내림차순(isAsc: false)으로 정렬
-			}
+// 			cv_pagingConfig.func = this.getList;
+// 			if(isInit === true){
+// 				cv_pagingConfig.pageNo = 1;
+// 				cv_pagingConfig.orders = [{target : "frst_reg_ymd", isAsc : false}]; 		// frst_reg_ymd(등록일) 필드를 기준으로 내림차순(isAsc: false)으로 정렬
+// 			}
 			
-			var params = {
-					search_nm : this.search_nm,
-					search_val : this.search_val,
-				}
+// 			var params = {
+// 					search_nm : this.search_nm,
+// 					search_val : this.search_val,
+// 				}
 			
-			cv_sessionStorage		// cv_sessionStorage 객체에 pagingConfig와 params를 저장
-				.setItem('pagingConfig', cv_pagingConfig)
-				.setItem('params', params);
+// 			cv_sessionStorage		// cv_sessionStorage 객체에 pagingConfig와 params를 저장
+// 				.setItem('pagingConfig', cv_pagingConfig)
+// 				.setItem('params', params);
 
-			cf_ajax("/system/notice_mng/getList", params, this.getListCB);  // 접속되는 URL을 적어야한다. (시스템 파일 경로 말고)
-		},
-		getListCB : function(data){  // ajax로 데이터를 받아와서 dataList에 담는다
-			this.dataList = data.list;
-			for(var i=0; i<this.dataList.length; i++){
-				this.dataList[i].read_cnt = this.dataList[i].notice_no.numformat();
-			}
+// 			cf_ajax("/system/notice_mng/getList", params, this.getListCB);  // 접속되는 URL을 적어야한다. (시스템 파일 경로 말고)
+// 		},
+// 		getListCB : function(data){  // ajax로 데이터를 받아와서 dataList에 담는다
+// 			this.dataList = data.list;
+// 			for(var i=0; i<this.dataList.length; i++){
+// 				this.dataList[i].read_cnt = this.dataList[i].notice_no.numformat();
+// 			}
 			
-			cv_pagingConfig.renderPagenation("system");
-		},
-		gotoDtl : function(notice_no){		// 상세 보기 페이지로 이동하는 함수
-			var params = {
-					notice_no : cf_defaultIfEmpty(notice_no, ""),
-				}
-			cf_movePage("/system/notice_mng/notice", params); // 자세히 보기 페이지로 이동
-		},
-		truncateText: function(text, length) {			// 글자 30자 이상일때 뒤에 ...
-            if (text.length > length) {
-                return text.substring(0, length) + '...';
-            }
-            return text;
-        }
+// 			cv_pagingConfig.renderPagenation("system");
+// 		},
+// 		gotoDtl : function(notice_no){		// 상세 보기 페이지로 이동하는 함수
+// 			var params = {
+// 					notice_no : cf_defaultIfEmpty(notice_no, ""),
+// 				}
+// 			cf_movePage("/system/notice_mng/notice", params); // 자세히 보기 페이지로 이동
+// 		},
+// 		truncateText: function(text, length) {			// 글자 30자 이상일때 뒤에 ...
+//             if (text.length > length) {
+//                 return text.substring(0, length) + '...';
+//             }
+//             return text;
+//         }
     }
 });
 

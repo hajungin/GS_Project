@@ -199,8 +199,7 @@
                 <td class="center">{{item.emp_nm}}</td>
                 <td class="center">{{item.count}}</td>
                 <td class="center">{{formatCurrency(item.total_price)}}</td>
-                <td class="center">{{ calculateAchievementRate(item.total_price) }}</td>
-               
+                <td class="center">{{ calculateAchievementRate(item.total_price) }}</td>  
             </tr>
         </tbody>
     </table>
