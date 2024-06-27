@@ -97,6 +97,10 @@
 								<span class="title">가입현황</span>
 							</a>
 							
+							<a href="#gm" onclick="cf_movePage('/sell/sales')">
+								<span class="title">판매달성률</span>
+							</a>
+							
 
 							<a href="#gm" onclick="cf_movePage('/cal/dtlCom')">
 								<span class="title">금융계산기</span>
@@ -104,7 +108,11 @@
 							<a href="#gm" onclick="cf_movePage('/cal/listPlan')">
 								<span class="title">설계이력조회</span>
 							</a>
+<<<<<<< HEAD
 
+=======
+						
+>>>>>>> d5d406a18baf4505fb4834ee0ed1140451e0dee2
 
 						</li>
 					</ul>

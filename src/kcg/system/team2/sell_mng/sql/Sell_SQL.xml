@@ -306,20 +306,14 @@
 		        <if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
 		            AND cu.cust_mbl_telno LIKE CONCAT('%', #{cust_mbl_telno}, '%')
 		        </if>
-		        <if test='prod_nm != null and prod_nm != ""'>
-		            <if test='sa != null and sa.prod_nm != null and sa.prod_nm != ""'>
-		                AND sa.prod_nm LIKE CONCAT('%', #{prod_nm}, '%')
-		            </if>
-		            <if test='lo != null and lo.prod_nm != null and lo.prod_nm != ""'>
-		                AND lo.prod_nm LIKE CONCAT('%', #{prod_nm}, '%')
-		            </if>
-		            <if test='ac != null and ac.prod_nm != null and ac.prod_nm != ""'>
-		                AND ac.prod_nm LIKE CONCAT('%', #{prod_nm}, '%')
-		            </if>
-		            <if test='dp != null and dp.prod_nm != null and dp.prod_nm != ""'>
-		                AND dp.prod_nm LIKE CONCAT('%', #{prod_nm}, '%')
-		            </if>
-		        </if>
+			        <if test='prod_nm != null and prod_nm != ""'>
+			            and (
+			                sa.prod_nm like CONCAT('%', #{prod_nm}, '%')
+			                or lo.prod_nm like CONCAT('%', #{prod_nm}, '%')
+			                or dp.prod_nm like CONCAT('%', #{prod_nm}, '%')
+			                or ac.prod_nm like CONCAT('%', #{prod_nm}, '%')
+			            )
+			        </if>
 <!-- 		        <if test='prod_nm != null and prod_nm != ""'> -->
 <!-- 					AND  -->
 <!-- 					(a.sa_prod_nm LIKE '%' || #{prod_nm} || '%' OR a.loan_prod_nm LIKE '%' || #{prod_nm} || '%' OR  -->
@@ -342,6 +336,25 @@
 		        
 
 	</select>
+	
+	<select id="achievement" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT 
+		    ee.emp_nm,
+		    COUNT(ee.emp_no) AS count,
+		    SUM(a.price) AS total_price
+		FROM 
+		    kcgbd.e_product_init a
+		LEFT JOIN 
+		    kcgbd.e_employee ee ON a.emp_no = ee.emp_no
+		WHERE 
+		    a.prod_type  = #{prod_type} 
+		GROUP BY 
+		    ee.emp_nm
+		ORDER by
+			total_price DESC, count DESC;
+	</select>
+	
+	
 
     
 </mapper>

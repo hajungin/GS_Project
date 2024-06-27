@@ -58,4 +58,10 @@ public class SellSvc {
 		System.out.println(rslt.toString());
 		return rslt;	
 	}
+
+
+	public List<CmmnMap> achievement(CmmnMap params) {
+		List<CmmnMap> rslt = cmmnDao.selectList("system.team2.sell_mng.achievement", params);
+		return rslt;
+	}
 }
