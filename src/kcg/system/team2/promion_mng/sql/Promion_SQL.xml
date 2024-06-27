@@ -615,6 +615,7 @@
 		  	  , interest_rate
 		  	  , interest_ta
 		  	  ,emp_no
+		  	  ,prod_type
 		  	 )
 		values (
 		  	 cast(#{prod_no} as numeric(5)),
@@ -624,7 +625,8 @@
 			cast(#{tot_dpst_amt} as bigint),
 			cast(#{aply_rate} as numeric(3,1)),
 			#{interest_ta},
-			#{emp_no}
+			#{emp_no},
+			#{prod_type}
 		     )
 	</insert>
 	

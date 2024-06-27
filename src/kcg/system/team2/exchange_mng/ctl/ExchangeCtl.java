@@ -41,7 +41,7 @@ public class ExchangeCtl {
 	@ResponseBody
 	public List<Map<String, Object>> getList() {
 	    String responseBody = exchangeSvc.getExchange();
-	    System.out.println(responseBody);
+	    System.out.println("============================================================================resposebody :" + responseBody);
 
 	    // JSON 배열을 List<Map<String, Object>>로 변환
 	    ObjectMapper objectMapper = new ObjectMapper();

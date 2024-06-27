@@ -27,31 +27,29 @@
 	        <div class="calculator-container">
 	            <h3>환율 계산기</h3>
 	            <div class="calculator">
-	            	<!-- <select v-model="exchageType">
-	                    <option>송금 받을 때</option>
-	                    <option>송금 보낼 때</option>
-	                </select> -->
-	            
-	                <select v-model="selectedCurrency1">
-	                    <option v-for="item in dataList" :value="item.cur_unit" :selected="item.cur_unit === 'USD'">{{ item.cur_nm }}</option>
-	                </select>
-	                <input type="number" v-model="amount1" value="item.result">
-	                <br/>
-	                
-	                <select v-model="selectedCurrency2">
-	                    <option v-for="item in dataList" :value="item.cur_unit" :selected="item.cur_unit === 'KRW'">{{ item.cur_nm }}</option>
-	                </select>
-	                <input type="number" v-model="amount2" value="item.result">
+		            <div>
+		            	<select v-model="selectedType" id="selectType">
+		                    <option value="ttb">송금 받을 때</option>
+		                    <option value="tts">송금 보낼 때</option>
+		                    <option value="deal_bas_r">매매 기준율</option>
+		                </select>
+		            </div>
+						<div>
+							<select v-model="selectedCurrency1" >
+								<option v-for="item in dataList" :key="item.cur_unit"
+									:value="item">{{ item.cur_nm }}</option>
+							</select> <input type="number" v-model="amount1" @input="calculateExchange">
+						</div>
+						<div> = </div>
+	                <div>
+		                <select v-model="selectedCurrency2">
+		                    <option v-for="item in dataList" :value="item.cur_unit" :selected="item.cur_unit === 'KRW'">{{ item.cur_nm }}</option>
+		                </select>
+		                <input type="number" v-model="amount2" disable>
+	                </div>
 	            </div>
 	        </div>
 	        <br/>
-        
-        
-        
-        
-        
-        
-        
         
             <template>
                 <table class="table table-bordered datatable dataTable" style="border: 1px solid #999999;">
@@ -83,69 +81,7 @@
     </div>
 </div>
 
-<!-- 환율 정보 그래프 팝업 -->
-<div class="modal fade" id="pop_cust_info">
-    <template>
-        <div class="modal-dialog" style="width: 80%;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btn_popClose">&times;</button>
-                    <h4 class="modal-title" id="modify_nm">고객기본정보</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="panel-body" style="display: flex; border: 1px solid #FF0000; width: 100%;">
-                        <div class="left-panel" style="width: 50%;">
-                            <div class="form-group">
-                                <label for="wrt_dt" class="fix-width-33">작성일자:</label>
-                                <input type="text" class="form-control" id="wrt_dt" v-model="info.wrt_dt">
-                            </div>
-                            <div class="form-group">
-                                <label for="cust_nm" class="fix-width-33">성명:</label>
-                                <input type="text" class="form-control" id="cust_nm" v-model="info.cust_nm">
-                            </div>
-                            <div class="form-group">
-                                <label for="rrno" class="fix-width-33">실명번호:</label>
-                                <input type="text" class="form-control" id="rrno" v-model="info.rrno">
-                            </div>
-                            <div class="form-group">
-                                <label for="cust_eml_addr" class="fix-width-33">E-mail:</label>
-                                <input type="text" class="form-control" id="cust_eml_addr" v-model="info.cust_eml_addr">
-                            </div>
-                            <div class="form-group">
-                                <label for="co_telno" class="fix-width-33">전화번호:</label>
-                                <input type="text" class="form-control" id="co_telno" v-model="info.co_telno">
-                            </div>
-                            <div class="form-group">
-                                <label for="cust_mbl_telno" class="fix-width-33">핸드폰번호:</label>
-                                <input type="text" class="form-control" id="cust_mbl_telno" v-model="info.cust_mbl_telno">
-                            </div>
-                            <div class="form-group">
-                                <label for="occp_ty_cd_nm" class="fix-width-33">직업:</label>
-                                <input type="text" class="form-control" id="occp_ty_cd_nm" v-model="info.occp_ty_cd_nm">
-                            </div>
-                            <div class="form-group">
-                                <label for="cust_addr" class="fix-width-33">주소:</label>
-                                <input type="text" class="form-control" id="cust_addr" v-model="info.cust_addr">
-                            </div>
-                        </div>
-                        <div class="right-panel" style="width: 50%;">
-                            <div class="form-group">
-                                <label for="tsk_dtl_cn">상담내역:</label>
-                            </div>
-                            <div>
-                                <textarea id="tsk_dtl_cn" v-model="info.tsk_dtl_cn" style="width: 100%;"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </template>
-</div>
-<!--// 고객기본정보조회 팝업 -->
+
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.16/dist/vue.js"></script>
 <script>
@@ -154,9 +90,13 @@ var vueapp = new Vue({
     data: {
         dataList: [],       // 서버에서 받아오는 데이터를 저장할 배열
         amount1: 1,         // 입력된 금액을 저장할 변수 (초기금액 1로 설정)
-        amount2: '',         
+        amount2: '',
+        selectedType : '',
         selectedCurrency1: 'USD', // 선택된 환율 정보의 통화 단위를 저장할 변수 (초기설정 달러로)
         selectedCurrency2: 'KRW',
+        deal_bas_r : '',
+        ttb : '',
+        tts : '',
         result: ''          // 계산된 결과를 저장할 변수
     },
     computed: {
@@ -196,18 +136,25 @@ var vueapp = new Vue({
             });
         },
         calculateExchange: function() {
-            if (!this.amount || isNaN(this.amount) || !this.selectedCurrency) {
-                alert("올바른 금액과 통화를 선택하세요.");
+        	
+        	// selectedCurrency1에는 선택된 통화의 cur_unit 값이 들어 있음
+            const selectedCurrency = this.dataList.find(item => item.cur_unit === this.selectedCurrency1);
+            
+            console.dir(selectedCurrency);
+        	let amount1 = Number(this.amount1);
+        	let ttb = Number(this.selectedCurrency.ttb);
+        	console.log("============================" + ttb);
+            if (!selectedCurrency) {
+                console.error("Selected currency not found in dataList:", this.selectedCurrency1);
                 return;
             }
-            var selectedItem = this.dataList.find(item => item.cur_unit === this.selectedCurrency);
-            if (!selectedItem) {
-                alert("선택된 환율 정보가 없습니다.");
-                return;
+           
+            // ttb 값을 이용하여 계산
+            if (this.selectedType === "ttb") {
+                this.amount2 = amount1 * ttb;
             }
-            var rate = parseFloat(selectedItem.deal_bas_r.replace(/,/g, ''));
-            var result = this.amount * rate;
-            this.result = result.toFixed(2); // 소수점 2자리까지 표시
+        
+            cf_ajax("/system/exchange_mng", this.data);
         },
         gotoDtl: function(cust_mbl_telno) {
             pop_cust_info.init(cust_mbl_telno);
@@ -216,55 +163,6 @@ var vueapp = new Vue({
     },
 });
 
-var pop_cust_info = new Vue({
-    el: "#pop_cust_info",
-    data: {
-        info: {
-            cust_mbl_telno: "",
-            wrt_dt: "",
-            cust_nm: "",
-            rrno: "",
-            cust_eml_addr: "",
-            co_telno: "",
-            cust_mbl_telno: "",
-            occp_ty_cd_nm: "",
-            cust_addr: "",
-            tsk_dtl_cn: "",
-        }
-    },
-    methods: {
-        init: function(cust_mbl_telno) {
-            this.initInfo();
-            this.info.cust_mbl_telno = cust_mbl_telno;
-            if (cust_mbl_telno) {
-                this.getInfo();
-            }
-        },
-        initInfo: function() {
-            this.info = {
-                cust_mbl_telno: "",
-                wrt_dt: "",
-                cust_nm: "",
-                rrno: "",
-                cust_eml_addr: "",
-                co_telno: "",
-                cust_mbl_telno: "",
-                occp_ty_cd_nm: "",
-                cust_addr: "",
-                tsk_dtl_cn: "",
-            };
-        },
-        getInfo: function() {
-            var params = {
-                cust_mbl_telno: this.info.cust_mbl_telno,
-            };
-            cf_ajax("/custMng/getInfo", params, this.getInfoCB);
-        },
-        getInfoCB: function(data) {
-            this.info = data;
-        },
-    },
-});
 
 </script>
 </html>
