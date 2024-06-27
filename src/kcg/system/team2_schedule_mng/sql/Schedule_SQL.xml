@@ -3,13 +3,34 @@
 <mapper namespace='system.team2_schedule_mng'>
 	
 	<select id="getSch" parameterType="cmmnMap" resultType="cmmnMap">
+			/* system.team2_schedule_mng.getSch */
 		SELECT
-		title ,
-		schdul_beg_yml AS start,
-		schdul_end_yml AS end
+			schdul_no AS id,
+			title,
+			schdul_beg_yml AS start,
+			schdul_end_yml AS end
 		FROM
-		kcgbd.e_schedule
+			kcgbd.e_schedule
 		WHERE 1=1
-		<!-- 추가적인 조건을 여기에 추가할 수 있습니다 -->
 	</select>
+	
+	<insert id="insertSch" parameterType="cmmnMap">
+			/* system.team2_schedule_mng.insertSch */
+		INSERT INTO kcgbd.e_schedule (emp_no, title, schdul_beg_yml, schdul_end_yml)
+		VALUES ('2024060101' , #{title}, CAST(#{start} AS TIMESTAMP), CAST(#{end} AS TIMESTAMP));
+	</insert>
+	
+	
+	<delete id="deleteSch" parameterType="cmmnMap">
+			/* system.team2_schedule_mng.insertSch */
+	
+	</delete>
+	
+	
+	<update id="updateSch" parameterType="cmmnMap">
+			/* system.team2_schedule_mng.updateSch */
+	
+	</update>
+	
+	
 </mapper>
