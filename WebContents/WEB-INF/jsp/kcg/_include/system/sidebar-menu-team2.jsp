@@ -1,3 +1,4 @@
+<%@ page import="kcg.login.vo.UserInfoVO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<div class="sidebar-menu">
@@ -30,12 +31,6 @@
 						<span class="title">TEAM2 고객관리</span>
 					</a>
 					<ul data-lnb="10" data-snb="0">
-<!-- 						<li data-lnb="10" data-snb="3"> -->
-<!-- 							<a href="#gm" onclick="cf_movePage('/customer/custMng')"> -->
-<!-- 								<span class="title">고객 정보 관리</span> -->
-<!-- 							</a> -->
-<!-- 						</li>	 -->
-					
 						<li data-lnb="10" data-snb="3">
 							<a href="#gm" onclick="cf_movePage('/customer/custList')">
 								<span class="title">고객 목록 조회</span>
@@ -50,6 +45,8 @@
 						</li>						
 					</ul>
 				</li> 
+				<% UserInfoVO userInfoVO = (UserInfoVO) session.getAttribute("userInfoVO");
+					if(userInfoVO.getEmpNo().equals("admin")){  %>
 				<li data-lnb="10" data-snb="0">
 					<a href="#gm" onclick="cf_movePage('/common/commMng')">
 						<i class="entypo-newspaper"></i>
@@ -62,21 +59,21 @@
 						<span class="title">TEAM2 담당자관리</span>
 					</a>
 				</li> 
-
+				<% } %>
 				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/system')">
+					<a href="#gm" onclick="cf_movePage('/system/notice_mng/list)">
 						<i class="entypo-newspaper"></i>
 						<span class="title">TEAM2 공지사항</span>
 					</a>
 				</li> 
 				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/system')">
+					<a href="#gm" onclick="cf_movePage('/system/schedule')">
 						<i class="entypo-newspaper"></i>
 						<span class="title">TEAM2 스케줄관리</span>
 					</a>
 				</li> 
 				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/system')">
+					<a href="#gm" onclick="cf_movePage('/system/exchange_mng')">
 						<i class="entypo-newspaper"></i>
 						<span class="title">TEAM2 환율정보</span>
 					</a>
@@ -85,38 +82,45 @@
 				<li data-lnb="11" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
-						<span class="title">TEAM2 판매관리(사용자)</span>
+						<span class="title">TEAM2 판매관리</span>
 					</a>
 					<ul data-lnb="11" data-snb="0">
 						<li data-lnb="11" data-snb="1">
 							<a href="#gm" onclick="cf_movePage('/sell/list')">
 								<span class="title">상품정보 조회</span>
 							</a>
-
 							<a href="#gm" onclick="cf_movePage('/sell/init')">
 								<span class="title">가입현황</span>
 							</a>
-							
+							<% if(userInfoVO.getEmpNo().equals("admin")){  %>
 							<a href="#gm" onclick="cf_movePage('/sell/sales')">
 								<span class="title">판매달성률</span>
 							</a>
-							
-
+							 <% } %>
 							<a href="#gm" onclick="cf_movePage('/cal/dtlCom')">
 								<span class="title">금융계산기</span>
 							</a>
 							<a href="#gm" onclick="cf_movePage('/cal/listPlan')">
 								<span class="title">설계이력조회</span>
 							</a>
-						
 
 						</li>
 					</ul>
 				</li>
+				<% if(!userInfoVO.getEmpNo().equals("admin")){  %>
+				<li data-lnb="10" data-snb="0">
+					<a href="#gm" onclick="cf_movePage('/myPage/getMyPage')">
+						<i class="entypo-newspaper"></i>
+						<span class="title">TEAM2 마이페이지</span>
+					</a>
+				</li>
+				<% } %>
+				<% 
+				if(userInfoVO.getEmpNo().equals("admin")){  %>
 				<li data-lnb="11" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
-						<span class="title">TEAM2 상품관리(관리자)</span>
+						<span class="title">TEAM2 상품관리</span>
 					</a>
 					<ul data-lnb="11" data-snb="0">
 						<li data-lnb="11" data-snb="1">
@@ -129,13 +133,7 @@
 						</li>
 					</ul>
 				</li>
-				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/system')">
-						<i class="entypo-newspaper"></i>
-						<span class="title">TEAM2 마이페이지</span>
-					</a>
-				</li> 
-				 
+				 <% } %>
 			</ul>
 		</div>
 

@@ -48,6 +48,22 @@ public class EmpMngCtl {
 		return empMngSvc.empDelete(params); 
 	}
 	
+	@RequestMapping("/empUserDelete")
+	public CmmnMap empUserDelete(CmmnMap params) {
+		return empMngSvc.empUserDelete(params); 
+	}
+	
+	@RequestMapping("/userPwInit")
+	public CmmnMap userPwInit(CmmnMap params) {
+		return empMngSvc.userPwUpdate(params); 
+	}
+	
+	@RequestMapping("/userPwUpdate")
+	public CmmnMap userPwUpdate(CmmnMap params) {
+		return empMngSvc.userPwUpdate(params); 
+	}
+	
+		
 }
 
 

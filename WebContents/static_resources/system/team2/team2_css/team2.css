@@ -1,0 +1,347 @@
+@charset "UTF-8";
+
+.header {
+        background-color: #A7EEFF;
+        color: #333;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        font-size: 1.5em;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin: 20px 0;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+.header:hover {
+   	background-color: #66CCFF;
+}
+
+.modal-footer {
+    border-top: 1px solid #ddd;
+    padding: 15px;
+    text-align: right;
+}
+
+#Button:hover {
+   	background-color: #2980B9; /* Hover 시 배경색 변경 */
+}
+
+/* prodList */
+#popup_print .modal-content {
+    border: none;
+    border-radius: 0;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+#popup_print .modal-header {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 15px;
+}
+
+#popup_print .modal-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#popup_print .modal-body {
+    padding: 20px;
+}
+
+#popup_print .form-group {
+    margin-bottom: 15px;
+}
+
+#popup_print table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+#popup_print table th, #popup_print table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+#popup_print table th { 
+	background-color: #f0f0f0; 
+	color: #333;
+}
+
+#popup_print .btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+#popup_print .btn-secondary:hover {
+    background-color: #7f8c8d;
+    border-color: #7f8c8d;
+}
+
+/* empMng */
+#pop_emp_register .modal-content, #pop_emp_info .modal-content {
+    border: none;
+    border-radius: 0;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+#pop_emp_register .modal-header, #pop_emp_info .modal-header {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 15px;
+}
+
+#pop_emp_register .modal-title, #pop_emp_info .modal-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#pop_emp_register .modal-body, #pop_emp_info .modal-body {
+    padding: 20px;
+}
+
+#pop_emp_register .form-group, #pop_emp_info .form-group {
+    margin-bottom: 15px;
+}
+
+#pop_emp_register table, #pop_emp_info table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+#pop_emp_register table th, #pop_emp_info table th, #pop_emp_register table td, #pop_emp_info table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+ #pop_emp_register table th, #pop_emp_info table th { 
+    background-color: #f0f0f0; 
+    color: #333;
+ } 
+
+#pop_emp_register .btn-primary:hover, #pop_emp_info .btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+#pop_emp_register .btn-secondary:hover, #pop_emp_info .btn-secondary:hover {
+    background-color: #7f8c8d;
+    border-color: #7f8c8d;
+}
+
+/* custList */
+#pop_cust_info .modal-content {
+    border: none;
+    border-radius: 0;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+#pop_cust_info .modal-header {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 15px;
+}
+
+#pop_cust_info .modal-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#pop_cust_info .modal-body {
+    padding: 20px;
+}
+
+#pop_cust_info .form-group {
+    margin-bottom: 15px;
+}
+
+#pop_cust_info table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+#pop_cust_info table th, #pop_cust_info table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+#pop_cust_info table th { 
+	background-color: #f0f0f0; 
+	color: #333;
+}
+
+#pop_cust_info .btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+#pop_cust_info .btn-secondary:hover {
+    background-color: #7f8c8d;
+    border-color: #7f8c8d;
+}
+
+/* communi */
+#pop_cnslt_dtl .modal-content {
+    border: none;
+    border-radius: 0;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+#pop_cnslt_dtl .modal-header {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 15px;
+}
+
+#pop_cnslt_dtl .modal-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#pop_cnslt_dtl .modal-body {
+    padding: 20px;
+}
+
+#pop_cnslt_dtl .form-group {
+    margin-bottom: 15px;
+}
+
+#pop_cnslt_dtl table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+#pop_cnslt_dtl table th, #pop_cnslt_dtl table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+#pop_cnslt_dtl table th { 
+	background-color: #f0f0f0; 
+	color: #333;
+}
+
+#pop_cnslt_dtl .btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+#pop_cnslt_dtl .btn-secondary:hover {
+    background-color: #7f8c8d;
+    border-color: #7f8c8d;
+}
+
+/* empMng */
+#grid_app .modal-content {
+    border: none;
+    border-radius: 0;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+#grid_app .modal-header {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 15px;
+}
+
+#grid_app .modal-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#grid_app .modal-body {
+    padding: 20px;
+}
+
+#grid_app .form-group {
+    margin-bottom: 15px;
+}
+
+#grid_app table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+#grid_app table th, #grid_app table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+#grid_app table th { 
+	background-color: #f0f0f0; 
+	color: #333;
+}
+
+#grid_app .btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+#grid_app .btn-secondary:hover {
+    background-color: #7f8c8d;
+    border-color: #7f8c8d;
+}
+
+/* common */
+.input-row td {
+	padding: 0;
+	margin: 0;
+	height: 30px;
+}
+
+.input-row input[type="text"] {
+   	border: 1px solid #ccc;
+    width: 100%;
+    height: 100%; 
+    box-sizing: border-box;
+    padding: 0; 
+    margin: 0;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.input-row input[type="text"]::placeholder {
+   	color: #999;
+   	text-align: center;
+   	font-style: italic;
+}
+
+#pop_gr_comm .modal-header {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 15px;
+}
+
+#pop_gr_comm .modal-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
+
+
+
+

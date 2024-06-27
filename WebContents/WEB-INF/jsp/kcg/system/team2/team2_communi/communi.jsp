@@ -10,6 +10,7 @@
             <link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
             <link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
             <link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
+            <link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
             <title>상담내역조회</title>
         </head>
 
@@ -28,13 +29,13 @@
                         <li class="active"><strong>상담내역조회</strong></li>
                     </ol>
 
-                    <h2>상담내역</h2>
+                    <h2 class="header" onclick="location.reload();">상담내역</h2>
                     <br />
 
                     <div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
                         <template>
                             <div class="flex flex-100">
-                                <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
+                                <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10" style="border: 2px solid #00CDFF;">
                                     <div class="form-group flex-20">
                                         <label class="fix-width-33">상담일시:</label>
                                         <input type="date" class="form-control" v-model="cnslt_dt">
@@ -59,23 +60,23 @@
                                 </div>
                             </div>
                             <div class="flex flex-100 flex-padding-10 flex-gap-10"
-                                style="justify-content:flex-end;border: 1px solid #999999;">
-                                <button type="button" class="btn btn-orange btn-icon"
+                                style="justify-content:flex-end; border: 2px solid #00CDFF;">
+                                <button type="button" class="btn btn-danger btn-icon btn-small"
                                     style="margin-left: 5px;" @click="cnsltDelete">
                                     삭제
-                                    <i class="entypo-users"></i>
+                                    <i class="entypo-trash"></i>
                                 </button>
                             </div>
                             <table class="table table-bordered datatable dataTable" id="grid_app"
-                                style="border: 1px solid #999999;">
+                                style="border: 2px solid #00CDFF;">
                                 <thead>
                                     <tr class="replace-inputs">
-                                        <th style="width: 5%;" class="center"><input type="checkbox" id="allCheck"
+                                        <th style="width: 5%; background-color: #B9FFFF;" class="center"><input type="checkbox" id="allCheck"
                                                 @click="all_check(event.target)" style="cursor: pointer;"></th>
-                                        <th style="width: 10%;" class="center">상담일자</th>
-                                        <th style="width: 5%;" class="center">고객명</th>
-                                        <th style="width: 30%;" class="center">상담내용</th>
-                                        <th style="width: 5%;" class="center">상담자</th>
+                                        <th style="width: 10%; background-color: #B9FFFF;" class="center">상담일자</th>
+                                        <th style="width: 5%; background-color: #B9FFFF;" class="center">고객명</th>
+                                        <th style="width: 30%; background-color: #B9FFFF;" class="center">상담내용</th>
+                                        <th style="width: 5%; background-color: #B9FFFF;" class="center">상담자</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -93,7 +94,9 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="dataTables_paginate paging_simple_numbers" id="div_paginate"></div>
+                            <div style="position: relative; width: 100%">
+					    		<div class="dataTables_paginate paging_simple_numbers" id="div_paginate" style="position: absolute; right: 0; top: -90%;"></div>
+							</div>
                         </template>
                     </div>
 <!-- 상담내역 detail 팝업                 -->

@@ -27,6 +27,23 @@
 	        <div class="calculator-container">
 	            <h3>환율 계산기</h3>
 	            <div class="calculator">
+<<<<<<< HEAD
+<!--  	            	<select v-model="exchageType"> -->
+<!-- 	                    <option>송금 받을 때</option> -->
+<!-- 	                    <option>송금 보낼 때</option>  -->
+<!-- 	                </select>  -->
+	            
+	                <select v-model="selectedCurrency1">
+	                    <option v-for="item in dataList" :value="item.cur_unit" :selected="item.cur_unit === 'USD'">{{ item.cur_nm }}</option>
+	                </select>
+	                <input type="number" v-model="amount1" value="item.result">
+	                <br/>
+	                
+	                <select v-model="selectedCurrency2">
+	                    <option v-for="item in dataList" :value="item.cur_unit" :selected="item.cur_unit === 'KRW'">{{ item.cur_nm }}</option>
+	                </select>
+	                <input type="number" v-model="amount2" value="item.result">
+=======
 		            <div>
 		            	<select v-model="selectedType" id="selectType">
 		                    <option value="ttb">송금 받을 때</option>
@@ -47,6 +64,7 @@
 		                </select>
 		                <input type="text" v-model="amount2" @input="calculateExchange2">
 	                </div>
+>>>>>>> 61d0f5b3ba154d0540d967c6d78285cea6d776fd
 	            </div>
 	        </div>
 	        <br/>

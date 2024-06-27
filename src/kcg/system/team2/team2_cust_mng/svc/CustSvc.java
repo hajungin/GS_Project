@@ -30,8 +30,10 @@ public class CustSvc {
 	CmmnDao cmmnDao;
 
 	public PageList<CmmnMap> getCustInfoList(CmmnMap params, PagingConfig pagingConfig) {
-		return cmmnDao.selectListPage("system.team2_cust_mng.getAll", params, pagingConfig);
+		 PageList<CmmnMap> custInfoList = cmmnDao.selectListPage("system.team2_cust_mng.getAll", params, pagingConfig);
+		 return custInfoList; 
 	}
+		
 	
 	public PageList<CmmnMap> getCustEventList(CmmnMap params, PagingConfig pagingConfig) {
 		return cmmnDao.selectListPage("system.team2_cust_mng.getEvent", params, pagingConfig);

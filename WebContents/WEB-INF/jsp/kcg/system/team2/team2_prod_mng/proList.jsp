@@ -125,9 +125,10 @@
 			<ol class="breadcrumb bc-3">
 				<li><a href="#none" onclick="cf_movePage('/system')"><i
 						class="fa fa-home"></i>Home</a></li>
+				<li class="active"><strong>상품관리</strong></li>
 				<li class="active"><strong>상품정보조회</strong></li>
 			</ol>
-			<h2 class="header">상품관리 > 상품정보조회 > 프로모션 상품</h2>
+			<h2 class="header">프로모션 상품</h2>
 			<div class="right flex-column flex-100">
 			 	<div class="right-top">
                         <ul class="nav">

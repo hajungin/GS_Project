@@ -39,7 +39,9 @@
 			e.emp_nm AS emp_nm,
 			d.comm_no AS emp_dept,
 			p.comm_no AS emp_posit,
-			e.emp_ecny_dt AS emp_ecny_dt,
+			d.comm_nm AS emp_dept_nm,
+			p.comm_nm AS emp_posit_nm,
+			TO_CHAR(e.emp_ecny_dt, 'YYYY-MM-DD') AS emp_ecny_dt,
 			e.emp_mbl_telno AS emp_mbl_telno,
 			e.emp_eml_addr AS emp_eml_addr
 		FROM kcgbd.e_employee AS e
@@ -66,19 +68,75 @@
 		UPDATE
 			kcgbd.e_employee
 		SET
-			emp_no = #{emp_no},
 			emp_nm = #{emp_nm},
 			emp_dept = #{emp_dept},
 			emp_posit = #{emp_posit},
-			emp_ecny_dt = #{emp_ecny_dt},
+			emp_ecny_dt = TO_DATE(#{emp_ecny_dt}, 'YYYY-MM-DD'),
 			emp_mbl_telno = #{emp_mbl_telno},
 			emp_eml_addr = #{emp_eml_addr}
+		WHERE emp_no = #{emp_no}
 	</update>
 	
 	<delete id="empDelete" parameterType="cmmnMap">
 		DELETE FROM kcgbd.e_employee
 		WHERE emp_no = #{emp_no}
 	</delete>
+	
+	<insert id="empUserInfo" parameterType="cmmnMap">
+		INSERT INTO
+		kcgbd.t_user (
+		auth_cd
+		,user_id
+		,iam_yn
+		,reg_dt
+		,status_cd
+		,name
+		,jikgub_nm
+		,tdept_nm
+		,email
+		,del_yn
+		,user_pw
+		,emp_no
+		) VALUES (
+		'user'
+		,#{user_id}
+		,'N'
+		,now()
+		,'AAA'
+		,#{emp_nm}
+		,#{emp_posit_nm}
+		,#{emp_dept_nm}
+		,#{emp_eml_addr}
+		,'N'
+		,#{user_pw}
+		,#{emp_no}
+		)
+	</insert>
+	
+	
+	<update id="updateEmpUserInfo" parameterType="cmmnMap">
+		UPDATE kcgbd.t_user SET
+		,name = #{emp_nm}
+		,jikgub_nm = #{emp_posit_nm}
+		,tdept_nm = #{emp_dept_nm}
+		,email
+		= #{emp_eml_addr}
+		WHERE 1=1
+		AND emp_no = #{emp_no}
+	</update>
+	
+	<delete id="empUserDelete" parameterType="cmmnMap">
+		DELETE FROM kcgbd.t_user
+		WHERE emp_no = #{emp_no}
+	</delete>
+	
+	<update id="userPwUpdate" parameterType="cmmnMap">
+		UPDATE kcgbd.t_user SET
+		user_pw = #{user_pw}
+		WHERE 1=1
+		AND emp_no = #{emp_no}
+	</update>
+	
 	
 </mapper>
 
