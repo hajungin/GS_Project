@@ -50,10 +50,16 @@
                 <div id='calendar' style="padding:30px;">
                 </div>
                 
-                <!-- 모달 창 -->
-<!--                 <div id="app"> -->
-                    <div class="modal fade" id="eventModal" >
-                        <div class="modal-dialog">
+                
+                
+            </div>
+        </div>
+    </div>
+    
+    <!-- 모달 창 -->
+                <div id="app">
+                    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="eventModalLabel">이벤트 상세 정보</h5>
@@ -83,15 +89,51 @@
                             </div>
                         </div>
                     </div>
-<!--                 </div> -->
+                </div>
                 <!-- 모달 창 끝 -->
-                
-            </div>
-        </div>
-    </div>
+    
+    
 </body>
 <script>
-
+var app = new Vue({
+    el: '#app',
+    data: {
+        selectedEvent: {}
+    },
+    methods: {
+    	updateEvent: function() {
+    	    var self = this;
+    	    // 이벤트 ID를 정수형으로 변환
+    	    var eventId = parseInt(self.selectedEvent.id, 10);
+    	    // ISO 8601 형식의 문자열을 그대로 사용 (PostgreSQL의 timestamp와 호환됨)
+    	    var startTime = new Date(self.selectedEvent.start).toISOString();
+    	    var endTime = new Date(self.selectedEvent.end).toISOString();
+    	    
+    	    cf_ajax("/system/schedule/update", {
+    	        id: eventId,
+    	        title: self.selectedEvent.title,
+    	        start: startTime,
+    	        end: endTime
+    	    }, function(response) {
+    	        console.log("이벤트 수정 성공:", response);
+    	        $('#eventModal').modal('hide');
+    	        location.reload(); // 이벤트 수정 후 페이지 새로고침
+    	    });
+    	},
+        deleteEvent: function() {
+            var self = this;
+            if (confirm("정말로 이 이벤트를 삭제하시겠습니까?")) {
+                // 이벤트 ID를 정수형으로 변환하여 삭제 요청
+                var eventId = parseInt(self.selectedEvent.id, 10);
+                cf_ajax("/system/schedule/delete", { id: eventId }, function(response) {
+                    console.log("이벤트 삭제 성공:", response);
+                    $('#eventModal').modal('hide');
+                    location.reload(); // 이벤트 삭제 후 페이지 새로고침
+                });
+            }
+        }
+    }
+});
 
 var vueapp = new Vue({
     el: "#vueapp",
@@ -134,7 +176,7 @@ var vueapp = new Vue({
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                 },
                 eventClick: function(info) {
-                	eventModal.selectedEvent = {
+                    app.selectedEvent = {
                         id: info.event.id,
                         title: info.event.title,
                         start: info.event.start.toISOString().slice(0,16),
@@ -159,9 +201,6 @@ var vueapp = new Vue({
                                 end: arg.end,
                                 allDay: arg.allDay
                             });
-                        }, function(error) {
-                            console.error("이벤트 추가 실패:", error);
-                            alert("이벤트 추가 실패: " + error);
                         });
                     } else {
                         calendar.unselect();
@@ -175,44 +214,6 @@ var vueapp = new Vue({
                 }
             });
             calendar.render();
-        }
-    }
-});
-
-var eventModal = new Vue({
-    el: '#eventModal',
-    data: {
-        selectedEvent: {}
-    },
-    methods: {
-        updateEvent: function() {
-            var self = this;
-            cf_ajax("/system/schedule/update", {
-                id: self.selectedEvent.id,
-                title: self.selectedEvent.title,
-                start: self.selectedEvent.start,
-                end: self.selectedEvent.end
-            }, function(response) {
-                console.log("이벤트 수정 성공:", response);
-                $('#eventModal').modal('hide');
-                location.reload(); // 이벤트 수정 후 페이지 새로고침
-            }, function(error) {
-                console.error("이벤트 수정 실패:", error);
-                alert("이벤트 수정 실패: " + error);
-            });
-        },
-        deleteEvent: function() {
-            var self = this;
-            if (confirm("정말로 이 이벤트를 삭제하시겠습니까?")) {
-                cf_ajax("/system/schedule/delete", { id: self.selectedEvent.id }, function(response) {
-                    console.log("이벤트 삭제 성공:", response);
-                    $('#eventModal').modal('hide');
-                    location.reload(); // 이벤트 삭제 후 페이지 새로고침
-                }, function(error) {
-                    console.error("이벤트 삭제 실패:", error);
-                    alert("이벤트 삭제 실패: " + error);
-                });
-            }
         }
     }
 });
