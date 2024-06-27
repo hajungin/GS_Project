@@ -77,6 +77,11 @@ public class SellCtl {
 			return sellsvc.achievement(params);
 	 }
 	 
+	 @RequestMapping("/topCustomer")
+	    public List<CmmnMap> topCustomer(CmmnMap params) {
+			return sellsvc.topCustomer(params);
+	 }
+	 
 	 
 	 
 	 

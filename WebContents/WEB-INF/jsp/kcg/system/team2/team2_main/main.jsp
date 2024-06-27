@@ -163,7 +163,8 @@
                </div>
                </div>
                
-               <div>
+               
+               <div id="vueapp">
                   <h4>우수사원 리스트 출력 예정!!!!</h4>
                      <table class="table table-bordered dataTable" style="border: 2px solid #464646; width: 200px;" id="grid_app">
                        <thead>
@@ -174,14 +175,11 @@
                            </tr>
                        </thead>
                        <tbody>
-                           <tr>
-                               <td class="center">1</td>
-                               <td class="center">김철수</td>
+				            <tr v-for="(ite,index) in dataLis">
+				               	<td class="center">{{index+1}}</td>
+				                <td class="center">{{ite.emp_nm}}</td>
+				                
                            </tr>
-<!--                            <tr v-for="(item,index) in dataList"> -->
-<!--                                <td class="center">{{index+1}}</td> -->
-<!--                                <td class="center">{{item.emp_nm}}</td> -->
-<!--                            </tr> -->
                        </tbody>
                    </table>
                </div>
@@ -189,17 +187,17 @@
            
            
                <h4>공지사항</h4>
-               <div id="vueapp">
-                   <span class="notice-container" style="width: 250px;">
-                       <span class="notice-item" v-for="(item, index) in dataList.slice(0, 5)" :key="index" @click="gotoDtl(item.notice_no)" style="cursor: pointer;">
-                           <span>{{item.notice_no}}</span>
-                           <span>[ {{item.notice_sb}} ]</span> <br/>
-                           <span>{{truncateText(item.notice_cn, 15)}}</span> <br/>
-                       </span>
-                   </span>
-               </div>
-            </div>
-         
+               
+<!--                    <span class="notice-container" style="width: 250px;"> -->
+<!--                        <span class="notice-item" v-for="(item, index) in dataList.slice(0, 5)" :key="index" @click="gotoDtl(item.notice_no)" style="cursor: pointer;"> -->
+<!--                            <span>{{item.notice_no}}</span> -->
+<!--                            <span>[ {{item.notice_sb}} ]</span> <br/> -->
+<!--                            <span>{{truncateText(item.notice_cn, 15)}}</span> <br/> -->
+<!--                        </span> -->
+<!--                    </span> -->
+               
+            
+         </div>
     </div> 
     
 </body>
@@ -209,14 +207,24 @@ var vueapp = new Vue({
     el : "#vueapp",
     data : {
         dataList : [],
+        dataLis: [],
         search_nm : "",
         search_val : "",
         events: []
     },
     mounted : function() { // 페이지 로드 시 실행
         this.getCalendarEvents();
+    	this.getInfo();
     },
     methods : {
+    	getInfo: function() {
+    		cf_ajax("/sell/topCustomer", null, this.getInfoCB);
+    	},
+    	getInfoCB : function(data){
+    		this.dataLis = data;
+    		console.log(this.dataLis);
+    	},
+    	
        getCalendarEvents: function() {
             var self = this;
 
@@ -340,6 +348,7 @@ var app = new Vue({
         selectedEvent: {}
     },
     methods: {
+    	
        updateEvent: function() {
            var self = this;
            // 이벤트 ID를 정수형으로 변환
@@ -359,6 +368,7 @@ var app = new Vue({
                location.reload(); // 이벤트 수정 후 페이지 새로고침
            });
        },
+       
         deleteEvent: function() {
             var self = this;
             if (confirm("정말로 이 이벤트를 삭제하시겠습니까?")) {

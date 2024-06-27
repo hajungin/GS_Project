@@ -1,5 +1,7 @@
 package kcg.system.main.ctl;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -92,4 +94,7 @@ public class SystemMainCtl {
 	public String openPopupTable(ModelMap model) {
 		return "kcg/batchResult/table";
 	}
+	
+	
+	
 }

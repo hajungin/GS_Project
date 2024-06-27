@@ -1,5 +1,6 @@
 package kcg.system.team2.main.ctl;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,4 +33,6 @@ public class Team2MainCtl {
     public PageList<CmmnMap> getList(CmmnMap params, PagingConfig pagingConfig) {
         return noticeSvc.getList(params, pagingConfig);
     }
+    
+    
 }
