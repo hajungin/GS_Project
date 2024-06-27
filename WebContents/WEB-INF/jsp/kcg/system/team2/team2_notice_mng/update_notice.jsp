@@ -5,6 +5,7 @@
 <head>
 	<jsp:include page="/WEB-INF/jsp/kcg/_include/system/header_meta.jsp" flush="false"/>
 	<link href="/static_resources/lib/summernote/0.8.18/summernote-lite.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
 	<script src="/static_resources/lib/summernote/0.8.18/summernote-lite.min.js"></script>
 	<script src="/static_resources/lib/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 	<!-- Imported styles on this page -->
@@ -25,11 +26,11 @@
 			<li class="active"><strong>공지사항</strong></li>
 		</ol>
 	
-		<h2>공지사항 > 수정하기</h2>
+		<h2 class="header" onclick="location.reload();">공지사항 수정</h2>
 		<br/>
 		
 		<div class="row">
-			<div id="vueapp" style="width: 910px; margin-left: 15px;">
+			<div id="vueapp" style="width: 910px; margin: 0 auto; border: 2px solid #00CDFF;">
 				<template>	
 					<div class="panel panel-primary" data-collapsed="0">
 						<div class="panel-body">
@@ -39,22 +40,22 @@
 								<input type="hidden">{{ new Date(parseInt(info.frst_reg_ymd)).toISOString().slice(0, 10) }}</input>
 								
 								<div class="form-group">
-									<label for="notice_sb" class="sys_label_01 control-label">제목</label>
+									<label for="notice_sb" class="sys_label_01 control-label" style="text-align: center;">제목</label>
 									<div class="sys_col_03">
 										<input type="text" class="form-control" id="notice_sb" v-model="info.notice_sb">
 									</div>
 								</div>
 					
 								<div class="form-group">
-									<label for="notice_cn" class="sys_label_01 control-label">수정내용</label>
+									<label for="notice_cn" class="sys_label_01 control-label" style="text-align: center;">수정내용</label>
 									<div class="sys_col_05">
 										<textarea class="form-control" rows="5" id="notice_cn" v-model="info.notice_cn"></textarea>
 									</div>
 								</div>
 			
 
-								<div class="form-group">
-									<div class="col-sm-offset-2 col-sm-5">
+								<div class="form-group" style="width: 100%; text-align: center;">
+									<div class="col-sm-offset-2 col-sm-5" style="text-align: center; margin-left: 270px;">
 										<button type="button" class="btn btn-green btn-icon btn-small" @click="save(info.notice_no)">
 											저장
 											<i class="entypo-check"></i>
