@@ -104,9 +104,7 @@
 							<a href="#gm" onclick="cf_movePage('/cal/listPlan')">
 								<span class="title">설계이력조회</span>
 							</a>
-							<a href="#gm" onclick="cf_movePage('/system')">
-								<span class="title">가입현황</span>
-							</a>
+
 
 						</li>
 					</ul>

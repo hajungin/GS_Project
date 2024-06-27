@@ -8,6 +8,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="common.utils.common.CmmnMap" %>
 <%@ page import="common.utils.json.JsonUtil" %>
+<jsp:useBean id="nowday" class="java.util.Date" />
+<fmt:formatDate var="now" value="${today}" pattern="yyyy-MM-dd" />
 
 <!DOCTYPE html>
 <html>
@@ -81,7 +83,7 @@
 </head>
 <body class="page-body" data-url="http://neon.dev">
     <div class="page-container main-content";">
-        <jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu.jsp" flush="false"/>
+        <jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu-team2.jsp" flush="false"/>
         <div style="opacity:0.9">
         	<div style= "width: 80%;">
 	        	<!-- 헤더 -->
@@ -125,6 +127,18 @@
            <div class="main-info" style= "width: 15%;">
 	           <div>로그인 정보</div>
 	            <div>
+	             <div class="card text-bg-light">
+                    <div class="card-header">
+                        <i class="fas fa-user"></i>
+                        <a th:text="${userInfoVO.name} + 님" ></a>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <span th:text="부서 : ${userInfoVO.tdeptNm}"></span><br>
+                            <span th:text="로그인 일시 : ' + ${now}"></span>
+                        </p>
+                    </div>
+                </div>
 	            	<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.userId}</span>&nbsp;님 <br/>
 	            	<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.name}</span>&nbsp;님 <br/>
 	            	<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.tdeptNm}</span>&nbsp;부서 <br/>
