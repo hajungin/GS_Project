@@ -83,11 +83,7 @@
 		                            </tr>
 		                        </tbody>
 		                    </table>
-<<<<<<< HEAD
 		                    <div style="position: relative; width: 100%;">
-=======
-		                    <div style="position: relative; width: 100%">
->>>>>>> b180239212b0156e966a9f65e6ff783c058eaa04
 					    		<div class="dataTables_paginate paging_simple_numbers" id="div_paginate" style="position: absolute; right: 0; top: -90%;"></div>
 							</div>
 		                </template>

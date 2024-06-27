@@ -46,9 +46,9 @@
 <!--             <span class="findId" id="findId">아이디 찾기</span> -->
 <!--             <span class="findPw" id="findPw">비밀번호 찾기</span> -->
 <!--         </div> -->
-    <br>
-    <span class="regist" id="regist">회원 등록</span>
-    <input type="button" class="regist" onClick="location.href = '/login/getRegistUserForm'" value="회원 등록"/>
+<!--     <br> -->
+<!--     <span class="regist" id="regist">회원 등록</span> -->
+<!--     <input type="button" class="regist" onClick="location.href = '/login/getRegistUserForm'" value="회원 등록"/> -->
 
 <!--     <div id="remember-container"> -->
 <!--       <input type="checkbox" id="checkbox-2-1" class="checkbox" checked="checked"/> -->

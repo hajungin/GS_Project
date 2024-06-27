@@ -6,11 +6,7 @@
 			<div class="col-md-6 col-sm-8 hidden-xs">
 		
 				<ul class="user-info pull-left pull-none-xsm" style="padding: unset;margin: unset;">
-<<<<<<< HEAD
-					<div style="font-size: 25px;font-weight: bold;color: #31271e;"> 집에 가고 싶다 ...</div>				
-=======
-					<div style="font-size: 25px;font-weight: bold;color: #31271e;"> 살려주세요...</div>				
->>>>>>> d5d406a18baf4505fb4834ee0ed1140451e0dee2
+					<div style="font-size: 25px;font-weight: bold;color: #31271e;"> 금융 프로젝트 TEAM2</div>				
 <!-- 					<div style="font-size: 20px;font-weight: bold;color: #31271e;">관리자시스템</div> -->
 				</ul>
 
