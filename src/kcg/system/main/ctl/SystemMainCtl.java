@@ -1,6 +1,7 @@
 package kcg.system.main.ctl;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import common.externalApi.HnpWeather;
 import common.utils.common.CmmnMap;
 import kcg.common.svc.CommonSvc;
+import kcg.login.vo.UserInfoVO;
 import kcg.system.main.svc.SystemMainSvc;
 
 
@@ -34,7 +36,7 @@ public class SystemMainCtl {
 	HnpWeather hnpWeather;
 
 	@RequestMapping("")
-	public String openPage(ModelMap model) {
+	public String openPage(ModelMap model, HttpSession session) {
 
 
 
@@ -58,8 +60,12 @@ public class SystemMainCtl {
 		model.addAttribute("Temperatures", v[3]);
 		model.addAttribute("humidity", v[4]);
 		 */
-
+		UserInfoVO userInfoVO = (UserInfoVO) session.getAttribute("userInfoVO");
+		if(userInfoVO.getEmpNo().equals("admin001")) {
 		return "kcg/system/main/SystemMain";
+		} else {
+		return "kcg/system/team2/team2_main/main";
+		}
 	}
 
 	@RequestMapping("/getReqStat")

@@ -22,14 +22,21 @@
 	
 	
 	<delete id="deleteSch" parameterType="cmmnMap">
-			/* system.team2_schedule_mng.insertSch */
-	
+	    	/* system.team2_schedule_mng.deleteSch */
+	    DELETE FROM kcgbd.e_schedule
+	    WHERE schdul_no = #{id}
 	</delete>
 	
 	
 	<update id="updateSch" parameterType="cmmnMap">
-			/* system.team2_schedule_mng.updateSch */
-	
+			/* system.team2_schedule_mng.deleteSch */
+		UPDATE kcgbd.e_schedule
+		SET 
+			title = #{title}
+			,schdul_beg_yml = TO_TIMESTAMP(#{start}, 'YYYY-MM-DDTHH24:MI:SS.MSZ'),
+	        schdul_end_yml = TO_TIMESTAMP(#{end}, 'YYYY-MM-DDTHH24:MI:SS.MSZ')
+		WHERE 1=1
+			AND schdul_no = #{id}
 	</update>
 	
 	
