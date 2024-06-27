@@ -293,9 +293,12 @@
     		cust_mbl_telno: "",
     		event: "all",
     		emp_nm: "",
+<<<<<<< HEAD
     		event_cust: [],
     		event_y: false,
     		login_emp: "${emp_no}"
+=======
+>>>>>>> 9d0645e9f9f1ac7c7e5a32f45f390751f34a10b8
         },
         mounted: function () {
             var fromDtl = cf_getUrlParam("fromDtl");
@@ -316,14 +319,6 @@
                     .removeItem("pagingConfig")
                     .removeItem("params");
                 this.getCustInfoList(true);
-            }
-        },
-        computed: {
-            enriched_cust_list: function() {
-                return this.cust_list.map(cust => ({
-                    ...cust,
-                    isEventCust: this.event_list.some(event => event.cust_nm === cust.cust_nm)
-                }));
             }
         },
         methods: {

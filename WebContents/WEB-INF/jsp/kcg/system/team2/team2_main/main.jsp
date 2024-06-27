@@ -119,7 +119,11 @@
     <title>GSITM | 메인</title>
 </head>
 <body class="page-body" data-url="http://neon.dev">
+<<<<<<< HEAD
     <div class="page-container main-content";" style="backgroud-img: url(team2/team2_images/team2bg.jpg);">
+=======
+    <div class="page-container main-content";">
+>>>>>>> 9d0645e9f9f1ac7c7e5a32f45f390751f34a10b8
         <jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu-team2.jsp" flush="false"/>
         <div style="opacity:0.9">
         	<div style= "width: 80%;">

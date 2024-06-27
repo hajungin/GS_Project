@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import common.utils.common.CmmnMap;
@@ -19,24 +20,23 @@ public class ScheduleCtl {
     
     @RequestMapping("")
 	public String noticeList(ModelMap model) {
-    
 		return "kcg/system/team2/team2_schedule_mng/schedule";
 	}
 
-  
-	/*
-	 * @RequestMapping("/calendars") public List<CmmnMap> getCalendarEvents(CmmnMap
-	 * params) { List<CmmnMap> scheduleList = scheduleSvc.getSch(params);
-	 * System.out.println(scheduleList); return scheduleSvc.getSch(params); }
-	 */
     
     @RequestMapping("/calendars")
     public List<CmmnMap> getSch(CmmnMap params){
     	List<CmmnMap> sch = scheduleSvc.getSch(params);
-
     	System.out.println("==============================ctl"+ params);
     	return sch;
     }
+    
+    
+	@RequestMapping("/insert")
+	public CmmnMap insert(@RequestBody CmmnMap params){
+		System.out.println("나와라 좀!!!!!!!!!!!!!!!!!! 컨트롤ㄹ어임"+params);
+		return scheduleSvc.insert(params); 
+	}
     
 	
 
