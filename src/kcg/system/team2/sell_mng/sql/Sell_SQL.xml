@@ -262,10 +262,10 @@
     </select>
     
     <select id="youthCustom" parameterType="cmmnMap" resultType="cmmnMap">
-    	select cust_nm, cust_mbl_telno, cust_pridtf_no, TO_CHAR(cust_birth, 'YYYY-MM-DD') AS cust_birth FROM kcgbd.e_customer
+    	select cust_nm, cust_mbl_telno, cust_pridtf_no, cust_cr_no,  TO_CHAR(cust_birth, 'YYYY-MM-DD') AS cust_birth FROM kcgbd.e_customer
         WHERE EXTRACT(YEAR FROM AGE(CURRENT_DATE, cust_birth)) BETWEEN 19 AND 34
-    	
     </select>
+    
     
     <select id="joinList" parameterType="cmmnMap" resultType="cmmnMap"> 
 		    SELECT 
@@ -314,27 +314,6 @@
 			                or ac.prod_nm like CONCAT('%', #{prod_nm}, '%')
 			            )
 			        </if>
-<!-- 		        <if test='prod_nm != null and prod_nm != ""'> -->
-<!-- 					AND  -->
-<!-- 					(a.sa_prod_nm LIKE '%' || #{prod_nm} || '%' OR a.loan_prod_nm LIKE '%' || #{prod_nm} || '%' OR  -->
-<!-- 					 a.ac_prod_nm LIKE '%' || #{prod_nm} || '%' OR 	a.dp_prod_nm LIKE '%' || #{prod_nm} || '%') -->
-<!-- 				</if> -->
-<!-- 		        <if test='prod_nm != null and prod_nm != ""'> -->
-<!-- 		            <if test='sa != null and sa.prod_nm != null and sa.prod_nm != ""'> -->
-<!-- 		                AND sa_prod_nm LIKE CONCAT('%', #{prod_nm}, '%') -->
-<!-- 		            </if> -->
-<!-- 		            <if test='lo != null and lo.prod_nm != null and lo.prod_nm != ""'> -->
-<!-- 		                AND loan_prod_nm LIKE CONCAT('%', #{prod_nm}, '%') -->
-<!-- 		            </if> -->
-<!-- 		            <if test='ac != null and ac.prod_nm != null and ac.prod_nm != ""'> -->
-<!-- 		                AND ac_prod_nm LIKE CONCAT('%', #{prod_nm}, '%') -->
-<!-- 		            </if> -->
-<!-- 		            <if test='dp != null and dp.prod_nm != null and dp.prod_nm != ""'> -->
-<!-- 		                AND dp_prod_nm LIKE CONCAT('%', #{prod_nm}, '%') -->
-<!-- 		            </if> -->
-<!-- 		        </if> -->
-		        
-
 	</select>
 	
 	<select id="achievement" parameterType="cmmnMap" resultType="cmmnMap">
@@ -353,6 +332,8 @@
 		ORDER by
 			total_price DESC, count DESC;
 	</select>
+	
+	
 	
 	
 

@@ -263,7 +263,6 @@
             },
             mounted: function() {
                 this.getInfoList();
-                this.initModalEventListeners();
             },
             methods: {
                 updateProdType(type) {

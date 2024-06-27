@@ -281,13 +281,15 @@
                                     <thead>
                                         <tr class="replace-inputs">
                                             <th style="width: 15%;" class="center">상품코드</th>
-                                            <th style="width: 20%;" class="center">상품명</th> 
+                                            <th style="width: 20%;" class="center">상품명</th>
+                                            <th style="width: 20%;" class="center">가입대상</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="item in printInfo.prodList">
                                             <td class="center">{{item.prod_no}}</td>
                                             <td class="center">{{item.prod_nm}}</td>
+                                            <td class="center">{{item.sub_tg}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -485,7 +487,7 @@ var vueapp = new Vue({
 			console.log(dateCopyList);
 
 			//출력팝업 띄우기
-			popup_print.init(dataCopyList);
+			popup_print.init(dateCopyList);
 			$('#popup_print').modal('show');
 		},
 		
@@ -533,13 +535,13 @@ var popup_print = new Vue(
 				}
 			},
 			methods : {
-				init : function(dataCopyList) {
-					this.initInfo(dataCopyList);
+				init : function(dateCopyList) {
+					this.initInfo(dateCopyList);
 				},
-				initInfo : function(dataCopyList) {
+				initInfo : function(dateCopyList) {
 					this.printInfo = {
-						prodCount : dataCopyList.length,
-						prodList : dataCopyList,
+						prodCount : dateCopyList.length,
+						prodList : dateCopyList,
 					};
 				},
 				print : function() {

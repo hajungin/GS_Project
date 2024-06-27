@@ -107,7 +107,7 @@
 							<select class="fix-width-50" style="margin-right: 80px;" id="pay_cycle" v-model="info.pay_cycle">
 								<option value="" disabled selected>납입주기를 선택하세요</option>
 								<option value="PC01">월납</option>
-								<option value="PC02" :disabled="isYearlyDisabled">년납</option>
+								<option value="PC02">년납</option>
 								<option value="PC03">일시납</option>
 							</select>
 						</div>	
@@ -268,6 +268,7 @@ var vueapp = new Vue({
 		    this.updateProductStat();
 		},
 		isYearlyDisabled() {
+			console.log(this.info.pay_period);
             return this.info.pay_period !== '' && parseInt(this.info.pay_period) <= 12;
         },
 
@@ -309,6 +310,10 @@ var vueapp = new Vue({
 			}
 			else if(cf_isEmpty(this.info.pay_cycle)){
 				alert("납입주기를 입력하세요.");
+				return;
+			}
+			else if(this.info.pay_cycle ==  'PC02'){
+				alert("년납은 선택 불가능합니다");
 				return;
 			}
 			else if(cf_isEmpty(this.info.air_min && this.info.air_max)){
@@ -354,7 +359,7 @@ var vueapp = new Vue({
 		},
 		saveCB : function(data){
 				alert("저장되었습니다.");
-				cf_movePage('/2team/prod/list');
+				cf_movePage('/2team/prod/GLlist');
 		},
 	}
 });

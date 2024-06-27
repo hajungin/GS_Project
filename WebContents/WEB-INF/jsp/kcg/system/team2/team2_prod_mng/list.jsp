@@ -447,6 +447,7 @@ var vueapp = new Vue({
                         price_min: this.price_min,
                         sale_stat: this.sale_stat,
                         promtn_yn: this.promtn_yn,
+                        prod_nm: this.prod_nm,
                         
             	}
             }
