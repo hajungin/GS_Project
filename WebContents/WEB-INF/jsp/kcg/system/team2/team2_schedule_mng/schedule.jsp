@@ -38,7 +38,7 @@
         <jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu.jsp" flush="false"/>
         <div class="main-content">
         <div style="opacity:0.9">
-            <div style="width: 80%;">
+            <div style="width: 100%;">
                 <!-- 헤더 -->
                 <jsp:include page="/WEB-INF/jsp/kcg/_include/system/header.jsp" flush="false"/>
                 <ol class="breadcrumb bc-3">
@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-  
+
     <!-- 모달 창 -->
                 <div id="app">
                     <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">

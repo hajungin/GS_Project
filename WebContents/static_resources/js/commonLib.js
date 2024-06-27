@@ -1011,12 +1011,13 @@ function cf_loadingbarShow() {
 	
 	if(!$("#back").length){
 		backGroundCover += "<div id='back'>";
-		backGroundCover += "	<img class='loadingImg' src='/static_resources/system/team2/team2_images.gif' alt='로딩바 이미지'>";
+
+		backGroundCover += "	<img class='loadingImg' src='/static_resources/system/team2/team2_images/p2.gif' alt='로딩바 이미지'>";
 		backGroundCover += "</div>";
 		$('body').append(backGroundCover);
 	}
-	$('#back').css({ width: '50%', height: backHeight, position : 'absolute', top: '0px', 'z-index': '99999999999999999999' });
-	$('.loadingImg').css({ left: '50%', top: '50%', position : 'absolute',transform: 'translate(-50%, -50%)' });
+	$('#back').css({ width: '10%', height: backHeight, position : 'absolute', top: '0px', 'z-index': '99999999999999999999' });
+	$('.loadingImg').css({ left: '12%', top: '28%', position : 'absolute',transform: 'translate(-50%, -50%)' });
 	$('#back').show();
 }
 

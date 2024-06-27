@@ -10,30 +10,7 @@
             <link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
             <link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
             <link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
-            <style type="text/css">
-    .header {
-        background-color: #A7EEFF;
-        color: #333;
-        padding: 12px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        font-size: 1.5em;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin: 20px 0;
-        transition: background-color 0.3s ease;
-        cursor: pointer;
-    }
-
-    .header:hover {
-        background-color: #66CCFF;
-    }
-    #Button:hover {
-        background-color: #2980B9; /* Hover 시 배경색 변경 */
-    }
-</style>
-            
+			<link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">            
             <title>관리자시스템</title>
         </head>
 
@@ -49,14 +26,14 @@
                 <li class="active"><strong>가입관리</strong></li>
             </ol>
 
-            <h2 class="header">판매관리 > 가입현황</h2>
+            <h2 class="header" onclick="location.reload();">판매관리 > 가입현황</h2>
             <br/>
 
             <div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
             <template>
     <div class="flex flex-100" style="border: 2px solid #00CDFF;">
-    <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
-    <div class="form-group flex-20">
+    <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10" style="border: none;">
+    	<div class="form-group flex-20">
             <label class="fix-width-30">상품명 :</label>
             <input class="form-control" v-model="prod_nm" value="">
         </div>
@@ -73,9 +50,9 @@
             <input type="text" class="form-control" v-model="cust_mbl_telno">
         </div>
         </div>
-        <div class="flex-wrap flex-10 flex flex-gap-10 flex-padding-10">
+        <div class="flex-wrap flex-10 flex flex-gap-10 flex-padding-10" style="border: none;">
         <div class="form-group flex-10" style="width: 30%;">
-            <button type="button" id="Button" class="btn btn-blue btn-icon icon-right" @click="getCustInfoList(true)">
+            <button type="button" id="Button" class="btn btn-primary btn-icon" @click="getCustInfoList(true)">
                 검색
                 <i class="entypo-search"></i>
             </button>
@@ -84,9 +61,9 @@
     </div>
     <div class="flex flex-100 flex-padding-10 flex-gap-10" 
 						style="justify-content: flex-end; border: 2px solid #00CDFF;">
-						<button type="button" id="Button" class="btn btn-blue btn-icon icon-right"
+						<button type="button" id="Button"class="btn btn-success btn-icon icon-right btn-small"
 							@click="moveCalc()">
-						 	등록 <i class="entypo entypo-info"></i>
+						 	등록 <i class="fa fa-plus"></i>
 						
 					</div>
 
