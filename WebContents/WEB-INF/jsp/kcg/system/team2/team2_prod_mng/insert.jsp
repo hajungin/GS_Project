@@ -299,6 +299,14 @@ var vueapp = new Vue({
 			    alert("적용이율 최소가 더 클 수 없습니다.");
 			    return;
 			}
+			else if(parseFloat(this.info.air_min) >= 10) {
+			    alert("적용이율 최소가 10%을 초과할 수 없습니다.");
+			    return;
+			}
+			else if(parseFloat(this.info.air_max) >= 10) {
+			    alert("적용이율 최대가 10%을 초과할 수 없습니다.");
+			    return;
+			}
 			else if(cf_isEmpty(this.info.air_beg_dt && this.info.air_end_dt)) {
 			    alert("적용기간을 입력하세요.");
 			    return;
@@ -317,6 +325,10 @@ var vueapp = new Vue({
 			}
 			else if(cf_isEmpty(this.info.promtn_yn)){
 				alert("프로모션 여부를 입력하세요.");
+				return;
+			}
+			else if(this.info.promtn_yn == 'Y' && this.info.sub_tg =='ST01'){
+				alert("프로모션과 가입대상을 확인해주세요.");
 				return;
 			}
 			else if(cf_isEmpty(this.info.sale_beg_dt && this.info.sale_end_dt)){
