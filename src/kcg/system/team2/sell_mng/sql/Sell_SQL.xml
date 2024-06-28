@@ -52,10 +52,10 @@
    		 AND CAST(#{sale_end_dt} AS DATE) &lt; ep.sale_end_dt
 		</if>
 		<if test='price_max != null and price_max != ""'>
-		   and ep.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		   and ep.price_max &lt; CAST(#{price_max} AS INTEGER)+1
 		</if>
 		<if test='price_min != null and price_min != ""'>
-		   and ep.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		   and ep.price_min &gt; CAST(#{price_min} AS INTEGER)-1
 		</if>
 		<if test='promtn_yn != null and promtn_yn != ""'>
 		   and ep.promtn_yn = #{promtn_yn}
@@ -111,10 +111,10 @@
    		 AND CAST(#{sale_end_dt} AS DATE) &lt; el.sale_end_dt
 		</if>
 		<if test='price_max != null and price_max != ""'>
-		   and el.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		   and el.price_max &lt; CAST(#{price_max} AS INTEGER)+1
 		</if>
 		<if test='price_min != null and price_min != ""'>
-		   and el.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		   and el.price_min &gt; CAST(#{price_min} AS INTEGER)-1
 		</if>
 		<if test='promtn_yn != null and promtn_yn != ""'>
 		   and el.promtn_yn = #{promtn_yn}
@@ -170,10 +170,10 @@
    		 AND CAST(#{sale_end_dt} AS DATE) &lt; ea.sale_end_dt
 		</if>
 		<if test='price_max != null and price_max != ""'>
-		   and ea.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		   and ea.price_max &lt; CAST(#{price_max} AS INTEGER)+1
 		</if>
 		<if test='price_min != null and price_min != ""'>
-		   and ea.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		   and ea.price_min &gt; CAST(#{price_min} AS INTEGER)-1
 		</if>
 		<if test='promtn_yn != null and promtn_yn != ""'>
 		   and ea.promtn_yn = #{promtn_yn}
@@ -230,10 +230,10 @@
    		 AND CAST(#{sale_end_dt} AS DATE) &lt; ed.sale_end_dt
 		</if>
 		<if test='price_max != null and price_max != ""'>
-		   and ed.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		   and ed.price_max &lt; CAST(#{price_max} AS INTEGER)+1
 		</if>
 		<if test='price_min != null and price_min != ""'>
-		   and ed.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		   and ed.price_min &gt; CAST(#{price_min} AS INTEGER)-1
 		</if>
 		<if test='promtn_yn != null and promtn_yn != ""'>
 		   and ed.promtn_yn = #{promtn_yn}
