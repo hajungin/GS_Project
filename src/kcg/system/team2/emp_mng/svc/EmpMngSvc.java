@@ -37,7 +37,7 @@ public class EmpMngSvc {
 
 	public CmmnMap empInsert(CmmnMap params) {
 		cmmnDao.update("system.team2_emp_mng.empInsert", params);
-		String pw = "1234";
+		String pw = params.getString("emp_no");
 		params.put("user_pw", CryptUtil.hashSHA512HexString(pw));
 		cmmnDao.insert("system.team2_emp_mng.empUserInfo", params);
 		return new CmmnMap().put("status", "OK");
@@ -66,9 +66,9 @@ public class EmpMngSvc {
 	}
 
 	public CmmnMap userPwInit(CmmnMap params) {
-		String pw = "1234";
+		String pw = params.getString("emp_no");
 		params.put("user_pw", CryptUtil.hashSHA512HexString(pw));
-		cmmnDao.update("system.team2_emp_mng.userPwInit", params);
+		cmmnDao.update("system.team2_emp_mng.userPwUpdate", params);
 		return new CmmnMap().put("status", "pwInit");
 	}
 
