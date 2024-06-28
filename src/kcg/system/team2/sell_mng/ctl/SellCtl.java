@@ -78,13 +78,13 @@ public class SellCtl {
 	 }
 	 
 	 @RequestMapping("/topCustomer")
-	    public List<CmmnMap> topCustomer(CmmnMap params) {
-			return sellsvc.topCustomer(params);
+	    public List<CmmnMap> topCustomer() {
+			return sellsvc.topCustomer();
 	 }
 	 
 	 @RequestMapping("/Notice")
-	    public List<CmmnMap> Notice(CmmnMap params) {
-			return sellsvc.Notice(params);
+	    public CmmnMap Notice() {
+			return sellsvc.Notice();
 	 }
 	 
 	 

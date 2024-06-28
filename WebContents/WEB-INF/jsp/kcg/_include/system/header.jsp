@@ -21,7 +21,7 @@
 					
 					<li>
 						<div>
-							<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.userId}</span>&nbsp;님
+							<span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.name}</span>&nbsp;님
 						</div>
 					</li>
 		

@@ -350,8 +350,14 @@
 	</select>
 	
 	<select id="Notice" parameterType="cmmnMap" resultType="cmmnMap">
-		
-	
+		select 
+			notice_sb,
+			notice_no
+		from
+			kcgbd.e_notice
+		order by
+			notice_no DESC
+		LIMIT 1
 	</select>
 	
 	
