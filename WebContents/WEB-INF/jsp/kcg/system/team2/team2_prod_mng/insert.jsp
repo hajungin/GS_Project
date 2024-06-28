@@ -144,12 +144,12 @@
 						<br>
 						<div class="form-group">
 							<div class="">
-								<button type="button" class="btn btn-green btn-icon btn-small" @click="save">
+								<button type="button" class="btn btn-success btn-icon icon-right" @click="save">
 									등록
-									<i class="fa fa-plus"></i>
+									<i class="fa fa-save"></i>
 								</button>
 								
-								<button type="button" class="btn btn-blue btn-icon btn-small" @click="cf_movePage('/2team/prod/GLlist')">
+								<button type="button" class="btn btn-blue btn-icon" @click="cf_movePage('/2team/prod/GLlist')">
 									목록
 									<i class="entypo-list"></i>
 								</button>

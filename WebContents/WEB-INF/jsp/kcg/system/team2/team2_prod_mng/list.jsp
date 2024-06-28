@@ -116,12 +116,12 @@
         </div>
        <div class="flex flex-100 flex-padding-10 flex-gap-10" 
 						style="justify-content: flex-end; border: 2px solid #00CDFF;">
-						<button type="button" id="Button" class="btn btn-success btn-icon icon-right btn-small"
+						<button type="button" id="Button" class="btn btn-success btn-icon icon-right"
 							@click="cf_movePage('/2team/prod/insert')">
-						 	상품등록 <i class="fa fa-plus"></i>
+						 	상품등록 <i class="entypo-book"></i>
 						</button><button type="button" id="Button" class="btn btn-blue btn-icon icon-right"
 							@click="popupPrint()">
-							이율내역 <i class="entypo entypo-info"></i>
+							이율내역 <i class="entypo-list"></i>
 						</button>
 					</div>
         
@@ -245,17 +245,17 @@
                         <div class="form-group">
                             <label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">판매기간 :</label>
                             <input type="date" class="fix-width-50" id="sale_beg_dt" v-model="info.sale_beg_dt" :disabled="!isEditing">
-                            <div>To  .</div>
+                            <div>시작일</div>
                             <input type="date" style="margin-left: 100px;" class="fix-width-50" id="sale_end_dt" v-model="info.sale_end_dt" :disabled="!isEditing">
-                            <div style="margin-right: 30px;">End .</div>
+                            <div style="margin-right: 30px;">종료일</div>
                         </div> 
                         
                         <div class="form-group">
                             <label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">적용기간 :</label>
                             <input type="date" class="fix-width-50" id="air_beg_dt" v-model="info.air_beg_dt" :disabled="!isEditing">
-                            <div>To  .</div>
+                            <div>시작일</div>
                             <input type="date" style="margin-left: 100px;" class="fix-width-50" id="air_end_dt" v-model="info.air_end_dt" :disabled="!isEditing">
-                            <div style="margin-right: 30px;">End .</div>
+                            <div style="margin-right: 30px;">종료일</div>
                         </div>
                         
                         <div class="form-group">
@@ -292,20 +292,17 @@
     
 			</div>
 			<div class="modal-footer">
-				<button type="button" v-if="info.sale_stat !== 'SS04'" class="btn btn-info btn-icon icon-left" @click="toggleEdit()">
+				<button type="button" v-if="info.sale_stat !== 'SS04'" class="btn btn-info btn-icon icon-right" @click="toggleEdit()">
 					<i class="fa fa-pencil"></i>
 					상품정보수정
 				</button>
-				<button type="button"  v-if="isEditing && info.sale_stat !== 'SS04'" class="btn btn-success btn-icon icon-left" @click=update()>
+				<button type="button"  v-if="isEditing && info.sale_stat !== 'SS04'" class="btn btn-success btn-icon icon-right" @click=update()>
 				    <i class="fa fa-save"></i> 
 				    상품정보저장
 				</button>
-				<button type="button" v-if="isEditing && info.sale_stat !== 'SS04'" class="btn btn-danger btn-icon icon-left" @click=deleteOne()>
+				<button type="button" v-if="isEditing && info.sale_stat !== 'SS04'" class="btn btn-danger btn-icon icon-right" @click=deleteOne()>
 				    <i class="fa fa-trash"></i> 
 				    상품판매종료
-				</button>
-				<button type="button" class="btn btn-secondary btn-icon icon-left" @click=cancel() data-dismiss="modal">
-				    Close
 				</button>
 
 
@@ -359,11 +356,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-					    <button type="button" class="btn btn-primary btn-icon icon-left" @click="print">
+					    <button type="button" class="btn btn-primary btn-icon icon-right" @click="print">
 					        <i class="fa fa-print"></i> 인쇄
-					    </button>
-					    <button type="button" class="btn btn-secondary btn-icon icon-left" data-dismiss="modal">
-					        Close 
 					    </button>
 					</div>
 

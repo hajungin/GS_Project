@@ -63,7 +63,7 @@
 						style="justify-content: flex-end; border: 2px solid #00CDFF;">
 						<button type="button" id="Button"class="btn btn-success btn-icon icon-right btn-small"
 							@click="moveCalc()">
-						 	등록 <i class="fa fa-plus"></i>
+						 	등록 <i class="entypo-book"></i>
 						
 					</div>
 
