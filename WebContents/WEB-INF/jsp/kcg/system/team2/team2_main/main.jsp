@@ -74,11 +74,27 @@
             box-shadow: -2px 0 5px rgba(0,0,0,0.1);
             overflow-y: auto;
         }
-        body #calendar {
-		    height: 80%;
-		    width: 80%;
-		    margin: auto;
-		    border: 1px solid #ccc; /* 경계선을 추가하여 위치 확인 */
+        .calendar-container {
+		    display: flex;
+		    justify-content: space-between; /* 요소 사이의 간격을 동일하게 배치 */
+		    align-items: flex-start; /* 요소들을 수직 방향으로 맨 위로 정렬 */
+		    padding: 20px 10px 10px 30px; /* 요소 사이 간격을 주기 위한 패딩 설정 */
+		}
+		
+		.calendar-container #calendar1,
+		.calendar-container #calendar2 {
+		    border-radius: 6px;
+		    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+		}
+
+		.calendar-container #calendar1 {
+		    width: 60%; /* 첫 번째 캘린더 너비 */
+		    height: 100%;
+		}
+		
+		.calendar-container #calendar2 {
+		    width: 40%; /* 두 번째 캘린더 너비 */
+		    height: 700px;
 		}
 		.card {
             background: #fff;
@@ -144,8 +160,13 @@
 		                %>
 		            </c:if>
 	            </div>
-	            <div>캘린더</div>
-	            <div id='calendar'></div>
+	            
+	            <div class="calendar-container">
+				    <span id="calendar1" style="padding:30px;"></span>
+				    <span id="calendar2" style="padding:30px;"></span>
+				</div>
+	            
+
         	</div>
             
            <div class="main-info" style= "width: 15%;">
@@ -173,7 +194,7 @@
 	            </div>
 	            
 	            <div>
-	            	<h4>우수사원 리스트 출력 예정!!!!</h4>
+	            	<!--<h4>우수사원 리스트 출력 예정!!!!</h4>  -->
 	            </div>
            
            
@@ -190,41 +211,6 @@
             </div>
     </div> 
     
-    <!-- 모달 창 -->
-                <div id="app">
-                    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="eventModalLabel">이벤트 상세 정보</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="eventTitle">제목:</label>
-                                        <input type="text" id="eventTitle" v-model="selectedEvent.title" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="eventStart">시작:</label>
-                                        <input type="datetime-local" id="eventStart" v-model="selectedEvent.start" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="eventEnd">종료:</label>
-                                        <input type="datetime-local" id="eventEnd" v-model="selectedEvent.end" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" @click="updateEvent">수정</button>
-                                    <button type="button" class="btn btn-danger" @click="deleteEvent">삭제</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 모달 창 끝 -->
 </body>
 
 <script>
@@ -234,7 +220,8 @@ var vueapp = new Vue({
         dataList : [],
         search_nm : "",
         search_val : "",
-        events: []
+        events: [],
+        empNo: "${userInfoVO.empNo}"
     },
     mounted : function() { // 페이지 로드 시 실행
         this.getList();
@@ -244,7 +231,7 @@ var vueapp = new Vue({
     	getCalendarEvents: function() {
             var self = this;
 
-            cf_ajax("/system/schedule/calendars", {}, function(response) {
+            cf_ajax("/system/schedule/calendars", { empNo: self.empNo }, function(response) {
                 self.events = response;
                 self.initCalendar();
             });
@@ -252,66 +239,56 @@ var vueapp = new Vue({
         initCalendar: function() {
             var self = this;
 
-            var calendarEl = document.getElementById('calendar');
-            var today = new Date();
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialDate: today,
+         // Calendar 1 초기화
+            var calendarEl1 = document.getElementById('calendar1');
+            var calendar1 = new FullCalendar.Calendar(calendarEl1, {
+                initialDate: new Date(),
                 timeZone: 'local',
                 initialView: 'dayGridMonth',
                 nowIndicator: true,
                 locale: 'ko',
-                navLinks: true,
-                editable: true,
-                expandRows: true,
-                slotMinTime: '09:00',
-                slotMaxTime: '18:00',
-                selectable: true,
+                eventColor: '#00567A',
                 events: self.events,
-
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                 },
                 eventClick: function(info) {
-                    app.selectedEvent = {
-                        id: info.event.id,
-                        title: info.event.title,
-                        start: info.event.start.toISOString().slice(0,16),
-                        end: info.event.end.toISOString().slice(0,16)
-                    };
-                    $('#eventModal').modal('show');
+                    cf_movePage("/system/schedule");
                 },
                 select: function(arg) {
-                    var title = prompt('일정을 입력하세요:');
-                    
-                    if (title) {
-                        cf_ajax("/system/schedule/insert", {
-                            title: title,
-                            start: arg.start,
-                            end: arg.end,
-                            allDay: arg.allDay
-                        }, function(response) {
-                            console.log("이벤트 추가 성공:", response);
-                            calendar.addEvent({
-                                title: title,
-                                start: arg.start,
-                                end: arg.end,
-                                allDay: arg.allDay
-                            });
-                        });
-                    } else {
-                        calendar.unselect();
-                    }
-                },
-                droppable: true,
-                drop: function(arg) {
-                    if (document.getElementById('drop-remove').checked) {
-                        arg.draggedEl.parentNode.removeChild(arg.draggedEl);
-                    }
+                    cf_movePage("/system/schedule");
                 }
             });
-            calendar.render();
+            calendar1.render();
+            
+            
+         // Calendar 2 초기화
+            var calendarEl2 = document.getElementById('calendar2');
+            var calendar2 = new FullCalendar.Calendar(calendarEl2, {
+                initialDate: new Date(),
+                timeZone: 'local',
+                initialView: 'listWeek', // 예시로 timeGridWeek로 설정
+                nowIndicator: true,
+                locale: 'ko',
+                events: self.events,
+                eventColor: '#00567A',
+                headerToolbar: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'today'
+                },
+                eventClick: function(info) {
+                    cf_movePage("/system/schedule");
+                },
+                select: function(arg) {
+                    cf_movePage("/system/schedule");
+                }
+            });
+            calendar2.render();
+            
+            
         },
     	getList : function(isInit){ // 목록을 가져오는 함수 검색 조건과 정렬 조건을 설정 ajax 요청 후 데이터 가져옴
 
@@ -364,25 +341,6 @@ var app = new Vue({
         selectedEvent: {}
     },
     methods: {
-    	updateEvent: function() {
-    	    var self = this;
-    	    // 이벤트 ID를 정수형으로 변환
-    	    var eventId = parseInt(self.selectedEvent.id, 10);
-    	    // ISO 8601 형식의 문자열을 그대로 사용 (PostgreSQL의 timestamp와 호환됨)
-    	    var startTime = new Date(self.selectedEvent.start).toISOString();
-    	    var endTime = new Date(self.selectedEvent.end).toISOString();
-    	    
-    	    cf_ajax("/system/schedule/update", {
-    	        id: eventId,
-    	        title: self.selectedEvent.title,
-    	        start: startTime,
-    	        end: endTime
-    	    }, function(response) {
-    	        console.log("이벤트 수정 성공:", response);
-    	        $('#eventModal').modal('hide');
-    	        location.reload(); // 이벤트 수정 후 페이지 새로고침
-    	    });
-    	},
         deleteEvent: function() {
             var self = this;
             if (confirm("정말로 이 이벤트를 삭제하시겠습니까?")) {

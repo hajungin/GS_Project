@@ -30,10 +30,10 @@
 		
 		<div class="dataTables_wrapper" id="vueapp">
 			<template>
-				<div class="dt-buttons" style="padding-top: 15px;">
-					<button type="button" class="btn btn-orange btn-icon icon-left btn-small" @click="gotoNew()">
-						새글작성<i class="entypo-plus"></i>
-					</button>
+				<div class="dt-buttons" style="padding-top: 15px;" v-if="userInfoVO.userId === 'admin001'">
+				    <button type="button" class="btn btn-orange btn-icon icon-left btn-small" @click="gotoNew()">
+				        새글작성<i class="entypo-plus"></i>
+				    </button>
 				</div>
 				
 				<div class="dataTables_filter">  
@@ -63,7 +63,7 @@
 							<td class="center">{{item.notice_no}}</td>
 							<td class="center">{{item.notice_sb}}</td>
 							<td class="center">{{item.notice_cn}}</td>
-							<td class="center">{{ new Date(parseInt(item.frst_reg_ymd)).toISOString().slice(0, 10) }}</td>
+							<td class="center">{{ new Date(parseInt(item.frst_reg_ymd) + 86400000).toISOString().slice(0, 10) }}</td>
 							<td class="center">{{item.rdcnt}}</td>
 						</tr>
 					</tbody>
@@ -86,6 +86,9 @@ var vueapp = new Vue({
 		dataList : [],
 		search_nm : "",
 		search_val : "",
+		userInfoVO: {
+			userId: '${userInfoVO.userId}'
+	    }
 	},
 	mounted : function(){		// 리로드 될때 바로 실행
 		var fromDtl = cf_getUrlParam("fromDtl");

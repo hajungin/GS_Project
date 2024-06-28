@@ -1,5 +1,7 @@
 package kcg.system.team2.notice_mng.ctl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -59,6 +61,13 @@ public class NoticeCtl {
 	@RequestMapping("/getList")
 	public PageList<CmmnMap> getList(CmmnMap params , PagingConfig pagingConfig){
 		return noticeSvc.getList(params, pagingConfig); 
+	}
+	
+//	리스트 처리
+	@RequestMapping("/getNotices")
+	public List<CmmnMap> getNotices(CmmnMap params){
+		System.out.println(params+ "뭐지?????????? 이건 컨트롤러임");
+		return noticeSvc.getNotices(params); 
 	}
 	
 	

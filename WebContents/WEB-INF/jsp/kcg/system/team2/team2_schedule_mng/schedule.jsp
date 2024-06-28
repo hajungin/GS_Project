@@ -21,11 +21,10 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/googlecalendar@6.1.8/index.global.min.js"></script>
     <meta charset="UTF-8">
-    <title>GSITM | 캘린더</title>
     <style>
         body #calendar {
-            height: 80%;
-            width: 80%;
+            height: 100%;
+            width: 100%;
             margin: auto;
             margin-bottom: 200px;
             border-radius: 6px;
@@ -38,7 +37,7 @@
         <jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu.jsp" flush="false"/>
         <div class="main-content">
         <div style="opacity:0.9">
-            <div style="width: 80%;">
+            <div style="width: 100%;">
                 <!-- 헤더 -->
                 <jsp:include page="/WEB-INF/jsp/kcg/_include/system/header.jsp" flush="false"/>
                 <ol class="breadcrumb bc-3">
@@ -46,8 +45,6 @@
                     <li class="active"><strong>스케줄 관리</strong></li>
                 </ol>
                 <br/>
-                <div>캘린더</div>
-                <span style="font-size: 18px; font-weight: bold; color: black;">${userInfoVO.userId}</span>&nbsp;님 <br/>
 	               <div id='calendar' style="padding:30px; z-indax: 999999px;" ></div>
                 </div>  
                 
@@ -55,46 +52,54 @@
             </div>
         </div>
     </div>
+    
+    
     <!-- 모달 창 -->
-                <div id="app">
-                    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="eventModalLabel">이벤트 상세 정보</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="eventTitle">제목:</label>
-                                        <input type="text" id="eventTitle" v-model="selectedEvent.title" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="eventStart">시작:</label>
-                                        <input type="datetime-local" id="eventStart" v-model="selectedEvent.start" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="eventEnd">종료:</label>
-                                        <input type="datetime-local" id="eventEnd" v-model="selectedEvent.end" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" @click="updateEvent">수정</button>
-                                    <button type="button" class="btn btn-danger" @click="deleteEvent">삭제</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 모달 창 끝 -->
+       <div id="app">
+           <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <h5 class="modal-title" id="eventModalLabel">이벤트 상세 정보</h5>
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                               <span aria-hidden="true">&times;</span>
+                           </button>
+                       </div>
+                       <div class="modal-body">
+                           <div class="form-group">
+                               <label for="eventTitle">제목:</label>
+                               <input type="text" id="eventTitle" v-model="selectedEvent.title" class="form-control">
+                           </div>
+                           <div class="form-group">
+                               <label for="eventStart">시작:</label>
+                               <input type="datetime-local" id="eventStart" v-model="selectedEvent.start" class="form-control">
+                           </div>
+                           <div class="form-group">
+                               <label for="eventEnd">종료:</label>
+                               <input type="datetime-local" id="eventEnd" v-model="selectedEvent.end" class="form-control">
+                           </div>
+                       </div>
+                       <div class="modal-footer">
+                           <button type="button" class="btn btn-primary" @click="updateEvent">수정</button>
+                           <button type="button" class="btn btn-danger" @click="deleteEvent">삭제</button>
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <!-- 모달 창 끝 -->
 
     
     
 </body>
 <script>
+function addHoursToISODate(dateString, hours) {
+    const date = new Date(dateString);
+    date.setHours(date.getHours() + hours);
+    return date.toISOString();
+}
+
 var app = new Vue({
     el: '#app',
     data: {
@@ -105,9 +110,9 @@ var app = new Vue({
     	    var self = this;
     	    // 이벤트 ID를 정수형으로 변환
     	    var eventId = parseInt(self.selectedEvent.id, 10);
-    	    // ISO 8601 형식의 문자열을 그대로 사용 (PostgreSQL의 timestamp와 호환됨)
-    	    var startTime = new Date(self.selectedEvent.start).toISOString();
-    	    var endTime = new Date(self.selectedEvent.end).toISOString();
+    	    // ISO 8601 형식의 문자열을 변환하여 UTC에 9시간을 더함
+    	    var startTime = addHoursToISODate(self.selectedEvent.start, 9);
+    	    var endTime = addHoursToISODate(self.selectedEvent.end, 9);
     	    
     	    cf_ajax("/system/schedule/update", {
     	        id: eventId,
@@ -138,7 +143,8 @@ var app = new Vue({
 var vueapp = new Vue({
     el: "#vueapp",
     data: {
-        events: []
+        events: [],
+        empNo: "${userInfoVO.empNo}" // JSP에서 empNo를 Vue 인스턴스의 데이터로 전달
     },
     mounted: function() {
         this.getCalendarEvents();
@@ -147,7 +153,7 @@ var vueapp = new Vue({
         getCalendarEvents: function() {
             var self = this;
 
-            cf_ajax("/system/schedule/calendars", {}, function(response) {
+            cf_ajax("/system/schedule/calendars", { empNo: self.empNo }, function(response) {
                 self.events = response;
                 self.initCalendar();
             });
@@ -169,19 +175,21 @@ var vueapp = new Vue({
                 slotMinTime: '09:00',
                 slotMaxTime: '18:00',
                 selectable: true,
+                eventColor: '#00567A',
                 events: self.events,
 
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                    right:'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                 },
                 eventClick: function(info) {
+                	// 이벤트 클릭 시, 시작 및 종료 시간에 +9시간을 더함
                     app.selectedEvent = {
                         id: info.event.id,
                         title: info.event.title,
-                        start: info.event.start.toISOString().slice(0,16),
-                        end: info.event.end.toISOString().slice(0,16)
+                        start: addHoursToISODate(info.event.start.toISOString(), 9).slice(0, 16),
+                        end: addHoursToISODate(info.event.end.toISOString(), 9).slice(0, 16)
                     };
                     $('#eventModal').modal('show');
                 },

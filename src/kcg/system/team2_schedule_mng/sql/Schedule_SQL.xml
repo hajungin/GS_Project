@@ -5,6 +5,7 @@
 	<select id="getSch" parameterType="cmmnMap" resultType="cmmnMap">
 			/* system.team2_schedule_mng.getSch */
 		SELECT
+			emp_no,
 			schdul_no AS id,
 			title,
 			schdul_beg_yml AS start,
@@ -12,12 +13,13 @@
 		FROM
 			kcgbd.e_schedule
 		WHERE 1=1
+			AND emp_no = #{empNo}
 	</select>
 	
 	<insert id="insertSch" parameterType="cmmnMap">
 			/* system.team2_schedule_mng.insertSch */
 		INSERT INTO kcgbd.e_schedule (emp_no, title, schdul_beg_yml, schdul_end_yml)
-		VALUES ('2024060101' , #{title}, CAST(#{start} AS TIMESTAMP), CAST(#{end} AS TIMESTAMP));
+		VALUES (#{empNo} , #{title}, CAST(#{start} AS TIMESTAMP), CAST(#{end} AS TIMESTAMP));
 	</insert>
 	
 	
@@ -33,8 +35,8 @@
 		UPDATE kcgbd.e_schedule
 		SET 
 			title = #{title}
-			,schdul_beg_yml = TO_TIMESTAMP(#{start}, 'YYYY-MM-DDTHH24:MI:SS.MSZ'),
-	        schdul_end_yml = TO_TIMESTAMP(#{end}, 'YYYY-MM-DDTHH24:MI:SS.MSZ')
+			,schdul_beg_yml = TO_TIMESTAMP(#{start}, 'YYYY-MM-DD"T"HH24:MI:SS.MSZ'),
+	        schdul_end_yml = TO_TIMESTAMP(#{end}, 'YYYY-MM-DD"T"HH24:MI:SS.MSZ')
 		WHERE 1=1
 			AND schdul_no = #{id}
 	</update>
