@@ -5,6 +5,7 @@
 <head>
 	<jsp:include page="/WEB-INF/jsp/kcg/_include/system/header_meta.jsp" flush="false"/>
 	<link href="/static_resources/lib/summernote/0.8.18/summernote-lite.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
 	<script src="/static_resources/lib/summernote/0.8.18/summernote-lite.min.js"></script>
 	<script src="/static_resources/lib/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 	<!-- Imported styles on this page -->
@@ -22,40 +23,40 @@
 		
 		<ol class="breadcrumb bc-3">
 			<li><a href="#none" onclick="cf_movePage('/system')"><i class="fa fa-home"></i>Home</a></li>
-			<li class="active"><strong>공지사항 상세보기</strong></li>
+			<li class="active"><strong>공지사항</strong></li>
 		</ol>
 	
-		<h2>공지사항 > 상세보기</h2>
+		<h2 class="header" onclick="location.reload();">공지사항 상세</h2>
 		<br/>
 		
 		<div class="row">
-			<div id="vueapp" style="width: 910px; margin-left: 15px;">
+			<div id="vueapp" style="width: 910px; margin: 0 auto; border: 2px solid #00CDFF;">
 				<template>	
 					<div class="panel panel-primary" data-collapsed="0">
 						<div class="panel-body">
 							<form class="form-horizontal form-groups-bordered">
 					
 								<div class="form-group" v-if="info.idx != ''">
-								    <label for="frst_reg_ymd" class="sys_label_01 control-label">작성일</label>
+								    <label for="frst_reg_ymd" class="sys_label_01 control-label" style="text-align: center;">작성일</label>
 								    <div class="sys_col_02">
 								        <span>{{ new Date(parseInt(info.frst_reg_ymd)).toISOString().slice(0, 10) }}</span>
 								    </div>
 								    
-								    <label for="frst_reg_ymd" class="sys_label_01 control-label">조회수</label>
+								    <label for="frst_reg_ymd" class="sys_label_01 control-label" style="text-align: center;">조회수</label>
 								    <div class="sys_col_02">
 								        <span>{{ info.rdcnt }}</span>
 								    </div>
 								</div>
 								
 								<div class="form-group">
-								    <label for="notice_sb" class="sys_label_01 control-label">제목</label>
+								    <label for="notice_sb" class="sys_label_01 control-label" style="text-align: center;">제목</label>
 								    <div class="sys_col_03">
 								        <span>{{ info.notice_sb }}</span>
 								    </div>
 								</div>
 								
 								<div class="form-group">
-								    <label for="notice_cn" class="sys_label_01 control-label">내용</label>
+								    <label for="notice_cn" class="sys_label_01 control-label" style="text-align: center;">내용</label>
 								    <div class="sys_col_05">
 								        <div v-html="info.notice_cn"></div>
 								    </div>
@@ -63,8 +64,8 @@
 								
 			
 			
-								<div class="form-group">
-									<div class="col-sm-offset-2 col-sm-5">
+								<div class="form-group" style="width: 100%; text-align: center;">
+									<div class="col-sm-offset-2 col-sm-5" style="text-align: center; margin-left: 270px;">
 										<button type="button" class="btn btn-green btn-icon btn-small" @click="update(info.notice_no)">
 											수정
 											<i class="entypo-check"></i>

@@ -59,8 +59,8 @@
 				
 				<div class="dataTables_filter">  
 					<select id="search_nm" v-model="search_nm">
-						<option value="notice_sb">제목</option>
-						<option value="notice_cn">내용</option>
+						<option value="notice_sb" style="text-align: center;">제목</option>
+						<option value="notice_cn" style="text-align: center;">내용</option>
 					</select>	
 					<input type="search" placeholder="" style="width: 120px;" id="search_val" v-model="search_val" @keyup.enter="getList(true)">
 					<button type="button" class="btn btn-primary btn-icon" style="margin-left: 5px;" @click="getList(true)">
