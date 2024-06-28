@@ -136,12 +136,16 @@ public class PromionSvc {
 		} else {
 			if("PT01".equals(params.getString("prod_type"))) {
 				cmmnDao.update("system.team2.promion_mng.updateInitYN", params);
+				cmmnDao.insert("system.team2.promion_mng.insertSavgplSell", params);
 			}else if("PT02".equals(params.getString("prod_type"))) {
 				cmmnDao.update("system.team2.promion_mng.updateDpInitYN", params);
+				cmmnDao.insert("system.team2.promion_mng.insertDpstplSell", params);
 			}else if("PT03".equals(params.getString("prod_type"))) {
 				cmmnDao.update("system.team2.promion_mng.updateLoanInitYN", params);
+				cmmnDao.insert("system.team2.promion_mng.insertLoanplSell", params);
 			}else if("PT04".equals(params.getString("prod_type"))) {
 				cmmnDao.update("system.team2.promion_mng.updateAcInitYN", params);
+				cmmnDao.insert("system.team2.promion_mng.insertAcmlplSell", params);
 			}
 		}
 	}

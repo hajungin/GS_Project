@@ -674,7 +674,7 @@ var vueapp = new Vue({
 			this.info.tot_int_amt = (Math.round(nAcmInt));
 			this.info.tot_pay_amt = (Math.round(nAcmPayAmt));
 			console.log("circle_pay_amt(대출원금) :" + this.info.circle_pay_amt);
-			console.log("circle_repy_amt(총불입금액) :" + this.info.circle_repy_amt);
+			console.log("circle_repy_amt(불입금액) :" + this.info.circle_repy_amt);
 			console.log("circle_int(회차이자) :" + this.info.circle_int);
 			console.log("tot_int_amt(총납입이자) :" + this.info.tot_int_amt);
 			console.log("tot_pay_amt(총납입금액) :" + this.info.tot_pay_amt);
