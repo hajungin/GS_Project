@@ -52,10 +52,10 @@
    		 AND CAST(#{sale_end_dt} AS DATE) &lt; ep.sale_end_dt
 		</if>
 		<if test='price_max != null and price_max != ""'>
-		   and ep.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		   and ep.price_max &lt; CAST(#{price_max} AS INTEGER)+1
 		</if>
 		<if test='price_min != null and price_min != ""'>
-		   and ep.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		   and ep.price_min &gt; CAST(#{price_min} AS INTEGER)-1
 		</if>
 		<if test='promtn_yn != null and promtn_yn != ""'>
 		   and ep.promtn_yn = #{promtn_yn}
@@ -111,10 +111,10 @@
    		 AND CAST(#{sale_end_dt} AS DATE) &lt; el.sale_end_dt
 		</if>
 		<if test='price_max != null and price_max != ""'>
-		   and el.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		   and el.price_max &lt; CAST(#{price_max} AS INTEGER)+1
 		</if>
 		<if test='price_min != null and price_min != ""'>
-		   and el.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		   and el.price_min &gt; CAST(#{price_min} AS INTEGER)-1
 		</if>
 		<if test='promtn_yn != null and promtn_yn != ""'>
 		   and el.promtn_yn = #{promtn_yn}
@@ -170,10 +170,10 @@
    		 AND CAST(#{sale_end_dt} AS DATE) &lt; ea.sale_end_dt
 		</if>
 		<if test='price_max != null and price_max != ""'>
-		   and ea.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		   and ea.price_max &lt; CAST(#{price_max} AS INTEGER)+1
 		</if>
 		<if test='price_min != null and price_min != ""'>
-		   and ea.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		   and ea.price_min &gt; CAST(#{price_min} AS INTEGER)-1
 		</if>
 		<if test='promtn_yn != null and promtn_yn != ""'>
 		   and ea.promtn_yn = #{promtn_yn}
@@ -230,10 +230,10 @@
    		 AND CAST(#{sale_end_dt} AS DATE) &lt; ed.sale_end_dt
 		</if>
 		<if test='price_max != null and price_max != ""'>
-		   and ed.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		   and ed.price_max &lt; CAST(#{price_max} AS INTEGER)+1
 		</if>
 		<if test='price_min != null and price_min != ""'>
-		   and ed.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		   and ed.price_min &gt; CAST(#{price_min} AS INTEGER)-1
 		</if>
 		<if test='promtn_yn != null and promtn_yn != ""'>
 		   and ed.promtn_yn = #{promtn_yn}
@@ -262,10 +262,10 @@
     </select>
     
     <select id="youthCustom" parameterType="cmmnMap" resultType="cmmnMap">
-    	select cust_nm, cust_mbl_telno, cust_pridtf_no, TO_CHAR(cust_birth, 'YYYY-MM-DD') AS cust_birth FROM kcgbd.e_customer
+    	select cust_nm, cust_mbl_telno, cust_pridtf_no, cust_cr_no,  TO_CHAR(cust_birth, 'YYYY-MM-DD') AS cust_birth FROM kcgbd.e_customer
         WHERE EXTRACT(YEAR FROM AGE(CURRENT_DATE, cust_birth)) BETWEEN 19 AND 34
-    	
     </select>
+    
     
     <select id="joinList" parameterType="cmmnMap" resultType="cmmnMap"> 
 		    SELECT 
@@ -314,27 +314,6 @@
 			                or ac.prod_nm like CONCAT('%', #{prod_nm}, '%')
 			            )
 			        </if>
-<!-- 		        <if test='prod_nm != null and prod_nm != ""'> -->
-<!-- 					AND  -->
-<!-- 					(a.sa_prod_nm LIKE '%' || #{prod_nm} || '%' OR a.loan_prod_nm LIKE '%' || #{prod_nm} || '%' OR  -->
-<!-- 					 a.ac_prod_nm LIKE '%' || #{prod_nm} || '%' OR 	a.dp_prod_nm LIKE '%' || #{prod_nm} || '%') -->
-<!-- 				</if> -->
-<!-- 		        <if test='prod_nm != null and prod_nm != ""'> -->
-<!-- 		            <if test='sa != null and sa.prod_nm != null and sa.prod_nm != ""'> -->
-<!-- 		                AND sa_prod_nm LIKE CONCAT('%', #{prod_nm}, '%') -->
-<!-- 		            </if> -->
-<!-- 		            <if test='lo != null and lo.prod_nm != null and lo.prod_nm != ""'> -->
-<!-- 		                AND loan_prod_nm LIKE CONCAT('%', #{prod_nm}, '%') -->
-<!-- 		            </if> -->
-<!-- 		            <if test='ac != null and ac.prod_nm != null and ac.prod_nm != ""'> -->
-<!-- 		                AND ac_prod_nm LIKE CONCAT('%', #{prod_nm}, '%') -->
-<!-- 		            </if> -->
-<!-- 		            <if test='dp != null and dp.prod_nm != null and dp.prod_nm != ""'> -->
-<!-- 		                AND dp_prod_nm LIKE CONCAT('%', #{prod_nm}, '%') -->
-<!-- 		            </if> -->
-<!-- 		        </if> -->
-		        
-
 	</select>
 	
 	<select id="achievement" parameterType="cmmnMap" resultType="cmmnMap">
@@ -352,6 +331,33 @@
 		    ee.emp_nm
 		ORDER by
 			total_price DESC, count DESC;
+	</select>
+	
+	<select id="topCustomer" parameterType="cmmnMap" resultType="cmmnMap">
+		SELECT 
+		    ee.emp_nm,
+		    COUNT(ee.emp_no) AS count,
+		    SUM(a.price) AS total_price
+		FROM 
+		    kcgbd.e_product_init a
+		LEFT JOIN 
+		    kcgbd.e_employee ee ON a.emp_no = ee.emp_no
+		GROUP BY 
+		    ee.emp_nm
+		ORDER BY
+		    SUM(a.price) DESC, COUNT(ee.emp_no) DESC
+		LIMIT 5
+	</select>
+	
+	<select id="Notice" parameterType="cmmnMap" resultType="cmmnMap">
+		select 
+			notice_sb,
+			notice_no
+		from
+			kcgbd.e_notice
+		order by
+			notice_no DESC
+		LIMIT 1
 	</select>
 	
 	

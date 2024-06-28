@@ -34,7 +34,7 @@
 </head>
 <body class="page-body" data-url="http://neon.dev">
     <div class="page-container">
-        <jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu.jsp" flush="false"/>
+        <jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu-team2.jsp" flush="false"/>
         <div class="main-content">
         <div style="opacity:0.9">
             <div style="width: 100%;">
@@ -52,8 +52,7 @@
             </div>
         </div>
     </div>
-    
-    
+
     <!-- 모달 창 -->
        <div id="app">
            <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">

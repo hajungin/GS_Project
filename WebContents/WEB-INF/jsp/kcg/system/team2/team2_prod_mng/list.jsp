@@ -37,7 +37,7 @@
 				<li class="active"><strong>상품관리</strong></li>
 				<li class="active"><strong>상품정보조회</strong></li>
 			</ol>
-			<h2 class="header">일반상품</h2>
+			<h2 class="header" onclick="location.reload();">일반상품</h2>
 			<div class="right flex-column flex-100">
 			    <div class="right-top">
 			        <ul class="nav">
@@ -54,7 +54,7 @@
 					
         
         <div class="flex flex-100" style="border: 2px solid #00CDFF;">
-            <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
+            <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10" style="border: none;">
                 <div class="form-group flex-20" style="position: relative;">
                     <label for="productName" class="form-control">상품명 :</label>
                     <input type="text" style="height:30px;" class="form-control" v-model="prod_nm" value=""/>
@@ -106,9 +106,9 @@
                  
                 
             </div>
-         	<div class="flex-wrap flex-10 flex flex-gap-10 flex-padding-10">
+         	<div class="flex-wrap flex-10 flex flex-gap-10 flex-padding-10" style="border: none;">
             	<div class="form-group flex-10" style="width: 30%;">
-			        <button type="button" id="Button" class="btn btn-blue btn-icon icon-right" @click="getListCond(true)">
+			        <button type="button" id="Button" class="btn btn-primary btn-icon" @click="getListCond(true)">
 					    검색 <i class="entypo entypo-search"></i>
 					</button>
 				</div>
@@ -116,9 +116,9 @@
         </div>
        <div class="flex flex-100 flex-padding-10 flex-gap-10" 
 						style="justify-content: flex-end; border: 2px solid #00CDFF;">
-						<button type="button" id="Button" class="btn btn-blue btn-icon icon-right"
+						<button type="button" id="Button" class="btn btn-success btn-icon icon-right btn-small"
 							@click="cf_movePage('/2team/prod/insert')">
-						 	상품등록 <i class="entypo entypo-info"></i>
+						 	상품등록 <i class="fa fa-plus"></i>
 						</button><button type="button" id="Button" class="btn btn-blue btn-icon icon-right"
 							@click="popupPrint()">
 							이율내역 <i class="entypo entypo-info"></i>
@@ -447,6 +447,7 @@ var vueapp = new Vue({
                         price_min: this.price_min,
                         sale_stat: this.sale_stat,
                         promtn_yn: this.promtn_yn,
+                        prod_nm: this.prod_nm,
                         
             	}
             }

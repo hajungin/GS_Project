@@ -9,32 +9,8 @@
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
-	
+	<link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
 	<title>상품등록</title>
-	<style>
-    #vueapp {
-        display: flex;
-        justify-content: center;
-    }
-    .header {
-        background-color: #A7EEFF;
-        color: #333;
-        padding: 12px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        font-size: 1.5em;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin: 20px 0;
-        transition: background-color 0.3s ease;
-        cursor: pointer;
-    }
-    .header:hover {
-        background-color: #66CCFF;
-    }
-    
-	</style>
 </head>
 <body class="page-body">
 
@@ -48,17 +24,18 @@
 		
 		<ol class="breadcrumb bc-3">
 			<li><a href="#none" onclick="cf_movePage('/system')"><i class="fa fa-home"></i>Home</a></li>
+			<li class="active"><strong>상품관리</strong></li>
 			<li class="active"><strong>상품등록관리</strong></li>
 		</ol>
 	
-		<h2 class="header">상품관리 > 상품등록관리</h2>
+		<h2 class="header" onclick="location.reload();">상품등록관리</h2>
 		<br/>
 		
 		<div class="row">
-			<div id="vueapp" style="display: flex;justify-items: left;" >
+			<div id="vueapp" style="display: flex; justify-items: left;">
 			<template>
-			<div class="card" style="width: 1000px; border: 2px solid #00CDFF;">
-				<div class="panel-body flex-100" >			
+			<div class="card" style="width: 60%; border: 2px solid #00CDFF;">
+				<div class="panel-body flex-100" style="width: 100%;">			
 					<div class="center-panel flex-66" style="margin-left: auto;">
 						<div class="form-group" >
 							<label for="prod_nm" class="fix-width-50" style="margin-left: 90px;">상품명 :</label>
@@ -107,7 +84,7 @@
 							<select class="fix-width-50" style="margin-right: 80px;" id="pay_cycle" v-model="info.pay_cycle">
 								<option value="" disabled selected>납입주기를 선택하세요</option>
 								<option value="PC01">월납</option>
-								<option value="PC02" :disabled="isYearlyDisabled">년납</option>
+								<option value="PC02">년납</option>
 								<option value="PC03">일시납</option>
 							</select>
 						</div>	
@@ -123,8 +100,6 @@
 							</div>
 						</div>
 						
-							
-		
 						<div class="form-group">
 							<label for="prod_air_max" class="fix-width-50" style="margin-left: 90px;">적용이율 :</label>
 							<div class="form-control" style="margin-right: 280px;">
@@ -139,7 +114,7 @@
 		
 						<div class="form-group">
 							<label for="prod_air_bgng_ymd" class="fix-width-50" style="margin-left: 90px;">이율적용기간 :</label>
-							<div class="form-control"style="margin-right: 280px;">
+							<div class="form-control" style="margin-right: 280px;">
 								<input type="date"  id="air_beg_dt" v-model="info.air_beg_dt">
 								<label>To</label>
 								<input type="date"  id="air_end_dt" v-model="info.air_end_dt">
@@ -166,12 +141,12 @@
 								<option value="IT03">비과세</option>
 							</select>
 						</div>
-							
+						<br>
 						<div class="form-group">
 							<div class="">
 								<button type="button" class="btn btn-green btn-icon btn-small" @click="save">
 									등록
-									<i class="entypo-check"></i>
+									<i class="fa fa-plus"></i>
 								</button>
 								
 								<button type="button" class="btn btn-blue btn-icon btn-small" @click="cf_movePage('/2team/prod/GLlist')">
@@ -268,6 +243,7 @@ var vueapp = new Vue({
 		    this.updateProductStat();
 		},
 		isYearlyDisabled() {
+			console.log(this.info.pay_period);
             return this.info.pay_period !== '' && parseInt(this.info.pay_period) <= 12;
         },
 
@@ -309,6 +285,10 @@ var vueapp = new Vue({
 			}
 			else if(cf_isEmpty(this.info.pay_cycle)){
 				alert("납입주기를 입력하세요.");
+				return;
+			}
+			else if(this.info.pay_cycle ==  'PC02'){
+				alert("년납은 선택 불가능합니다");
 				return;
 			}
 			else if(cf_isEmpty(this.info.air_min && this.info.air_max)){
@@ -354,7 +334,7 @@ var vueapp = new Vue({
 		},
 		saveCB : function(data){
 				alert("저장되었습니다.");
-				cf_movePage('/2team/prod/list');
+				cf_movePage('/2team/prod/GLlist');
 		},
 	}
 });

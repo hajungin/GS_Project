@@ -1,24 +1,16 @@
-package kcg.system.team2.main.svc;
+package kcg.system.main.svc;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import common.utils.common.CmmnMap;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
-public class Team2MainSvc {
-	
-	
-	
+public class TeamMainSvc {
 
 //	뉴스 가져오기 API
     public String searchNews() {
@@ -86,6 +78,4 @@ public class Team2MainSvc {
             throw new RuntimeException("API 응답을 읽는 데 실패했습니다.", e);
         }
     }
-
-	
 }

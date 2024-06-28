@@ -9,13 +9,31 @@
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/promion.css">
-	
 	<!-- Bilboard Chart(https://naver.github.io/billboard.js) -->
 	<script src="https://d3js.org/d3.v6.min.js"></script>
 	<script src="/static_resources/system/js/datatables/billboard.js"></script>
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/billboard.css">
-	
 	<title>금융계산기</title>
+<style>
+.header {
+    background-color: #A7EEFF;
+    color: #333;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 20px 0;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.header:hover {
+   	background-color: #66CCFF;
+}
+</style>
 </head>
 <body class="page-body">
 
@@ -32,7 +50,7 @@
 			<li class="active"><strong>금융계산기</strong></li>
 		</ol>
 	
-		<h2>프로모션 > 금융계산기 (대출 설계)</h2>
+		<h2 class="header" onclick="location.reload();">금융계산기 (대출 설계)</h2>
 		<br/>
 		
 		<div class="row">
@@ -656,7 +674,7 @@ var vueapp = new Vue({
 			this.info.tot_int_amt = (Math.round(nAcmInt));
 			this.info.tot_pay_amt = (Math.round(nAcmPayAmt));
 			console.log("circle_pay_amt(대출원금) :" + this.info.circle_pay_amt);
-			console.log("circle_repy_amt(총불입금액) :" + this.info.circle_repy_amt);
+			console.log("circle_repy_amt(불입금액) :" + this.info.circle_repy_amt);
 			console.log("circle_int(회차이자) :" + this.info.circle_int);
 			console.log("tot_int_amt(총납입이자) :" + this.info.tot_int_amt);
 			console.log("tot_pay_amt(총납입금액) :" + this.info.tot_pay_amt);

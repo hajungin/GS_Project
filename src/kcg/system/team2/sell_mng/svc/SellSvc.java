@@ -64,4 +64,15 @@ public class SellSvc {
 		List<CmmnMap> rslt = cmmnDao.selectList("system.team2.sell_mng.achievement", params);
 		return rslt;
 	}
+	
+	public List<CmmnMap> topCustomer() {
+		List<CmmnMap> topCustomer = cmmnDao.selectList("system.team2.sell_mng.topCustomer");
+		return topCustomer;
+	}
+
+
+	public CmmnMap Notice( ) {
+		CmmnMap Notice = cmmnDao.selectOne("system.team2.sell_mng.Notice");
+		return Notice;
+	}
 }

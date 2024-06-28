@@ -13,108 +13,7 @@
             <link rel="stylesheet" href="/static_resources/system/js/datatables/promion.css">
             <link rel="stylesheet" href="/static_resources/system/js/datatables/promion.css">
 			<link rel="stylesheet" href="/static_resources/system/js/datatables/billboard.css">
-            <style type="text/css">
-    .header {
-        background-color: #A7EEFF;
-        color: #333;
-        padding: 12px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        font-size: 1.5em;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin: 20px 0;
-        transition: background-color 0.3s ease;
-        cursor: pointer;
-    }
-
-    .header:hover {
-        background-color: #66CCFF;
-    }
-    #Button:hover {
-        background-color: #2980B9; /* Hover 시 배경색 변경 */
-    }
-
-	/* 기본 스타일 초기화 */
-	body, h3, li {
-	    margin: 0;
-	    padding: 0;
-	    font-family: 'Noto Sans KR', sans-serif;
-	    box-sizing: border-box;
-	}
-	
-	/* 섹션 헤더 스타일 */
-	.section-header {
-	    text-align: center;
-	    margin: 40px 0 20px;
-	}
-	
-	.section-header h5 {
-	    font-size: 1.5em;
-	    color: #ffffff;
-	    background: linear-gradient(135deg, #4A90E2, #00796b);
-	    padding: 15px 20px;
-	    border-radius: 12px;
-	    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-	    transition: transform 0.3s ease-in-out;
-	}
-	
-	.section-header h3:hover {
-	    transform: scale(1.05);
-	}
-	
-	/* 타겟 리스트 스타일 */
-	.target-list {
-	    list-style: none;
-	    padding: 0;
-	    margin: 0 auto;
-	    max-width: 600px;
-	    text-align: left;
-	}
-	
-	.target-list li {
-	    font-size: 1.8em;
-	    color: #333;
-	    background-color: #ffffff;
-	    padding: 20px 25px;
-	    margin: 15px 0;
-	    border-left: 8px solid #4A90E2;
-	    border-radius: 10px;
-	    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-	    transition: all 0.3s ease-in-out;
-	}
-	
-	.target-list li:hover {
-	    background-color: #f0f8ff;
-	    border-left-color: #00796b;
-	    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-	}
-	
-	/* 반응형 디자인 */
-	@media (max-width: 768px) {
-	    .section-header h3 {
-	        font-size: 2em;
-	    }
-	
-	    .target-list li {
-	        font-size: 1.5em;
-	        padding: 15px 20px;
-	    }
-	}
-	
-	@media (max-width: 480px) {
-	    .section-header h3 {
-	        font-size: 1.5em;
-	        padding: 10px 15px;
-	    }
-	
-	    .target-list li {
-	        font-size: 1.2em;
-	        padding: 10px 15px;
-	    }
-	}
-</style>
+			<link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
             
             <title>관리자시스템</title>
         </head>
@@ -131,7 +30,7 @@
                 <li class="active"><strong>가입관리</strong></li>
             </ol>
 
-            <h2 class="header">판매달성률</h2>
+            <h2 class="header" onclick="location.reload();">판매달성률</h2>
             <br/>
             
 
@@ -145,7 +44,7 @@
 							  <li class="nav-tab active"  @click="updateProdType('PT01')" style="background-color: #64A0FF;">적금</li>
 							  <li class="nav-tab active"  @click="updateProdType('PT02')" style="background-color: #4DB6AC;">예금</li>
 							  <li class="nav-tab active"  @click="updateProdType('PT03')" style="background-color: #70D2B4;">목돈마련</li>
-							  <li class="nav-tab active"  @click="updateProdType('PT04')" style="background-color: #bc3cbc;">대출</li>
+							  <li class="nav-tab active"  @click="updateProdType('PT04')" style="background-color: #FFB400;">대출</li>
 							
                         </ul>
                  </div>
@@ -177,7 +76,7 @@
    
     	<div class="flex flex-100 flex-padding-10 flex-gap-10" 
 						style="justify-content: flex-end; border: 2px solid #00CDFF;">
-						<button type="button" id="Button" class="btn btn-blue btn-icon icon-right"
+						<button type="button" id="Button" class="btn btn-success btn-icon icon-right btn-small"
 							@click="pop_price_max">
 						 	목표금액 등록 <i class="entypo entypo-trophy"></i>
 						
@@ -199,8 +98,7 @@
                 <td class="center">{{item.emp_nm}}</td>
                 <td class="center">{{item.count}}</td>
                 <td class="center">{{formatCurrency(item.total_price)}}</td>
-                <td class="center">{{ calculateAchievementRate(item.total_price) }}</td>
-               
+                <td class="center">{{ calculateAchievementRate(item.total_price) }}</td>  
             </tr>
         </tbody>
     </table>
@@ -264,7 +162,6 @@
             },
             mounted: function() {
                 this.getInfoList();
-                this.initModalEventListeners();
             },
             methods: {
                 updateProdType(type) {

@@ -5,6 +5,7 @@
 <head>
 	<jsp:include page="/WEB-INF/jsp/kcg/_include/system/header_meta.jsp" flush="false"/>
 	<link href="/static_resources/lib/summernote/0.8.18/summernote-lite.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
 	<script src="/static_resources/lib/summernote/0.8.18/summernote-lite.min.js"></script>
 	<script src="/static_resources/lib/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 	<!-- Imported styles on this page -->
@@ -14,7 +15,7 @@
 
 <div class="page-container">
 
-	<jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu.jsp" flush="false"/>
+	<jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu-team2.jsp" flush="false"/>
 
 	<div class="main-content">
 
@@ -25,34 +26,32 @@
 			<li class="active"><strong>공지사항</strong></li>
 		</ol>
 	
-		<h2>공지사항 > 새 공지 작성하기</h2>
+		<h2 class="header" onclick="location.reload();">새 공지 작성</h2>
 		<br/>
 		
 		<div class="row">
-			<div id="vueapp" style="width: 910px; margin-left: 15px;">
+			<div id="vueapp" style="width: 910px; margin: 0 auto;">
 				<template>	
-					<div class="panel panel-primary" data-collapsed="0">
+					<div class="panel panel-primary" data-collapsed="0" style="border: 2px solid #00CDFF;">
 						<div class="panel-body">
 							<form class="form-horizontal form-groups-bordered">
 					
-								
 								<div class="form-group">
-									<label for="notice_sb" class="sys_label_01 control-label">제목</label>
+									<label for="notice_sb" class="sys_label_01 control-label" style="display: flex; flex-direction: column; align-items: center;">제목</label>
 									<div class="sys_col_03">
 										<input type="text" class="form-control" id="notice_sb" v-model="info.notice_sb">
 									</div>
 								</div>
 					
 								<div class="form-group">
-									<label for="notice_cn" class="sys_label_01 control-label">작성내용</label>
+									<label for="notice_cn" class="sys_label_01 control-label" style="display: flex; flex-direction: column; align-items: center;">작성내용</label>
 									<div class="sys_col_05">
 										<textarea class="form-control" rows="5" id="notice_cn" v-model="info.notice_cn"></textarea>
 									</div>
 								</div>
 			
-
-								<div class="form-group">
-									<div class="col-sm-offset-2 col-sm-5">
+								<div class="form-group" style="width: 100%; text-align: center;">
+									<div class="col-sm-offset-2 col-sm-5" style="text-align: center; margin-left: 270px;">
 										<button type="button" class="btn btn-green btn-icon btn-small" @click="save">
 											등록
 											<i class="entypo-check"></i>

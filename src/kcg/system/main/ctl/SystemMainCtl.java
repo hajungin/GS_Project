@@ -1,5 +1,7 @@
 package kcg.system.main.ctl;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +20,7 @@ import common.utils.common.CmmnMap;
 import kcg.common.svc.CommonSvc;
 import kcg.login.vo.UserInfoVO;
 import kcg.system.main.svc.SystemMainSvc;
+import kcg.system.main.svc.TeamMainSvc;
 
 
 @RequestMapping("/system")
@@ -28,6 +31,9 @@ public class SystemMainCtl {
 
 	@Autowired
 	SystemMainSvc systemMainSvc;
+	
+	@Autowired
+    TeamMainSvc mainSvc;
 
 	@Autowired
 	CommonSvc commonSvc;
@@ -37,8 +43,6 @@ public class SystemMainCtl {
 
 	@RequestMapping("")
 	public String openPage(ModelMap model, HttpSession session) {
-
-
 
 		CmmnMap statData = systemMainSvc.getStatData();
 		model.addAttribute("statData", statData);
@@ -64,6 +68,9 @@ public class SystemMainCtl {
 		if(userInfoVO.getEmpNo().equals("admin001")) {
 		return "kcg/system/main/SystemMain";
 		} else {
+			String responseBody = mainSvc.searchNews();
+	        model.addAttribute("news", responseBody);
+	        
 		return "kcg/system/team2/team2_main/main";
 		}
 	}
@@ -87,4 +94,7 @@ public class SystemMainCtl {
 	public String openPopupTable(ModelMap model) {
 		return "kcg/batchResult/table";
 	}
+	
+	
+	
 }

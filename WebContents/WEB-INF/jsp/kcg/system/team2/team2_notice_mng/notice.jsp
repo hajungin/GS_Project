@@ -9,12 +9,33 @@
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
 	<link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
 	<title>공지사항 | 관리자</title>
+	
+<style>
+.header {
+    background-color: #A7EEFF;
+    color: #333;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 20px 0;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.header:hover {
+   	background-color: #66CCFF;
+}
+</style>
 </head>
 <body class="page-body">
 
 <div class="page-container">
 
-	<jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu.jsp" flush="false"/>
+	<jsp:include page="/WEB-INF/jsp/kcg/_include/system/sidebar-menu-team2.jsp" flush="false"/>
 
 	<div class="main-content">
 
@@ -25,24 +46,26 @@
 			<li class="active"><strong>공지사항</strong></li>
 		</ol>
 	
-		<h2>공지사항 목록</h2>
+		<h2 class="header" onclick="location.reload();">공지사항 목록</h2>
 		<br/>
 		
-		<div class="dataTables_wrapper" id="vueapp">
+		<div class="dataTables_wrapper" id="vueapp" style="border: 2px solid #00CDFF;">
 			<template>
+
 				<div class="dt-buttons" style="padding-top: 15px;" v-if="userInfoVO.userId === 'admin001'">
 				    <button type="button" class="btn btn-orange btn-icon icon-left btn-small" @click="gotoNew()">
 				        새글작성<i class="entypo-plus"></i>
 				    </button>
+
 				</div>
 				
 				<div class="dataTables_filter">  
 					<select id="search_nm" v-model="search_nm">
-						<option value="notice_sb">제목</option>
-						<option value="notice_cn">내용</option>
+						<option value="notice_sb" style="text-align: center;">제목</option>
+						<option value="notice_cn" style="text-align: center;">내용</option>
 					</select>	
 					<input type="search" placeholder="" style="width: 120px;" id="search_val" v-model="search_val" @keyup.enter="getList(true)">
-					<button type="button" class="btn btn-blue btn-icon icon-left" style="margin-left: 5px;" @click="getList(true)">
+					<button type="button" class="btn btn-primary btn-icon" style="margin-left: 5px;" @click="getList(true)">
 						검색
 						<i class="entypo-search"></i>
 					</button>

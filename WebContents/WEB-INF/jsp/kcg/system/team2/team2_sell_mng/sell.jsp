@@ -14,29 +14,7 @@
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/promion.css">
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/billboard.css">
-
-	<style type="text/css">    .header {
-        background-color: #A7EEFF;
-        color: #333;
-        padding: 12px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        font-size: 1.5em;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin: 20px 0;
-        transition: background-color 0.3s ease;
-        cursor: pointer;
-    }
-
-    .header:hover {
-        background-color: #66CCFF;
-    }
-    #Button:hover {
-        background-color: #2980B9; /* Hover 시 배경색 변경 */
-    }
-</style>
+	<link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
 
 <title>상품정보조회</title>
 </head>
@@ -55,10 +33,11 @@
 			<ol class="breadcrumb bc-3">
 				<li><a href="#none" onclick="cf_movePage('/system')"><i
 						class="fa fa-home"></i>Home</a></li>
+				<li class="active"><strong>판매관리</strong></li>
 				<li class="active"><strong>상품정보조회</strong></li>
 			</ol>
 
-			<h2 class="header">판매관리 > 상품정보조회 > 판매중 상품</h2>
+			<h2 class="header" onclick="location.reload();">판매중 상품</h2>
 			<br />
 
 			<div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
@@ -66,7 +45,7 @@
 					
         
         <div class="flex flex-100" style="border: 2px solid #00CDFF;">
-            <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10">
+            <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10" style="border: none;">
                 <div class="form-group flex-20">
                     <label for="productName" class="form-control">상품명 :</label>
                     <input type="text" style="height:30px;" class="form-control" v-model="prod_nm" value=""/>
@@ -115,9 +94,9 @@
                  	<input type="text" style="height:30px;" class="form-control" v-model="price_min" value=""/>
                  </div>
               </div>
-             <div class="flex-wrap flex-10 flex flex-gap-10 flex-padding-10">
+             <div class="flex-wrap flex-10 flex flex-gap-10 flex-padding-10" style="border: none;">
             	<div class="form-group flex-10" style="width: 30%;">
-			        <button type="button" id="Button" class="btn btn-blue btn-icon icon-right" @click="getListCond(true)">
+			        <button type="button" id="Button" class="btn btn-primary btn-icon" @click="getListCond(true)">
 					    검색 <i class="entypo entypo-search"></i>
 					</button>
 				</div>
@@ -126,7 +105,7 @@
         </div>
         <div class="flex flex-100 flex-padding-10 flex-gap-10"
 
-						style="justify-content: flex-end; border: 1px solid #999999;">
+						style="justify-content: flex-end;  border: 2px solid #00CDFF;">
 						
 					
 						<button type="button"  id="Customer" class="btn btn-blue btn-icon icon-right"
@@ -281,13 +260,15 @@
                                     <thead>
                                         <tr class="replace-inputs">
                                             <th style="width: 15%;" class="center">상품코드</th>
-                                            <th style="width: 20%;" class="center">상품명</th> 
+                                            <th style="width: 20%;" class="center">상품명</th>
+                                            <th style="width: 20%;" class="center">가입대상</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="item in printInfo.prodList">
                                             <td class="center">{{item.prod_no}}</td>
                                             <td class="center">{{item.prod_nm}}</td>
+                                            <td class="center">{{item.sub_tg}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -485,7 +466,7 @@ var vueapp = new Vue({
 			console.log(dateCopyList);
 
 			//출력팝업 띄우기
-			popup_print.init(dataCopyList);
+			popup_print.init(dateCopyList);
 			$('#popup_print').modal('show');
 		},
 		
@@ -533,13 +514,13 @@ var popup_print = new Vue(
 				}
 			},
 			methods : {
-				init : function(dataCopyList) {
-					this.initInfo(dataCopyList);
+				init : function(dateCopyList) {
+					this.initInfo(dateCopyList);
 				},
-				initInfo : function(dataCopyList) {
+				initInfo : function(dateCopyList) {
 					this.printInfo = {
-						prodCount : dataCopyList.length,
-						prodList : dataCopyList,
+						prodCount : dateCopyList.length,
+						prodList : dateCopyList,
 					};
 				},
 				print : function() {

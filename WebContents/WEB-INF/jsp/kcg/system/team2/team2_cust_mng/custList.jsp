@@ -60,15 +60,15 @@
                     </div>
                     <div class="flex flex-100 flex-padding-10 flex-gap-10"
                         style="justify-content:flex-end;  border: 2px solid #00CDFF;">
-                        <button type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
+                        <button type="button" class="btn btn-success btn-icon icon-right btn-small" style="margin-left: 5px;"
                             @click="gotoDtl()">
                             신규회원등록
-                            <i class="entypo-archive"></i>
+                            <i class="entypo-user"></i>
                         </button>
                         <button type="button" class="btn btn-blue btn-icon" style="margin-left: 5px;"
                             @click="cf_movePage('/communi/communiList')">
                             상담목록조회
-                            <i class="entypo-user"></i>
+                            <i class="entypo-list"></i>
                         </button>
                     </div>
                     <table class="table table-bordered datatable dataTable" id="grid_app"
@@ -124,13 +124,13 @@
                                 <div class="form-group">
                                     <label for="cust_nm" class="col-sm-4 control-label">성명</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="cust_nm" v-model="info.cust_nm" class="form-control" :readonly="isEmpty(info.cust_sn)">
+                                        <input type="text" id="cust_nm" v-model="info.cust_nm" class="form-control" :readonly="isNotEmpty(info.cust_sn)">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="cust_pridtf_no" class="col-sm-4 control-label">실명번호</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="cust_pridtf_no" v-model="info.cust_pridtf_no" class="form-control" :readonly="isEmpty(info.cust_sn)">
+                                        <input type="text" id="cust_pridtf_no" v-model="info.cust_pridtf_no" class="form-control" :readonly="isNotEmpty(info.cust_sn)">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -374,6 +374,7 @@
         data: {
             info: {
             	cust_pridtf_no: "${cust_pridtf_no}",
+            	cust_sn: "",
                 cust_nm: "",
                 cust_eml_addr: "",
                 cust_home_telno: "",

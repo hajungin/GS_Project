@@ -28,7 +28,6 @@
 **/src/kcg/system/etc_mng
 **/src/kcg/system/externalApi
 **/src/kcg/system/main/sql
-**/src/kcg/system/main/svc
 **/src/kcg/system/menu_mng
 **/src/kcg/system/poli_person_mng
 **/src/kcg/system/prod_mng
