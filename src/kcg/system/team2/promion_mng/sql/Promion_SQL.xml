@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="getLoan" parameterType="cmmnMap" resultType="cmmnMap">
-	 /* system.team2.Cal.getDp*/
+	 /* system.team2.Cal.getLoan*/
       select prod_no
            , prod_nm
            , prod_type
@@ -198,7 +198,7 @@
 	</select>
 	
 	<select id="getProdLoan" parameterType="cmmnMap" resultType="cmmnMap">
-	/* system.team2.promion_mng.getProdDp */
+	/* system.team2.promion_mng.getProdLoan */
 		select prod_no
 		     , prod_nm
 		     , prod_type
@@ -212,14 +212,25 @@
 		     , interest_ta
 		     , sale_beg_dt
 		     , sale_end_dt
-		      , 0 as circle_acml_amt
-		     , 0 as goal_amt
 		     , 0 as goal_prd
-		     , 0 as tot_dpst_amt
-		     , 0 as tot_dpst_int
-		     , 0 as int_tax_amt
-		     , 0 as bfo_rcve_amt
-		     , 0 as atx_rcve_amt
+		     , 0 as circle_pay_amt
+		     , 0 as circle_repy_amt
+		     , 0 as circle_int
+		     , 0 as tot_int_amt
+		     , 0 as tot_pay_amt
+		     , 0 as circle_acml_amt_fmt
+		     , 0 as circle_acml_amt
+		     , 0 as tot_dpst_amt_fmt
+		     , 0 as tot_dpst_int_fmt
+		     , 0 as int_tax_amt_fmt
+		     , 0 as bfo_rcve_amt_fmt
+		     , 0 as atx_rcve_amt_fmt
+		     , 0 as loan_amt_fmt
+		     , 0 as circle_pay_amt_fmt
+		     , 0 as circle_repy_amt_fmt
+		     , 0 as circle_int_fmt
+		     , 0 as tot_int_amt_fmt
+		     , 0 as tot_pay_amt_fmt
 		  from kcgbd.e_product_loan a
 		 where prod_no = cast(#{prod_no} as bigint)
 	</select>
@@ -404,10 +415,10 @@
 		  	 , cast(#{aply_rate} as numeric(5,2))
 		  	 , #{interest_ta}
 		  	 , now()
-		  	 , #{tot_dpst_amt}
-		  	 , #{tot_dpst_int}
-		  	 , #{int_tax_amt}
-		  	 , #{atx_rcve_amt}
+		  	 , cast(#{tot_dpst_amt} as numeric(8))
+		  	 , cast(#{tot_dpst_int} as numeric(8))
+		  	 , cast(#{int_tax_amt} as numeric(8))
+		  	 , cast(#{atx_rcve_amt} as numeric(8))
 		  	 , cast(#{cust_sn} as numeric(5))
 		  	 , #{prod_no}
 		  	 , #{prod_type}
@@ -417,9 +428,9 @@
 	<update id="updateDsgnSavgpl" parameterType="cmmnMap">
 	/* system.team2.promion_mng.updateDsgnSavgpl */
 		update kcgbd.e_planlist
-		   set circle_acml_amt = #{circle_acml_amt}
-		  	 , goal_prd = #{goal_prd}
-		  	 , aply_rate = #{aply_rate}
+		   set circle_acml_amt = cast(#{circle_acml_amt} as numeric(8))
+		  	 , goal_prd = cast(#{goal_prd} as numeric(8))
+		  	 , aply_rate = cast(#{aply_rate} as numeric(5,2))
 		  	 , interest_ta = #{interest_ta}
 		  	 , wrt_dt = TO_DATE(#{wrt_dt}, 'yyyy-mm-dd')
 		  	 , tot_dpst_amt = #{tot_dpst_amt}
