@@ -328,7 +328,7 @@ var vueapp = new Vue({
 				return;
 			}
 			else if(this.info.promtn_yn == 'Y' && this.info.sub_tg =='ST01'){
-				alert("프로모션과 가입대상을 확인해주세요.");
+				alert("프로모션 상품일시 가입대상이 일반 일수 없습니다.");
 				return;
 			}
 			else if(cf_isEmpty(this.info.sale_beg_dt && this.info.sale_end_dt)){
