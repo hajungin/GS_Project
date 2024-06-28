@@ -124,6 +124,7 @@
       .calendar-container #calendar2 {
           width: 30%; /* 두 번째 캘린더 너비 */
           height: 557px;
+
       }
 
 

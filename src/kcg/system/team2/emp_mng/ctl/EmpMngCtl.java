@@ -55,7 +55,7 @@ public class EmpMngCtl {
 	
 	@RequestMapping("/userPwInit")
 	public CmmnMap userPwInit(CmmnMap params) {
-		return empMngSvc.userPwUpdate(params); 
+		return empMngSvc.userPwInit(params); 
 	}
 	
 	@RequestMapping("/userPwUpdate")
