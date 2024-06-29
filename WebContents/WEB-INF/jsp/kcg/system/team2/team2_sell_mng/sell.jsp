@@ -114,7 +114,7 @@
 						</button>
 						<button type="button" id="Button" class="btn btn-blue btn-icon icon-right"
 							@click="popupPrint()">
-							상세내역 <i class="entypo entypo-info"></i>
+							상세내역 <i class="entypo-list"></i>
 						</button>
 					</div>
         
@@ -188,7 +188,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"
                             aria-hidden="true" id="btn_popClose">&times;</button>
-                        <h4 class="modal-title" id="modify_nm">일반상품이율</h4>
+                        <h4 class="modal-title" id="modify_nm">상품상세내역</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal form-groups-bordered">
@@ -224,11 +224,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-					    <button type="button" class="btn btn-primary btn-icon icon-left" @click="print">
+					    <button type="button" class="btn btn-primary btn-icon icon-right" @click="print">
 					        <i class="fa fa-print"></i> 인쇄
-					    </button>
-					    <button type="button" class="btn btn-secondary btn-icon icon-left" data-dismiss="modal">
-					        Close 
 					    </button>
 					</div>
 
@@ -302,14 +299,7 @@
                        
                     
                     </div>
-                    <div class="modal-footer">
-                    	<button type="button" class="btn btn-primary btn-icon icon-left" @click="print">
-					        <i class="fa fa-print"></i> 인쇄
-					    </button>
-					    <button type="button" class="btn btn-secondary btn-icon icon-left" data-dismiss="modal">
-					        Close 
-					    </button>
-					</div>
+                    
 
                 </div>
             
@@ -598,43 +588,6 @@ var popup_Customer = new Vue(
 				getInfoCB : function(data){
 					console.log(data);
 					this.cusList = data;	
-				},
-				
-				print : function() {
-					const printArea = document.getElementById('printArea').innerHTML;
-					console.log(printArea);
-
-					win = window.open();
-					self.focus();
-					win.document.open();
-
-					/*
-					1. div 안의 모든 태그들을 innerHTML을 사용하여 매개변수로 받는다.
-					2. window.open() 을 사용하여 새 팝업창을 띄운다.
-					3. 열린 새 팝업창에 기본 <html><head><body>를 추가한다.
-					4. <body> 안에 매개변수로 받은 printArea를 추가한다.
-					5. window.print() 로 인쇄
-					6. 인쇄 확인이 되면 팝업창은 자동으로 window.close()를 호출하여 닫힘
-					 */
-					win.document.write('<html><head>');
-
-					win.document
-							.write('<link rel="stylesheet" href="/static_resources/system/js/datatables/datatables.css">');
-					win.document
-							.write('<link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">');
-					win.document
-							.write('<link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">');
-
-					win.document.write('<title></title><style>');
-					win.document.write('td.center {text-align: center;}');
-					win.document.write('th.center {text-align: center;}');
-					win.document.write('body {font-size: 14px;}');
-					win.document.write('</style></head><body>');
-					win.document.write(printArea);
-					win.document.write('</body></html>');
-					win.document.close();
-					win.print();
-					win.close();
 				},
 			}
 		});

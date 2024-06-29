@@ -31,26 +31,49 @@ public class ScheduleCtl {
     @RequestMapping("/calendars")
     public List<CmmnMap> getSch(CmmnMap params){
     	List<CmmnMap> sch = scheduleSvc.getSch(params);
-    	System.out.println("==============================ctl"+ params);
+    	System.out.println("컨트롤러0===============" + params);
     	return sch;
     }
+    
+    @RequestMapping("/getEvent")
+	public CmmnMap getInfo(CmmnMap params){
+		
+		int eventId = Integer.parseInt(params.getString("eventId", "0"));
+        params.put("eventId", eventId);
+       
+        
+        System.out.println("eventId: " + eventId);
+        
+		
+		return scheduleSvc.getEvent(params); 
+	}
     
     
 	@RequestMapping("/insert")
 	public CmmnMap insert(@RequestBody CmmnMap params){
 		System.out.println("나와라 좀!!!!!!!!!!!!!!!!!! 컨트롤ㄹ어임"+params);
+		
+		// 클라이언트에서 전송한 ISO 8601 형식의 시작 및 종료 날짜-시간 값 가져오기
+	    String startIsoDateTime = params.getString("start");
+	    String endIsoDateTime = params.getString("end");
+		
+		// ISO 8601 형식을 PostgreSQL timestamp 형식으로 변환하는 함수 호출
+	    String startPostgresTimestamp = isoToPostgresTimestamp(startIsoDateTime);
+	    String endPostgresTimestamp = isoToPostgresTimestamp(endIsoDateTime);
+	    
+	    // 변환된 값을 params에 설정
+	    params.put("start", startPostgresTimestamp);
+	    params.put("end", endPostgresTimestamp);
 		return scheduleSvc.insert(params); 
 	}
     
 	@RequestMapping("/delete")
 	public CmmnMap delete(@RequestBody CmmnMap params){
-		System.out.println("나와라 좀!!!!!!!!!!!!!!!!!! 컨트롤ㄹ어임 삭제삭제 "+params);
 		return scheduleSvc.delete(params); 
 	}
 	
 	@RequestMapping("/update")
 	public CmmnMap update(@RequestBody CmmnMap params){
-		System.out.println("나와라 좀!!!!!!!!!!!!!!!!!! 컨트롤ㄹ어임 수정임!!!! "+params);
 		
 		// 클라이언트에서 전송한 ISO 8601 형식의 시작 및 종료 날짜-시간 값 가져오기
 	    String startIsoDateTime = params.getString("start");
