@@ -21,7 +21,6 @@ public class ScheduleSvc {
 	
 	public List<CmmnMap> getSch(CmmnMap params) {
 		List<CmmnMap> sch = cmmnDao.selectList("system.team2_schedule_mng.getSch", params);
-		System.out.println("===================================svc"+sch);
 		return sch;
 	}
 	
@@ -29,24 +28,20 @@ public class ScheduleSvc {
 	public CmmnMap insert(CmmnMap params) {
 		System.out.println("================sch 서비스=================");
 	    cmmnDao.insert("system.team2_schedule_mng.insertSch", params);
-	    System.out.println("나와라 좀!!!!!!!!!!!!!!!!!! 서비스임"+params);
+	    System.out.println("나와라 좀!!!!!!!!!!!!!!!!!! 서비스 넣는 부분임"+params);
 	    
 	    return new CmmnMap().put("status", "OK"); 
 	}
 	
 	public CmmnMap delete(CmmnMap params) {
-		System.out.println("================sch 서비스 중 삭제중!!=================");
 	    cmmnDao.delete("system.team2_schedule_mng.deleteSch", params);
-	    System.out.println("나와라 좀!!!!!!!!!!!!!!!!!! 서비스 삭제임!!!"+params);
 	    
 	    return new CmmnMap().put("status", "OK"); 
 	}
 	
 	
 	public CmmnMap update(CmmnMap params) {
-		System.out.println("================sch 서비스 중 업뎃중!!=================");
 	    cmmnDao.update("system.team2_schedule_mng.updateSch", params);
-	    System.out.println("나와라 좀!!!!!!!!!!!!!!!!!! 서비스 업뎃임!!!"+params);
 	    
 	    return new CmmnMap().put("status", "OK"); 
 	}

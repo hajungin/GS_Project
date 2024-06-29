@@ -79,8 +79,11 @@
                            </div>
                        </div>
                        <div class="modal-footer">
-                           <button type="button" class="btn btn-primary" @click="updateEvent">수정</button>
-                           <button type="button" class="btn btn-danger" @click="deleteEvent">삭제</button>
+                       		<button v-if="isNewEvent" type="button" class="btn btn-primary" @click="addEvent">등록</button>
+                       		<span v-else type="button">
+	                       		<button class="btn btn-primary" @click="updateEvent">수정</button>
+	                           <button class="btn btn-danger" @click="deleteEvent">삭제</button>
+                       		</span>
                            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
                        </div>
                    </div>
@@ -102,31 +105,39 @@ function addHoursToISODate(dateString, hours) {
 var app = new Vue({
     el: '#app',
     data: {
-        selectedEvent: {}
+        selectedEvent: {},
+        isNewEvent: true, // 새로운 이벤트인지 여부를 판단하는 데이터,
+        empNo: "${userInfoVO.empNo}" // JSP에서 empNo를 Vue 인스턴스의 데이터로 전달
     },
     methods: {
-    	updateEvent: function() {
-    	    var self = this;
-    	    // 이벤트 ID를 정수형으로 변환
-    	    var eventId = parseInt(self.selectedEvent.id, 10);
-    	    // ISO 8601 형식의 문자열을 변환하여 UTC에 9시간을 더함
-    	    var startTime = addHoursToISODate(self.selectedEvent.start, 9);
-    	    var endTime = addHoursToISODate(self.selectedEvent.end, 9);
-    	    
-    	    cf_ajax("/system/schedule/update", {
-    	        id: eventId,
-    	        title: self.selectedEvent.title,
-    	        start: startTime,
-    	        end: endTime
-    	    }, function(response) {
-    	        console.log("이벤트 수정 성공:", response);
-    	        $('#eventModal').modal('hide');
-    	        location.reload(); // 이벤트 수정 후 페이지 새로고침
-    	    });
-    	},
+        updateEvent: function() {
+            var self = this;
+            // 이벤트 ID를 정수형으로 변환
+            var eventId = parseInt(self.selectedEvent.id, 10);
+            // ISO 8601 형식의 문자열을 변환하여 UTC에 9시간을 더함
+            var startTime = addHoursToISODate(self.selectedEvent.start, 9);
+            var endTime = addHoursToISODate(self.selectedEvent.end, 9);
+
+            // 유효성 검사: 종료일이 시작일보다 늦는지 확인
+            if (new Date(endTime) < new Date(startTime)) {
+                alert("종료일은 시작일보다 빠를 수 없습니다. 다시 확인하여주세요.");
+                return; // 종료일이 시작일보다 늦으면 업데이트를 중지
+            }
+
+            cf_ajax("/system/schedule/update", {
+                id: eventId,
+                title: self.selectedEvent.title,
+                start: startTime,
+                end: endTime
+            }, function(response) {
+                console.log("이벤트 수정 성공:", response);
+                $('#eventModal').modal('hide');
+                location.reload(); // 이벤트 수정 후 페이지 새로고침
+            });
+        },
         deleteEvent: function() {
             var self = this;
-            if (confirm("정말로 이 이벤트를 삭제하시겠습니까?")) {
+            if (confirm("정말로 이 일정을 삭제하시겠습니까?")) {
                 // 이벤트 ID를 정수형으로 변환하여 삭제 요청
                 var eventId = parseInt(self.selectedEvent.id, 10);
                 cf_ajax("/system/schedule/delete", { id: eventId }, function(response) {
@@ -135,15 +146,57 @@ var app = new Vue({
                     location.reload(); // 이벤트 삭제 후 페이지 새로고침
                 });
             }
+        },
+        addEvent: function() {
+            var self = this;
+            
+         	// 시작일과 종료일을 입력하지 않은 경우
+            if (!self.selectedEvent.start || !self.selectedEvent.end) {
+                alert('시작 일자와 종료 일자를 모두 입력해주세요.');
+                return;
+            }
+            
+            var title = self.selectedEvent.title;
+            var startTime = addHoursToISODate(self.selectedEvent.start, 9);
+            var endTime = addHoursToISODate(self.selectedEvent.end, 9);
+			
+         	// 시작일과 종료일이 비어 있는지 확인
+            if (!startTime || !endTime) {
+                alert('시작 일자와 종료 일자를 모두 입력해주세요.');
+                return;
+            }
+            
+            // 유효성 검사: 종료일이 시작일보다 늦는지 확인
+            if (new Date(endTime) < new Date(startTime)) {
+                alert("종료일은 시작일보다 빠를 수 없습니다. 다시 확인하여주세요.");
+                return; // 종료일이 시작일보다 늦으면 추가를 중지
+            }
+
+            if (title) {
+                cf_ajax("/system/schedule/insert", {
+                	empNo: self.empNo,
+                    title: title,
+                    start: startTime,
+                    end: endTime,
+                    allDay: false // allDay 값은 예시로 false로 설정
+                }, function(response) {
+                    console.log("이벤트 추가 성공:", response);
+                    $('#eventModal').modal('hide');
+                    location.reload(); // 이벤트 추가 후 페이지 새로고침
+                });
+            } else {
+                alert("제목을 입력하세요.");
+            }
         }
     }
 });
+
 
 var vueapp = new Vue({
     el: "#vueapp",
     data: {
         events: [],
-        empNo: "${userInfoVO.empNo}" // JSP에서 empNo를 Vue 인스턴스의 데이터로 전달
+        empNo: "${userInfoVO.empNo}"
     },
     mounted: function() {
         this.getCalendarEvents();
@@ -178,28 +231,60 @@ var vueapp = new Vue({
                 events: self.events,
 
                 headerToolbar: {
-                    left: 'prev,next today',
+                    left: 'prev,next today addEventButton',
                     center: 'title',
                     right:'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },customButtons: {
+                    addEventButton: {
+                        text : "일정 추가",
+                        click : function() {
+                        	// 새로운 이벤트 추가로 설정
+                            app.isNewEvent = true;
+                         	// 데이터 초기화
+                            app.selectedEvent = {
+                                title: '',
+                                start: '',
+                                end: ''
+                            };
+                            $('#eventModal').modal('show');
+                        }
+                    }
                 },
                 eventClick: function(info) {
-                	// 이벤트 클릭 시, 시작 및 종료 시간에 +9시간을 더함
-                    app.selectedEvent = {
-                        id: info.event.id,
-                        title: info.event.title,
-                        start: addHoursToISODate(info.event.start.toISOString(), 9).slice(0, 16),
-                        end: addHoursToISODate(info.event.end.toISOString(), 9).slice(0, 16)
-                    };
-                    $('#eventModal').modal('show');
+                    try {
+                        console.log('Event data:', info.event);
+
+                        var start = info.event.start ? addHoursToISODate(info.event.start.toISOString(), 9).slice(0, 16) : '';
+                        var end = info.event.end ? addHoursToISODate(info.event.end.toISOString(), 9).slice(0, 16) : start;
+						
+                     // 기존 이벤트 수정으로 설정
+                        app.isNewEvent = false;
+                        
+                        app.selectedEvent = {
+                            id: info.event.id,
+                            title: info.event.title,
+                            start: start,
+                            end: end
+                        };
+                        $('#eventModal').modal('show');
+                    } catch (error) {
+                        console.error('Error processing event click:', error);
+                        alert('이벤트를 처리하는 중 오류가 발생했습니다. 콘솔 로그를 확인하세요.');
+                    }
                 },
                 select: function(arg) {
                     var title = prompt('일정을 입력하세요:');
                     
+                    // ISO 8601 형식의 문자열을 변환하여 UTC에 9시간을 더함
+                    var startTime = addHoursToISODate(arg.start.toISOString(), 9);
+    				var endTime = addHoursToISODate(arg.end.toISOString(), 9);
+                    
                     if (title) {
                         cf_ajax("/system/schedule/insert", {
+                        	empNo: self.empNo,
                             title: title,
-                            start: arg.start,
-                            end: arg.end,
+                            start: startTime,
+                            end: endTime,
                             allDay: arg.allDay
                         }, function(response) {
                             console.log("이벤트 추가 성공:", response);
@@ -209,6 +294,7 @@ var vueapp = new Vue({
                                 end: arg.end,
                                 allDay: arg.allDay
                             });
+                            location.reload();
                         });
                     } else {
                         calendar.unselect();
