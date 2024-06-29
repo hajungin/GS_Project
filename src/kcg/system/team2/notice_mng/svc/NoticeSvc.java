@@ -34,7 +34,6 @@ public class NoticeSvc {
 //	그냥 리스트로 가져오기 (메인화면용)
 	public List<CmmnMap> getNotices(CmmnMap params){
 		List<CmmnMap> rslt = cmmnDao.selectList("system.team2.notice_mng.getNoticeList", params);
-		System.out.println(params + "뭐지?????????? 이건 서비스임");
 		return rslt;
 	}
 	

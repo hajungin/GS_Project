@@ -65,10 +65,23 @@
                            </button>
                        </div>
                        <div class="modal-body">
+	                       <div class="form-group">
+			                    <label for="eventSchType">일정 종류:</label>
+			                    <select id="eventSchType" v-model="selectedEvent.schType" class="form-control">
+		                            <option value="common">일반</option>
+			                        <option value="consulting">상담</option>
+			                        <option value="meeting">회의</option>
+			                        <option value="edu">교육</option>
+			                    </select>
+			                </div>
                            <div class="form-group">
                                <label for="eventTitle">제목:</label>
                                <input type="text" id="eventTitle" v-model="selectedEvent.title" class="form-control">
                            </div>
+                           <div class="form-group">
+			                    <label for="eventSchCn">일정 내용:</label>
+			                    <textarea id="eventSchCn" v-model="selectedEvent.schCn" rows="4" class="form-control"></textarea>
+			                </div>
                            <div class="form-group">
                                <label for="eventStart">시작:</label>
                                <input type="datetime-local" id="eventStart" v-model="selectedEvent.start" class="form-control">
@@ -102,10 +115,29 @@ function addHoursToISODate(dateString, hours) {
     return date.toISOString();
 }
 
+function timestampToDatetimeLocal(timestamp) {
+    // 타임스탬프를 기반으로 Date 객체 생성
+    const date = new Date(timestamp);
+
+    // +9시간을 더해줌
+    date.setHours(date.getHours() + 9);
+
+    // Date 객체를 ISO 8601 형식으로 변환 후, datetime-local 형식으로 자르기
+    const datetimeLocal = date.toISOString().slice(0, 16);
+
+    return datetimeLocal;
+}
+
 var app = new Vue({
     el: '#app',
     data: {
-        selectedEvent: {},
+        selectedEvent: {
+        	title: '',
+            start: '',
+            end: '',
+            schCn: '',
+            schType: '' // 초기값 설정
+        },
         isNewEvent: true, // 새로운 이벤트인지 여부를 판단하는 데이터,
         empNo: "${userInfoVO.empNo}" // JSP에서 empNo를 Vue 인스턴스의 데이터로 전달
     },
@@ -128,7 +160,9 @@ var app = new Vue({
                 id: eventId,
                 title: self.selectedEvent.title,
                 start: startTime,
-                end: endTime
+                end: endTime,
+                schType: self.selectedEvent.schType,
+                schCn: self.selectedEvent.schCn,
             }, function(response) {
                 console.log("이벤트 수정 성공:", response);
                 $('#eventModal').modal('hide');
@@ -159,6 +193,8 @@ var app = new Vue({
             var title = self.selectedEvent.title;
             var startTime = addHoursToISODate(self.selectedEvent.start, 9);
             var endTime = addHoursToISODate(self.selectedEvent.end, 9);
+            var schType = self.selectedEvent.schType;
+            var schCn = self.selectedEvent.schCn;
 			
          	// 시작일과 종료일이 비어 있는지 확인
             if (!startTime || !endTime) {
@@ -178,6 +214,8 @@ var app = new Vue({
                     title: title,
                     start: startTime,
                     end: endTime,
+                    schType: schType,
+                    schCn: schCn,
                     allDay: false // allDay 값은 예시로 false로 설정
                 }, function(response) {
                     console.log("이벤트 추가 성공:", response);
@@ -244,7 +282,9 @@ var vueapp = new Vue({
                             app.selectedEvent = {
                                 title: '',
                                 start: '',
-                                end: ''
+                                end: '',
+                                schCn: '',
+                                schType: '',
                             };
                             $('#eventModal').modal('show');
                         }
@@ -252,21 +292,35 @@ var vueapp = new Vue({
                 },
                 eventClick: function(info) {
                     try {
+                        // Event data 로그 추가
                         console.log('Event data:', info.event);
 
-                        var start = info.event.start ? addHoursToISODate(info.event.start.toISOString(), 9).slice(0, 16) : '';
-                        var end = info.event.end ? addHoursToISODate(info.event.end.toISOString(), 9).slice(0, 16) : start;
-						
-                     // 기존 이벤트 수정으로 설정
-                        app.isNewEvent = false;
-                        
-                        app.selectedEvent = {
-                            id: info.event.id,
-                            title: info.event.title,
-                            start: start,
-                            end: end
-                        };
-                        $('#eventModal').modal('show');
+                        var self = this;
+                        var eventId = parseInt(info.event.id, 10);
+
+                        // 이벤트 데이터에서 필요한 값 로그 추가
+                        console.log('Event ID:', eventId);
+
+                        // 서버에 해당 이벤트의 정보 요청
+                        cf_ajax("/system/schedule/getEvent", { id: eventId }, function(response) {
+
+                            // 응답으로 받은 데이터를 selectedEvent에 설정
+                            app.selectedEvent = {
+				                id: response.id,
+				                title: response.title,
+				                schCn: response.schcn, // 응답 데이터에서 schcn을 schCn으로 매핑
+				                schType: response.schtype, // 응답 데이터에서 schtype을 schType으로 매핑
+				                start: timestampToDatetimeLocal(response.start),
+				                end: timestampToDatetimeLocal(response.end)
+				            };
+                            
+
+                            // 이벤트 수정으로 설정
+                            app.isNewEvent = false;
+
+                            // 모달 창 열기
+                            $('#eventModal').modal('show');
+                        });
                     } catch (error) {
                         console.error('Error processing event click:', error);
                         alert('이벤트를 처리하는 중 오류가 발생했습니다. 콘솔 로그를 확인하세요.');
@@ -285,6 +339,8 @@ var vueapp = new Vue({
                             title: title,
                             start: startTime,
                             end: endTime,
+                            schCn: '',
+                            schType: 'common',
                             allDay: arg.allDay
                         }, function(response) {
                             console.log("이벤트 추가 성공:", response);
@@ -292,6 +348,8 @@ var vueapp = new Vue({
                                 title: title,
                                 start: arg.start,
                                 end: arg.end,
+                                schCn: arg.schCn,
+                                schType: arg.schType,
                                 allDay: arg.allDay
                             });
                             location.reload();

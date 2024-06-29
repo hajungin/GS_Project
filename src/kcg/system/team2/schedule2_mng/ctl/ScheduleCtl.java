@@ -31,8 +31,22 @@ public class ScheduleCtl {
     @RequestMapping("/calendars")
     public List<CmmnMap> getSch(CmmnMap params){
     	List<CmmnMap> sch = scheduleSvc.getSch(params);
+    	System.out.println("컨트롤러0===============" + params);
     	return sch;
     }
+    
+    @RequestMapping("/getEvent")
+	public CmmnMap getInfo(CmmnMap params){
+		
+		int eventId = Integer.parseInt(params.getString("eventId", "0"));
+        params.put("eventId", eventId);
+       
+        
+        System.out.println("eventId: " + eventId);
+        
+		
+		return scheduleSvc.getEvent(params); 
+	}
     
     
 	@RequestMapping("/insert")

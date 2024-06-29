@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import common.dao.CmmnDao;
 import common.utils.common.CmmnMap;
+import common.utils.string.StringUtil;
 import kcg.common.svc.CommonSvc;
 import kcg.login.vo.UserInfoVO;
 
@@ -21,7 +22,17 @@ public class ScheduleSvc {
 	
 	public List<CmmnMap> getSch(CmmnMap params) {
 		List<CmmnMap> sch = cmmnDao.selectList("system.team2_schedule_mng.getSch", params);
+		System.out.println(params + "써비스 =============");
 		return sch;
+	}
+	
+	public CmmnMap getEvent(CmmnMap params) {
+		CmmnMap info = cmmnDao.selectOne("system.team2_schedule_mng.getEvent", params);
+		if(info != null) {
+			info.put("ctnt", StringUtil.simpleDecodeXSS(info.getString("ctnt","")));
+		}
+		
+		return info;
 	}
 	
 //	저장하기
