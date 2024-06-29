@@ -238,8 +238,6 @@ getCommonList: function () {
         },
         getListCB: function (data) {
             this.dataList = data;
-
-​
 //                 this.dataList.push("selected", false);
 //                 this.dataList.push("update", false);
 },
@@ -260,8 +258,6 @@ $("[name=is_check]:checked").length === $("[name=is_check]").length
              alert("수정 대상을 선택하여 주십시오.");
              return;
          }
-
-​
 //              else if (checkedList.length > 1) {
 //             	 alert("하나만 선택하세요!!");
 //                  return;
@@ -306,7 +302,6 @@ cf_ajax("/common/commInsert", params, this.insertStsCB);
 					}
 				this.getCommonList();
 			}
-
 		},
 		commUpdate: function () {
 			var updateData = this.dataList.filter(item => item.update);
@@ -379,8 +374,6 @@ cf_ajax("/common/commInsert", params, this.insertStsCB);
         	$('#pop_gr_comm').modal('show');
         },
     }
-
-​
 });
 var pop_gr_comm = new Vue({
 	el: "#pop_gr_comm",
@@ -414,7 +407,6 @@ var pop_gr_comm = new Vue({
 	self.dataList = newVal;
 	});
    }
-
 });
 </script>
 
