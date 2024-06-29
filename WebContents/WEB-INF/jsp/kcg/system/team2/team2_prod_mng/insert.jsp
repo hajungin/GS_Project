@@ -116,9 +116,9 @@
 							<label for="prod_air_bgng_ymd" class="fix-width-50" style="margin-left: 90px;">이율적용기간 :</label>
 							<div class="form-control" style="margin-right: 280px;">
 								<input type="date"  id="air_beg_dt" v-model="info.air_beg_dt">
-								<label>To</label>
+								<label>시작일</label>
 								<input type="date"  id="air_end_dt" v-model="info.air_end_dt">
-								<label>End</label>
+								<label>종료일</label>
 							</div>
 							
 						</div>				
@@ -127,9 +127,9 @@
 							<label for="ntsl_bgng_ymd" class="fix-width-50" style="margin-left: 90px;">판매적용기간 :</label>
 							<div class="form-control" style="margin-right: 280px;">
 								<input type="date"  id="sale_beg_dt" v-model="info.sale_beg_dt">
-								<label>To</label>
+								<label>시작일</label>
 								<input type="date"  id="sale_end_dt" v-model="info.sale_end_dt">
-								<label>End</label>
+								<label>종료일</label>
 							</div>
 						</div>
 						<div class="form-group">
