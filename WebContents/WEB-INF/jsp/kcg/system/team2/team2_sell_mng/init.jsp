@@ -23,10 +23,10 @@
 
             <ol class="breadcrumb bc-3">
                 <li><a href="#none" onclick="cf_movePage('/system')"><i class="fa fa-home"></i>Home</a></li>
-                <li class="active"><strong>가입관리</strong></li>
+                <li class="active"><strong>판매관리 > 가입관리  </strong></li>
             </ol>
 
-            <h2 class="header" onclick="location.reload();">판매관리 > 가입현황</h2>
+            <h2 class="header" onclick="location.reload();">가입현황</h2>
             <br/>
 
             <div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">

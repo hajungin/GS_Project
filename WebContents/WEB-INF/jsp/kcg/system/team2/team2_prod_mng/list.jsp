@@ -237,14 +237,13 @@
                             <label for="err_eng_nm" style="margin-left: 140px;" class="fix-width-50">납입 주기 :</label>
                             <select class="fix-width-50" style="margin-right: 30px;" id="pay_cycle" v-model="info.pay_cycle" :disabled="!isEditing">
 						        <option value="PC01">월납</option>
-						        <option value="PC02">년납</option>
 						        <option value="PC03">일시납</option>
 						    </select>
                         </div>
                         
                         <div class="form-group">
                             <label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">판매기간 :</label>
-                            <input type="date" class="fix-width-50" id="sale_beg_dt" v-model="info.sale_beg_dt" :disabled="!isEditing">
+                            <input type="date" class="fix-width-50" id="sale_beg_dt" v-model="info.sale_beg_dt" disabled="disabled">
                             <div>시작일</div>
                             <input type="date" style="margin-left: 100px;" class="fix-width-50" id="sale_end_dt" v-model="info.sale_end_dt" :disabled="!isEditing">
                             <div style="margin-right: 30px;">종료일</div>
@@ -598,7 +597,19 @@ var pop_cust_info = new Vue({
 		
 		}
 	},
+	mounted() {
+		this.setDates();
+	  },
 	methods : {
+		//split('T')[0]을 사용하여 날짜 입력 필드에 필요한 형식인 YYYY-MM-DD 부분만 추출
+		setDates() {
+                const today = new Date();
+                const nextMonth = new Date(today);
+                nextMonth.setMonth(today.getMonth() + 1);
+
+                this.info.air_beg_dt = today.toISOString().split('T')[0];
+                this.info.air_end_dt = nextMonth.toISOString().split('T')[0];
+        },
 		toggleEdit() {
             this.isEditing = !this.isEditing;
         },
@@ -686,12 +697,20 @@ var pop_cust_info = new Vue({
 				alert("적용이율을 입력하세요.");
 				return;
 			}
+			else if (!Number.isInteger(parseFloat(this.info.air_min)) || !Number.isInteger(parseFloat(this.info.air_max))) {
+                alert("적용이율은 정수만 입력할 수 있습니다.");
+                return;
+			}
 			else if (parseFloat(this.info.air_min) > parseFloat(this.info.air_max)) {
 			    alert("적용이율 최소가 더 클 수 없습니다.");
 			    return;
 			}
-			else if (parseInt(this.info.air_max) > 10  && parseInt(this.info.air_min) > 10) {
-			    alert("적용이율이 적합하지 않습니다.");
+			else if(parseFloat(this.info.air_min) >= 10) {
+			    alert("적용이율 최소가 10% 이상 일 수 없습니다.");
+			    return;
+			}
+			else if(parseFloat(this.info.air_max) >= 10) {
+			    alert("적용이율 최대가 10% 이상 일 수 없습니다.");
 			    return;
 			}
 			else if (cf_isEmpty(this.info.air_beg_dt && this.info.air_end_dt)) {

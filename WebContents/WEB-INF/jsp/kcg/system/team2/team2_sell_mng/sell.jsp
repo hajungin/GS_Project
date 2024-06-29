@@ -188,7 +188,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"
                             aria-hidden="true" id="btn_popClose">&times;</button>
-                        <h4 class="modal-title" id="modify_nm">일반상품이율</h4>
+                        <h4 class="modal-title" id="modify_nm">상품상세내역</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal form-groups-bordered">
