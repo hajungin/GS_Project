@@ -44,8 +44,9 @@
                             
 							  <li class="nav-tab active"  @click="updateProdType('PT01')" style="background-color: #64A0FF;">적금</li>
 							  <li class="nav-tab active"  @click="updateProdType('PT02')" style="background-color: #4DB6AC;">예금</li>
-							  <li class="nav-tab active"  @click="updateProdType('PT03')" style="background-color: #70D2B4;">목돈마련</li>
-							  <li class="nav-tab active"  @click="updateProdType('PT04')" style="background-color: #FFB400;">대출</li>
+							  <li class="nav-tab active"  @click="updateProdType('PT03')" style="background-color: #FFB400;">대출</li>
+							  <li class="nav-tab active"  @click="updateProdType('PT04')" style="background-color: #70D2B4;">목돈마련</li>
+							  
 							
                         </ul>
                  </div>
@@ -53,8 +54,9 @@
 			 <div class="section-header">
 		        <h5 v-if="prod_type == 'PT01'">적금</h5>
 		        <h5 v-if="prod_type == 'PT02'">예금</h5>
-		        <h5 v-if="prod_type == 'PT03'">목돈마련</h5>
-		        <h5 v-if="prod_type == 'PT04'">대출</h5>
+		        <h5 v-if="prod_type == 'PT03'">대출</h5>
+		        <h5 v-if="prod_type == 'PT04'">목돈마련</h5>
+		        
 		    </div>
 		
 		    <div class="target-list">
@@ -64,10 +66,10 @@
 		        <li v-if="prod_type == 'PT02'">
 		            예금 목표 달성 금액 : {{ formatCurrency(ac_target) }}
 		        </li>
-		        <li v-if="prod_type == 'PT03'">
+		        <li v-if="prod_type == 'PT04'">
 		            목돈마련 목표 달성 금액 : {{ formatCurrency(dp_target) }}
 		        </li>
-		        <li v-if="prod_type == 'PT04'">
+		        <li v-if="prod_type == 'PT03'">
 		            대출 목표 달성 금액 : {{ formatCurrency(lo_target) }}
 		        </li>
 		    </div>
@@ -127,16 +129,16 @@
 			                            <tr>
 			                                <th class="center" style="width: 10%;">적금</th>
 			                                <th class="center" style="width: 10%;">예금</th>
-			                                <th class="center" style="width: 10%;">목돈마련</th>
 			                                <th class="center" style="width: 10%;">대출</th>
+			                                <th class="center" style="width: 10%;">목돈마련</th>
 			                            </tr>
 			                        </thead>
 			                        <tbody>
 			                            <tr  class="input-row">
 			                                <td class="center"><input type="text" v-model="modalSaTarget "></td>
 			                                <td class="center"><input type="text" v-model="modalAcTarget "></td>
-			                                <td class="center"><input type="text" v-model="modalDpTarget "></td>
 			                                <td class="center"><input type="text" v-model="modalLoTarget "></td>
+			                                <td class="center"><input type="text" v-model="modalDpTarget "></td>
 			                        </tbody>
 			                    </table>
 			                    <div style="text-align: center; margin-bottom: 5px;">
@@ -202,10 +204,10 @@
                         case 'PT02':
                             target = parseFloat(this.ac_target);
                             break;
-                        case 'PT03':
+                        case 'PT04':
                             target = parseFloat(this.dp_target);
                             break;
-                        case 'PT04':
+                        case 'PT03':
                             target = parseFloat(this.lo_target);
                             break;
                         default:
