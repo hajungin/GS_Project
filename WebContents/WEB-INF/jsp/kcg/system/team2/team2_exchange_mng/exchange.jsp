@@ -8,7 +8,68 @@
     <link rel="stylesheet" href="/static_resources/system/js/datatables/proddtl.css">
     <link rel="stylesheet" href="/static_resources/system/js/select2/select2-bootstrap.css">
     <link rel="stylesheet" href="/static_resources/system/js/select2/select2.css">
+    <link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
     <title>관리자시스템</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+  }
+
+  .calculator-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .calculator {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .calculator div {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .calculator select, .calculator input {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 150px;
+  }
+
+  .equals-sign {
+    font-size: 24px;
+    margin: 10px;
+  }
+
+  @media (max-width: 600px) {
+    .calculator {
+      width: 90%;
+    }
+
+    .calculator select, .calculator input {
+      width: 100%;
+    }
+  }
+</style>
 </head>
 <body class="page-body">
 <div class="page-container">
@@ -17,52 +78,49 @@
         <jsp:include page="/WEB-INF/jsp/kcg/_include/system/header.jsp" flush="false"/>
         <ol class="breadcrumb bc-3">
             <li><a href="#none" onclick="cf_movePage('/system')"><i class="fa fa-home"></i>Home</a></li>
-            <li class="active"><strong>환전</strong></li>
+            <li class="active"><strong>환율정보</strong></li>
         </ol>
-        <h2>환전하기</h2>
-        
+        <h2 class="header" onclick="location.reload();">환율 계산기</h2>
         
         <div class="flex-column flex-gap-10" id="vueapp">
         
 	        <div class="calculator-container">
-	            <h3>환율 계산기</h3>
 	            <div class="calculator">
-
 		            <div>
 		            	<select v-model="selectedType" id="selectType">
+		            		<option value="">분류</option>
 		                    <option value="ttb">송금 받을 때</option>
 		                    <option value="tts">송금 보낼 때</option>
 		                    <option value="deal_bas_r">매매 기준율</option>
 		                </select>
 		            </div>
-						<div>
-							<select v-model="selectedCurrency1" >
-								<option v-for="item in dataList" :key="item.cur_unit" :value="item.cur_unit">{{ item.cur_nm }}</option>
-							</select>
-							<input type="text" v-model="amount1" @input="calculateExchange">
-						</div>
-						<div> = </div>
+					<div>
+						<select v-model="selectedCurrency1">
+							<option v-for="item in dataList" :key="item.cur_unit" :value="item.cur_unit">{{ item.cur_nm }}</option>
+						</select>
+						<input type="text" v-model="amount1" @input="calculateExchange">
+					</div>
+					<div class="equals-sign"> = </div>
 	                <div>
 		                <select v-model="selectedCurrency2">
 		                    <option v-for="item in dataList" :key="item.cur_unit" :value="item.cur_unit">{{ item.cur_nm }}</option>
 		                </select>
 		                <input type="text" v-model="amount2" @input="calculateExchange2">
 	                </div>
-
 	            </div>
 	        </div>
 	        <br/>
         
             <template>
-                <table class="table table-bordered datatable dataTable" style="border: 1px solid #999999;">
+                <table class="table table-bordered datatable dataTable" style="border: 2px solid #00CDFF;">
                     <thead>
                         <tr class="replace-inputs">
-                        	<th style="width: 5%;" class="center">코드</th>
-                            <th style="width: 10%;" class="center">통화국</th>
-                            <th style="width: 20%;" class="center">통화단위</th>
-                            <th style="width: 20%;" class="center">송금 받을 때</th>
-                            <th style="width: 20%;" class="center">송금 보낼 때</th>
-                            <th style="width: 20%;" class="center">매매 기준율</th>
+                        	<th style="width: 8%; background-color: #B9FFFF;" class="center">코드</th>
+                            <th style="width: 17%; background-color: #B9FFFF;" class="center">통화국</th>
+                            <th style="width: 15%; background-color: #B9FFFF;" class="center">통화단위</th>
+                            <th style="width: 20%; background-color: #B9FFFF;" class="center">송금 받을 때</th>
+                            <th style="width: 20%; background-color: #B9FFFF;" class="center">송금 보낼 때</th>
+                            <th style="width: 20%; background-color: #B9FFFF;" class="center">매매 기준율</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,8 +140,7 @@
         <jsp:include page="/WEB-INF/jsp/kcg/_include/system/footer.jsp" flush="false"/>
     </div>
 </div>
-
-
+</body>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.16/dist/vue.js"></script>
 <script>

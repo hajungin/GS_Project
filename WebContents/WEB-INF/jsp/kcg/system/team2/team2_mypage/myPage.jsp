@@ -38,7 +38,7 @@
 							
 							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
 								<label for="emp_nm" class="fix-width-33" style="width: 80px;">성명 :</label>
-								<input type="text" class="form-control" id="emp_nm" v-model="info.emp_nm" style="flex: 1;">
+								<input type="text" class="form-control" id="emp_nm" v-model="info.emp_nm" readonly style="flex: 1;">
 							</div>
 							
 							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
@@ -54,7 +54,7 @@
 							<div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
 
 								<label for="emp_ecny_dt" class="fix-width-33" style="width: 80px;">입사일자 :</label>
-								<input type="date" class="form-control" id="emp_ecny_dt" v-model="info.emp_ecny_dt" style="flex: 1;">
+								<input type="date" class="form-control" id="emp_ecny_dt" v-model="info.emp_ecny_dt" readonly style="flex: 1;">
 
 							</div>
 							

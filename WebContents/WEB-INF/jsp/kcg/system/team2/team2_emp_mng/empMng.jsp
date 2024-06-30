@@ -23,7 +23,7 @@
 		
 		            <ol class="breadcrumb bc-3">
 		                <li><a href="#none" onclick="cf_movePage('/system')"><i class="fa fa-home"></i>Home</a></li>
-		                <li class="active"><strong>담당자 관리</strong></li>
+		                <li class="active"><strong>담당자관리</strong></li>
 		            </ol>
 		
 		            <h2 class="header" onclick="location.reload();">담당자 목록</h2>
@@ -154,9 +154,9 @@
 	                                        </div>
 	                                    </div>
 	                                    <div class="form-group">
-	                                        <label for="reg_user_id" class="col-sm-4 control-label">User ID :</label>
-	                                        <div class="col-sm-8">
-	                                            <textarea id="reg_user_id" v-model="reg_info.user_id" class="form-control" style="width: 100%; resize: none; margin-left: 10px;"></textarea>
+	                                        <label for="reg_user_id" class="col-sm-2 control-label">User ID :</label>
+	                                        <div class="col-sm-5">
+	                                            <input type="text" id="reg_user_id" v-model="reg_info.user_id" class="form-control">
 	                                        </div>
 	                                    </div>
 		                        </form>

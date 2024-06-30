@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="/static_resources/system/js/datatables/billboard.css">
 	<link rel="stylesheet" href="/static_resources/system/team2/team2_css/team2.css">
 
-<title>상품정보조회</title>
+<title>상품정보</title>
 </head>
 <body class="page-body">
 
@@ -35,7 +35,7 @@
 				<li><a href="#none" onclick="cf_movePage('/system')"><i
 						class="fa fa-home"></i>Home</a></li>
 				<li class="active"><strong>상품관리</strong></li>
-				<li class="active"><strong>상품정보조회</strong></li>
+				<li class="active"><strong>상품정보</strong></li>
 			</ol>
 			<h2 class="header" onclick="location.reload();">프로모션 상품</h2>
 			<div class="right flex-column flex-100">

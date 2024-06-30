@@ -43,6 +43,7 @@
 		
 		<ol class="breadcrumb bc-3">
 			<li><a href="#none" onclick="cf_movePage('/system')"><i class="fa fa-home"></i>Home</a></li>
+			<li class="active"><strong>판매관리</strong></li>
 			<li class="active"><strong>설계이력조회</strong></li>
 		</ol>
 	

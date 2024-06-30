@@ -25,10 +25,10 @@
 		<ol class="breadcrumb bc-3">
 			<li><a href="#none" onclick="cf_movePage('/system')"><i class="fa fa-home"></i>Home</a></li>
 			<li class="active"><strong>상품관리</strong></li>
-			<li class="active"><strong>상품등록관리</strong></li>
+			<li class="active"><strong>상품등록</strong></li>
 		</ol>
 	
-		<h2 class="header" onclick="location.reload();">상품등록관리</h2>
+		<h2 class="header" onclick="location.reload();">상품등록</h2>
 		<br/>
 		
 		<div class="row">

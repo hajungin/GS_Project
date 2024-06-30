@@ -27,7 +27,8 @@
 
             <ol class="breadcrumb bc-3">
                 <li><a href="#none" onclick="cf_movePage('/system')"><i class="fa fa-home"></i>Home</a></li>
-                <li class="active"><strong>가입관리</strong></li>
+                <li class="active"><strong>판매관리</strong></li>
+                <li class="active"><strong>판매달성률</strong></li>
             </ol>
 
             <h2 class="header" onclick="location.reload();">판매달성률</h2>
