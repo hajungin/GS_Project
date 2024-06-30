@@ -188,9 +188,6 @@
 						<button type="button" class="btn btn-orange btn-small" @click="saveSell()">
 							상품가입저장
 						</button>
-						<button type="button" class="btn btn-blue btn-icon btn-small" @click="popupPrint()">
-							설계발행 <i class="entypo-print"></i>
-						</button>
 						<button type="button" class="btn btn-blue btn-icon btn-small" @click="gotoList()">
 							목록 <i class="entypo-list"></i>
 						</button>
