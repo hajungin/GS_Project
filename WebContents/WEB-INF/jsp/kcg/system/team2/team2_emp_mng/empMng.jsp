@@ -356,7 +356,7 @@
 		                        emp_ecny_dt: "",
 		                        emp_mbl_telno: "",
 		                        emp_eml_addr: "",
-	                        	user_id: ""
+	                        	user_id: "",
 		                    };
 		                    this.getComm();
 		                },
