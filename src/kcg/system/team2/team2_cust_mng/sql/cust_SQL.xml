@@ -18,16 +18,64 @@
 		FROM kcgbd.e_customer AS c
 		JOIN kcgbd.e_employee AS e ON c.emp_no = e.emp_no
 		JOIN kcgbd.e_common AS cm ON e.emp_dept = cm.comm_no
-		WHERE c.use_yn = 'Y'
-		<if test='cust_nm != null and cust_nm != ""'>
-		AND c.cust_nm like CONCAT('%',#{cust_nm},'%')
-		</if>
-		<if test='emp_nm != null and emp_nm != ""'>
-		AND e.emp_nm like CONCAT('%',#{emp_nm},'%')
-		</if>
-		<if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
-		AND c.cust_mbl_telno like CONCAT('%',#{cust_mbl_telno},'%')
-		</if>
+		<choose>
+			<when test='event == "sel_birth"'>
+				WHERE c.use_yn = 'Y'
+				AND TO_CHAR(c.cust_birth, 'MM-DD') BETWEEN TO_CHAR(CURRENT_DATE, 'MM-DD') 
+	        	AND TO_CHAR((CURRENT_DATE + INTERVAL '1 month'), 'MM-DD')
+	        	<if test='cust_nm != null and cust_nm != ""'>
+					AND c.cust_nm like CONCAT('%',#{cust_nm},'%')
+				</if>
+				<if test='emp_nm != null and emp_nm != ""'>
+					AND e.emp_nm like CONCAT('%',#{emp_nm},'%')
+				</if>
+				<if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
+					AND c.cust_mbl_telno like CONCAT('%',#{cust_mbl_telno},'%')
+				</if>
+			</when>
+			<when test='event == "expiration"'>
+				JOIN kcgbd.e_product_init AS ps ON c.cust_sn = ps.cust_sn
+				WHERE c.use_yn = 'Y'
+				AND ps.end_ymd BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '1 month'
+				<if test='cust_nm != null and cust_nm != ""'>
+					AND c.cust_nm like CONCAT('%',#{cust_nm},'%')
+				</if>
+				<if test='emp_nm != null and emp_nm != ""'>
+					AND e.emp_nm like CONCAT('%',#{emp_nm},'%')
+				</if>
+				<if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
+					AND c.cust_mbl_telno like CONCAT('%',#{cust_mbl_telno},'%')
+				</if>
+			</when>
+			<when test='event == "event"'>
+				JOIN kcgbd.e_product_init AS ps ON c.cust_sn = ps.cust_sn
+				WHERE c.use_yn = 'Y'
+				AND ps.end_ymd BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '1 month'
+				OR TO_CHAR(c.cust_birth, 'MM-DD') BETWEEN TO_CHAR(CURRENT_DATE, 'MM-DD') 
+	        	AND TO_CHAR((CURRENT_DATE + INTERVAL '1 month'), 'MM-DD')
+	        	<if test='cust_nm != null and cust_nm != ""'>
+					AND c.cust_nm like CONCAT('%',#{cust_nm},'%')
+				</if>
+				<if test='emp_nm != null and emp_nm != ""'>
+					AND e.emp_nm like CONCAT('%',#{emp_nm},'%')
+				</if>
+				<if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
+					AND c.cust_mbl_telno like CONCAT('%',#{cust_mbl_telno},'%')
+				</if>
+			</when>
+			<otherwise>
+				<if test='cust_nm != null and cust_nm != ""'>
+					AND c.cust_nm like CONCAT('%',#{cust_nm},'%')
+				</if>
+				<if test='emp_nm != null and emp_nm != ""'>
+					AND e.emp_nm like CONCAT('%',#{emp_nm},'%')
+				</if>
+				<if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
+					AND c.cust_mbl_telno like CONCAT('%',#{cust_mbl_telno},'%')
+				</if>
+			</otherwise>
+		</choose>
+		
 		ORDER BY cust_nm ASC
 	</select>
 	
@@ -52,11 +100,29 @@
 				WHERE c.use_yn = 'Y'
 				AND TO_CHAR(c.cust_birth, 'MM-DD') BETWEEN TO_CHAR(CURRENT_DATE, 'MM-DD') 
 	        	AND TO_CHAR((CURRENT_DATE + INTERVAL '1 month'), 'MM-DD')
+	        	<if test='cust_nm != null and cust_nm != ""'>
+					AND c.cust_nm like CONCAT('%',#{cust_nm},'%')
+				</if>
+				<if test='emp_nm != null and emp_nm != ""'>
+					AND e.emp_nm like CONCAT('%',#{emp_nm},'%')
+				</if>
+				<if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
+					AND c.cust_mbl_telno like CONCAT('%',#{cust_mbl_telno},'%')
+				</if>
 			</when>
 			<when test='event == "expiration"'>
 				JOIN kcgbd.e_product_init AS ps ON c.cust_sn = ps.cust_sn
 				WHERE c.use_yn = 'Y'
 				AND ps.end_ymd BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '1 month'
+				<if test='cust_nm != null and cust_nm != ""'>
+					AND c.cust_nm like CONCAT('%',#{cust_nm},'%')
+				</if>
+				<if test='emp_nm != null and emp_nm != ""'>
+					AND e.emp_nm like CONCAT('%',#{emp_nm},'%')
+				</if>
+				<if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
+					AND c.cust_mbl_telno like CONCAT('%',#{cust_mbl_telno},'%')
+				</if>
 			</when>
 			<when test='event == "event"'>
 				JOIN kcgbd.e_product_init AS ps ON c.cust_sn = ps.cust_sn
@@ -64,8 +130,27 @@
 				AND ps.end_ymd BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '1 month'
 				OR TO_CHAR(c.cust_birth, 'MM-DD') BETWEEN TO_CHAR(CURRENT_DATE, 'MM-DD') 
 	        	AND TO_CHAR((CURRENT_DATE + INTERVAL '1 month'), 'MM-DD')
+	        	<if test='cust_nm != null and cust_nm != ""'>
+					AND c.cust_nm like CONCAT('%',#{cust_nm},'%')
+				</if>
+				<if test='emp_nm != null and emp_nm != ""'>
+					AND e.emp_nm like CONCAT('%',#{emp_nm},'%')
+				</if>
+				<if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
+					AND c.cust_mbl_telno like CONCAT('%',#{cust_mbl_telno},'%')
+				</if>
 			</when>
-			<otherwise></otherwise>
+			<otherwise>
+				<if test='cust_nm != null and cust_nm != ""'>
+					AND c.cust_nm like CONCAT('%',#{cust_nm},'%')
+				</if>
+				<if test='emp_nm != null and emp_nm != ""'>
+					AND e.emp_nm like CONCAT('%',#{emp_nm},'%')
+				</if>
+				<if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
+					AND c.cust_mbl_telno like CONCAT('%',#{cust_mbl_telno},'%')
+				</if>
+			</otherwise>
 		</choose>
 		ORDER BY cust_nm ASC
 	</select>
