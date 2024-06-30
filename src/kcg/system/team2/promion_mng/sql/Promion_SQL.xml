@@ -653,6 +653,7 @@
 		  	  , interest_rate
 		  	  , interest_ta
 		  	  ,emp_no
+		  	  , prod_type
 		  	 )
 		values (
 		  	 cast(#{prod_no} as numeric(5)),
@@ -662,7 +663,8 @@
 			cast(#{tot_dpst_amt} as bigint),
 			cast(#{aply_rate} as numeric(3,1)),
 			#{interest_ta},
-			#{emp_no}
+			#{emp_no},
+			#{prod_type}
 		     )
 	</insert>
 	
@@ -678,16 +680,18 @@
 		  	  , interest_rate
 		  	  , interest_ta
 		  	  ,emp_no
+		  	  , prod_type
 		  	 )
 		values (
 		  	 cast(#{prod_no} as numeric(5)),
 			cast(#{cust_sn} as numeric(5)),
 			current_date,
 			current_date + INTERVAL '1 month' * cast(#{pay_period} as integer),
-			cast(#{tot_dpst_amt} as bigint),
+			cast(#{circle_pay_amt} as bigint),
 			cast(#{aply_rate} as numeric(3,1)),
 			#{interest_ta},
-			#{emp_no}
+			#{emp_no},
+			#{prod_type}
 		     )
 	</insert>
 	
@@ -703,6 +707,7 @@
 		  	  , interest_rate
 		  	  , interest_ta
 		  	  ,emp_no
+		  	  , prod_type
 		  	 )
 		values (
 		  	 cast(#{prod_no} as numeric(5)),
@@ -712,7 +717,8 @@
 			cast(#{tot_dpst_amt} as bigint),
 			cast(#{aply_rate} as numeric(3,1)),
 			#{interest_ta},
-			#{emp_no}
+			#{emp_no},
+			#{prod_type}
 		     )
 	</insert>
 	<update id="updateInitYN" parameterType="cmmnMap">
