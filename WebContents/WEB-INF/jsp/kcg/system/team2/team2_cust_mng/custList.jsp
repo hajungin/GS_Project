@@ -329,6 +329,7 @@
                 var params = {
                     cust_nm: this.cust_nm,
                     emp_nm: this.emp_nm,
+                    event: this.event,
                     cust_mbl_telno: this.cust_mbl_telno
                 }
 
@@ -348,7 +349,9 @@
                 } else {
                 	var params = {
                         	cust_nm: this.cust_nm,
+                        	emp_nm: this.emp_nm,
                             event: this.event,
+                            cust_mbl_telno: this.cust_mbl_telno
                         }
 
                         cv_sessionStorage
