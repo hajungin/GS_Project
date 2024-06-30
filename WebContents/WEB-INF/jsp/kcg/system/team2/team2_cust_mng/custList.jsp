@@ -235,7 +235,7 @@
 					상담내용저장
 					<i class="entypo-pencil"></i>
 					</button>
-					<button type="button" class="btn btn-danger btn-icon btn-small" @click="custChangeSts" v-if="isNotEmpty(info.cust_pridtf_no)">
+					<button type="button" class="btn btn-danger btn-icon btn-small" @click="custChangeSts" v-if="isNotEmpty(info.cust_sn)">
 					고객정보삭제
 					<i class="entypo-trash"></i>
 					</button>
