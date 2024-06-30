@@ -116,9 +116,9 @@
 							<label for="prod_air_bgng_ymd" class="fix-width-50" style="margin-left: 90px;">이율적용기간 :</label>
 							<div class="form-control" style="margin-right: 280px;">
 								<input type="date"  id="air_beg_dt" v-model="info.air_beg_dt">
-								<label>To</label>
+								<label>시작일</label>
 								<input type="date"  id="air_end_dt" v-model="info.air_end_dt">
-								<label>End</label>
+								<label>종료일</label>
 							</div>
 							
 						</div>				
@@ -127,9 +127,9 @@
 							<label for="ntsl_bgng_ymd" class="fix-width-50" style="margin-left: 90px;">판매적용기간 :</label>
 							<div class="form-control" style="margin-right: 280px;">
 								<input type="date"  id="sale_beg_dt" v-model="info.sale_beg_dt">
-								<label>To</label>
+								<label>시작일</label>
 								<input type="date"  id="sale_end_dt" v-model="info.sale_end_dt">
-								<label>End</label>
+								<label>종료일</label>
 							</div>
 						</div>
 						<div class="form-group">
@@ -144,12 +144,12 @@
 						<br>
 						<div class="form-group">
 							<div class="">
-								<button type="button" class="btn btn-green btn-icon btn-small" @click="save">
+								<button type="button" class="btn btn-success btn-icon icon-right" @click="save">
 									등록
-									<i class="fa fa-plus"></i>
+									<i class="fa fa-save"></i>
 								</button>
 								
-								<button type="button" class="btn btn-blue btn-icon btn-small" @click="cf_movePage('/2team/prod/GLlist')">
+								<button type="button" class="btn btn-blue btn-icon" @click="cf_movePage('/2team/prod/GLlist')">
 									목록
 									<i class="entypo-list"></i>
 								</button>
@@ -299,6 +299,14 @@ var vueapp = new Vue({
 			    alert("적용이율 최소가 더 클 수 없습니다.");
 			    return;
 			}
+			else if(parseFloat(this.info.air_min) >= 10) {
+			    alert("적용이율 최소가 10%을 초과할 수 없습니다.");
+			    return;
+			}
+			else if(parseFloat(this.info.air_max) >= 10) {
+			    alert("적용이율 최대가 10%을 초과할 수 없습니다.");
+			    return;
+			}
 			else if(cf_isEmpty(this.info.air_beg_dt && this.info.air_end_dt)) {
 			    alert("적용기간을 입력하세요.");
 			    return;
@@ -317,6 +325,10 @@ var vueapp = new Vue({
 			}
 			else if(cf_isEmpty(this.info.promtn_yn)){
 				alert("프로모션 여부를 입력하세요.");
+				return;
+			}
+			else if(this.info.promtn_yn == 'Y' && this.info.sub_tg =='ST01'){
+				alert("프로모션 상품일시 가입대상이 일반 일수 없습니다.");
 				return;
 			}
 			else if(cf_isEmpty(this.info.sale_beg_dt && this.info.sale_end_dt)){

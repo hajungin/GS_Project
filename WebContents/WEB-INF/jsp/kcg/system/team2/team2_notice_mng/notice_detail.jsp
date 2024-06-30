@@ -39,7 +39,7 @@
 								<div class="form-group" v-if="info.idx != ''">
 								    <label for="frst_reg_ymd" class="sys_label_01 control-label" style="text-align: center;">작성일</label>
 								    <div class="sys_col_02">
-								        <span>{{ new Date(parseInt(info.frst_reg_ymd)).toISOString().slice(0, 10) }}</span>
+								        <span>{{ new Date(parseInt(info.frst_reg_ymd) + 86400000).toISOString().slice(0, 10) }}</span>
 								    </div>
 								    
 								    <label for="frst_reg_ymd" class="sys_label_01 control-label" style="text-align: center;">조회수</label>
@@ -63,14 +63,16 @@
 								</div>
 								
 			
-			
-								<div class="form-group" style="width: 100%; text-align: center;">
-									<div class="col-sm-offset-2 col-sm-5" style="text-align: center; margin-left: 270px;">
-										<button type="button" class="btn btn-green btn-icon btn-small" @click="update(info.notice_no)">
+
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-5">
+										<button type="button" class="btn btn-green btn-icon btn-small" @click="update(info.notice_no)"
+												v-if="userInfoVO.userId === 'admin1'">
 											수정
 											<i class="entypo-check"></i>
 										</button>
-										<button type="button" id="btn_delete" class="btn btn-red btn-icon btn-small" @click="delInfo">
+										<button type="button" id="btn_delete" class="btn btn-red btn-icon btn-small" @click="delInfo"
+												v-if="userInfoVO.userId === 'admin1'">
 											삭제
 											<i class="entypo-trash"></i>
 										</button>
@@ -127,6 +129,9 @@ var vueapp = new Vue({
             last_mdf_ymd: "",
             rdcnt: ""
         },
+        userInfoVO: {
+			userId: '${userInfoVO.userId}'
+	    }
     },
 	mounted : function(){
 		const urlParams = new URLSearchParams(window.location.search);

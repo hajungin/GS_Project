@@ -116,7 +116,7 @@
 	
 	<update id="updateEmpUserInfo" parameterType="cmmnMap">
 		UPDATE kcgbd.t_user SET
-		,name = #{emp_nm}
+		name = #{emp_nm}
 		,jikgub_nm = #{emp_posit_nm}
 		,tdept_nm = #{emp_dept_nm}
 		,email

@@ -115,9 +115,9 @@
         </div>
        <div class="flex flex-100 flex-padding-10 flex-gap-10" 
 						style="justify-content: flex-end; border: 2px solid #00CDFF;">
-						<button type="button" id="Button" class="btn btn-success btn-icon icon-right btn-small"
+						<button type="button" id="Button" class="btn btn-success btn-icon icon-right"
 							@click="cf_movePage('/2team/prod/insert')">
-						 	상품등록 <i class="fa fa-plus"></i>
+						 	상품등록 <i class="entypo-book"></i>
 						</button><button type="button" id="Button" class="btn btn-blue btn-icon icon-right"
 							@click="popupPrint()">
 							이율내역 <i class="entypo entypo-info"></i>
@@ -205,7 +205,6 @@
 						    </select>
                             <label for="err_eng_nm" style="margin-left: 100px;" class="fix-width-50">가입대상 :</label>
                             <select class="fix-width-50" style="margin-right: 30px;" id="sub_tg" v-model="info.sub_tg" :disabled="!isEditing">
-						        <option value="ST01">일반개인</option>
 						        <option value="ST02">청년생활</option>
 						        <option value="ST03">소상공인</option>
 						    </select>
@@ -233,14 +232,13 @@
                             <label for="err_eng_nm" style="margin-left: 140px;" class="fix-width-50">납입 주기 :</label>
                             <select class="fix-width-50" style="margin-right: 30px;" id="pay_cycle" v-model="info.pay_cycle" :disabled="!isEditing">
 						        <option value="PC01">월납</option>
-						        <option value="PC02">년납</option>
 						        <option value="PC03">일시납</option>
 						    </select>
                         </div>
                         
                         <div class="form-group">
                             <label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">판매기간 :</label>
-                            <input type="date" class="fix-width-50" id="sale_beg_dt" v-model="info.sale_beg_dt" :disabled="!isEditing">
+                            <input type="date" class="fix-width-50" id="sale_beg_dt" v-model="info.sale_beg_dt" disabled="disabled">
                             <div>To  .</div>
                             <input type="date" style="margin-left: 100px;" class="fix-width-50" id="sale_end_dt" v-model="info.sale_end_dt" :disabled="!isEditing">
                             <div style="margin-right: 30px;">End .</div>
@@ -288,22 +286,18 @@
     
 			</div>
 			<div class="modal-footer">
-				<button type="button" v-if="info.sale_stat !== 'SS04'" class="btn btn-info btn-icon icon-left" @click="toggleEdit()">
+				<button type="button" v-if="info.sale_stat !== 'SS04'" class="btn btn-info btn-icon icon-right" @click="toggleEdit()">
 					<i class="fa fa-pencil"></i>
 					상품정보수정
 				</button>
-				<button type="button"  v-if="isEditing && info.sale_stat !== 'SS04'" class="btn btn-success btn-icon icon-left" @click=update()>
+				<button type="button"  v-if="isEditing && info.sale_stat !== 'SS04'" class="btn btn-success btn-icon icon-right" @click=update()>
 				    <i class="fa fa-save"></i> 
 				    상품정보저장
 				</button>
-				<button type="button" v-if="isEditing && info.sale_stat !== 'SS04'" class="btn btn-danger btn-icon icon-left" @click=deleteOne()>
+				<button type="button" v-if="isEditing && info.sale_stat !== 'SS04'" class="btn btn-danger btn-icon icon-right" @click=deleteOne()>
 				    <i class="fa fa-trash"></i> 
 				    상품판매종료
 				</button>
-				<button type="button" class="btn btn-secondary btn-icon icon-left" @click=cancel() data-dismiss="modal">
-				    Close
-				</button>
-
 
 		</div>
 	</div>
@@ -354,11 +348,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-					    <button type="button" class="btn btn-primary btn-icon icon-left" @click="print">
+					    <button type="button" class="btn btn-primary btn-icon icon-right" @click="print">
 					        <i class="fa fa-print"></i> 인쇄
-					    </button>
-					    <button type="button" class="btn btn-secondary btn-icon icon-left" data-dismiss="modal">
-					        Close 
 					    </button>
 					</div>
 
@@ -683,12 +674,20 @@ var pop_cust_info = new Vue({
 				alert("적용이율을 입력하세요.");
 				return;
 			}
+			else if (!Number.isInteger(parseFloat(this.info.air_min)) || !Number.isInteger(parseFloat(this.info.air_max))) {
+                alert("적용이율은 정수만 입력할 수 있습니다.");
+                return;
+			}
 			else if (parseFloat(this.info.air_min) > parseFloat(this.info.air_max)) {
 			    alert("적용이율 최소가 더 클 수 없습니다.");
 			    return;
 			}
-			else if (parseInt(this.info.air_max) > 10  && parseInt(this.info.air_min) > 10) {
-			    alert("적용이율이 적합하지 않습니다.");
+			else if(parseFloat(this.info.air_min) >= 10) {
+			    alert("적용이율 최소가 10% 이상 일 수 없습니다.");
+			    return;
+			}
+			else if(parseFloat(this.info.air_max) >= 10) {
+			    alert("적용이율 최대가 10% 이상 일 수 없습니다.");
 			    return;
 			}
 			else if (cf_isEmpty(this.info.air_beg_dt && this.info.air_end_dt)) {

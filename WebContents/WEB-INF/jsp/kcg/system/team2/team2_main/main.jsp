@@ -101,13 +101,31 @@
    margin: 0;
 }
 
-body #calendar {
-   height: 60%;
-   width: 60%;
-   text-align: left;
-   margin-left: 10%;
-   border: 1px solid #ccc; /* 경계선을 추가하여 위치 확인 */
-}
+.calendar-container {
+          display: flex;
+/*           justify-content: center; /* 요소 사이의 간격을 동일하게 배치 */  */
+          align-items: flex-start; /* 요소들을 수직 방향으로 맨 위로 정렬 */
+          padding: 20px 10px 10px 30px; /* 요소 사이 간격을 주기 위한 패딩 설정 */
+      }
+      
+      .calendar-container #calendar1,
+      .calendar-container #calendar2 {
+          border-radius: 6px;
+          box-shadow: 0 0 10px rgba(0,0,0,0.1);
+          background-color: aliceblue;
+      }
+
+      .calendar-container #calendar1 {
+         margin-left: 130px;
+          width: 40%; /* 첫 번째 캘린더 너비 */
+          height: 100%;
+      }
+      
+      .calendar-container #calendar2 {
+          width: 30%; /* 두 번째 캘린더 너비 */
+          height: 557px;
+      }
+
 
 .card {
    background: #f0f0f0;
@@ -235,9 +253,14 @@ body #calendar {
                      style="margin-left: 5px;  margin-right: 10%; width: 60px; height: 60px;" @click="toggleShow">
                      <img src='/static_resources/system/team2/team2_images/calendar.png' style="width: 40px; height: 40px; margin: auto;"></i>
                   </button>
-                        <div v-if="show">
+                        <!-- <div>
                             <div id='calendar'  style="width: 40%; height: 50%; text-align: left; background-color: white;"></div>
-                        </div>
+                        </div> -->
+                        <div class="calendar-container" v-if="show">
+                         <span id="calendar1" style="padding:30px;"></span>
+                         <span id="calendar2" style="padding:30px;"></span>
+                     </div>
+                        
                         
                     </div>
             </div>
@@ -311,6 +334,7 @@ body #calendar {
                search_val : "",
                events : [],
                show : false,
+               empNo: "${userInfoVO.empNo}"
             },
             
 //             mounted : function() { // 페이지 로드 시 실행
@@ -320,85 +344,64 @@ body #calendar {
                getCalendarEvents : function() {
                   var self = this;
 
-                  cf_ajax("/system/schedule/calendars", {}, function(
-                        response) {
-                     self.events = response;
-                     self.initCalendar();
+                  cf_ajax("/system/schedule/calendars", { empNo: self.empNo }, function(response) {
+                      self.events = response;
+                      self.initCalendar();
                   });
+
                },
                initCalendar : function() {
                   var self = this;
 
-                  var calendarEl = document.getElementById('calendar');
-                  var today = new Date();
-                  var calendar = new FullCalendar.Calendar(
-                        calendarEl,
-                        {
-                           initialDate : today,
-                           timeZone : 'local',
-                           initialView : 'dayGridMonth',
-                           nowIndicator : true,
-                           locale : 'ko',
-                           navLinks : true,
-                           editable : true,
-                           expandRows : true,
-                           slotMinTime : '09:00',
-                           slotMaxTime : '18:00',
-                           selectable : true,
-                           events : self.events,
+               // Calendar 1 초기화
+                  var calendarEl1 = document.getElementById('calendar1');
+                  var calendar1 = new FullCalendar.Calendar(calendarEl1, {
+                      initialDate: new Date(),
+                      timeZone: 'local',
+                      initialView: 'dayGridMonth',
+                      nowIndicator: true,
+                      locale: 'ko',
+                      eventColor: '#00567A',
+                      events: self.events,
+                      headerToolbar: {
+                          left: 'prev,next today',
+                          center: 'title',
+                          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                      },
+                      eventClick: function(info) {
+                          cf_movePage("/system/schedule");
+                      },
+                      select: function(arg) {
+                          cf_movePage("/system/schedule");
+                      }
+                  });
+                  calendar1.render();
+                  
+                  
+               // Calendar 2 초기화
+                  var calendarEl2 = document.getElementById('calendar2');
+                  var calendar2 = new FullCalendar.Calendar(calendarEl2, {
+                      initialDate: new Date(),
+                      timeZone: 'local',
+                      initialView: 'listWeek', 
+                      nowIndicator: true,
+                      locale: 'ko',
+                      events: self.events,
+                      eventColor: '#00567A',
+                      headerToolbar: {
+                          left: 'prev,next',
+                          center: 'title',
+                          right: 'today'
+                      },
+                      eventClick: function(info) {
+                          cf_movePage("/system/schedule");
+                      },
+                      select: function(arg) {
+                          cf_movePage("/system/schedule");
+                      }
+                  });
+                  calendar2.render();
 
-                           headerToolbar : {
-                              left : 'prev,next today',
-                              center : 'title',
-                              right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-                           },
-                           eventClick : function(info) {
-                              app.selectedEvent = {
-                                 id : info.event.id,
-                                 title : info.event.title,
-                                 start : info.event.start
-                                       .toISOString().slice(0, 16),
-                                 end : info.event.end.toISOString()
-                                       .slice(0, 16)
-                              };
-                              $('#eventModal').modal('show');
-                           },
-                           select : function(arg) {
-                              var title = prompt('일정을 입력하세요:');
-
-                              if (title) {
-                                 cf_ajax("/system/schedule/insert",
-                                       {
-                                          title : title,
-                                          start : arg.start,
-                                          end : arg.end,
-                                          allDay : arg.allDay
-                                       }, function(response) {
-                                          console.log(
-                                                "이벤트 추가 성공:",
-                                                response);
-                                          calendar.addEvent({
-                                             title : title,
-                                             start : arg.start,
-                                             end : arg.end,
-                                             allDay : arg.allDay
-                                          });
-                                       });
-                              } else {
-                                 calendar.unselect();
-                              }
-                           },
-                           droppable : true,
-                           drop : function(arg) {
-                              if (document
-                                    .getElementById('drop-remove').checked) {
-                                 arg.draggedEl.parentNode
-                                       .removeChild(arg.draggedEl);
-                              }
-                           },
-                           
-                        });
-                  calendar.render();
                   
                },
                toggleShow: function() {
@@ -410,43 +413,43 @@ body #calendar {
             }
          });
    var data = new Vue({
-	   el : "#data",
+      el : "#data",
        data : {
           dataList : [],
-   		 
-       },
-	    mounted : function() { // 페이지 로드 시 실행
-	    this.getInfo();
-	 	},
-	 methods : {
-		 getInfo : function() {
-	 		cf_ajax("/sell/topCustomer", null, this.getInfoCB);
-	 	},
-			getInfoCB : function(data){
-				this.dataList = data;
-		},	   
-	 }  
-   });
-   var notice = new Vue({
-	   el : "#notice",
-       data : {
-   		  notice: "",
+          
        },
        mounted : function() { // 페이지 로드 시 실행
-   	    this.getNotice();
-   	 	},
-   		 methods : {
-			getNotice : function() {
-		 		cf_ajax("/sell/Notice", null, this.getNCB);
-		 	},
-		 	getNCB : function(data){
-					this.notice = data;
-			},
-			gotoDtl : function(notice_no){	
-			    cf_movePage('/system/notice_mng/notice?notice_no=' + notice_no);
-			},
+       this.getInfo();
+       },
+    methods : {
+       getInfo : function() {
+          cf_ajax("/sell/topCustomer", null, this.getInfoCB);
+       },
+         getInfoCB : function(data){
+            this.dataList = data;
+      },      
+    }  
+   });
+   var notice = new Vue({
+      el : "#notice",
+       data : {
+           notice: "",
+       },
+       mounted : function() { // 페이지 로드 시 실행
+          this.getNotice();
+          },
+          methods : {
+         getNotice : function() {
+             cf_ajax("/sell/Notice", null, this.getNCB);
+          },
+          getNCB : function(data){
+               this.notice = data;
+         },
+         gotoDtl : function(notice_no){   
+             cf_movePage('/system/notice_mng/notice?notice_no=' + notice_no);
+         },
 
-	 }
+    }
    });
 </script>
 

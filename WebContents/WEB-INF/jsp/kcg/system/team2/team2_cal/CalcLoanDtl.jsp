@@ -189,9 +189,6 @@
 						<button type="button" class="btn btn-orange btn-small" @click="saveSell()">
 							상품가입저장
 						</button>
-						<button type="button" class="btn btn-blue btn-icon btn-small" @click="popupPrint()">
-							설계발행 <i class="entypo-print"></i>
-						</button>
 						<button type="button" class="btn btn-blue btn-icon btn-small" @click="gotoList()">
 							목록 <i class="entypo-list"></i>
 						</button>
@@ -598,7 +595,8 @@ var vueapp = new Vue({
 			var nScInt		= 0;	// 회차이자
 			var nAcmInt		= 0;	// 누적이자
 			var nAcmPayAmt	= 0;	// 누적불입금액
-			var nScBacAmt	= 0;	// 회차잔금			
+			var nScBacAmt	= 0;	// 회차잔금	
+			var etcInt = 0;
 			
 			
 			nScPrnRpyAmt = Math.floor(nLnAmt / nPrd, 6);
@@ -643,20 +641,22 @@ var vueapp = new Vue({
 				}
 				// 만기일시상환
 				else {	
-					nScInt = nLnAmt*nApplItr
 					if(i<nPrd){
+						nScInt = nLnAmt*nApplItr
 						nScPayAmt = nScInt;
 						nScPrnRpyAmt = 0;
-						nAcmPayAmt = 0;
 						nScBacAmt = nLnAmt;
 					} else{
+						nScInt = nLnAmt*nApplItr
 						nScPayAmt = nScInt + nLnAmt;
 						nScPrnRpyAmt = nLnAmt;
-						nAcmPayAmt = nLnAmt;
 						nScBacAmt = 0;
+						
 					}
-					
+					nAcmInt += nScInt;
+					nAcmPayAmt += nScPayAmt;
 				}
+				
 				
 				html += '<tr>';
 				html += '<td class="right" style="text-align: right;">' + i + '</td>';

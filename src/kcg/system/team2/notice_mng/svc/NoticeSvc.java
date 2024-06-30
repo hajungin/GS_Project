@@ -31,6 +31,12 @@ public class NoticeSvc {
 		return rslt;
 	}
 	
+//	그냥 리스트로 가져오기 (메인화면용)
+	public List<CmmnMap> getNotices(CmmnMap params){
+		List<CmmnMap> rslt = cmmnDao.selectList("system.team2.notice_mng.getNoticeList", params);
+		return rslt;
+	}
+	
 	
 //	상세 정보 가져오기
 	public CmmnMap getInfo(CmmnMap params) {
@@ -58,7 +64,7 @@ public class NoticeSvc {
 	
 //	저장하기
 	public CmmnMap insert(CmmnMap params) {
-	    cmmnDao.update("system.team2.notice_mng.insertInfo", params);
+	    cmmnDao.insert("system.team2.notice_mng.insertInfo", params);
 	    return new CmmnMap().put("notice_no", params.getString("notice_no")); 
 	}
 	

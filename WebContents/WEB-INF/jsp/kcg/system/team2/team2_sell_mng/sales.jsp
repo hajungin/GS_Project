@@ -59,16 +59,16 @@
 		
 		    <div class="target-list">
 		        <li v-if="prod_type == 'PT01'">
-		            적금 판매 달성 금액 : {{ formatCurrency(sa_target) }}
+		            적금 목표 달성 금액 : {{ formatCurrency(sa_target) }}
 		        </li>
 		        <li v-if="prod_type == 'PT02'">
-		            예금 판매 달성 금액 : {{ formatCurrency(ac_target) }}
+		            예금 목표 달성 금액 : {{ formatCurrency(ac_target) }}
 		        </li>
 		        <li v-if="prod_type == 'PT03'">
-		            목돈마련 판매 달성 금액 : {{ formatCurrency(dp_target) }}
+		            목돈마련 목표 달성 금액 : {{ formatCurrency(dp_target) }}
 		        </li>
 		        <li v-if="prod_type == 'PT04'">
-		            대출 판매 달성 금액 : {{ formatCurrency(lo_target) }}
+		            대출 목표 달성 금액 : {{ formatCurrency(lo_target) }}
 		        </li>
 		    </div>
 		    

@@ -72,10 +72,10 @@
 		   and ep.sale_stat = #{sale_stat}
 		</if>
 		<if test='price_max != null and price_max != ""'>
-		   and ep.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		   and ep.price_max &lt; CAST(#{price_max} AS INTEGER)+1
 		</if>
 		<if test='price_min != null and price_min != ""'>
-		   and ep.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		   and ep.price_min &gt; CAST(#{price_min} AS INTEGER)-1
 		</if>
 		
 		UNION ALL
@@ -128,10 +128,10 @@
 		   and el.sale_stat = #{sale_stat}
 		</if>
 		<if test='price_max != null and price_max != ""'>
-		   and el.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		   and el.price_max &lt; CAST(#{price_max} AS INTEGER)+1
 		</if>
 		<if test='price_min != null and price_min != ""'>
-		   and el.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		   and el.price_min &gt; CAST(#{price_min} AS INTEGER)-1
 		</if>
 		
 		UNION ALL
@@ -184,10 +184,10 @@
 		   and ea.sale_stat = #{sale_stat}
 		</if>
 		<if test='price_max != null and price_max != ""'>
-		   and ea.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		   and ea.price_max &lt; CAST(#{price_max} AS INTEGER)+1
 		</if>
 		<if test='price_min != null and price_min != ""'>
-		   and ea.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		   and ea.price_min &gt; CAST(#{price_min} AS INTEGER)-1
 		</if>
 		
 		UNION ALL
@@ -240,10 +240,10 @@
 		   and ed.sale_stat = #{sale_stat}
 		</if>
 		<if test='price_max != null and price_max != ""'>
-		   and ed.price_max &lt; CAST(#{price_max} AS INTEGER)-1
+		   and ed.price_max &lt; CAST(#{price_max} AS INTEGER)+1
 		</if>
 		<if test='price_min != null and price_min != ""'>
-		   and ed.price_min &gt; CAST(#{price_min} AS INTEGER)+1
+		   and ed.price_min &gt; CAST(#{price_min} AS INTEGER)-1
 		</if>
 	</select>
 	
