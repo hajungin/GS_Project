@@ -105,7 +105,7 @@
 		,'AAA'
 		,#{emp_nm}
 		,#{emp_posit_nm}
-		,#{emp_dept_nm}
+		,'영업1팀'
 		,#{emp_eml_addr}
 		,'N'
 		,#{user_pw}
