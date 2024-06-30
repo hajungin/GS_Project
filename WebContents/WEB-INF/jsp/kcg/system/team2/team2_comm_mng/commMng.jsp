@@ -34,10 +34,10 @@
 			<ol class="breadcrumb bc-3">
 				<li><a href="#none" onclick="cf_movePage('/system')"><i
 						class="fa fa-home"></i>Home</a></li>
-				<li class="active"><strong>공통옵션관리</strong></li>
+				<li class="active"><strong>시스템코드관리</strong></li>
 			</ol>
 
-			<h2 class="header" onclick="location.reload();">공통옵션관리</h2>
+			<h2 class="header" onclick="location.reload();">시스템코드관리</h2>
 			<br />
 
 			<div class="flex-column flex-gap-10 dataTables_wrapper" id="vueapp">
@@ -196,59 +196,59 @@
 </body>
 <script type="text/javascript">
 var vueapp = new Vue({
-el: "#vueapp",
-data: {
-dataList: [],
-gr_comm_list: [],
-comm_no: "",
-comm_nm: "",
-note: "",
-gr_comm_no: "",
-gr_comm_nm: "",
-sel_gr_comm_no: "",
-search_val: "",
-insert: false,
-update: false,
-selected: false
-},
-mounted: function () {
-this.getCommonList();
-this.getGrCommList();
-},
-computed: {
-showButton() {
-return this.insert || this.update;
-},
-},
-methods: {
-getGrCommList: function () {
-cf_ajax("/common/getGrCommList", null, (data) => {
-this.gr_comm_list = data;
-});
-},
-getCommonList: function () {
+	el: "#vueapp",
+	data: {
+		dataList: [],
+		gr_comm_list: [],
+		comm_no: "",
+		comm_nm: "",
+		note: "",
+		gr_comm_no: "",
+		gr_comm_nm: "",
+		sel_gr_comm_no: "",
+		search_val: "",
+		insert: false,
+		update: false,
+		selected: false
+	},
+	mounted: function () {
+		this.getCommonList();
+		this.getGrCommList();
+	},
+	computed: {
+		showButton() {
+		return this.insert || this.update;
+		},
+	},
+	methods: {
+		getGrCommList: function () {
+		cf_ajax("/common/getGrCommList", null, (data) => {
+		this.gr_comm_list = data;
+			});
+		},
+		getCommonList: function () {
         	var params = {
         	gr_comm_no: this.gr_comm_no,
         	gr_comm_nm: this.gr_comm_nm,
         	comm_nm: this.search_val,
         	note: this.note,
         	}
-
+	
     		cf_ajax("/common/getCommonList", params, this.getListCB);
-        },
+	        },
         getListCB: function (data) {
             this.dataList = data;
 //                 this.dataList.push("selected", false);
 //                 this.dataList.push("update", false);
-},
-all_check: function (obj) {
-$('[name=is_check]').prop('checked', obj.checked);
-},
-onCheck: function () {
-$("#allCheck").prop('checked',
-$("[name=is_check]:checked").length === $("[name=is_check]").length
-);
-},
+		},
+		all_check: function (obj) {
+			$('[name=is_check]').prop('checked', obj.checked);
+		},
+		onCheck: function () {
+			$("#allCheck").prop('checked',
+			$("[name=is_check]:checked").length === $("[name=is_check]").length
+			);
+		},
         showInputRow() {
             this.insert = true;
         },
@@ -262,35 +262,35 @@ $("[name=is_check]:checked").length === $("[name=is_check]").length
 //             	 alert("하나만 선택하세요!!");
 //                  return;
 //              }
-checkedList.each((index, element) => {
-var item = this.dataList[index];
-if (item.selected) {
-item.originalData = {
-comm_nm: item.comm_nm,
-note: item.note
-}
-console.log(item.originalData)
-Vue.set(item, 'update', true);
-}
-});
-this.update = true;
-},
-commInsert: function () {
-var gr_comm_no = this.sel_gr_comm_no;
-var sel_gr_comm = this.gr_comm_list.find(item => item.gr_comm_no === this.sel_gr_comm_no);
-var gr_comm_nm = sel_gr_comm.gr_comm_nm;
-var comm_no = this.comm_no;
-var comm_nm = this.comm_nm;
-var note = this.note;
-var params = {
-gr_comm_no: gr_comm_no,
-gr_comm_nm: gr_comm_nm,
-comm_no: comm_no,
-comm_nm: comm_nm,
-note: note
-}
-cf_ajax("/common/commInsert", params, this.insertStsCB);
+		checkedList.each((index, element) => {
+			var item = this.dataList[index];
+			if (item.selected) {
+			item.originalData = {
+			comm_nm: item.comm_nm,
+			note: item.note
+			}
+			console.log(item.originalData)
+			Vue.set(item, 'update', true);
+			}
+		});
+			this.update = true;
 		},
+		commInsert: function () {
+			var gr_comm_no = this.sel_gr_comm_no;
+			var sel_gr_comm = this.gr_comm_list.find(item => item.gr_comm_no === this.sel_gr_comm_no);
+			var gr_comm_nm = sel_gr_comm.gr_comm_nm;
+			var comm_no = this.comm_no;
+			var comm_nm = this.comm_nm;
+			var note = this.note;
+			var params = {
+			gr_comm_no: gr_comm_no,
+			gr_comm_nm: gr_comm_nm,
+			comm_no: comm_no,
+			comm_nm: comm_nm,
+			note: note
+			}
+		cf_ajax("/common/commInsert", params, this.insertStsCB);
+				},
 		insertStsCB: function (data) {
 			if (data.status == "OK") {
 				alert("등록 완료");
@@ -378,33 +378,36 @@ cf_ajax("/common/commInsert", params, this.insertStsCB);
 var pop_gr_comm = new Vue({
 	el: "#pop_gr_comm",
 	data: {
-	dataList: [],
+		dataList: [],
 	},
 	methods: {
-	getGrCommList: function () {
-	vueapp.getGrCommList();
+		getGrCommList: function () {
+		vueapp.getGrCommList();
 	},
 	grCommUpdate: function() {
-	var params = {
-	dataList: this.dataList,
-	}
-	cf_ajax("/common/grCommUpdate", params, this.updateStsCB);
+		var params = {
+		dataList: this.dataList,
+		}
+		cf_ajax("/common/grCommUpdate", params, this.updateStsCB);
 	},
 	updateStsCB: function (data) {
 		if (data.status == "OK") {
 		alert("수정 완료이 완료되었습니다.");
-	}
+		}
 		vueapp.getGrCommList();
+		window.location.reload();
+		$('#pop_gr_comm').modal('hide');
+		
 	},
 	close: function () {
-	vueapp.getGrCommList();
-	}
+		vueapp.getGrCommList();
+		}
 	},
 	mounted() {
-	this.getGrCommList();
-	var self = this;
-	vueapp.$watch('gr_comm_list', function(newVal) {
-	self.dataList = newVal;
+		this.getGrCommList();
+		var self = this;
+		vueapp.$watch('gr_comm_list', function(newVal) {
+		self.dataList = newVal;
 	});
    }
 });

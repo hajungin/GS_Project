@@ -50,7 +50,7 @@
 				<li data-lnb="10" data-snb="0">
 					<a href="#gm" onclick="cf_movePage('/common/commMng')">
 						<i class="entypo-newspaper"></i>
-						<span class="title">TEAM2 공통옵션관리</span>
+						<span class="title">TEAM2 시스템코드관리</span>
 					</a>
 				</li> 
 				<li data-lnb="10" data-snb="0">
@@ -72,13 +72,6 @@
 						<span class="title">TEAM2 스케줄관리</span>
 					</a>
 				</li> 
-				<li data-lnb="10" data-snb="0">
-					<a href="#gm" onclick="cf_movePage('/system/exchange_mng')">
-						<i class="entypo-newspaper"></i>
-						<span class="title">TEAM2 환율정보</span>
-					</a>
-				</li> 
-				
 				<li data-lnb="11" data-snb="0">
 					<a href="#gm">
 						<i class="entypo-newspaper"></i>
@@ -89,6 +82,12 @@
 							<a href="#gm" onclick="cf_movePage('/sell/list')">
 								<span class="title">상품정보 조회</span>
 							</a>
+							<a href="#gm" onclick="cf_movePage('/cal/dtlCom')">
+								<span class="title">금융계산기</span>
+							</a>
+							<a href="#gm" onclick="cf_movePage('/cal/listPlan')">
+								<span class="title">설계이력조회</span>
+							</a>
 							<a href="#gm" onclick="cf_movePage('/sell/init')">
 								<span class="title">가입현황</span>
 							</a>
@@ -97,16 +96,15 @@
 								<span class="title">판매달성률</span>
 							</a>
 							 <% } %>
-							<a href="#gm" onclick="cf_movePage('/cal/dtlCom')">
-								<span class="title">금융계산기</span>
-							</a>
-							<a href="#gm" onclick="cf_movePage('/cal/listPlan')">
-								<span class="title">설계이력조회</span>
-							</a>
-
 						</li>
 					</ul>
 				</li>
+				<li data-lnb="10" data-snb="0">
+					<a href="#gm" onclick="cf_movePage('/system/exchange_mng')">
+						<i class="entypo-newspaper"></i>
+						<span class="title">TEAM2 환율정보</span>
+					</a>
+				</li> 
 				<% if(!userInfoVO.getEmpNo().equals("admin")){  %>
 				<li data-lnb="10" data-snb="0">
 					<a href="#gm" onclick="cf_movePage('/myPage/getMyPage')">

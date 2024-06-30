@@ -67,13 +67,12 @@
 								<div class="form-group">
 									<div class="col-sm-offset-2 col-sm-5">
 										<button type="button" class="btn btn-green btn-icon btn-small" @click="update(info.notice_no)"
-												v-if="userInfoVO.userId === 'admin001'">
-
+												v-if="userInfoVO.userId === 'admin1'">
 											수정
 											<i class="entypo-check"></i>
 										</button>
 										<button type="button" id="btn_delete" class="btn btn-red btn-icon btn-small" @click="delInfo"
-												v-if="userInfoVO.userId === 'admin001'">
+												v-if="userInfoVO.userId === 'admin1'">
 											삭제
 											<i class="entypo-trash"></i>
 										</button>
