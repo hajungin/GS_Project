@@ -246,7 +246,7 @@
                         
                         <div class="form-group">
                             <label for="err_eng_nm" style="margin-left: 40px;" class="fix-width-50">적용기간 :</label>
-                            <input type="date" class="fix-width-50" id="air_beg_dt" v-model="info.air_beg_dt" :disabled="!isEditing">
+                            <input type="date" class="fix-width-50" id="air_beg_dt" v-model="info.air_beg_dt" disabled="disabled">
                             <div>To  .</div>
                             <input type="date" style="margin-left: 100px;" class="fix-width-50" id="air_end_dt" v-model="info.air_end_dt" :disabled="!isEditing">
                             <div style="margin-right: 30px;">End .</div>
@@ -673,10 +673,6 @@ var pop_cust_info = new Vue({
 			else if (cf_isEmpty(this.info.air_min && this.info.air_max)){
 				alert("적용이율을 입력하세요.");
 				return;
-			}
-			else if (!Number.isInteger(parseFloat(this.info.air_min)) || !Number.isInteger(parseFloat(this.info.air_max))) {
-                alert("적용이율은 정수만 입력할 수 있습니다.");
-                return;
 			}
 			else if (parseFloat(this.info.air_min) > parseFloat(this.info.air_max)) {
 			    alert("적용이율 최소가 더 클 수 없습니다.");

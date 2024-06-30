@@ -115,9 +115,9 @@
 						<div class="form-group">
 							<label for="prod_air_bgng_ymd" class="fix-width-50" style="margin-left: 90px;">이율적용기간 :</label>
 							<div class="form-control" style="margin-right: 280px;">
-								<input type="date"  id="air_beg_dt" v-model="info.air_beg_dt">
+								<input type="date"  id="air_beg_dt" v-model="info.air_beg_dt" disabled="disabled">
 								<label>시작일</label>
-								<input type="date"  id="air_end_dt" v-model="info.air_end_dt">
+								<input type="date"  id="air_end_dt" v-model="info.air_end_dt" disabled="disabled">
 								<label>종료일</label>
 							</div>
 							
@@ -126,9 +126,9 @@
 						<div class="form-group">
 							<label for="ntsl_bgng_ymd" class="fix-width-50" style="margin-left: 90px;">판매적용기간 :</label>
 							<div class="form-control" style="margin-right: 280px;">
-								<input type="date"  id="sale_beg_dt" v-model="info.sale_beg_dt">
+								<input type="date"  id="sale_beg_dt" v-model="info.sale_beg_dt" disabled="disabled">
 								<label>시작일</label>
-								<input type="date"  id="sale_end_dt" v-model="info.sale_end_dt">
+								<input type="date"  id="sale_end_dt" v-model="info.sale_end_dt" disabled="disabled">
 								<label>종료일</label>
 							</div>
 						</div>
@@ -242,10 +242,6 @@ var vueapp = new Vue({
 		    cf_ajax("/2team/prod/code", null, null);
 		    this.updateProductStat();
 		},
-		isYearlyDisabled() {
-			console.log(this.info.pay_period);
-            return this.info.pay_period !== '' && parseInt(this.info.pay_period) <= 12;
-        },
 
 		 
 		save : function(){

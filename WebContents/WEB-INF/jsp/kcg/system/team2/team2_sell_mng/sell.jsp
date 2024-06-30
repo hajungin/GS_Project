@@ -112,6 +112,10 @@
 							@click="popupCustomer()">
 							고객조회 <i class="entypo entypo-info"></i>
 						</button>
+						<button type="button" id="Button"class="btn btn-success btn-icon icon-right btn-small"
+							@click= "cf_movePage('/cal/dtlCom')">
+						 	가입등록 <i class="entypo-book"></i>
+						 </button>
 						<button type="button" id="Button" class="btn btn-blue btn-icon icon-right"
 							@click="popupPrint()">
 							상세내역 <i class="entypo-list"></i>
