@@ -28,6 +28,7 @@
 		<if test='cust_mbl_telno != null and cust_mbl_telno != ""'>
 		AND c.cust_mbl_telno like CONCAT('%',#{cust_mbl_telno},'%')
 		</if>
+		ORDER BY cust_nm ASC
 	</select>
 	
 	<select id="getEvent" parameterType="cmmnMap" resultType="cmmnMap">
@@ -66,6 +67,7 @@
 			</when>
 			<otherwise></otherwise>
 		</choose>
+		ORDER BY cust_nm ASC
 	</select>
 	
 	<select id="getCustList" parameterType="cmmnMap" resultType="cmmnMap">

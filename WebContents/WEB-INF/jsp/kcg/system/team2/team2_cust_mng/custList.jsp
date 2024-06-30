@@ -323,7 +323,7 @@
                 cv_pagingConfig.func = this.getCustInfoList;
                 if (isInit === true) {
                     cv_pagingConfig.pageNo = 1;
-                    cv_pagingConfig.orders = [{ target: "cust_nm", isAsc: false }];
+                    cv_pagingConfig.orders = [{ target: "cust_nm", isAsc: true }];
                 }
 
                 var params = {
@@ -341,7 +341,7 @@
             getCustEventList: function() {
             	cv_pagingConfig.func = this.getCustEventList;
                 cv_pagingConfig.pageNo = 1;
-                cv_pagingConfig.orders = [{ target: "cust_nm", isAsc: false }];
+                cv_pagingConfig.orders = [{ target: "cust_nm", isAsc: true }];
 
                 if(this.event == "all") {
                 	this.getCustInfoList(true);
