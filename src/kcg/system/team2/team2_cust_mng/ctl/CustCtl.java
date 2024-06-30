@@ -50,13 +50,6 @@ public class CustCtl {
 		return PageList;
 	}
 	
-	// 고객 목록 조회 (List)
-	@RequestMapping("/getCustEventList")
-	public PageList<CmmnMap> getCustEventList(CmmnMap params, PagingConfig pagingConfig) {
-		PageList<CmmnMap> PageList = custSvc.getCustEventList(params, pagingConfig);
-		return PageList;
-	}
-	
 	@RequestMapping("/getCustList")
 	public List<CmmnMap> getCustList(CmmnMap params){
 		log.debug(params.toString());

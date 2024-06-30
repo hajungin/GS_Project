@@ -39,7 +39,7 @@
                         <div class="flex-wrap flex-100 flex flex-gap-10 flex-padding-10" style="border: none;">
                             <div class="form-group flex-60">
                             	<label class="fix-width-10" style="margin-left: 50px;">이벤트구분 :</label>
-	                                <select id ="event" class="form-control" v-model="event" @change="getCustEventList()">
+	                                <select id ="event" class="form-control" v-model="event" @change="getCustInfoList(true)">
 	                                	<option value="all">전체</option>
 	                                	<option value="sel_birth">생일</option>
 	                                	<option value="expiration">만기도래</option>
@@ -309,7 +309,6 @@
                 this.cust_pridtf_no = params.cust_pridtf_no;
 
                 this.getCustInfoList();
-                this.getCustEventList();
             } else {
                 cv_sessionStorage
                     .removeItem("pagingConfig")
@@ -338,28 +337,6 @@
                     .setItem('params', params);
 
                 cf_ajax("/customer/getCustInfoList", params, this.getListCB);
-            },
-            getCustEventList: function() {
-            	cv_pagingConfig.func = this.getCustEventList;
-                cv_pagingConfig.pageNo = 1;
-                cv_pagingConfig.orders = [{ target: "cust_nm", isAsc: true }];
-
-                if(this.event == "all") {
-                	this.getCustInfoList(true);
-                } else {
-                	var params = {
-                        	cust_nm: this.cust_nm,
-                        	emp_nm: this.emp_nm,
-                            event: this.event,
-                            cust_mbl_telno: this.cust_mbl_telno
-                        }
-
-                        cv_sessionStorage
-                            .setItem('pagingConfig', cv_pagingConfig)
-                            .setItem('params', params);
-
-                        cf_ajax("/customer/getCustEventList", params, this.getListCB);
-                }
             },
             getListCB: function (data) {
                 //console.log(data);
@@ -439,6 +416,12 @@
                    emp_mbl_telno: "",
                 }
             },
+            isEmpty(value) {
+                return value === '';
+            },
+			isNotEmpty(value){
+				return value !== '';
+			},
             getInfo: function () {
                 var params = {
                     cust_mbl_telno: this.info.cust_mbl_telno,
@@ -449,7 +432,9 @@
             getInfoCB: function (data) {
                 this.info = data;
             },
-
+			custInfoReload: function () {
+				this.getInfo();
+			},
 			getCnsltCB: function (data) {
 				this.cnsltList = data;
 			},
@@ -510,9 +495,7 @@
 				$('#pop_cust_info').modal('hide');
 				window.location.reload();
 			},
-			custInfoReload: function () {
-				this.getInfo();
-			},
+
 			
 			custInsert: function () {
 				var cust_nm = this.info.cust_nm;
@@ -560,12 +543,7 @@
 				}
 				cf_ajax("/communi/cnsltInsert", params, this.insertStsCB);
 			},
-			isEmpty(value) {
-                return value === '';
-            },
-			isNotEmpty(value){
-				return value !== '';
-			},
+			
             custChangeSts: function () {
 				var cust_pridtf_no = this.info.cust_pridtf_no;
 				 
