@@ -117,7 +117,7 @@
 							<div class="form-control" style="margin-right: 280px;">
 								<input type="date"  id="air_beg_dt" v-model="info.air_beg_dt" disabled="disabled">
 								<label>시작일</label>
-								<input type="date"  id="air_end_dt" v-model="info.air_end_dt" disabled="disabled">
+								<input type="date"  id="air_end_dt" v-model="info.air_end_dt">
 								<label>종료일</label>
 							</div>
 							
@@ -128,7 +128,7 @@
 							<div class="form-control" style="margin-right: 280px;">
 								<input type="date"  id="sale_beg_dt" v-model="info.sale_beg_dt" disabled="disabled">
 								<label>시작일</label>
-								<input type="date"  id="sale_end_dt" v-model="info.sale_end_dt" disabled="disabled">
+								<input type="date"  id="sale_end_dt" v-model="info.sale_end_dt">
 								<label>종료일</label>
 							</div>
 						</div>
