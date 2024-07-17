@@ -1,12 +1,17 @@
+# 🚩프로젝트명
+#### 금융 Project
+
+---
 # 📰 프로젝트 소개
 #### GSITM부트캠프에서 진행된 금융 Project
 
 ---
 # 📠프로젝트 주제
 #### 금융사에서 고객관리와 상품관리를 진행하고 사원은 고객들에게 상품 판매를 진행
+
 ---
 # 📚프로젝트 개요
-#### 금융사 마케팅활용 웹 서비스
+#### 금융사 금융 상품 판매활용 웹 서비스
 - 고객관리 : 고객의 개인정보를 관리 특히 고객별 직업, 연령층 등 상품 홍보 및 판매에 필요한 정보를 활용
 - 상품관리 : 상품유형, 이율, 프로모션 여부 등 고객이 원하는 종류의 상품을 즉시 활용 가능한 기능
 - 판매관리 : 금융 계산기, 상품 가입 현황 등 판매와 관련되어 있거나 판매완료 후 정보를 관리하는 기능
@@ -59,7 +64,8 @@
 | :---: | --- | --- | :---: |
 | ![image](https://github.com/user-attachments/assets/e22eaf94-f5a1-469b-9bc1-918c0bd7a8f8) | ![image](https://github.com/user-attachments/assets/8d391950-50db-4c09-bfd9-7f19a96f6dc2) | ![image](https://github.com/user-attachments/assets/180080b8-70c0-44ad-9d94-6aab257b6c1a) | ![image](https://github.com/user-attachments/assets/27825bce-1585-46cb-b15a-ee9cf6e25866) |
 
-
+---
+# 📌 주요기능
 
 
 
