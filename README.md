@@ -44,6 +44,11 @@
 
 ---
 # 🛠기술스택
+#### IDE : ![image](https://github.com/user-attachments/assets/084f0e9d-c530-434e-ba47-a67774a103f1)
+
+#### DBMS : ![image](https://github.com/user-attachments/assets/2a3d68ee-d694-4179-93a2-7e57ef0c058e)
+
+
 
 
 
