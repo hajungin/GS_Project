@@ -55,8 +55,8 @@
 | ![image](https://github.com/user-attachments/assets/a8b27f0c-788f-4669-a20c-9ede84214e77) | ![image](https://github.com/user-attachments/assets/5cc28af9-a79d-4671-8e31-14aeee97234e) | ![image](https://github.com/user-attachments/assets/2e978b73-5151-403a-9c98-cbb07af4044f) | ![image](https://github.com/user-attachments/assets/8c47e637-021c-4cd3-8116-cc99573535bf) | ![image](https://github.com/user-attachments/assets/222f1b07-2cda-4b69-8cdf-2f36e8bcfb43) | 
 
 #### **Backend / Frontend**
-| **Java** | **HTML** | **CSS** | **JavaScript** |
-| :---: | --- | --- | --- |
+| **Java 18** | **HTML** | **CSS** | **JavaScript** |
+| :---: | --- | --- | :---: |
 | ![image](https://github.com/user-attachments/assets/e22eaf94-f5a1-469b-9bc1-918c0bd7a8f8) | ![image](https://github.com/user-attachments/assets/8d391950-50db-4c09-bfd9-7f19a96f6dc2) | ![image](https://github.com/user-attachments/assets/180080b8-70c0-44ad-9d94-6aab257b6c1a) | ![image](https://github.com/user-attachments/assets/27825bce-1585-46cb-b15a-ee9cf6e25866) |
 
 
