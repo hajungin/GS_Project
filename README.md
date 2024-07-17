@@ -44,12 +44,17 @@
 
 ---
 # 🛠기술스택
-| **IDE** | **DBMS** | **DBA** |
-| --- | --- | --- |
-| ![image](https://github.com/user-attachments/assets/b3c7a2f6-6243-472e-918e-b60e936e774f) | ![image](https://github.com/user-attachments/assets/367a1891-03f7-4b66-873b-8c678f0c7d8a) | ![image](https://github.com/user-attachments/assets/f42f9d16-6b47-4847-aa23-b4ab488c0c43) |
- 
-| **FrameWork/Library** |
-| ![image](https://github.com/user-attachments/assets/0a56a11e-2701-4c88-8d27-4ad8c85aae0a) | ![image](https://github.com/user-attachments/assets/5cc28af9-a79d-4671-8e31-14aeee97234e) | ![image](https://github.com/user-attachments/assets/2e978b73-5151-403a-9c98-cbb07af4044f) | 
+| **IDE** | **DBMS** | **DBA** | **API** | **형상관리**
+| --- | --- | --- | --- | --- |
+| ![image](https://github.com/user-attachments/assets/b3c7a2f6-6243-472e-918e-b60e936e774f) | ![image](https://github.com/user-attachments/assets/367a1891-03f7-4b66-873b-8c678f0c7d8a) | ![image](https://github.com/user-attachments/assets/f42f9d16-6b47-4847-aa23-b4ab488c0c43) | ![image](https://github.com/user-attachments/assets/bdb3019d-a186-426b-9afd-8d1c8d404024) | ![image](https://github.com/user-attachments/assets/22a7ba1a-b6ab-4caa-bec2-f5c29d5994fc) |
+
+
+ ##### **FrameWork/Library**
+| **BootStrap** | **Vue.js** | **JQuery** | **JSP** | **MyBatis** |
+| --- | --- | --- | --- | --- |
+| ![image](https://github.com/user-attachments/assets/0a56a11e-2701-4c88-8d27-4ad8c85aae0a) | ![image](https://github.com/user-attachments/assets/5cc28af9-a79d-4671-8e31-14aeee97234e) | ![image](https://github.com/user-attachments/assets/2e978b73-5151-403a-9c98-cbb07af4044f) | ![image](https://github.com/user-attachments/assets/8c47e637-021c-4cd3-8116-cc99573535bf) | ![image](https://github.com/user-attachments/assets/222f1b07-2cda-4b69-8cdf-2f36e8bcfb43) | 
+
+
 
 
 
