@@ -46,10 +46,13 @@
 # 🛠기술스택
 | **IDE** | **DBMS** | **DBA** |
 | --- | --- | --- |
-| ![image](https://github.com/user-attachments/assets/084f0e9d-c530-434e-ba47-a67774a103f1) | ![image](https://github.com/user-attachments/assets/2a3d68ee-d694-4179-93a2-7e57ef0c058e) | ![image](https://github.com/user-attachments/assets/9aa6fe95-eb33-48ff-a2ec-e1da22fe7030) |
+| ![image](https://github.com/user-attachments/assets/b3c7a2f6-6243-472e-918e-b60e936e774f) | ![image](https://github.com/user-attachments/assets/367a1891-03f7-4b66-873b-8c678f0c7d8a) | ![image](https://github.com/user-attachments/assets/f42f9d16-6b47-4847-aa23-b4ab488c0c43) |
+ 
 | **FrameWork/Library** |
-| --- |
-| ![image](https://github.com/user-attachments/assets/c56f1115-f13d-4984-8c25-2f66bacbffee) | ![image](https://github.com/user-attachments/assets/3fa99d1c-5380-4d49-80e2-54e666016ac3) |
+| ![image](https://github.com/user-attachments/assets/0a56a11e-2701-4c88-8d27-4ad8c85aae0a) | ![image](https://github.com/user-attachments/assets/5cc28af9-a79d-4671-8e31-14aeee97234e) | ![image](https://github.com/user-attachments/assets/2e978b73-5151-403a-9c98-cbb07af4044f) | 
+
+
+
 
 
 
