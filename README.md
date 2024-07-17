@@ -44,9 +44,10 @@
 
 ---
 # 🛠기술스택
-#### IDE : ![image](https://github.com/user-attachments/assets/084f0e9d-c530-434e-ba47-a67774a103f1)
+| **IDE** | **DBMS** | **DB관리Tool** |
+| --- | --- | --- |
+| ![image](https://github.com/user-attachments/assets/084f0e9d-c530-434e-ba47-a67774a103f1) | ![image](https://github.com/user-attachments/assets/2a3d68ee-d694-4179-93a2-7e57ef0c058e) | ![image](https://github.com/user-attachments/assets/9aa6fe95-eb33-48ff-a2ec-e1da22fe7030) |
 
-#### DBMS : ![image](https://github.com/user-attachments/assets/2a3d68ee-d694-4179-93a2-7e57ef0c058e)
 
 
 
