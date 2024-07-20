@@ -74,7 +74,35 @@
 - 금융소식 (API)
 - 공지사항(최신공지사항링크연결)
 - 달력 및 스케줄 (API)
-- 이달의 우수사원 (금융상품 판매 금액 순) 
+- 이달의 우수사원 (금융상품 판매 금액 순)
+### 고객관리
+
+| 고객목록 조회 |
+| --- |
+| ![image](https://github.com/user-attachments/assets/c7314542-4132-4b56-8c26-e8173515cf0e) |
+- 이벤트(생일, 만기도래), 고객명, 전화번호, 관리담당자 검색기능
+- 아이콘 파란색 자신의 고객 표시
+- 회원등록, 상담목록 조회 버튼
+- 고객 정보 관리 기능 (더블클릭)
+- 페이징 처리 기능
+| 고객기본정보관리 | 신규회원등록 |
+| --- | --- |
+| ![image](https://github.com/user-attachments/assets/5c778c0b-3115-4e35-b7ee-3c8bddec6cdd) | ![image](https://github.com/user-attachments/assets/b06431ee-4bec-4eac-ae86-0bdb44374fed) |
+
+| 상담내역조회 |
+| --- |
+| ![image](https://github.com/user-attachments/assets/4e8896ea-72f6-4068-a4e8-4c1c5b8ba5fd) |
+- 상담일시, 고객명, 상담내용, 상담자 검색기능
+- 상담내역 삭제 기능
+- 페이징 처리 기능
+| 상담상세내역조회 |
+| --- |
+| ![image](https://github.com/user-attachments/assets/842b9304-dec1-4a02-bff8-97959779d4ce) |
+
+
+
+
+
 
 
 
