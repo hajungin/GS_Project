@@ -223,6 +223,8 @@
 | 적금상품 | 예금상품 | 대출상품 | 목돈마련상품 |
 | --- | --- | --- | --- |
 | ![image](https://github.com/user-attachments/assets/eb6e3b92-9fec-468e-a410-020b5dae7b07) | ![image](https://github.com/user-attachments/assets/c3ccf882-7da8-4753-a30d-31a45258f008) | ![image](https://github.com/user-attachments/assets/3c7df32b-676b-4e17-a73f-c23056873028) | ![image](https://github.com/user-attachments/assets/70c4560f-6b72-462e-a570-99e7c6e7d1cb) |
+
+
 | 목표금액 등록 |
 | --- |
 | ![image](https://github.com/user-attachments/assets/8a4b380e-815f-4ba4-a412-59fd3ecc4146) |
@@ -232,7 +234,7 @@
 
 ---
 # 🧩ERD
-[ERD.drawio.svg](file:///C:/Users/hji00/Downloads/ERD.drawio%20(1).svg)
+[ERD.drawio.svg](#file:///C:/Users/hji00/Downloads/ERD.drawio%20(1).svg)
 
 
 
