@@ -236,6 +236,9 @@
 # 🧩ERD
 [ERD.drawio.svg](#file:///C:/Users/hji00/Downloads/ERD.drawio%20(1).svg)
 
+![image](https://github.com/user-attachments/assets/4c9eebcc-c21e-4514-89ab-7b2fb87b8900)
+
+
 
 
 
