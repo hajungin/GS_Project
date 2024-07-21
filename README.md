@@ -102,30 +102,21 @@
 | --- | --- |
 | ![image](https://github.com/user-attachments/assets/5c778c0b-3115-4e35-b7ee-3c8bddec6cdd) | ![image](https://github.com/user-attachments/assets/b06431ee-4bec-4eac-ae86-0bdb44374fed) |
 
-| 상담내역조회 |
-| --- |
-| ![image](https://github.com/user-attachments/assets/4e8896ea-72f6-4068-a4e8-4c1c5b8ba5fd) |
+| 상담내역조회 | 상담상세내역 |
+| --- | --- |
+| ![image](https://github.com/user-attachments/assets/4e8896ea-72f6-4068-a4e8-4c1c5b8ba5fd) | ![image](https://github.com/user-attachments/assets/842b9304-dec1-4a02-bff8-97959779d4ce) |
 - 상담일시, 고객명, 상담내용, 상담자 검색기능
 - 상담내역 삭제 기능
 - 페이징 처리 기능
 
-
-| 상담상세내역조회 |
-| --- |
-| ![image](https://github.com/user-attachments/assets/842b9304-dec1-4a02-bff8-97959779d4ce) |
-
 ---
 ### 공지사항
-| 공지사항목록조회 |
-| --- |
-| ![image](https://github.com/user-attachments/assets/c9e6ce32-817c-4173-9f93-e956992a7eb2) |
+| 공지사항목록조회 | 목록상세 |
+| --- | --- |
+| ![image](https://github.com/user-attachments/assets/c9e6ce32-817c-4173-9f93-e956992a7eb2) | ![image](https://github.com/user-attachments/assets/e1e944e5-60af-443a-8557-8b32ca84d0cb) |
 - 제목, 내용 검색 기능
 - 페이징 처리 기능
 - 목록 클릭 시 목록 상세로 이동
-
-| 목록 상세 |
-| --- |
-| ![image](https://github.com/user-attachments/assets/e1e944e5-60af-443a-8557-8b32ca84d0cb) |
 
 ---
 ### 스케줄관리
@@ -144,6 +135,29 @@
 - 상품명, 상품유형, 판매기간, 프로모션, 가입대상, 가입금액 검색 기능
 - 가입등록 버튼 금융계산기 이동
 - 상세내역 버튼 체크박스 선택 후 상품 상세내역 출력
+
+| 금융계산기 | 설계저장 | 가입저장 |
+| --- | --- | --- |
+| ![image](https://github.com/user-attachments/assets/5d30daa4-5731-4b0b-b576-e0013290efdd) | ![image](https://github.com/user-attachments/assets/398a4eea-d840-4485-bce7-c30365612d71) | ![image](https://github.com/user-attachments/assets/455f0a3c-1ea2-4c24-8261-ae7b700c0f52) |
+
+
+- 등록된 상품 적금, 예금, 대출, 목돈마련 상품 카테고리 별로 계산 기능
+- 설계저장 : 가입 진행 전 설계이력만 저장
+- 설계이력조회 : 해당 고객 클릭 시 고객정보를 가지고 금융 계산기로 이동
+- 가입저장 : 가입현황에 등록 (판매처리)
+
+---
+| 환율 계산기 |
+| --- |
+
+
+---
+| 마이페이지 |
+| --- |
+| ![image](https://github.com/user-attachments/assets/6c18d943-e612-439f-95b9-5daef340b60a) |
+
+
+
 
 
 
